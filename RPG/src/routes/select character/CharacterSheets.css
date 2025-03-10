@@ -1,0 +1,17 @@
+.character-sheet-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2em;
+}
+
+.character-sheet {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+    border: 1px solid black;
+}  
+
+.character-sheet.selected {
+    border-color: yellow;
+}
