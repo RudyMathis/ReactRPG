@@ -7,9 +7,11 @@ export type CharacterType = {
     attack: number;
     defense: number;
     speed: number;
-    magic: number;
+    mana: number;
+    maxMana: number;
     luck: number;
     exp: number;
+    maxExp: number;
     gold: number;
     items: string[];
     spells: string[];

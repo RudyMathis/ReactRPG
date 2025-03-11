@@ -1,14 +1,7 @@
-import { CharacterType } from "./CharacterType";
-import CharacterData from "./CharacterData.json";
-import { atom, useAtom } from 'jotai';
-import "./CharacterSheets.css";
 
-const characterAtom = atom<Record<number, CharacterType>>(
-    Object.values(CharacterData).reduce((acc, char) => {
-        acc[char.id] = char;
-        return acc;
-    }, {} as Record<number, CharacterType>)
-);
+import {  useAtom } from 'jotai';
+import "./CharacterSheets.css";
+import characterAtom from "../../atom/CharacterAtom";
 
 const CharacterSheets = () => {
     const [characters, setCharacters] = useAtom(characterAtom);
