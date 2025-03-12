@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router';
-import { useAtom } from 'jotai';
-import characterAtom from '../atom/CharacterAtom';
+// import { useAtom } from 'jotai';
+// import characterAtom from '../atom/CharacterAtom';
 
 type NavigateBtnProps = {
     locationValue: string;
@@ -9,11 +9,11 @@ type NavigateBtnProps = {
 
 const NavigateBtn = ({ locationValue, location }: NavigateBtnProps) => {
     const navigate = useNavigate();
-    const [characters] = useAtom(characterAtom);
+    // const [characters] = useAtom(characterAtom);
 
     const handleNavigation = () => {
-        const selectedCharacters = Object.values(characters).filter(char => char.selected);
-        console.log(selectedCharacters);
+        // const selectedCharacters = Object.values(characters).filter(char => char.selected);
+        // console.log(selectedCharacters);
         navigate(locationValue);
     };
 

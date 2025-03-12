@@ -1,6 +1,25 @@
 import { atom } from 'jotai';
-import { CharacterType } from "../routes/selectCharacter/CharacterType";
 import CharacterData from "../routes/selectCharacter/CharacterData.json";
+
+type CharacterType = {
+    id: number;
+    name: string;
+    level: number;
+    health: number;
+    maxHealth: number;
+    attack: number;
+    defense: number;
+    speed: number;
+    mana: number;
+    maxMana: number;
+    luck: number;
+    exp: number;
+    maxExp: number;
+    gold: number;
+    items: string[];
+    spells: string[];
+    selected: boolean;
+}
 
 const CharacterAtom = atom<Record<number, CharacterType>>(
     Object.values(CharacterData).reduce((acc, char) => {

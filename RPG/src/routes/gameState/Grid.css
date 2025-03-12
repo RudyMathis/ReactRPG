@@ -21,33 +21,3 @@
     background-color: black;   /* means somethings missing */
     border: 1px solid darkgray;
 }
-
-/* temp */
-
-#Warrior, #Skeleton {
-    background-color: red;
-}
-
-#Mage, #Ghoul {
-    background-color: blue;
-}
-
-#Cleric, #Zombie {
-    background-color: green;
-}
-
-#Rogue, #Rat {
-    background-color: yellow;
-}
-
-#Archer, #Wolf {
-    background-color: purple;
-}
-
-#Bard, #Goblin {
-    background-color: orange;
-}
-
-#Monk, #Ent {
-    background-color: pink;
-}

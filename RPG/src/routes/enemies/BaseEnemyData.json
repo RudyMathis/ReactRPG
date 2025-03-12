@@ -9,10 +9,11 @@
         "defense": 20,
         "speed": 10,
         "mana": 10,
-        "maxMana": 100,
+        "maxMana": 10,
         "luck": 10,
         "items": [],
         "spells": [],
+        "target": ["TargetHealthLow"],
         "selected": false
     },
     "Ghoul": {
@@ -25,10 +26,11 @@
         "defense": 10,
         "speed": 10,
         "mana": 40,
-        "maxMana": 100,
+        "maxMana": 40,
         "luck": 10,
         "items": [],
         "spells": [],
+        "target": [],
         "selected": false
     },
     "Zombie": {
@@ -41,10 +43,11 @@
         "defense": 15,
         "speed": 10,
         "mana": 30,
-        "maxMana": 100,
+        "maxMana": 30,
         "luck": 10,
         "items": [],
         "spells": [],
+        "target": ["TargetRandom"],
         "selected": false
     },
     "Rat": {
@@ -57,10 +60,11 @@
         "defense": 10,
         "speed": 30,
         "mana": 10,
-        "maxMana": 100,
+        "maxMana": 10,
         "luck": 10,
         "items": [],
         "spells": [],
+        "target": ["TargetSpeedLow"],
         "selected": false
     },
     "Wolf": {
@@ -73,10 +77,11 @@
         "defense": 20,
         "speed": 20,
         "mana": 10,
-        "maxMana": 100,
+        "maxMana": 10,
         "luck": 10,
         "items": [],
         "spells": [],
+        "target": [],
         "selected": false
     },
     "Goblin": {
@@ -89,10 +94,11 @@
         "defense": 10,
         "speed": 30,
         "mana": 40,
-        "maxMana": 100,
+        "maxMana": 40,
         "luck": 30,
         "items": [],
         "spells": [],
+        "target": [],
         "selected": false
     },
     "Ent": {
@@ -103,12 +109,13 @@
         "maxHealth": 200,
         "attack": 10,
         "defense": 30,
-        "speed": 50,
+        "speed": 80,
         "mana": 10,
-        "maxMana": 100,
+        "maxMana": 10,
         "luck": 0,
         "items": [],
         "spells": [],
+        "target": ["TargetLuckLow"],
         "selected": false
     }
 }
