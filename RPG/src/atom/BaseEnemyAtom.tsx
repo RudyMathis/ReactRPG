@@ -16,6 +16,7 @@ export type EnemyType = {
     items: string[];
     spells: string[];
     target: string[];
+    status: string[];
     selected: boolean;
 }
 

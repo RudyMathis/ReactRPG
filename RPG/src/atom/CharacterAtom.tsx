@@ -18,6 +18,7 @@ export type CharacterType = {
     gold: number;
     items: string[];
     spells: string[];
+    status: string[];
     selected: boolean;
 }
 

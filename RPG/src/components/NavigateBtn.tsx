@@ -9,11 +9,8 @@ type NavigateBtnProps = {
 
 const NavigateBtn = ({ locationValue, location }: NavigateBtnProps) => {
     const navigate = useNavigate();
-    // const [characters] = useAtom(characterAtom);
 
     const handleNavigation = () => {
-        // const selectedCharacters = Object.values(characters).filter(char => char.selected);
-        // console.log(selectedCharacters);
         navigate(locationValue);
     };
 

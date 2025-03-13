@@ -3,8 +3,8 @@
         "id": 1,
         "name": "Warrior",
         "level": 1,
-        "health": 200,
-        "maxHealth": 200,
+        "health": 300,
+        "maxHealth": 300,
         "attack": 10,
         "defense": 20,
         "speed": 10,
@@ -16,6 +16,7 @@
         "gold": 0,
         "items": [],
         "spells": [],
+        "status": [],
         "selected": false
     },
     "Mage": {
@@ -35,6 +36,7 @@
         "gold": 0,
         "items": [],
         "spells": [],
+        "status": [],
         "selected": false
     },
     "Cleric": {
@@ -54,6 +56,7 @@
         "gold": 0,
         "items": [],
         "spells": [],
+        "status": [],
         "selected": false
     },
     "Rogue": {
@@ -73,6 +76,7 @@
         "gold": 0,
         "items": [],
         "spells": [],
+        "status": [],
         "selected": false
     },
     "Archer": {
@@ -92,6 +96,7 @@
         "gold": 0,
         "items": [],
         "spells": [],
+        "status": [],
         "selected": false
     },
     "Bard": {
@@ -111,6 +116,7 @@
         "gold": 0,
         "items": [],
         "spells": [],
+        "status": [],
         "selected": false
     },
     "Monk": {
@@ -130,6 +136,7 @@
         "gold": 0,
         "items": [],
         "spells": [],
+        "status": [],
         "selected": false
     }
 }

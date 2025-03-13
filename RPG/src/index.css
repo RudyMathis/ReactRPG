@@ -56,30 +56,35 @@ button {
 
 /* temp */
 
-#Warrior, #Skeleton {
+.character-sprite.Warrior, .character-sprite.Skeleton {
     background-color: red;
 }
 
-#Mage, #Ghoul {
+.character-sprite.Mage, .character-sprite.Ghoul {
     background-color: blue;
 }
 
-#Cleric, #Zombie {
+.character-sprite.Cleric, .character-sprite.Zombie {
     background-color: green;
 }
 
-#Rogue, #Rat {
+.character-sprite.Rogue, .character-sprite.Rat {
     background-color: yellow;
 }
 
-#Archer, #Wolf {
+.character-sprite.Archer, .character-sprite.Wolf {
     background-color: purple;
 }
 
-#Bard, #Goblin {
+.character-sprite.Bard, .character-sprite.Goblin {
     background-color: orange;
 }
 
-#Monk, #Ent {
+.character-sprite.Monk, .character-sprite.Ent {
     background-color: pink;
+}
+
+.character-sprite.dead {
+	background-color: darkgray;
+	cursor: not-allowed;
 }

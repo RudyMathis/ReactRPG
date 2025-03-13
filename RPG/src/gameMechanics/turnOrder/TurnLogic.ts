@@ -27,33 +27,63 @@ export const runTurnLogic = async (
         console.warn(`No valid target found for ${enemy.name}`);
         continue;
       }
-
-      console.log(`%cEnemy ${entity.name} takes its turn.`, 'color: red; font-weight: bold;');
-      const damage = enemy.attack;
       
-      console.log(`%cEnemy ${entity.name} attacks ${character.name} and deals ${damage} damage!`, 'color: red;');
-      console.log(`${character.name}'s health has been reduced to ${basicAttack(character, enemy)}`);
+      const updatedHealth = basicEnemyAttack(character, enemy);
+      if (character.health <= 0) {
+        store.set(CharacterAtom, prev => ({
+          ...prev,
+          [character.id]: { ...character, health: 0 }
+        }));
+  
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        character.health = 0;
+        character.status = ['Dead'];
+        character.selected = false;
+      } else {
 
-      await new Promise(resolve => setTimeout(resolve, 1000));
+        store.set(CharacterAtom, prev => ({
+          ...prev,
+          [character.id]: { ...character, health: updatedHealth }
+        }));
+  
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        character.health = updatedHealth;
+      }
+
+
     } else {
       // Character turn
       const character = entity as CharacterType;
+
+      if(character.health > 0) {
+
       console.log(`Character ${character.name}'s turn. Waiting for user input...`);
       await waitForInput();
 
       const playerTarget = store.get(playerTargetAtom);
+      if (playerTarget && 'target' in playerTarget) {
+        const updatedHealth = basicCharacterAttack(playerTarget, character);
+        
+        store.set(EnemyAtom, prev => ({
+          ...prev,
+          [playerTarget.id]: { ...playerTarget, health: updatedHealth }
+        }));
 
-      if (playerTarget) {
-        console.log(`%c${entity.name} attacks ${playerTarget.name} for 10 damage!`, 'color: blue;');
+        playerTarget.health = updatedHealth;
       } else {
-        console.log(`%c${entity.name} has no target.`, 'color: blue;');
+        console.log(`%c${character.name} has no valid target.`, 'color: blue;');
       }
     }
+    }
   }
-  console.log("Turn cycle complete.");
+  console.log('Turn cycle complete.');
 };
 
-const basicAttack = (character: CharacterType, enemy: EnemyType) => {
-  const updatedHealth = character.health - enemy.attack;
-  return updatedHealth;
+
+const basicCharacterAttack = (enemy: EnemyType, character: CharacterType) => {
+  return enemy.health - character.attack;
+};
+
+const basicEnemyAttack = (character: CharacterType, enemy: EnemyType) => {
+  return character.health - enemy.attack;
 };

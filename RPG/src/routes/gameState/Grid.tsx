@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback, useRef, useMemo  } from 'react';
 import { useSetAtom, useAtom } from 'jotai';
 import CharacterAtom, { CharacterType } from '../../atom/CharacterAtom';
 import EnemyAtom, { EnemyType } from '../../atom/BaseEnemyAtom';
@@ -19,7 +19,7 @@ const Grid = () => {
   const selectedCharacters = Object.values(characters).filter(char => char.selected);
   
   const [enemies] = useAtom(EnemyAtom);
-  const shuffledEnemies = shuffleArray(Object.values(enemies));
+  const shuffledEnemies = useMemo(() => shuffleArray(Object.values(enemies)), []);
 
   // Get the turn order via our custom hook (which sorts by speed, highest first).
   const turnOrder = useTurnOrder();
@@ -65,14 +65,15 @@ const Grid = () => {
       {selectedCharacters.map((char, index) => (
         <div
           key={char.id}
-          className="character-sprite"
-          id={char.name}
+          className={`character-sprite ${char.name} ${char.health === 0 ? 'dead' : ''}`}
           style={{
             gridColumn: (index % 2) === 0 ? 2 : 3,
             gridRow: (index * 2) + 1
           }}
         >
           {char.name.slice(0, 3)}
+          {char.health}
+          {char.status}
         </div>
       ))}
       
@@ -80,8 +81,8 @@ const Grid = () => {
       {shuffledEnemies.map((enemy, index) => (
         <div
           key={enemy.id}
-          className="character-sprite"
-          id={enemy.name}
+          className={`character-sprite ${enemy.name} ${enemy.health === 0 ? 'dead' : ''}`}
+          // id={enemy.name}
           onClick={() => handlePlayerTargeted(enemy)}
           data-target={getEnemyTargetName(enemy, selectedCharacters)}
           style={{
@@ -90,6 +91,8 @@ const Grid = () => {
           }}
         >
           {enemy.name.slice(0, 3)}
+          {enemy.health}
+          {enemy.status}
         </div>
       ))}
       
