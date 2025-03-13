@@ -1,10 +1,10 @@
 import { useState, useCallback, useRef } from 'react';
-import { useAtom } from 'jotai';
-import CharacterAtom from '../../atom/CharacterAtom';
-import EnemyAtom from '../../atom/BaseEnemyAtom';
+import { useSetAtom, useAtom } from 'jotai';
+import CharacterAtom, { CharacterType } from '../../atom/CharacterAtom';
+import EnemyAtom, { EnemyType } from '../../atom/BaseEnemyAtom';
 import { getEnemyTargetName } from '../../gameMechanics/enemyTarget/EnemyTargetLogic';
 import { useTurnOrder }  from '../../gameMechanics/turnOrder/useTurnOrder';
-
+import { playerTargetAtom } from '../../atom/PlayerTargetAtom';
 import { runTurnLogic } from '../../gameMechanics/turnOrder/TurnLogic';
 import './Grid.css';
 
@@ -24,6 +24,7 @@ const Grid = () => {
   // Get the turn order via our custom hook (which sorts by speed, highest first).
   const turnOrder = useTurnOrder();
 
+  const setPlayerTarget = useSetAtom(playerTargetAtom);
 
   // State to control waiting for user input during character turns.
   const [waitingForInput, setWaitingForInput] = useState(false);
@@ -46,6 +47,12 @@ const Grid = () => {
       inputPromiseResolverRef.current = null;
     }
   };
+
+  const handlePlayerTargeted = (entity: EnemyType | CharacterType) => {
+    console.log("Player targeted", entity.name);
+    setPlayerTarget(entity); // Set target directly in the atom
+  };
+
   const checkTurnOrderAndRunLogic = () => {
     if (turnOrder.length > 0) {
       runTurnLogic(turnOrder, waitForInput);
@@ -75,6 +82,7 @@ const Grid = () => {
           key={enemy.id}
           className="character-sprite"
           id={enemy.name}
+          onClick={() => handlePlayerTargeted(enemy)}
           data-target={getEnemyTargetName(enemy, selectedCharacters)}
           style={{
             gridColumn: (index % 2) === 0 ? 18 : 19,
