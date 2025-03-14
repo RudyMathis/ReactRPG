@@ -6,6 +6,8 @@ import { getEnemyTargetName } from '../../gameMechanics/enemyTarget/EnemyTargetL
 import { useTurnOrder }  from '../../gameMechanics/turnOrder/useTurnOrder';
 import { playerTargetAtom } from '../../atom/PlayerTargetAtom';
 import { runTurnLogic } from '../../gameMechanics/turnOrder/TurnLogic';
+import HealthBar from '../../components/bars/HealthBar';
+import ManaBar from '../../components/bars/ManaBar';
 import './Grid.css';
 
 // A simple shuffle function, if needed for enemy order.
@@ -65,15 +67,16 @@ const Grid = () => {
       {selectedCharacters.map((char, index) => (
         <div
           key={char.id}
-          className={`character-sprite ${char.name} ${char.health === 0 ? 'dead' : ''}`}
           style={{
             gridColumn: (index % 2) === 0 ? 2 : 3,
             gridRow: (index * 2) + 1
           }}
         >
-          {char.name.slice(0, 3)}
-          {char.health}
-          {char.status}
+          <HealthBar health={char.health <= 0 ? 0 : char.health} maxHealth={char.maxHealth} />
+          {char.maxMana > 0 && <ManaBar mana={char.mana} maxMana={char.maxMana} />}
+          <div className={`character-sprite ${char.name} ${char.health <= 0 ? 'dead' : ''}`}>
+            {char.name.slice(0, 3)}
+          </div>
         </div>
       ))}
       
@@ -81,18 +84,19 @@ const Grid = () => {
       {shuffledEnemies.map((enemy, index) => (
         <div
           key={enemy.id}
-          className={`character-sprite ${enemy.name} ${enemy.health === 0 ? 'dead' : ''}`}
-          // id={enemy.name}
-          onClick={() => handlePlayerTargeted(enemy)}
-          data-target={getEnemyTargetName(enemy, selectedCharacters)}
           style={{
             gridColumn: (index % 2) === 0 ? 18 : 19,
             gridRow: ((index + 1) * 2) - 1
           }}
         >
-          {enemy.name.slice(0, 3)}
-          {enemy.health}
-          {enemy.status}
+          <HealthBar health={enemy.health <= 0 ? 0 : enemy.health} maxHealth={enemy.maxHealth} />
+          {enemy.maxMana > 0 && <ManaBar mana={enemy.mana} maxMana={enemy.maxMana} />}
+          <div 
+            onClick={() => handlePlayerTargeted(enemy)}
+            data-target={getEnemyTargetName(enemy, selectedCharacters)}
+            className={`character-sprite ${enemy.name} ${enemy.health <= 0 ? 'dead' : ''}`}>
+            {enemy.name.slice(0, 3)}
+          </div>
         </div>
       ))}
       

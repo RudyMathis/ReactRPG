@@ -1,6 +1,4 @@
 import { useNavigate } from 'react-router';
-// import { useAtom } from 'jotai';
-// import characterAtom from '../atom/CharacterAtom';
 
 type NavigateBtnProps = {
     locationValue: string;

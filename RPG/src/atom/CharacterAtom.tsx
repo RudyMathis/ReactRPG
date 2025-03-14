@@ -19,6 +19,7 @@ export type CharacterType = {
     items: string[];
     spells: string[];
     status: string[];
+    currentTurn: boolean;
     selected: boolean;
 }
 

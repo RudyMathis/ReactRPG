@@ -1,28 +1,31 @@
 import './GameMenu.css'
 import { useAtom } from 'jotai';
 import CharacterAtom from '../../../atom/CharacterAtom';
+import ExperienceBar from '../../../components/bars/ExperienceBar';
+import ActionMenu from '../../../gameMechanics/menu/ActionMenu';
 const GameMenuBase = () => {
     const [characters] = useAtom(CharacterAtom);
     const selectedCharacters = Object.values(characters).filter(char => char.selected);
 
     return (
-        <div className="game-menu-container">
+        <>
             <h1>Game Menu</h1>
-            <div className="character-mini-info-container">
-                {selectedCharacters.map((char) => (
-                    <div key={char.id} className="character-mini-info">
-                        <span>{char.name}</span>
-                        <span>{char.health}/{char.maxHealth}</span>
-                        <span>{char.mana}/{char.maxMana}</span>
-                        <span>{char.exp}/{char.maxExp}</span>
-                    </div>
-                ))}
-            </div>
+            <div className="game-menu-container">
+                <div className="character-mini-info-container">
+                    {selectedCharacters.map((char) => (
+                        <div key={char.id} className="character-mini-info">
+                            <span>{char.name}</span>
+                            <span><ExperienceBar experience={char.exp} maxExperience={char.maxExp} /></span>
+                        </div>
+                    ))}
+                </div>
+                <ActionMenu />
 
-            {/* character info */}
-            {/* character actions */}
-            {/* character inventory */}
-        </div>
+                {/* character info */}
+                {/* character actions */}
+                {/* character inventory */}
+            </div>
+        </>
     );
 };
 

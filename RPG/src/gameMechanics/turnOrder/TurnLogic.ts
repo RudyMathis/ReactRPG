@@ -20,7 +20,7 @@ export const runTurnLogic = async (
     if ('target' in entity) {
       // Enemy turn
       const enemy = entity as EnemyType;
-      const targetName = getEnemyTargetName(enemy, characters);
+      const targetName = getEnemyTargetName(enemy, characters.filter(c => !c.status.includes('Dead')));
       const character = characters.find(c => c.name === targetName);
 
       if (!character) {
@@ -29,27 +29,28 @@ export const runTurnLogic = async (
       }
       
       const updatedHealth = basicEnemyAttack(character, enemy);
+      character.health = updatedHealth;
+
       if (character.health <= 0) {
+        // Character is dead
         store.set(CharacterAtom, prev => ({
           ...prev,
-          [character.id]: { ...character, health: 0 }
+          [character.id]: { ...character, health: 0, status: ['Dead'] }
         }));
   
         await new Promise(resolve => setTimeout(resolve, 1000));
-        character.health = 0;
-        character.status = ['Dead'];
-        character.selected = false;
-      } else {
 
+        character.health = 0;
+        character.status.push('Dead');
+
+      } else {
         store.set(CharacterAtom, prev => ({
           ...prev,
           [character.id]: { ...character, health: updatedHealth }
         }));
   
         await new Promise(resolve => setTimeout(resolve, 1000));
-        character.health = updatedHealth;
       }
-
 
     } else {
       // Character turn
@@ -57,23 +58,42 @@ export const runTurnLogic = async (
 
       if(character.health > 0) {
 
-      console.log(`Character ${character.name}'s turn. Waiting for user input...`);
-      await waitForInput();
+        character.currentTurn = true;
 
-      const playerTarget = store.get(playerTargetAtom);
-      if (playerTarget && 'target' in playerTarget) {
-        const updatedHealth = basicCharacterAttack(playerTarget, character);
+        console.log(`Character ${character.name}'s turn. Waiting for user input...`);
+        await waitForInput();
+
+        const playerTarget = store.get(playerTargetAtom);
         
-        store.set(EnemyAtom, prev => ({
-          ...prev,
-          [playerTarget.id]: { ...playerTarget, health: updatedHealth }
-        }));
+        if (playerTarget && 'target' in playerTarget) {
 
-        playerTarget.health = updatedHealth;
-      } else {
-        console.log(`%c${character.name} has no valid target.`, 'color: blue;');
-      }
-    }
+          const updatedHealth = basicCharacterAttack(playerTarget, character);
+          playerTarget.health = updatedHealth;
+
+          if(playerTarget.health <= 0) {
+            store.set(EnemyAtom, prev => ({
+              ...prev,
+              [playerTarget.id]: { ...playerTarget, health: 0, status: ['Dead'] }
+            }));
+  
+            playerTarget.health = 0;
+            playerTarget.status.push('Dead');
+
+          } else {  
+            store.set(EnemyAtom, prev => ({
+              ...prev,
+              [playerTarget.id]: { ...playerTarget, health: updatedHealth }
+            }));
+
+          }
+
+        } else {
+          console.log(`%c${character.name} has no valid target.`, 'color: blue;');
+        }
+
+        character.currentTurn = false;
+
+      } 
     }
   }
   console.log('Turn cycle complete.');

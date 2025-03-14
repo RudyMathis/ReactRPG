@@ -8,15 +8,16 @@
         "attack": 10,
         "defense": 20,
         "speed": 10,
-        "mana": 10,
-        "maxMana": 10,
+        "mana": 0,
+        "maxMana": 0,
         "luck": 10,
-        "exp": 0,
+        "exp": 30,
         "maxExp": 100,
         "gold": 0,
         "items": [],
-        "spells": [],
+        "spells": ["Quick Attack", "Swing Strike"],
         "status": [],
+        "currentTurn": false,
         "selected": false
     },
     "Mage": {
@@ -36,7 +37,8 @@
         "gold": 0,
         "items": [],
         "spells": [],
-        "status": [],
+        "status": ["Fireball", "Ice Bolt"],
+        "currentTurn": false,
         "selected": false
     },
     "Cleric": {
@@ -55,8 +57,9 @@
         "maxExp": 100,
         "gold": 0,
         "items": [],
-        "spells": [],
+        "spells": ["Heal", "Cure"],
         "status": [],
+        "currentTurn": false,
         "selected": false
     },
     "Rogue": {
@@ -68,15 +71,16 @@
         "attack": 40,
         "defense": 10,
         "speed": 60,
-        "mana": 10,
-        "maxMana": 10,
+        "mana": 0,
+        "maxMana": 0,
         "luck": 25,
         "exp": 0,
         "maxExp": 100,
         "gold": 0,
         "items": [],
-        "spells": [],
+        "spells": ["Quick Attack", "Backstab"],
         "status": [],
+        "currentTurn": false,
         "selected": false
     },
     "Archer": {
@@ -97,6 +101,7 @@
         "items": [],
         "spells": [],
         "status": [],
+        "currentTurn": false,
         "selected": false
     },
     "Bard": {
@@ -117,6 +122,7 @@
         "items": [],
         "spells": [],
         "status": [],
+        "currentTurn": false,
         "selected": false
     },
     "Monk": {
@@ -137,6 +143,7 @@
         "items": [],
         "spells": [],
         "status": [],
+        "currentTurn": false,
         "selected": false
     }
 }

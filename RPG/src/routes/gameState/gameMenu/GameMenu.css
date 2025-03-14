@@ -1,6 +1,6 @@
 .game-menu-container {
     display: flex;
-    flex-direction: column;
+    /* flex-direction: column; */
     gap: 1em;
     border: 1px solid black;
 }
