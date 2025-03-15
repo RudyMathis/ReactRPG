@@ -6,6 +6,7 @@ import { getEnemyTargetName } from '../../gameMechanics/enemyTarget/EnemyTargetL
 import { useTurnOrder }  from '../../gameMechanics/turnOrder/useTurnOrder';
 import { playerTargetAtom } from '../../atom/PlayerTargetAtom';
 import { runTurnLogic } from '../../gameMechanics/turnOrder/TurnLogic';
+import DetailScreen from '../../components/entityDetail/DetailScreen';
 import HealthBar from '../../components/bars/HealthBar';
 import ManaBar from '../../components/bars/ManaBar';
 import './Grid.css';
@@ -76,6 +77,7 @@ const Grid = () => {
           {char.maxMana > 0 && <ManaBar mana={char.mana} maxMana={char.maxMana} />}
           <div className={`character-sprite ${char.name} ${char.health <= 0 ? 'dead' : ''}`}>
             {char.name.slice(0, 3)}
+          <DetailScreen entity={char} />
           </div>
         </div>
       ))}
@@ -96,6 +98,7 @@ const Grid = () => {
             data-target={getEnemyTargetName(enemy, selectedCharacters)}
             className={`character-sprite ${enemy.name} ${enemy.health <= 0 ? 'dead' : ''}`}>
             {enemy.name.slice(0, 3)}
+          <DetailScreen entity={enemy} />
           </div>
         </div>
       ))}
