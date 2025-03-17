@@ -22,7 +22,7 @@ const DetailScreen = ({ entity }: CharacterDetailProps) => {
 
     const handleMouseLeave = () => {
         if (timeoutRef.current) {
-            clearTimeout(timeoutRef.current); // Clear timeout if mouse leaves early
+            clearTimeout(timeoutRef.current);
         }
         setHidden(true);
     };

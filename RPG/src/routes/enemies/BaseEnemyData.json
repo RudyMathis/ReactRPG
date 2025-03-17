@@ -15,7 +15,7 @@
         "spells": ["Attack"],
         "target": ["TargetHealthLow"],
         "status": [],
-        "selected": false
+        "isSelected": false
     },
     "Ghoul": {
         "id": 2,
@@ -33,7 +33,7 @@
         "spells": ["Attack"],
         "target": ["TargetRandom"],
         "status": [],
-        "selected": false
+        "isSelected": false
     },
     "Zombie": {
         "id": 3,
@@ -51,7 +51,7 @@
         "spells": ["Basic Attack"],
         "target": ["TargetRandom"],
         "status": [],
-        "selected": false
+        "isSelected": false
     },
     "Rat": {
         "id": 4,
@@ -69,7 +69,7 @@
         "spells": ["Bite"],
         "target": ["TargetSpeedLow"],
         "status": [],
-        "selected": false
+        "isSelected": false
     },
     "Wolf": {
         "id": 5,
@@ -87,7 +87,7 @@
         "spells": ["Bite"],
         "target": ["TargetRandom"],
         "status": [],
-        "selected": false
+        "isSelected": false
     },
     "Goblin": {
         "id": 6,
@@ -105,7 +105,7 @@
         "spells": [],
         "target": ["TargetRandom"],
         "status": [],
-        "selected": false
+        "isSelected": false
     },
     "Ent": {
         "id": 7,
@@ -123,6 +123,6 @@
         "spells": ["Root"],
         "target": ["TargetLuckLow"],
         "status": [],
-        "selected": false
+        "isSelected": false
     }
 }

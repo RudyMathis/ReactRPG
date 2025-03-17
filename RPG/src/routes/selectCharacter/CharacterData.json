@@ -18,7 +18,7 @@
         "spells": ["Quick Attack", "Swing Strike"],
         "status": [],
         "currentTurn": false,
-        "selected": false
+        "isSelected": false
     },
     "Mage": {
         "id": 2,
@@ -36,10 +36,10 @@
         "maxExp": 100,
         "gold": 0,
         "items": [],
-        "spells": [],
-        "status": ["Fireball", "Ice Bolt"],
+        "spells": ["Fireball", "Ice Bolt"],
+        "status": [],
         "currentTurn": false,
-        "selected": false
+        "isSelected": false
     },
     "Cleric": {
         "id": 3,
@@ -60,7 +60,7 @@
         "spells": ["Heal", "Cure"],
         "status": [],
         "currentTurn": false,
-        "selected": false
+        "isSelected": false
     },
     "Rogue": {
         "id": 4,
@@ -81,7 +81,7 @@
         "spells": ["Quick Attack", "Backstab"],
         "status": [],
         "currentTurn": false,
-        "selected": false
+        "isSelected": false
     },
     "Archer": {
         "id": 5,
@@ -102,7 +102,7 @@
         "spells": [],
         "status": [],
         "currentTurn": false,
-        "selected": false
+        "isSelected": false
     },
     "Bard": {
         "id": 6,
@@ -123,7 +123,7 @@
         "spells": [],
         "status": [],
         "currentTurn": false,
-        "selected": false
+        "isSelected": false
     },
     "Monk": {
         "id": 7,
@@ -144,6 +144,6 @@
         "spells": [],
         "status": [],
         "currentTurn": false,
-        "selected": false
+        "isSelected": false
     }
 }

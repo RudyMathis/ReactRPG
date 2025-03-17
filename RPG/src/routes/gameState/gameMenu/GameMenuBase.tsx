@@ -2,10 +2,9 @@ import './GameMenu.css'
 import { useAtom } from 'jotai';
 import CharacterAtom from '../../../atom/CharacterAtom';
 import ExperienceBar from '../../../components/bars/ExperienceBar';
-import ActionMenu from '../../../gameMechanics/menu/ActionMenu';
 const GameMenuBase = () => {
     const [characters] = useAtom(CharacterAtom);
-    const selectedCharacters = Object.values(characters).filter(char => char.selected);
+    const selectedCharacters = Object.values(characters).filter(char => char.isSelected);
 
     return (
         <>
@@ -19,7 +18,6 @@ const GameMenuBase = () => {
                         </div>
                     ))}
                 </div>
-                <ActionMenu />
 
                 {/* character info */}
                 {/* character actions */}

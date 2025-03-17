@@ -6,7 +6,7 @@ export const useTurnOrder = () => {
   const [characters] = useAtom(CharacterAtom);
   const [enemies] = useAtom(EnemyAtom);
 
-  const selectedCharacters = Object.values(characters).filter(char => char.selected);
+  const selectedCharacters = Object.values(characters).filter(char => char.isSelected);
   const allEntities = [...selectedCharacters, ...Object.values(enemies)];
 
   // Sort entities by speed in descending order (highest to lowest)

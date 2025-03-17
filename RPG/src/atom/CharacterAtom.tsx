@@ -20,7 +20,7 @@ export type CharacterType = {
     spells: string[];
     status: string[];
     currentTurn: boolean;
-    selected: boolean;
+    isSelected: boolean;
 }
 
 const CharacterAtom = atom<Record<number, CharacterType>>(

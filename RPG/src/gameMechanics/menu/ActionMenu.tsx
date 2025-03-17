@@ -1,24 +1,33 @@
 import { useAtom } from 'jotai';
 import CharacterAtom from "../../atom/CharacterAtom";
 import './ActionMenu.css'
-const ActionMenu = () => {
+
+type ActionMenuProps ={
+    isVisible: boolean;
+    toggleVisibility: () => void;
+}
+
+const ActionMenu = ({ isVisible, toggleVisibility }: ActionMenuProps) => {
     const [characters] = useAtom(CharacterAtom);
-    const selectedCharacters = Object.values(characters).filter(char => char.selected);
+    const selectedCharacters = Object.values(characters).filter(char => char.currentTurn && char.isSelected);
 
     return (
-        <div className="action-menu-container">
-            {selectedCharacters.map((char) => (
-                char.currentTurn ? 
-                    <div key={char.id} className="action-menu-item">
-                        {char.spells
-                            .map((spell, index) => (
-                                <button key={index}>{spell}</button>
-                        ))}
-                    </div> 
-                    : null
-            ))}
-        </div>
+        isVisible && (
+            <div className="action-menu-container">
+                {selectedCharacters.map((char) => (
+                    char.currentTurn ? 
+                        <div key={char.id} className="action-menu-item">
+                            {char.spells.map((spell, index) => (
+                                <button key={`${char.id}-${index}`}>{spell}</button>
+                            ))}
+                        </div> 
+                        : null
+                ))}
+                <div onClick={toggleVisibility}>Close Menu</div>
+            </div>
+        )
     );
 };
 
 export default ActionMenu;
+

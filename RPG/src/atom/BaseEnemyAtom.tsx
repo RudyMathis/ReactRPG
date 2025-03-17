@@ -17,7 +17,7 @@ export type EnemyType = {
     spells: string[];
     target: string[];
     status: string[];
-    selected: boolean;
+    isSelected: boolean;
 }
 
 const EnemyAtom = atom<Record<number, EnemyType>>(

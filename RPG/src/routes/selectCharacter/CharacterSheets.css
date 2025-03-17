@@ -12,6 +12,6 @@
     border: 1px solid black;
 }  
 
-.character-sheet.selected {
+.character-sheet.isSelected {
     border-color: yellow;
 }

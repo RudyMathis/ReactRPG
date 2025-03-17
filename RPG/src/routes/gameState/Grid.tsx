@@ -10,6 +10,7 @@ import DetailScreen from '../../components/entityDetail/DetailScreen';
 import HealthBar from '../../components/bars/HealthBar';
 import ManaBar from '../../components/bars/ManaBar';
 import './Grid.css';
+import ActionMenu from '../../gameMechanics/menu/ActionMenu';
 
 // A simple shuffle function, if needed for enemy order.
 const shuffleArray = <T,>(array: T[]): T[] => {
@@ -19,22 +20,15 @@ const shuffleArray = <T,>(array: T[]): T[] => {
 const Grid = () => {
   // Get characters and enemies from atoms.
   const [characters] = useAtom(CharacterAtom);
-  const selectedCharacters = Object.values(characters).filter(char => char.selected);
-  
   const [enemies] = useAtom(EnemyAtom);
+  const selectedCharacters = Object.values(characters).filter(char => char.isSelected);
   const shuffledEnemies = useMemo(() => shuffleArray(Object.values(enemies)), []);
-
-  // Get the turn order via our custom hook (which sorts by speed, highest first).
+  const [activeMenu, setActiveMenu] = useState<{ id: number | null; type: 'character' | 'enemy' | null }>({ id: null, type: null });
   const turnOrder = useTurnOrder();
-
   const setPlayerTarget = useSetAtom(playerTargetAtom);
-
-  // State to control waiting for user input during character turns.
   const [waitingForInput, setWaitingForInput] = useState(false);
-  // A ref to hold the promise resolver.
   const inputPromiseResolverRef = useRef<(() => void) | null>(null);
   
-  // The waitForInput function returns a promise that resolves when the user clicks "Next Turn".
   const waitForInput = useCallback((): Promise<void> => {
     setWaitingForInput(true);
     return new Promise(resolve => {
@@ -42,7 +36,6 @@ const Grid = () => {
     });
   }, []);
 
-  // When the user clicks the button, resolve the promise.
   const handleNextTurnClick = () => {
     setWaitingForInput(false);
     if (inputPromiseResolverRef.current) {
@@ -62,6 +55,10 @@ const Grid = () => {
     }
   };
 
+  const toggleMenuVisibility = (id: number, type: 'character' | 'enemy') => {
+      setActiveMenu(prev => prev.id === id && prev.type === type ? { id: null, type: null } : { id, type });
+  };
+
   return (
     <div className="board">
       {/* Render selected characters */}
@@ -72,12 +69,19 @@ const Grid = () => {
             gridColumn: (index % 2) === 0 ? 2 : 3,
             gridRow: (index * 2) + 1
           }}
+          onClick={() => toggleMenuVisibility(char.id, 'character')}
         >
           <HealthBar health={char.health <= 0 ? 0 : char.health} maxHealth={char.maxHealth} />
           {char.maxMana > 0 && <ManaBar mana={char.mana} maxMana={char.maxMana} />}
           <div className={`character-sprite ${char.name} ${char.health <= 0 ? 'dead' : ''}`}>
             {char.name.slice(0, 3)}
-          <DetailScreen entity={char} />
+            <DetailScreen entity={char} />
+          </div>
+          <div style={{ position: 'relative' }}>
+            <ActionMenu
+                isVisible={activeMenu.id === char.id && activeMenu.type === 'character'}
+                toggleVisibility={() => toggleMenuVisibility(char.id, 'character')}
+            />
           </div>
         </div>
       ))}
@@ -90,15 +94,23 @@ const Grid = () => {
             gridColumn: (index % 2) === 0 ? 18 : 19,
             gridRow: ((index + 1) * 2) - 1
           }}
+          onClick={() => toggleMenuVisibility(enemy.id, 'enemy')}
         >
           <HealthBar health={enemy.health <= 0 ? 0 : enemy.health} maxHealth={enemy.maxHealth} />
           {enemy.maxMana > 0 && <ManaBar mana={enemy.mana} maxMana={enemy.maxMana} />}
           <div 
             onClick={() => handlePlayerTargeted(enemy)}
             data-target={getEnemyTargetName(enemy, selectedCharacters)}
-            className={`character-sprite ${enemy.name} ${enemy.health <= 0 ? 'dead' : ''}`}>
+            className={`character-sprite ${enemy.name} ${enemy.health <= 0 ? 'dead' : ''}`}
+          >
             {enemy.name.slice(0, 3)}
-          <DetailScreen entity={enemy} />
+            <DetailScreen entity={enemy} />
+          </div>
+          <div style={{ position: 'relative' }}>
+            <ActionMenu
+                isVisible={activeMenu.id === enemy.id && activeMenu.type === 'enemy'}
+                toggleVisibility={() => toggleMenuVisibility(enemy.id, 'enemy')}
+            />
           </div>
         </div>
       ))}
