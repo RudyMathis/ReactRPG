@@ -1,5 +1,5 @@
 import { atom } from 'jotai';
-import BaseEnemyData from "../routes/enemies/BaseEnemyData.json";
+import BaseEnemyData from "../gameData/enemies/BaseEnemyData.json";
 
 export type EnemyType = {
     id: number;

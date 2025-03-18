@@ -5,7 +5,7 @@ import "./CharacterSelect.css";
 const CharacterSelect = () => {
 
     return (
-        <div className="character-select-container">
+        <div>
             <div className="main-container">           
                 <h1>Select Your Character</h1>
                 <NavigateBtn locationValue="/" location="Main Menu" />

@@ -2,15 +2,12 @@ import { useState, useCallback, useRef, useMemo  } from 'react';
 import { useSetAtom, useAtom } from 'jotai';
 import CharacterAtom, { CharacterType } from '../../atom/CharacterAtom';
 import EnemyAtom, { EnemyType } from '../../atom/BaseEnemyAtom';
-import { getEnemyTargetName } from '../../gameMechanics/enemyTarget/EnemyTargetLogic';
 import { useTurnOrder }  from '../../gameMechanics/turnOrder/useTurnOrder';
 import { playerTargetAtom } from '../../atom/PlayerTargetAtom';
 import { runTurnLogic } from '../../gameMechanics/turnOrder/TurnLogic';
-import DetailScreen from '../../components/entityDetail/DetailScreen';
-import HealthBar from '../../components/bars/HealthBar';
-import ManaBar from '../../components/bars/ManaBar';
+import CharacterDisplay from '../../components/entityDetail/CharacterDisplay';
+import EnemyDisplay from '../../components/entityDetail/EnemeyDisplay';
 import './Grid.css';
-import ActionMenu from '../../gameMechanics/menu/ActionMenu';
 
 // A simple shuffle function, if needed for enemy order.
 const shuffleArray = <T,>(array: T[]): T[] => {
@@ -71,18 +68,11 @@ const Grid = () => {
           }}
           onClick={() => toggleMenuVisibility(char.id, 'character')}
         >
-          <HealthBar health={char.health <= 0 ? 0 : char.health} maxHealth={char.maxHealth} />
-          {char.maxMana > 0 && <ManaBar mana={char.mana} maxMana={char.maxMana} />}
-          <div className={`character-sprite ${char.name} ${char.health <= 0 ? 'dead' : ''}`}>
-            {char.name.slice(0, 3)}
-            <DetailScreen entity={char} />
-          </div>
-          <div style={{ position: 'relative' }}>
-            <ActionMenu
-                isVisible={activeMenu.id === char.id && activeMenu.type === 'character'}
-                toggleVisibility={() => toggleMenuVisibility(char.id, 'character')}
-            />
-          </div>
+          <CharacterDisplay
+            character={char}
+            isActive={activeMenu.id === char.id && activeMenu.type === 'character'}
+            toggleVisibility={() => toggleMenuVisibility(char.id, 'character')}
+          />
         </div>
       ))}
       
@@ -96,20 +86,11 @@ const Grid = () => {
           }}
           onClick={() => toggleMenuVisibility(enemy.id, 'enemy')}
         >
-          <HealthBar health={enemy.health <= 0 ? 0 : enemy.health} maxHealth={enemy.maxHealth} />
-          {enemy.maxMana > 0 && <ManaBar mana={enemy.mana} maxMana={enemy.maxMana} />}
-          <div 
-            onClick={() => handlePlayerTargeted(enemy)}
-            data-target={getEnemyTargetName(enemy, selectedCharacters)}
-            className={`character-sprite ${enemy.name} ${enemy.health <= 0 ? 'dead' : ''}`}
-          >
-            {enemy.name.slice(0, 3)}
-            <DetailScreen entity={enemy} />
-          </div>
-          <div style={{ position: 'relative' }}>
-            <ActionMenu
-                isVisible={activeMenu.id === enemy.id && activeMenu.type === 'enemy'}
-                toggleVisibility={() => toggleMenuVisibility(enemy.id, 'enemy')}
+          <div onClick={() => handlePlayerTargeted(enemy)}>
+            <EnemyDisplay
+              enemy={enemy}
+              isActive={activeMenu.id === enemy.id && activeMenu.type === 'enemy'}
+              toggleVisibility={() => toggleMenuVisibility(enemy.id, 'enemy')}
             />
           </div>
         </div>

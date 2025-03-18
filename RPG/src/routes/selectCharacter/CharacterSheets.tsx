@@ -1,7 +1,8 @@
 
 import {  useAtom } from 'jotai';
-import "./CharacterSheets.css";
+import "../../gameData/characters/CharacterData.json";
 import characterAtom from "../../atom/CharacterAtom";
+import "./CharacterSheets.css";
 
 const CharacterSheets = () => {
     const [characters, setCharacters] = useAtom(characterAtom);

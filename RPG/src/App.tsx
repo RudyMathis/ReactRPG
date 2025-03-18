@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router';
-import MainMenu from './routes/main menu/MainMenu';
+import MainMenu from './routes/mainMenu/MainMenu';
 import CharacterSelect from './routes/selectCharacter/CharacterSelect';
 import Options from './routes/options/Options';
 import LevelLayout from './routes/gameState/LevelLayout';

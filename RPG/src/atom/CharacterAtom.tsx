@@ -1,5 +1,5 @@
 import { atom } from 'jotai';
-import CharacterData from "../routes/selectCharacter/CharacterData.json";
+import CharacterData from "../gameData/characters/CharacterData.json";
 
 export type CharacterType = {
     id: number;
