@@ -11,6 +11,7 @@ type CharacterDisplayProps = {
 }
 
 const CharacterDisplay: React.FC<CharacterDisplayProps> = ({ character, isActive, toggleVisibility }) => {
+
     return (
         <div>
             <HealthBar health={character.health <= 0 ? 0 : character.health} maxHealth={character.maxHealth} />

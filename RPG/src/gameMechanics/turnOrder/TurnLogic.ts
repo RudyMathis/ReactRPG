@@ -49,6 +49,7 @@ export const runTurnLogic = async (
 
       if(character.health > 0) {
         // Mark current turn for the character
+        store.set(playerTargetAtom, null);
         store.set(CharacterAtom, prev => ({
           ...prev,
           [character.id]: { ...character, currentTurn: true }
@@ -66,7 +67,10 @@ export const runTurnLogic = async (
           // Update enemy state for health and status
           store.set(EnemyAtom, prev => ({
             ...prev,
-            [playerTarget.id]: { ...playerTarget, health: updatedHealth, status: playerTarget.health <= 0 ? ['Dead'] : playerTarget.status }
+            [playerTarget.id]: { 
+              ...playerTarget, 
+              health: updatedHealth,  
+              status: playerTarget.health <= 0 ? ['Dead'] : playerTarget.status }
           }));
 
           if (playerTarget.health <= 0) {

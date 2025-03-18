@@ -7,7 +7,7 @@ type ActionMenuProps ={
     toggleVisibility: () => void;
 }
 
-const ActionMenu = ({ isVisible, toggleVisibility }: ActionMenuProps) => {
+const ActionMenu = ({ isVisible }: ActionMenuProps) => {
     const [characters] = useAtom(CharacterAtom);
     const selectedCharacters = Object.values(characters).filter(char => char.currentTurn && char.isSelected);
 
@@ -23,7 +23,6 @@ const ActionMenu = ({ isVisible, toggleVisibility }: ActionMenuProps) => {
                         </div> 
                         : null
                 ))}
-                <div onClick={toggleVisibility}>Close Menu</div>
             </div>
         )
     );

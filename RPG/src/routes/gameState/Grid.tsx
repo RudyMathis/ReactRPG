@@ -1,5 +1,5 @@
 import { useState, useCallback, useRef, useMemo  } from 'react';
-import { useSetAtom, useAtom } from 'jotai';
+import { useAtom } from 'jotai';
 import CharacterAtom, { CharacterType } from '../../atom/CharacterAtom';
 import EnemyAtom, { EnemyType } from '../../atom/BaseEnemyAtom';
 import { useTurnOrder }  from '../../gameMechanics/turnOrder/useTurnOrder';
@@ -15,14 +15,13 @@ const shuffleArray = <T,>(array: T[]): T[] => {
 };
 
 const Grid = () => {
-  // Get characters and enemies from atoms.
   const [characters] = useAtom(CharacterAtom);
   const [enemies] = useAtom(EnemyAtom);
   const selectedCharacters = Object.values(characters).filter(char => char.isSelected);
   const shuffledEnemies = useMemo(() => shuffleArray(Object.values(enemies)), []);
   const [activeMenu, setActiveMenu] = useState<{ id: number | null; type: 'character' | 'enemy' | null }>({ id: null, type: null });
   const turnOrder = useTurnOrder();
-  const setPlayerTarget = useSetAtom(playerTargetAtom);
+  const [playerTarget, setPlayerTarget] = useAtom(playerTargetAtom);
   const [waitingForInput, setWaitingForInput] = useState(false);
   const inputPromiseResolverRef = useRef<(() => void) | null>(null);
   
@@ -35,16 +34,18 @@ const Grid = () => {
 
   const handleNextTurnClick = () => {
     setWaitingForInput(false);
+    setActiveMenu({ id: null, type: null }); // Hide menu
     if (inputPromiseResolverRef.current) {
       inputPromiseResolverRef.current();
       inputPromiseResolverRef.current = null;
     }
-  };
+};
 
   const handlePlayerTargeted = (entity: EnemyType | CharacterType) => {
+    setPlayerTarget(prev => (prev?.id === entity.id ? null : entity)); // Untarget if already selected
     console.log("Player targeted", entity.name);
-    setPlayerTarget(entity); // Set target directly in the atom
   };
+
 
   const checkTurnOrderAndRunLogic = () => {
     if (turnOrder.length > 0) {
@@ -52,9 +53,10 @@ const Grid = () => {
     }
   };
 
-  const toggleMenuVisibility = (id: number, type: 'character' | 'enemy') => {
+  const toggleMenuVisibility = (id: number | null, type: 'character' | 'enemy' | null) => {
       setActiveMenu(prev => prev.id === id && prev.type === type ? { id: null, type: null } : { id, type });
   };
+  
 
   return (
     <div className="board">
@@ -68,11 +70,13 @@ const Grid = () => {
           }}
           onClick={() => toggleMenuVisibility(char.id, 'character')}
         >
-          <CharacterDisplay
-            character={char}
-            isActive={activeMenu.id === char.id && activeMenu.type === 'character'}
-            toggleVisibility={() => toggleMenuVisibility(char.id, 'character')}
-          />
+          <div onClick={() => handlePlayerTargeted(char)}>
+            <CharacterDisplay
+              character={char}
+              isActive={activeMenu.id === char.id && activeMenu.type === 'character'}
+              toggleVisibility={() => toggleMenuVisibility(char.id, 'character')}
+            />
+          </div>
         </div>
       ))}
       
@@ -97,7 +101,7 @@ const Grid = () => {
       ))}
       
       {/* Render the "Next Turn" button only when waiting for input */}
-      {waitingForInput && (
+      {waitingForInput && playerTarget && (
         <button
           onClick={handleNextTurnClick}
           style={{ position: 'fixed', bottom: '20px', left: '20px', zIndex: 1000 }}
