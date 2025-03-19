@@ -1,17 +1,14 @@
 import HealthBar from './bars/HealthBar';
 import ManaBar from './bars/ManaBar';
 import DetailScreen from './DetailScreen';
-import ActionMenu from '../menu/ActionMenu';
 import { EnemyType } from '../../atom/BaseEnemyAtom';
 
 type EnemyDisplay = {
     enemy: EnemyType;
-    isActive: boolean;
-    toggleVisibility: () => void;
 }
 
-
-const EnemyDisplay: React.FC<EnemyDisplay> = ({ enemy, isActive, toggleVisibility }) => {
+const EnemyDisplay: React.FC<EnemyDisplay> = ({ enemy }) => {
+    
     
     return (
         <div>
@@ -20,9 +17,6 @@ const EnemyDisplay: React.FC<EnemyDisplay> = ({ enemy, isActive, toggleVisibilit
             <div className={`character-sprite ${enemy.name} ${enemy.health <= 0 ? 'dead' : ''}`}>
                 {enemy.name.slice(0, 3)}
                 <DetailScreen entity={enemy} />
-            </div>
-            <div style={{ position: 'relative' }}>
-                <ActionMenu isVisible={isActive} toggleVisibility={toggleVisibility} />
             </div>
         </div>
     );

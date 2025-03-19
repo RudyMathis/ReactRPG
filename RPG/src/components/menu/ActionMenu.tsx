@@ -5,24 +5,32 @@ import './ActionMenu.css'
 type ActionMenuProps ={
     isVisible: boolean;
     toggleVisibility: () => void;
+    onSpell: () => void;
 }
 
-const ActionMenu = ({ isVisible }: ActionMenuProps) => {
+const ActionMenu = ({ isVisible, onSpell }: ActionMenuProps) => {
     const [characters] = useAtom(CharacterAtom);
     const selectedCharacters = Object.values(characters).filter(char => char.currentTurn && char.isSelected);
 
     return (
         isVisible && (
-            <div className="action-menu-container">
-                {selectedCharacters.map((char) => (
-                    char.currentTurn ? 
-                        <div key={char.id} className="action-menu-item">
-                            {char.spells.map((spell, index) => (
-                                <button key={`${char.id}-${index}`}>{spell}</button>
-                            ))}
-                        </div> 
-                        : null
-                ))}
+            <div style={{ position: 'relative'}}>
+                <div className="action-menu-container" >
+                    {selectedCharacters.map((char) => (
+                        char.currentTurn ? 
+                            <div key={char.id} className="action-menu-item">
+                                {char.spells.map((spell, index) => (
+                                    <button 
+                                        key={`${char.id}-${index}`}
+                                        onClick={() => onSpell()} 
+                                    >
+                                        {spell}
+                                    </button>
+                                ))}
+                            </div> 
+                            : null
+                    ))}
+                </div>
             </div>
         )
     );

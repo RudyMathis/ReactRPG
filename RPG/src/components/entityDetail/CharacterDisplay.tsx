@@ -1,16 +1,13 @@
 import HealthBar from './bars/HealthBar';
 import ManaBar from './bars/ManaBar';
 import DetailScreen from './DetailScreen';
-import ActionMenu from '../menu/ActionMenu';
 import { CharacterType } from '../../atom/CharacterAtom';
 
 type CharacterDisplayProps = {
     character: CharacterType;
-    isActive: boolean;
-    toggleVisibility: () => void;
 }
 
-const CharacterDisplay: React.FC<CharacterDisplayProps> = ({ character, isActive, toggleVisibility }) => {
+const CharacterDisplay: React.FC<CharacterDisplayProps> = ({ character}) => {
 
     return (
         <div>
@@ -19,9 +16,6 @@ const CharacterDisplay: React.FC<CharacterDisplayProps> = ({ character, isActive
             <div className={`character-sprite ${character.name} ${character.health <= 0 ? 'dead' : ''}`}>
                 {character.name.slice(0, 3)}
                 <DetailScreen entity={character} />
-            </div>
-            <div style={{ position: 'relative' }}>
-                <ActionMenu isVisible={isActive} toggleVisibility={toggleVisibility} />
             </div>
         </div>
     );

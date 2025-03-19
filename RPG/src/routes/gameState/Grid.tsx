@@ -5,6 +5,7 @@ import EnemyAtom, { EnemyType } from '../../atom/BaseEnemyAtom';
 import { useTurnOrder }  from '../../gameMechanics/turnOrder/useTurnOrder';
 import { playerTargetAtom } from '../../atom/PlayerTargetAtom';
 import { runTurnLogic } from '../../gameMechanics/turnOrder/TurnLogic';
+import ActionMenu from '../../components/menu/ActionMenu';
 import CharacterDisplay from '../../components/entityDetail/CharacterDisplay';
 import EnemyDisplay from '../../components/entityDetail/EnemeyDisplay';
 import './Grid.css';
@@ -64,19 +65,22 @@ const Grid = () => {
       {selectedCharacters.map((char, index) => (
         <div
           key={char.id}
+          onClick={() => toggleMenuVisibility(char.id, 'character')}
           style={{
             gridColumn: (index % 2) === 0 ? 2 : 3,
             gridRow: (index * 2) + 1
           }}
-          onClick={() => toggleMenuVisibility(char.id, 'character')}
         >
           <div onClick={() => handlePlayerTargeted(char)}>
-            <CharacterDisplay
-              character={char}
-              isActive={activeMenu.id === char.id && activeMenu.type === 'character'}
-              toggleVisibility={() => toggleMenuVisibility(char.id, 'character')}
-            />
+            <CharacterDisplay character={char} />
           </div>
+          {waitingForInput && playerTarget && (
+            <ActionMenu 
+              isVisible={activeMenu.id === char.id && activeMenu.type === 'character'} 
+              toggleVisibility={() => toggleMenuVisibility(char.id, 'character')} 
+              onSpell={handleNextTurnClick}
+            />
+          )}
         </div>
       ))}
       
@@ -84,31 +88,25 @@ const Grid = () => {
       {shuffledEnemies.map((enemy, index) => (
         <div
           key={enemy.id}
+          onClick={() => toggleMenuVisibility(enemy.id, 'enemy')}
           style={{
             gridColumn: (index % 2) === 0 ? 18 : 19,
             gridRow: ((index + 1) * 2) - 1
           }}
-          onClick={() => toggleMenuVisibility(enemy.id, 'enemy')}
         >
           <div onClick={() => handlePlayerTargeted(enemy)}>
-            <EnemyDisplay
-              enemy={enemy}
-              isActive={activeMenu.id === enemy.id && activeMenu.type === 'enemy'}
-              toggleVisibility={() => toggleMenuVisibility(enemy.id, 'enemy')}
-            />
+            <EnemyDisplay enemy={enemy} />
           </div>
+          {waitingForInput && playerTarget && (
+            <ActionMenu 
+              isVisible={activeMenu.id === enemy.id && activeMenu.type === 'enemy'} 
+              toggleVisibility={() => toggleMenuVisibility(enemy.id, 'enemy')} 
+              onSpell={handleNextTurnClick}
+            />
+          )}
         </div>
       ))}
       
-      {/* Render the "Next Turn" button only when waiting for input */}
-      {waitingForInput && playerTarget && (
-        <button
-          onClick={handleNextTurnClick}
-          style={{ position: 'fixed', bottom: '20px', left: '20px', zIndex: 1000 }}
-        >
-          Next Turn
-        </button>
-      )}
       <button onClick={checkTurnOrderAndRunLogic}>Start Turn</button>
     </div>
   );
