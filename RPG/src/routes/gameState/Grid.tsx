@@ -67,6 +67,7 @@ const Grid = () => {
           key={char.id}
           onClick={() => toggleMenuVisibility(char.id, 'character')}
           style={{
+            position: 'relative',
             gridColumn: (index % 2) === 0 ? 2 : 3,
             gridRow: (index * 2) + 1
           }}
@@ -76,7 +77,8 @@ const Grid = () => {
           </div>
           {waitingForInput && playerTarget && (
             <ActionMenu 
-              isVisible={activeMenu.id === char.id && activeMenu.type === 'character'} 
+              isVisible={activeMenu.id === char.id && activeMenu.type === 'character'}
+              type='character'
               toggleVisibility={() => toggleMenuVisibility(char.id, 'character')} 
               onSpell={handleNextTurnClick}
             />
@@ -90,6 +92,7 @@ const Grid = () => {
           key={enemy.id}
           onClick={() => toggleMenuVisibility(enemy.id, 'enemy')}
           style={{
+            position: 'relative',
             gridColumn: (index % 2) === 0 ? 18 : 19,
             gridRow: ((index + 1) * 2) - 1
           }}
@@ -99,14 +102,14 @@ const Grid = () => {
           </div>
           {waitingForInput && playerTarget && (
             <ActionMenu 
-              isVisible={activeMenu.id === enemy.id && activeMenu.type === 'enemy'} 
+              isVisible={activeMenu.id === enemy.id && activeMenu.type === 'enemy'}
+              type='enemy'
               toggleVisibility={() => toggleMenuVisibility(enemy.id, 'enemy')} 
               onSpell={handleNextTurnClick}
             />
           )}
         </div>
       ))}
-      
       <button onClick={checkTurnOrderAndRunLogic}>Start Turn</button>
     </div>
   );

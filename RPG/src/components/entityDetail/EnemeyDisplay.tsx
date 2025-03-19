@@ -9,7 +9,6 @@ type EnemyDisplay = {
 
 const EnemyDisplay: React.FC<EnemyDisplay> = ({ enemy }) => {
     
-    
     return (
         <div>
             <HealthBar health={enemy.health <= 0 ? 0 : enemy.health} maxHealth={enemy.maxHealth} />

@@ -56,7 +56,7 @@ button {
 
 /* temp */
 
-.character-sprite.Warrior, .character-sprite.Skeleton {
+.character-sprite.Skeleton {
     background-color: red;
 }
 
@@ -64,7 +64,7 @@ button {
     background-color: blue;
 }
 
-.character-sprite.Cleric, .character-sprite.Zombie {
+.character-sprite.Zombie {
     background-color: green;
 }
 

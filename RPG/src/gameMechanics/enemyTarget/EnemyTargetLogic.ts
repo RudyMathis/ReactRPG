@@ -1,9 +1,5 @@
-import CharacterAtom from '../../atom/CharacterAtom';
-import EnemyAtom from '../../atom/BaseEnemyAtom';
-
-// We derive the types from the atoms
-type CharacterType = (typeof CharacterAtom) extends import('jotai').Atom<Record<number, infer T>> ? T : never;
-type EnemyType = (typeof EnemyAtom) extends import('jotai').Atom<Record<number, infer T>> ? T : never;
+import type { CharacterType } from '../../atom/CharacterAtom';
+import type { EnemyType } from '../../atom/BaseEnemyAtom';
 
 export const getEnemyTargetName = (enemy: EnemyType, selectedCharacters: CharacterType[]): string => {
 

@@ -4,33 +4,32 @@ import './ActionMenu.css'
 
 type ActionMenuProps ={
     isVisible: boolean;
+    type: 'character' | 'enemy';
     toggleVisibility: () => void;
     onSpell: () => void;
 }
 
-const ActionMenu = ({ isVisible, onSpell }: ActionMenuProps) => {
+const ActionMenu = ({ isVisible, type, onSpell }: ActionMenuProps) => {
     const [characters] = useAtom(CharacterAtom);
     const selectedCharacters = Object.values(characters).filter(char => char.currentTurn && char.isSelected);
 
     return (
         isVisible && (
-            <div style={{ position: 'relative'}}>
-                <div className="action-menu-container" >
-                    {selectedCharacters.map((char) => (
-                        char.currentTurn ? 
-                            <div key={char.id} className="action-menu-item">
-                                {char.spells.map((spell, index) => (
-                                    <button 
-                                        key={`${char.id}-${index}`}
-                                        onClick={() => onSpell()} 
-                                    >
-                                        {spell}
-                                    </button>
-                                ))}
-                            </div> 
-                            : null
-                    ))}
-                </div>
+            <div className={`action-menu-container ${type}`} >
+                {selectedCharacters.map((char) => (
+                    char.currentTurn ? 
+                        <div key={char.id} className="action-menu-item">
+                            {char.spells.map((spell, index) => (
+                                <button 
+                                    key={`${char.id}-${index}`}
+                                    onClick={() => onSpell()} 
+                                >
+                                    {spell}
+                                </button>
+                            ))}
+                        </div> 
+                        : null
+                ))}
             </div>
         )
     );

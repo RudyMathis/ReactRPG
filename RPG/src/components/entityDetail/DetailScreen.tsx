@@ -1,10 +1,7 @@
 import { useState, useRef  } from "react";
-import CharacterAtom from "../../atom/CharacterAtom";
-import EnemyAtom from "../../atom/BaseEnemyAtom";
+import type { CharacterType } from "../../atom/CharacterAtom";
+import type { EnemyType } from"../../atom/BaseEnemyAtom";
 import './DetailScreen.css'
-
-type CharacterType = (typeof CharacterAtom) extends import('jotai').Atom<Record<number, infer T>> ? T : never;
-type EnemyType = (typeof EnemyAtom) extends import('jotai').Atom<Record<number, infer T>> ? T : never;
 
 type CharacterDetailProps = {
     entity: CharacterType | EnemyType;
