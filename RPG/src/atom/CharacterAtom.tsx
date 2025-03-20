@@ -2,8 +2,8 @@ import { atom } from 'jotai';
 import CharacterData from "../gameData/characters/CharacterData.json";
 
 type StatusEffect = {
-    type: string; // e.g., "Frozen"
-    duration: number; // Number of turns remaining
+    type: string;
+    duration: number;
 };
 
 export type CharacterType = {
@@ -15,6 +15,7 @@ export type CharacterType = {
     attack: number;
     defense: number;
     speed: number;
+    speedDefault: number;
     mana: number;
     maxMana: number;
     luck: number;

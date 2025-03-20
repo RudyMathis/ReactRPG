@@ -1,8 +1,8 @@
 import { atom } from 'jotai';
 import BaseEnemyData from "../gameData/enemies/BaseEnemyData.json";
 type StatusEffect = {
-    type: string; // e.g., "Frozen"
-    duration: number; // Number of turns remaining
+    type: string;
+    duration: number;
 };
 export type EnemyType = {
     id: number;
@@ -13,6 +13,7 @@ export type EnemyType = {
     attack: number;
     defense: number;
     speed: number;
+    speedDefault: number;
     mana: number;
     maxMana: number;
     luck: number;
