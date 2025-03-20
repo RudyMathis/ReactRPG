@@ -28,6 +28,11 @@ export const runTurnLogic = async (
       // Enemy turn
       const enemy = storeAtom.get(EnemyAtom)[entity.id];
 
+      if (enemy.health <= 0) {
+        console.log(`${enemy.name} died from status effects.`);
+        continue; // Skip this enemy's attack
+      }
+
       const targetName = getEnemyTargetName(enemy, characters.filter(c => !c.status.includes({ type: 'Dead', duration: Infinity })));
       const character = characters.find(c => c.name === targetName);
 
@@ -45,6 +50,8 @@ export const runTurnLogic = async (
         [character.id]: { ...character, health: updatedHealth, status: character.health <= 0 ? [{ type: 'Dead', duration: Infinity }] : character.status }
       }));
 
+      
+
       await new Promise(resolve => setTimeout(resolve, 1000));
 
       if (updatedHealth <= 0 && !character.status.some(s => s.type === "Dead")) {
@@ -56,7 +63,6 @@ export const runTurnLogic = async (
     } else {
       // Character turn
       const character = entity as CharacterType;
-      const playerTarget = storeAtom.get(playerTargetAtom);
 
       if(character.health > 0) {
         storeAtom.set(playerTargetAtom, null);
@@ -67,7 +73,9 @@ export const runTurnLogic = async (
 
         console.log(`Character ${character.name}'s turn. Waiting for user input...`);
         await waitForInput();
-        const spell = storeAtom.get(selectedSpellAtom); // Get selected spell
+        
+        const playerTarget = storeAtom.get(playerTargetAtom);
+        const spell = storeAtom.get(selectedSpellAtom);
         console.log(`Using spell: ${spell}`);
 
         if (playerTarget && 'target' in playerTarget) {
@@ -88,12 +96,6 @@ export const runTurnLogic = async (
           if (updatedHealth <= 0 && !playerTarget.status.some(s => s.type === "Dead")) {
             playerTarget.status.push({ type: "Dead", duration: Infinity });
           }
-
-          if(playerTarget.status.find(s => s.type === "Frozen")?.duration === 0) {
-            playerTarget.status = playerTarget.status.filter(s => s.type !== "Frozen");
-            console.log(`${playerTarget.name} is no longer Frozen!`);
-          }
-          console.log(playerTarget.name, playerTarget.status)
 
         } else {
           console.log(`%c${character.name} has no valid target.`, 'color: blue;');
@@ -121,20 +123,27 @@ const spellEffects: Record<string, (enemy: EnemyType, character: CharacterType) 
     return enemy.health - (character.attack + 5);
   },
   LightningBolt: (enemy, character) => enemy.health - (character.attack + 15),
-  Heal: (enemy, character) => {
+  Heal: (character) => {
     character.health += 20;
     return character.health;
+  },
+
+  Garrote: (enemy, character) => {
+    enemy.status.push({ type: "Bleed", duration: 3 });
+    return enemy.health - (character.attack + 5);
   }
 };
 
 
 const basicCharacterAttack = (enemy: EnemyType, character: CharacterType, spell: string) => {
+
   if (spellEffects[spell]) {
     return spellEffects[spell](enemy, character);
   } else {
     console.warn(`Unknown spell: ${spell}`);
     return enemy.health - character.attack; // Default attack
   }
+
 };
 
 

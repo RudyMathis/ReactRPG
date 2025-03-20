@@ -23,8 +23,12 @@ const DetailScreen = ({ entity }: CharacterDetailProps) => {
             {entity && entity.status.length > 0 && (
                 <p>Status Effects: {entity.status.map((status, index) => (
                     <span key={index}>
-                        {status.type} {status.duration && ` (Duration: ${status.duration} turns)`} 
-                        {index < entity.status.length - 1 && ', '}
+                        {status.duration > 0 && (
+                            <>
+                                <span>{status.type} (Duration: {status.duration} turns)</span>
+                                <span>{index < entity.status.length - 1 && ', '}</span>
+                            </>
+                        )}
                     </span>
                 ))}</p>
             )}

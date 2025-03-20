@@ -82,7 +82,7 @@
         "maxExp": 100,
         "gold": 0,
         "items": [],
-        "spells": ["Quick Attack", "Backstab"],
+        "spells": ["Quick Attack", "Backstab", "Garrote"],
         "status": [],
         "currentTurn": false,
         "isSelected": false
