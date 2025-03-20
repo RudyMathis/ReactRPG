@@ -36,7 +36,7 @@
         "maxExp": 100,
         "gold": 0,
         "items": [],
-        "spells": ["Fireball", "Ice Bolt"],
+        "spells": ["Fireball", "Ice_Bolt"],
         "status": [],
         "currentTurn": false,
         "isSelected": false

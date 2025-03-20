@@ -1,5 +1,6 @@
 import { useAtom } from 'jotai';
 import CharacterAtom from "../../atom/CharacterAtom";
+import { selectedSpellAtom } from "../../atom/SelectedSpellAtom";
 import './ActionMenu.css'
 
 type ActionMenuProps ={
@@ -12,6 +13,12 @@ const ActionMenu = ({ isVisible, type, onSpell }: ActionMenuProps) => {
     const [characters] = useAtom(CharacterAtom);
     const selectedCharacters = Object.values(characters).filter(char => char.currentTurn && char.isSelected);
 
+    const [, setSelectedSpell] = useAtom(selectedSpellAtom);
+
+    const handleSpellClick = (spell: string) => {
+      setSelectedSpell(spell); // Store the selected spell
+    };
+
     return (
         isVisible && (
             <div className={`action-menu-container ${type}`} >
@@ -21,9 +28,13 @@ const ActionMenu = ({ isVisible, type, onSpell }: ActionMenuProps) => {
                             {char.spells.map((spell, index) => (
                                 <button 
                                     key={`${char.id}-${index}`}
-                                    onClick={() => onSpell()} 
+                                    onClick={() => {
+                                        onSpell();
+                                        handleSpellClick(spell);
+                                    }}
+                                    data-spell={spell} 
                                 >
-                                    {spell}
+                                    {spell.replace('_', ' ')}
                                 </button>
                             ))}
                         </div> 

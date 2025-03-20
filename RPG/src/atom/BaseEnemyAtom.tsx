@@ -1,6 +1,9 @@
 import { atom } from 'jotai';
 import BaseEnemyData from "../gameData/enemies/BaseEnemyData.json";
-
+type StatusEffect = {
+    type: string; // e.g., "Frozen"
+    duration: number; // Number of turns remaining
+};
 export type EnemyType = {
     id: number;
     name: string;
@@ -16,7 +19,7 @@ export type EnemyType = {
     items: string[];
     spells: string[];
     target: string[];
-    status: string[];
+    status: StatusEffect[];
     isSelected: boolean;
 }
 

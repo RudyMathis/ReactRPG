@@ -20,6 +20,15 @@ const DetailScreen = ({ entity }: CharacterDetailProps) => {
             <p>Mana: {entity.mana}</p>
             <p>Max Mana: {entity.maxMana}</p>
             <p>Luck: {entity.luck}</p>
+            {entity && entity.status.length > 0 && (
+                <p>Status Effects: {entity.status.map((status, index) => (
+                    <span key={index}>
+                    {status.type} {status.duration && ` (Duration: ${status.duration} turns)`} 
+                    {index < entity.status.length - 1 && ', '}
+                    </span>
+                ))}</p>
+            )}
+
             {entity && 'exp' in entity && <p>Experience: {entity.exp}</p>}
             {entity && 'maxExp' in entity && <p>Max Experience: {entity.maxExp}</p>}
             {entity && 'gold' in entity && <p>Gold: {entity.gold}</p>}
