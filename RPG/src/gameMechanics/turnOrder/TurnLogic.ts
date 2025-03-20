@@ -1,4 +1,5 @@
 import { getDefaultStore } from 'jotai';
+import { turnCountAtom } from "../../atom/UseTurnCountAtom";
 import { playerTargetAtom } from '../../atom/PlayerTargetAtom';
 import CharacterAtom from '../../atom/CharacterAtom';
 import EnemyAtom from '../../atom/BaseEnemyAtom';
@@ -15,6 +16,8 @@ export const runTurnLogic = async (
   waitForInput: () => Promise<void>
 ) => {
   const characters = turnOrder.filter(e => !('target' in e)) as CharacterType[];
+
+  const currentTurn = store.get(turnCountAtom); // Read current turn
 
   for (const entity of turnOrder) {
     if ('target' in entity) {
@@ -90,8 +93,9 @@ export const runTurnLogic = async (
       }
     }
   }
-
-  console.log('Turn cycle complete.');
+  
+  console.log(`Turn ${store.get(turnCountAtom)} ended.`);
+  store.set(turnCountAtom, currentTurn + 1);
 };
 
 

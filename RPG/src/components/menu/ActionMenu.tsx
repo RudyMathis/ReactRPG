@@ -5,7 +5,6 @@ import './ActionMenu.css'
 type ActionMenuProps ={
     isVisible: boolean;
     type: 'character' | 'enemy';
-    toggleVisibility: () => void;
     onSpell: () => void;
 }
 

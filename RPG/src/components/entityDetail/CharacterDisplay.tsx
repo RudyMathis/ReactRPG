@@ -1,6 +1,5 @@
 import HealthBar from './bars/HealthBar';
 import ManaBar from './bars/ManaBar';
-import DetailScreen from './DetailScreen';
 import { CharacterType } from '../../atom/CharacterAtom';
 import EntityAnimation from './animation/EntityAnimation';
 
@@ -15,9 +14,7 @@ const CharacterDisplay: React.FC<CharacterDisplayProps> = ({ character}) => {
             <HealthBar health={character.health <= 0 ? 0 : character.health} maxHealth={character.maxHealth} />
             {character.maxMana > 0 && <ManaBar mana={character.mana} maxMana={character.maxMana} />}
             <div className={`character-sprite ${character.name} ${character.health <= 0 ? 'dead' : ''}`}>
-                {/* {character.name.slice(0, 3)} */}
                 <EntityAnimation entity={character}/>
-                <DetailScreen entity={character} />
             </div>
         </div>
     );

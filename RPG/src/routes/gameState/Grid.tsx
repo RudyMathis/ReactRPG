@@ -7,8 +7,10 @@ import { playerTargetAtom } from '../../atom/PlayerTargetAtom';
 import { runTurnLogic } from '../../gameMechanics/turnOrder/TurnLogic';
 import ActionMenu from '../../components/menu/ActionMenu';
 import CharacterDisplay from '../../components/entityDetail/CharacterDisplay';
-import EnemyDisplay from '../../components/entityDetail/EnemeyDisplay';
+import EnemyDisplay from '../../components/entityDetail/EnemyDisplay';
 import './Grid.css';
+import React from 'react';
+import DetailScreen from '../../components/entityDetail/DetailScreen';
 
 // A simple shuffle function, if needed for enemy order.
 const shuffleArray = <T,>(array: T[]): T[] => {
@@ -55,60 +57,82 @@ const Grid = () => {
   };
 
   const toggleMenuVisibility = (id: number | null, type: 'character' | 'enemy' | null) => {
-      setActiveMenu(prev => prev.id === id && prev.type === type ? { id: null, type: null } : { id, type });
+      setActiveMenu({ id: null, type: null }); // First, reset state
+      setTimeout(() => { 
+        setActiveMenu(prev => prev.id === id && prev.type === type ? { id: null, type: null } : { id, type });
+      }, 0);
   };
-  
+
+  const [hoveredEntity, setHoveredEntity] = useState<{ id: number | null; type: 'character' | 'enemy' | null }>({ id: null, type: null });
+  const handleMouseEnter = (id: number, type: 'character' | 'enemy') => {
+    setHoveredEntity({ id, type });
+  };
+
+  const handleMouseLeave = () => {
+    setHoveredEntity({ id: null, type: null });
+  };
 
   return (
     <div className="board">
       {/* Render selected characters */}
       {selectedCharacters.map((char, index) => (
-        <div
-          key={char.id}
-          onClick={() => toggleMenuVisibility(char.id, 'character')}
-          style={{
-            position: 'relative',
-            gridColumn: (index % 2) === 0 ? 2 : 3,
-            gridRow: (index * 2) + 1
-          }}
-        >
-          <div onClick={() => handlePlayerTargeted(char)}>
-            <CharacterDisplay character={char} />
+        <React.Fragment key={char.id}>
+          <div
+            key={char.id}
+            onClick={() => toggleMenuVisibility(char.id, 'character')}
+            onMouseEnter={() => handleMouseEnter(char.id, 'character')}
+            onMouseLeave={handleMouseLeave}
+            style={{
+              position: 'relative',
+              gridColumn: (index % 2) === 0 ? 2 : 3,
+              gridRow: (index * 2) + 1
+            }}
+          >
+            <div onClick={() => handlePlayerTargeted(char)}>
+              <CharacterDisplay character={char} />
+            </div>
+            {waitingForInput && playerTarget && (
+              <ActionMenu 
+                isVisible={activeMenu.id === char.id && activeMenu.type === 'character'}
+                type='character'
+                onSpell={handleNextTurnClick}
+              />
+            )}
           </div>
-          {waitingForInput && playerTarget && (
-            <ActionMenu 
-              isVisible={activeMenu.id === char.id && activeMenu.type === 'character'}
-              type='character'
-              toggleVisibility={() => toggleMenuVisibility(char.id, 'character')} 
-              onSpell={handleNextTurnClick}
-            />
+          {hoveredEntity.id === char.id && hoveredEntity.type === 'character' && (
+            <DetailScreen entity={char} />
           )}
-        </div>
+        </React.Fragment>
       ))}
       
       {/* Render enemies */}
       {shuffledEnemies.map((enemy, index) => (
-        <div
-          key={enemy.id}
-          onClick={() => toggleMenuVisibility(enemy.id, 'enemy')}
-          style={{
-            position: 'relative',
-            gridColumn: (index % 2) === 0 ? 18 : 19,
-            gridRow: ((index + 1) * 2) - 1
-          }}
-        >
-          <div onClick={() => handlePlayerTargeted(enemy)}>
-            <EnemyDisplay enemy={enemy} />
+        <React.Fragment key={enemy.id}>
+          <div
+            onClick={() => toggleMenuVisibility(enemy.id, 'enemy')}
+            onMouseEnter={() => handleMouseEnter(enemy.id, 'enemy')}
+            onMouseLeave={handleMouseLeave}
+            style={{
+              position: 'relative',
+              gridColumn: index % 2 === 0 ? 18 : 19,
+              gridRow: (index + 1) * 2 - 1
+            }}
+          >
+            <div onClick={() => handlePlayerTargeted(enemy)}>
+              <EnemyDisplay enemy={enemy} />
+            </div>
+            {waitingForInput && playerTarget && (
+              <ActionMenu 
+                isVisible={activeMenu.id === enemy.id && activeMenu.type === 'enemy'}
+                type='enemy'
+                onSpell={handleNextTurnClick}
+              />
+            )}
           </div>
-          {waitingForInput && playerTarget && (
-            <ActionMenu 
-              isVisible={activeMenu.id === enemy.id && activeMenu.type === 'enemy'}
-              type='enemy'
-              toggleVisibility={() => toggleMenuVisibility(enemy.id, 'enemy')} 
-              onSpell={handleNextTurnClick}
-            />
+          {hoveredEntity.id === enemy.id && hoveredEntity.type === 'enemy' && (
+            <DetailScreen entity={enemy} />
           )}
-        </div>
+        </React.Fragment>
       ))}
       <button onClick={checkTurnOrderAndRunLogic}>Start Turn</button>
     </div>
