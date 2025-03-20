@@ -112,8 +112,28 @@ export const runTurnLogic = async (
 };
 
 
-const basicCharacterAttack = (enemy: EnemyType, character: CharacterType) => {
-  return enemy.health - character.attack;
+
+const spellEffects: Record<string, (enemy: EnemyType, character: CharacterType) => number> = {
+  Fireball: (enemy, character) => enemy.health - (character.attack + 10),
+  Ice_Bolt: (enemy, character) => {
+    enemy.status.push({ type: "Frozen", duration: 2 }); // Add Frozen for 2 turns
+    return enemy.health - (character.attack + 5);
+  },
+  LightningBolt: (enemy, character) => enemy.health - (character.attack + 15),
+  Heal: (enemy, character) => {
+    character.health += 20;
+    return character.health;
+  }
+};
+
+
+const basicCharacterAttack = (enemy: EnemyType, character: CharacterType, spell: string) => {
+  if (spellEffects[spell]) {
+    return spellEffects[spell](enemy, character);
+  } else {
+    console.warn(`Unknown spell: ${spell}`);
+    return enemy.health - character.attack; // Default attack
+  }
 };
 
 
