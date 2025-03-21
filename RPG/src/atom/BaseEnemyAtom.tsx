@@ -3,6 +3,7 @@ import BaseEnemyData from "../gameData/enemies/BaseEnemyData.json";
 type StatusEffect = {
     type: string;
     duration: number;
+    damage?: number;
 };
 export type EnemyType = {
     id: number;

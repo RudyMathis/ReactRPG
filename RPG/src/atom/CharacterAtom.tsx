@@ -4,6 +4,7 @@ import CharacterData from "../gameData/characters/CharacterData.json";
 type StatusEffect = {
     type: string;
     duration: number;
+    damage?: number;
 };
 
 export type CharacterType = {

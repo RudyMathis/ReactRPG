@@ -22,7 +22,7 @@ export const runTurnLogic = async (
 
   for (const entity of turnOrder) {
 
-    await handleStatusEffects(entity); // Ensure state updates apply
+    handleStatusEffects(entity); 
 
     if ('target' in entity) {
       // Enemy turn
@@ -36,6 +36,7 @@ export const runTurnLogic = async (
       const targetName = getEnemyTargetName(enemy, characters.filter(c => !c.status.includes({ type: 'Dead', duration: Infinity })));
       const character = characters.find(c => c.name === targetName);
 
+
       if (!character || enemy.speed === 0) {
         console.warn(`No valid target found for ${enemy.name} Or enemy speed is 0`);
         continue;
@@ -43,15 +44,7 @@ export const runTurnLogic = async (
 
       const updatedHealth = basicEnemyAttack(character, enemy);
       character.health = updatedHealth;
-
-      // Update character state for health and status
-      storeAtom.set(CharacterAtom, prev => ({
-        ...prev,
-        [character.id]: { ...character, health: updatedHealth, status: character.health <= 0 ? [{ type: 'Dead', duration: Infinity }] : character.status }
-      }));
-
       
-
       await new Promise(resolve => setTimeout(resolve, 1000));
 
       if (updatedHealth <= 0 && !character.status.some(s => s.type === "Dead")) {
@@ -81,17 +74,6 @@ export const runTurnLogic = async (
         if (playerTarget && 'target' in playerTarget) {
           const updatedHealth = basicCharacterAttack(playerTarget, character, spell as string);
           playerTarget.health = updatedHealth;
-
-          storeAtom.set(EnemyAtom, prev => ({
-            ...prev,
-            [playerTarget.id]: { 
-              ...playerTarget, 
-              health: updatedHealth,
-              status: updatedHealth <= 0 
-                ? [...playerTarget.status.filter(s => s.type !== "Dead"), { type: "Dead", duration: Infinity }]
-                : playerTarget.status
-            }
-          }));
 
           if (updatedHealth <= 0 && !playerTarget.status.some(s => s.type === "Dead")) {
             playerTarget.status.push({ type: "Dead", duration: Infinity });
@@ -129,7 +111,7 @@ const spellEffects: Record<string, (enemy: EnemyType, character: CharacterType) 
   },
 
   Garrote: (enemy, character) => {
-    enemy.status.push({ type: "Bleed", duration: 3 });
+    enemy.status.push({ type: "Bleed", duration: 3, damage: 10 });
     return enemy.health - (character.attack + 5);
   }
 };
