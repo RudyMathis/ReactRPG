@@ -17,7 +17,6 @@ export const runTurnLogic = async (
   waitForInput: () => Promise<void>
 ) => {
   const characters = turnOrder.filter(e => !('target' in e)) as CharacterType[];
-
   const currentTurn = storeAtom.get(turnCountAtom); // Read current turn
 
   for (const entity of turnOrder) {
@@ -97,14 +96,14 @@ export const runTurnLogic = async (
 };
 
 
-const spellEffects: Record<string, (enemy: EnemyType, character: CharacterType) => number> = {
-  Fireball: (enemy, character) => enemy.health - (character.attack + 10),
+const spellEffects: Record<string, (enemy: EnemyType, character: CharacterType, enemyOne?: EnemyType, enemyTwo?: EnemyType) => number> = {
+  Fire_Ball: (enemy, character) => enemy.health - (character.attack + 10),
   Ice_Bolt: (enemy, character) => {
     enemy.status.push({ type: "Frozen", duration: 3 });
     enemy.speed = 0;
     return enemy.health - (character.attack + 5);
   },
-  LightningBolt: (enemy, character) => enemy.health - (character.attack + 15),
+  Lightning_Bolt: (enemy, character) => enemy.health - (character.attack + 15),
   Heal: (character) => {
     character.health += 20;
     return character.health;
@@ -113,9 +112,37 @@ const spellEffects: Record<string, (enemy: EnemyType, character: CharacterType) 
   Garrote: (enemy, character) => {
     enemy.status.push({ type: "Bleed", duration: 3, damage: 10 });
     return enemy.health - (character.attack + 5);
-  }
-};
+  },
 
+  Multi_Shot: (enemy: EnemyType, character: CharacterType) => {
+    const enemies = Object.values(storeAtom.get(EnemyAtom)); // Get all enemies as an array
+    const sortedEnemies = [...enemies].sort((a, b) => a.order - b.order); // Ensure correct order
+  
+    const enemyIndex = sortedEnemies.findIndex(e => e.id === enemy.id);
+    
+    if (enemyIndex === -1) {
+      console.warn(`Enemy ${enemy.id} not found in sorted list.`);
+      return enemy.health - (character.attack + 5);
+    }
+  
+    // Get previous and next enemies if they exist
+    const prevEnemy = enemyIndex > 0 ? sortedEnemies[enemyIndex - 1] : null;
+    const nextEnemy = enemyIndex < sortedEnemies.length - 1 ? sortedEnemies[enemyIndex + 1] : null;
+  
+    enemy.health -= character.attack + 5;
+  
+    if (prevEnemy) {
+      prevEnemy.health -= character.attack + 5;
+    }
+  
+    if (nextEnemy) {
+      nextEnemy.health -= character.attack + 5;
+    }
+  
+    return enemy.health; // Return updated health of main target
+  }
+  
+};
 
 const basicCharacterAttack = (enemy: EnemyType, character: CharacterType, spell: string) => {
 
@@ -127,7 +154,6 @@ const basicCharacterAttack = (enemy: EnemyType, character: CharacterType, spell:
   }
 
 };
-
 
 const basicEnemyAttack = (character: CharacterType, enemy: EnemyType) => {
   return character.health - enemy.attack;

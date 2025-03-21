@@ -18,7 +18,7 @@ export type EnemyType = {
     mana: number;
     maxMana: number;
     luck: number;
-    items: string[];
+    order: number;
     spells: string[];
     target: string[];
     status: StatusEffect[];

@@ -18,9 +18,6 @@ export const handleStatusEffects = (entity: CharacterType | EnemyType) => {
 
 const frozen = (entity: CharacterType | EnemyType, frozenStatus: { type: string; duration: number }) => {
 
-    // Decrease duration
-    frozenStatus.duration -= 1;
-
     // Remove Frozen status if duration is up
     if (frozenStatus.duration <= 0) {
         entity.status = entity.status.filter(s => s.type !== "Frozen");
@@ -28,24 +25,23 @@ const frozen = (entity: CharacterType | EnemyType, frozenStatus: { type: string;
         entity.speed = entity.speedDefault;
     }
 
+    frozenStatus.duration -= 1;
+
     return true; // Return true if entity is still frozen
 };
 
 const Bleed = (entity: CharacterType | EnemyType, bleedStatus: { type: string; duration: number, damage?: number }) => {
     const damage = bleedStatus.damage || 5; // Default to 5 if no damage is set
 
-    // Apply damage to entity health
-    entity.health -= damage;
-    bleedStatus.duration -= 1;
-
-
     // Remove bleed status if duration is up
     if (bleedStatus.duration <= 0) {
         entity.status = entity.status.filter(s => s.type !== "Bleed");
         bleedStatus.duration = 0;
-        console.log("PLEASE DONT SEE")
     } 
 
+    // Apply damage to entity health
+    entity.health -= damage;
+    bleedStatus.duration -= 1;
 
     return true; // Return true if entity is still Bleed
 };

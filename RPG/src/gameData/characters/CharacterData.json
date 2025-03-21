@@ -16,7 +16,7 @@
         "maxExp": 100,
         "gold": 0,
         "items": [],
-        "spells": ["Quick Attack", "Swing Strike"],
+        "spells": ["Quick_Attack", "Swing_Strike"],
         "status": [],
         "currentTurn": false,
         "isSelected": false
@@ -38,7 +38,7 @@
         "maxExp": 100,
         "gold": 0,
         "items": [],
-        "spells": ["Fireball", "Ice_Bolt"],
+        "spells": ["Fire_Ball", "Ice_Bolt"],
         "status": [],
         "currentTurn": false,
         "isSelected": false
@@ -82,7 +82,7 @@
         "maxExp": 100,
         "gold": 0,
         "items": [],
-        "spells": ["Quick Attack", "Backstab", "Garrote"],
+        "spells": ["Quick_Attack", "Backstab", "Garrote"],
         "status": [],
         "currentTurn": false,
         "isSelected": false
@@ -104,7 +104,7 @@
         "maxExp": 100,
         "gold": 0,
         "items": [],
-        "spells": [],
+        "spells": ["Multi_Shot"],
         "status": [],
         "currentTurn": false,
         "isSelected": false
@@ -126,7 +126,7 @@
         "maxExp": 100,
         "gold": 0,
         "items": [],
-        "spells": [],
+        "spells": ["Defense_Up", "Attack_Up"],
         "status": [],
         "currentTurn": false,
         "isSelected": false
@@ -148,7 +148,7 @@
         "maxExp": 100,
         "gold": 0,
         "items": [],
-        "spells": [],
+        "spells": ["Serenity", "Meditation"],
         "status": [],
         "currentTurn": false,
         "isSelected": false

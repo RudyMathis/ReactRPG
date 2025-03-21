@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef, useMemo  } from 'react';
+import { useState, useCallback, useRef, useEffect  } from 'react';
 import { useAtom } from 'jotai';
 import CharacterAtom, { CharacterType } from '../../atom/CharacterAtom';
 import EnemyAtom, { EnemyType } from '../../atom/BaseEnemyAtom';
@@ -13,28 +13,44 @@ import React from 'react';
 import DetailScreen from '../../components/entityDetail/DetailScreen';
 
 // A simple shuffle function, if needed for enemy order.
-const shuffleArray = <T,>(array: T[]): T[] => {
-  return [...array].sort(() => Math.random() - 0.5);
+const shuffleArray = <T extends { order?: number }>(array: T[]): T[] => {
+  const shuffled = [...array].sort(() => Math.random() - 0.5);
+
+  // Reassign the 'order' based on the shuffled positions
+  return shuffled.map((item, index) => ({
+    ...item,
+    order: index + 1,
+  }));
 };
 
 const Grid = () => {
   const [characters] = useAtom(CharacterAtom);
-  const [enemies] = useAtom(EnemyAtom);
+  const [enemies, setEnemies] = useAtom(EnemyAtom);
   const selectedCharacters = Object.values(characters).filter(char => char.isSelected);
-  const shuffledEnemies = useMemo(() => shuffleArray(Object.values(enemies)), []);
   const [activeMenu, setActiveMenu] = useState<{ id: number | null; type: 'character' | 'enemy' | null }>({ id: null, type: null });
   const turnOrder = useTurnOrder();
   const [playerTarget, setPlayerTarget] = useAtom(playerTargetAtom);
   const [waitingForInput, setWaitingForInput] = useState(false);
   const inputPromiseResolverRef = useRef<(() => void) | null>(null);
-  
-  const waitForInput = useCallback((): Promise<void> => {
-    setWaitingForInput(true);
-    return new Promise(resolve => {
-      inputPromiseResolverRef.current = resolve;
-    });
-  }, []);
+  const [initialized, setInitialized] = useState(false);
 
+  useEffect(() => {
+    if (!initialized) {
+      const shuffled = shuffleArray(Object.values(enemies)); // Shuffle enemies once
+      const reorderedEnemies = shuffled.reduce((acc: Record<number, EnemyType>, enemy, index) => {
+        acc[enemy.id] = { ...enemy, order: index + 1 };
+        return acc;
+      }, {});
+      setEnemies(reorderedEnemies);
+      setInitialized(true);
+    }
+  }, [initialized, enemies, setEnemies]);
+    const waitForInput = useCallback((): Promise<void> => {
+      setWaitingForInput(true);
+      return new Promise(resolve => {
+        inputPromiseResolverRef.current = resolve;
+      });
+    }, []);
   const handleNextTurnClick = () => {
     setWaitingForInput(false);
     setActiveMenu({ id: null, type: null }); // Hide menu
@@ -43,6 +59,7 @@ const Grid = () => {
       inputPromiseResolverRef.current = null;
     }
 };
+
 
   const handlePlayerTargeted = (entity: EnemyType | CharacterType) => {
     setPlayerTarget(prev => (prev?.id === entity.id ? null : entity)); // Untarget if already selected
@@ -106,7 +123,9 @@ const Grid = () => {
       ))}
       
       {/* Render enemies */}
-      {shuffledEnemies.map((enemy, index) => (
+      {Object.values(enemies)
+      .sort((a, b) => a.order - b.order) // Sort by the shuffled order
+      .map((enemy, index) => (
         <React.Fragment key={enemy.id}>
           <div
             onClick={() => toggleMenuVisibility(enemy.id, 'enemy')}
