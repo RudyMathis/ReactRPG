@@ -1,4 +1,6 @@
 import { storeAtom } from "../../atom/storeAtom";
+import { ShakeAtom } from "../../atom/effects/ShakeAtom";
+import { BaseDamageFlashAtom } from "../../atom/effects/BaseDamageFlashAtom";
 import { turnCountAtom } from "../../atom/UseTurnCountAtom";
 import { playerTargetAtom } from '../../atom/PlayerTargetAtom';
 import CharacterAtom from '../../atom/CharacterAtom';
@@ -32,9 +34,10 @@ export const runTurnLogic = async (
         continue; // Skip this enemy's attack
       }
 
+      await new Promise(resolve => setTimeout(resolve, 1500));
+
       const targetName = getEnemyTargetName(enemy, characters.filter(c => !c.status.includes({ type: 'Dead', duration: Infinity })));
       const character = characters.find(c => c.name === targetName);
-
 
       if (!character || enemy.speed === 0) {
         console.warn(`No valid target found for ${enemy.name} Or enemy speed is 0`);
@@ -43,12 +46,18 @@ export const runTurnLogic = async (
 
       const updatedHealth = basicEnemyAttack(character, enemy);
       character.health = updatedHealth;
-      
-      await new Promise(resolve => setTimeout(resolve, 1000));
 
+      storeAtom.set(ShakeAtom, (prev) => ({ ...prev, [enemy.id]: true }));
+      storeAtom.set(BaseDamageFlashAtom, (prev) => ({ ...prev, [character.id]: true }));
+      
       if (updatedHealth <= 0 && !character.status.some(s => s.type === "Dead")) {
         character.status.push({ type: "Dead", duration: Infinity });
       }
+
+      setTimeout(() => {
+        storeAtom.set(ShakeAtom, (prev) => ({ ...prev, [enemy.id]: false }));
+        storeAtom.set(BaseDamageFlashAtom, (prev) => ({ ...prev, [character.id]: false }));
+      }, 300);
 
       console.log(`Enemy ${enemy.name} attacked ${character.name} for ${enemy.attack} damage.`);
 
@@ -71,12 +80,20 @@ export const runTurnLogic = async (
         console.log(`Using spell: ${spell}`);
 
         if (playerTarget && 'target' in playerTarget) {
+          storeAtom.set(ShakeAtom, (prev) => ({ ...prev, [character.id]: true }));
+          storeAtom.set(BaseDamageFlashAtom, (prev) => ({ ...prev, [playerTarget.id]: true }));
+
           const updatedHealth = basicCharacterAttack(playerTarget, character, spell as string);
           playerTarget.health = updatedHealth;
 
           if (updatedHealth <= 0 && !playerTarget.status.some(s => s.type === "Dead")) {
             playerTarget.status.push({ type: "Dead", duration: Infinity });
           }
+
+          setTimeout(() => {
+            storeAtom.set(ShakeAtom, (prev) => ({ ...prev, [character.id]: false }));
+            storeAtom.set(BaseDamageFlashAtom, (prev) => ({ ...prev, [playerTarget.id]: false }));
+        }, 300);
 
         } else {
           console.log(`%c${character.name} has no valid target.`, 'color: blue;');

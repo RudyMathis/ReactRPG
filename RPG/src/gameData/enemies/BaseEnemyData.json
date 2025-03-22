@@ -1,6 +1,6 @@
 {
     "Skeleton": {
-        "id": 1,
+        "id": 100,
         "name": "Skeleton",
         "level": 1,
         "health": 200,
@@ -19,7 +19,7 @@
         "isSelected": false
     },
     "Ghoul": {
-        "id": 2,
+        "id": 101,
         "name": "Ghoul",
         "level": 1,
         "health": 50,
@@ -38,7 +38,7 @@
         "isSelected": false
     },
     "Zombie": {
-        "id": 3,
+        "id": 102,
         "name": "Zombie",
         "level": 1,
         "health": 150,
@@ -57,7 +57,7 @@
         "isSelected": false
     },
     "Rat": {
-        "id": 4,
+        "id": 103,
         "name": "Rat",
         "level": 1,
         "health": 100,
@@ -76,7 +76,7 @@
         "isSelected": false
     },
     "Wolf": {
-        "id": 5,
+        "id": 104,
         "name": "Wolf",
         "level": 1,
         "health": 100,
@@ -95,7 +95,7 @@
         "isSelected": false
     },
     "Goblin": {
-        "id": 6,
+        "id": 105,
         "name": "Goblin",
         "level": 1,
         "health": 150,
@@ -114,7 +114,7 @@
         "isSelected": false
     },
     "Ent": {
-        "id": 7,
+        "id": 106,
         "name": "Ent",
         "level": 1,
         "health": 300,

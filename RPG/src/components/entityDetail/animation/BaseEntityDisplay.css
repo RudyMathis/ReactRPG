@@ -11,4 +11,27 @@
     height: 128px;
     object-fit: contain;
     filter: drop-shadow(-20px 20px 4px rgba(0, 0, 0, 0.75));
+    transition: filter 0.1s ease-in-out;
+}
+
+
+@keyframes flash-red {
+    0%, 100% { filter: none; }
+    50% { filter: drop-shadow(0 0 8px red) saturate(200%) brightness(1.5); }
+}
+
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+    100% { transform: translateX(0); }
+}
+
+.shake {
+    animation: shake 0.3s ease-in-out 1;
+}
+
+.flash-red {
+    animation: flash-red .3s ease-in-out;
 }

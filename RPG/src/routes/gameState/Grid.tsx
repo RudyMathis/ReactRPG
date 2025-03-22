@@ -82,7 +82,9 @@ const Grid = () => {
 
   const [hoveredEntity, setHoveredEntity] = useState<{ id: number | null; type: 'character' | 'enemy' | null }>({ id: null, type: null });
   const handleMouseEnter = (id: number, type: 'character' | 'enemy') => {
-    setHoveredEntity({ id, type });
+    setTimeout(() => {
+      setHoveredEntity({ id, type });
+    }, 500);
   };
 
   const handleMouseLeave = () => {
