@@ -28,7 +28,6 @@ body {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	min-height: 100vh;
 }
 ol, ul {
 	list-style: none;
@@ -60,11 +59,11 @@ button {
     background-color: red;
 }
 
-.character-sprite.Mage, .character-sprite.Ghoul {
+.character-sprite.Ghoul {
     background-color: blue;
 }
 
-.character-sprite.Zombie {
+.character-sprite.Cleric, .character-sprite.Zombie {
     background-color: green;
 }
 
@@ -87,4 +86,11 @@ button {
 .character-sprite.dead {
 	background-color: darkgray;
 	cursor: not-allowed;
+}
+
+.entity-bar-container {
+	position: absolute;
+	bottom: 175%;
+	left: 0;
+	width: 100%;
 }

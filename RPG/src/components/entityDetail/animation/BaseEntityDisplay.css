@@ -1,0 +1,14 @@
+.sprite-container {
+    width: 128px;
+    height: 128px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sprite img {
+    width: 128px;
+    height: 128px;
+    object-fit: contain;
+    filter: drop-shadow(-20px 20px 4px rgba(0, 0, 0, 0.75));
+}

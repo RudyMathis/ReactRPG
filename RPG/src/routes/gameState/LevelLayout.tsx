@@ -5,7 +5,6 @@ const LevelLayout = () => {
 
     return (
         <div className="level-layout">
-            <h1>Level Layout</h1>
             <TurnOrderDisplay />
             <Grid />
             <NavigateBtn locationValue="/" location="Start Menu" />
