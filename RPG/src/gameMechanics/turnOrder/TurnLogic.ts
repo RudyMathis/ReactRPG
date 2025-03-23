@@ -3,6 +3,7 @@ import { ShakeAtom } from "../../atom/effects/ShakeAtom";
 import { BaseDamageFlashAtom } from "../../atom/effects/BaseDamageFlashAtom";
 import { turnCountAtom } from "../../atom/UseTurnCountAtom";
 import { playerTargetAtom } from '../../atom/PlayerTargetAtom';
+import { HealthAtom } from "../../atom/HealthAtom";
 import CharacterAtom from '../../atom/CharacterAtom';
 import EnemyAtom from '../../atom/BaseEnemyAtom';
 import { getEnemyTargetName } from '../enemyTarget/EnemyTargetLogic';
@@ -59,8 +60,12 @@ export const runTurnLogic = async (
         storeAtom.set(BaseDamageFlashAtom, (prev) => ({ ...prev, [character.id]: false }));
       }, 300);
 
-      console.log(`Enemy ${enemy.name} attacked ${character.name} for ${enemy.attack} damage.`);
+      storeAtom.set(HealthAtom, (prev) => ({
+        ...prev,
+        [character.id]: updatedHealth, // Update the character health
+      }));
 
+      console.log(`Enemy ${enemy.name} attacked ${character.name} for ${enemy.attack} damage.`);
     } else {
       // Character turn
       const character = entity as CharacterType;
@@ -94,6 +99,11 @@ export const runTurnLogic = async (
             storeAtom.set(ShakeAtom, (prev) => ({ ...prev, [character.id]: false }));
             storeAtom.set(BaseDamageFlashAtom, (prev) => ({ ...prev, [playerTarget.id]: false }));
         }, 300);
+        
+        storeAtom.set(HealthAtom, (prev) => ({
+          ...prev,
+          [playerTarget.id]: updatedHealth, // Update the character health
+        }));
 
         } else {
           console.log(`%c${character.name} has no valid target.`, 'color: blue;');
@@ -104,6 +114,7 @@ export const runTurnLogic = async (
           ...prev,
           [character.id]: { ...character, currentTurn: false }
         }));
+        
       }
     }
   }
