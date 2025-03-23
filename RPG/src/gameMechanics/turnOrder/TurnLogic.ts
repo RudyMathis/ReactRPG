@@ -3,7 +3,6 @@ import { ShakeAtom } from "../../atom/effects/ShakeAtom";
 import { BaseDamageFlashAtom } from "../../atom/effects/BaseDamageFlashAtom";
 import { turnCountAtom } from "../../atom/UseTurnCountAtom";
 import { playerTargetAtom } from '../../atom/PlayerTargetAtom';
-import { HealthAtom } from "../../atom/HealthAtom";
 import CharacterAtom from '../../atom/CharacterAtom';
 import EnemyAtom from '../../atom/BaseEnemyAtom';
 import { getEnemyTargetName } from '../enemyTarget/EnemyTargetLogic';
@@ -60,9 +59,12 @@ export const runTurnLogic = async (
         storeAtom.set(BaseDamageFlashAtom, (prev) => ({ ...prev, [character.id]: false }));
       }, 300);
 
-      storeAtom.set(HealthAtom, (prev) => ({
+      storeAtom.set(CharacterAtom, (prev) => ({
         ...prev,
-        [character.id]: updatedHealth, // Update the character health
+        [character.id]: {
+          ...prev[character.id],
+          health: updatedHealth, 
+        },
       }));
 
       console.log(`Enemy ${enemy.name} attacked ${character.name} for ${enemy.attack} damage.`);
@@ -70,52 +72,56 @@ export const runTurnLogic = async (
       // Character turn
       const character = entity as CharacterType;
 
-      if(character.health > 0) {
-        storeAtom.set(playerTargetAtom, null);
-        storeAtom.set(CharacterAtom, prev => ({
-          ...prev,
-          [character.id]: { ...character, currentTurn: true }
-        }));
+      if (character.health <= 0) {
+        console.log(`${character.name} is dead.`);
+        continue;
+      } 
+      storeAtom.set(playerTargetAtom, null);
+      storeAtom.set(CharacterAtom, prev => ({
+        ...prev,
+        [character.id]: { ...character, currentTurn: true }
+      }));
 
-        console.log(`Character ${character.name}'s turn. Waiting for user input...`);
-        await waitForInput();
-        
-        const playerTarget = storeAtom.get(playerTargetAtom);
-        const spell = storeAtom.get(selectedSpellAtom);
-        console.log(`Using spell: ${spell}`);
+      console.log(`Character ${character.name}'s turn. Waiting for user input...`);
+      await waitForInput();
+      
+      const playerTarget = storeAtom.get(playerTargetAtom);
+      const spell = storeAtom.get(selectedSpellAtom);
+      console.log(`Using spell: ${spell}`);
 
-        if (playerTarget && 'target' in playerTarget) {
-          storeAtom.set(ShakeAtom, (prev) => ({ ...prev, [character.id]: true }));
-          storeAtom.set(BaseDamageFlashAtom, (prev) => ({ ...prev, [playerTarget.id]: true }));
+      if (playerTarget && 'target' in playerTarget) {
+        storeAtom.set(ShakeAtom, (prev) => ({ ...prev, [character.id]: true }));
+        storeAtom.set(BaseDamageFlashAtom, (prev) => ({ ...prev, [playerTarget.id]: true }));
 
-          const updatedHealth = basicCharacterAttack(playerTarget, character, spell as string);
-          playerTarget.health = updatedHealth;
+        const updatedHealth = basicCharacterAttack(playerTarget, character, spell as string);
+        playerTarget.health = updatedHealth;
 
-          if (updatedHealth <= 0 && !playerTarget.status.some(s => s.type === "Dead")) {
-            playerTarget.status.push({ type: "Dead", duration: Infinity });
-          }
-
-          setTimeout(() => {
-            storeAtom.set(ShakeAtom, (prev) => ({ ...prev, [character.id]: false }));
-            storeAtom.set(BaseDamageFlashAtom, (prev) => ({ ...prev, [playerTarget.id]: false }));
-        }, 300);
-        
-        storeAtom.set(HealthAtom, (prev) => ({
-          ...prev,
-          [playerTarget.id]: updatedHealth, // Update the character health
-        }));
-
-        } else {
-          console.log(`%c${character.name} has no valid target.`, 'color: blue;');
+        if (updatedHealth <= 0 && !playerTarget.status.some(s => s.type === "Dead")) {
+          playerTarget.status.push({ type: "Dead", duration: Infinity });
         }
 
-        // Mark current turn as complete for the character
-        storeAtom.set(CharacterAtom, prev => ({
+        setTimeout(() => {
+          storeAtom.set(ShakeAtom, (prev) => ({ ...prev, [character.id]: false }));
+          storeAtom.set(BaseDamageFlashAtom, (prev) => ({ ...prev, [playerTarget.id]: false }));
+        }, 300);
+
+        storeAtom.set(EnemyAtom, (prev) => ({
           ...prev,
-          [character.id]: { ...character, currentTurn: false }
+          [playerTarget.id]: {
+            ...prev[playerTarget.id],
+            health: updatedHealth,
+          },
         }));
-        
+
+      } else {
+        console.log(`%c${character.name} has no valid target.`, 'color: blue;');
       }
+
+      // Mark current turn as complete for the character
+      storeAtom.set(CharacterAtom, prev => ({
+        ...prev,
+        [character.id]: { ...character, currentTurn: false }
+      }));
     }
   }
   

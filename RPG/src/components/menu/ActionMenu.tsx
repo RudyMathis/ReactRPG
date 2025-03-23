@@ -22,10 +22,13 @@ const ActionMenu = ({ isVisible, type, onSpell }: ActionMenuProps) => {
     const handleSpellClick = (spell: string) => {
         setSelectedSpell(spell); // Store the selected spell
         
-        const audioSrc = spellAudio[spell] || '/assets/sfx/default.mp3';
+        const audioSrc = spellAudio[spell];
         
         const audio = new Audio(audioSrc);
-        audio.play();
+        if (audio) {
+            audio.play();
+        }
+
     };
 
     return (

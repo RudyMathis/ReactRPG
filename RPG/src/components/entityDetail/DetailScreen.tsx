@@ -12,7 +12,7 @@ const DetailScreen = ({ entity }: CharacterDetailProps) => {
         <div className="popup">
             <h2>{entity.name}</h2>
             <p>Level: {entity.level}</p>
-            <p>Health: {entity.health}</p>
+            <p>Health: {entity.health <= 0 ? 0 : entity.health}</p>
             <p>Max Health: {entity.maxHealth}</p>
             <p>Attack: {entity.attack}</p>
             <p>Defense: {entity.defense}</p>
