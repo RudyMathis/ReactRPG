@@ -63,15 +63,15 @@ button {
     background-color: blue;
 }
 
-.character-sprite.Cleric, .character-sprite.Zombie {
+.character-sprite.Zombie {
     background-color: green;
 }
 
-.character-sprite.Rogue, .character-sprite.Rat {
+.character-sprite.Rat {
     background-color: yellow;
 }
 
-.character-sprite.Archer, .character-sprite.Wolf {
+.character-sprite.Wolf {
     background-color: purple;
 }
 
