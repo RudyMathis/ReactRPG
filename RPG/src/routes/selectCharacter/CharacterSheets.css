@@ -1,7 +1,10 @@
 .character-sheet-container {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
     gap: 2em;
+    margin: 2em 0
 }
 
 .character-sheet {
@@ -9,7 +12,8 @@
     flex-direction: column;
     gap: 1rem;
     padding: 1rem;
-    border: 1px solid black;
+    border: 1px solid white;
+    cursor: pointer;
 }  
 
 .character-sheet.isSelected {

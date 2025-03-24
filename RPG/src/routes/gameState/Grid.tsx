@@ -1,3 +1,4 @@
+import React from 'react';
 import { useState, useCallback, useRef, useEffect  } from 'react';
 import { useAtom } from 'jotai';
 import CharacterAtom, { CharacterType } from '../../atom/CharacterAtom';
@@ -8,9 +9,9 @@ import { runTurnLogic } from '../../gameMechanics/turnOrder/TurnLogic';
 import ActionMenu from '../../components/menu/ActionMenu';
 import CharacterDisplay from '../../components/entityDetail/CharacterDisplay';
 import EnemyDisplay from '../../components/entityDetail/EnemyDisplay';
-import './Grid.css';
-import React from 'react';
 import DetailScreen from '../../components/entityDetail/DetailScreen';
+import Btn from '../../components/Btn';
+import './Grid.css';
 
 // A simple shuffle function, if needed for enemy order.
 const shuffleArray = <T extends { order?: number }>(array: T[]): T[] => {
@@ -82,9 +83,7 @@ const Grid = () => {
 
   const [hoveredEntity, setHoveredEntity] = useState<{ id: number | null; type: 'character' | 'enemy' | null }>({ id: null, type: null });
   const handleMouseEnter = (id: number, type: 'character' | 'enemy') => {
-    setTimeout(() => {
       setHoveredEntity({ id, type });
-    }, 500);
   };
 
   const handleMouseLeave = () => {
@@ -98,13 +97,14 @@ const Grid = () => {
         <React.Fragment key={char.id}>
           <div
             key={char.id}
+            className='entity-container'
             onClick={() => toggleMenuVisibility(char.id, 'character')}
             onMouseEnter={() => handleMouseEnter(char.id, 'character')}
             onMouseLeave={handleMouseLeave}
             style={{
               position: 'relative',
               gridColumn: (index % 2) === 0 ? 2 : 3,
-              gridRow: (index * 2) + 1
+              gridRow: ((index + 1)* 2) + 1
             }}
           >
             <div onClick={() => handlePlayerTargeted(char)}>
@@ -130,13 +130,14 @@ const Grid = () => {
       .map((enemy, index) => (
         <React.Fragment key={enemy.id}>
           <div
+            className='entity-container'
             onClick={() => toggleMenuVisibility(enemy.id, 'enemy')}
             onMouseEnter={() => handleMouseEnter(enemy.id, 'enemy')}
             onMouseLeave={handleMouseLeave}
             style={{
               position: 'relative',
-              gridColumn: index % 2 === 0 ? 18 : 19,
-              gridRow: (index + 1) * 2 - 1
+              gridColumn: index % 2 === 0 ? 8 : 9,
+              gridRow: ((index + 1)* 2) + 1
             }}
           >
             <div onClick={() => handlePlayerTargeted(enemy)}>
@@ -155,7 +156,7 @@ const Grid = () => {
           )}
         </React.Fragment>
       ))}
-      <button onClick={checkTurnOrderAndRunLogic}>Start Turn</button>
+      <Btn onClick={checkTurnOrderAndRunLogic} text="Begin" />
     </div>
   );
 };

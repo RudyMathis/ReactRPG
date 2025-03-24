@@ -5,14 +5,14 @@ import "./CharacterSelect.css";
 const CharacterSelect = () => {
 
     return (
-        <div>
+        <>
             <div className="main-container">           
                 <h1>Select Your Character</h1>
                 <NavigateBtn locationValue="/" location="Main Menu" />
             </div>
             <CharacterSheets />
-            <NavigateBtn locationValue="/game" location="Begin your adventure" />
-        </div>
+            <NavigateBtn className="adventure" locationValue="/game" location="Begin your adventure" />
+        </>
     );
 };
 

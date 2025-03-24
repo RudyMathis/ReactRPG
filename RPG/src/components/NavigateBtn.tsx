@@ -3,9 +3,10 @@ import { useNavigate } from 'react-router';
 type NavigateBtnProps = {
     locationValue: string;
     location: string;
+    className?: string;
 }
 
-const NavigateBtn = ({ locationValue, location }: NavigateBtnProps) => {
+const NavigateBtn = ({ locationValue, location, className }: NavigateBtnProps) => {
     const navigate = useNavigate();
 
     const handleNavigation = () => {
@@ -13,7 +14,7 @@ const NavigateBtn = ({ locationValue, location }: NavigateBtnProps) => {
     };
 
     return (
-        <button onClick={handleNavigation}>{location}</button>
+        <button onClick={handleNavigation} className={`btn ${className}`}>{location}</button>
     );
 }
 
