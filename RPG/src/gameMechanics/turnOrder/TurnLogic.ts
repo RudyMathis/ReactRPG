@@ -109,7 +109,16 @@ export const runTurnLogic = async (
         }));
 
       } else {
-        console.log(`%c${character.name} has no valid target.`, 'color: blue;');
+        const updatedHealth = basicCharacterBuff(character, spell as string);
+        character.health = updatedHealth;
+        storeAtom.set(CharacterAtom, (prev) => ({
+          ...prev,
+          [character.id]: {
+            ...prev[character.id],
+            health: updatedHealth
+          },
+        }));
+
       }
 
       // Mark current turn as complete for the character
@@ -129,25 +138,20 @@ export const runTurnLogic = async (
 
 
 
-const spellEffects: Record<string, (enemy: EnemyType, character: CharacterType, enemyOne?: EnemyType, enemyTwo?: EnemyType) => number> = {
-  Fire_Ball: (enemy, character) => enemy.health - (character.attack + 10),
-  Ice_Bolt: (enemy, character) => {
+const spellEffects: Record<string, (enemy: EnemyType, character: CharacterType) => number> = {
+  Fire_Ball_Tar: (enemy, character) => enemy.health - (character.attack + 10),
+  Ice_Bolt_Tar: (enemy, character) => {
     enemy.status.push({ type: "Frozen", duration: 3 });
     enemy.speed = 0;
     return enemy.health - (character.attack + 5);
   },
-  Lightning_Bolt: (enemy, character) => enemy.health - (character.attack + 15),
-  Heal: (character) => {
-    character.health += 20;
-    return character.health;
-  },
-
-  Garrote: (enemy, character) => {
+  Lightning_Bolt_Tar: (enemy, character) => enemy.health - (character.attack + 15),
+  Garrote_Tar: (enemy, character) => {
     enemy.status.push({ type: "Bleed", duration: 3, damage: 10 });
     return enemy.health - (character.attack + 5);
   },
 
-  Multi_Shot: (enemy: EnemyType, character: CharacterType) => {
+  Multi_Shot_Tar: (enemy: EnemyType, character: CharacterType) => {
     const enemies = Object.values(storeAtom.get(EnemyAtom)); // Get all enemies as an array
     const sortedEnemies = [...enemies].sort((a, b) => a.order - b.order); // Ensure correct order
   
@@ -177,6 +181,10 @@ const spellEffects: Record<string, (enemy: EnemyType, character: CharacterType, 
   
 };
 
+const spellEffectsBuff: Record<string, (character: CharacterType) => number> = {
+  Heal__Char: (character) => character.health += 20,
+};
+
 const basicCharacterAttack = (enemy: EnemyType, character: CharacterType, spell: string) => {
   setTimeout(() => {
     storeAtom.set(ShakeAtom, (prev) => ({ ...prev, [character.id]: false }));
@@ -194,6 +202,15 @@ const basicCharacterAttack = (enemy: EnemyType, character: CharacterType, spell:
   }
 
 };
+
+const basicCharacterBuff = (character: CharacterType, spell: string) => {
+  if (!spellEffectsBuff[spell]) {
+      console.warn(`Unknown or missing spell in spellEffectsBuff: "${spell}"`);
+      return character.health; // Return unchanged health if spell is not found
+  }
+  return spellEffectsBuff[spell](character);
+};
+
 
 const basicEnemyAttack = (character: CharacterType, enemy: EnemyType) => {
   setTimeout(() => {

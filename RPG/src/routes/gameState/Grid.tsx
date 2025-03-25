@@ -37,6 +37,7 @@ const Grid = () => {
   const [waitingForInput, setWaitingForInput] = useState(false);
   const inputPromiseResolverRef = useRef<(() => void) | null>(null);
   const [initialized, setInitialized] = useState(false);
+  const [activeDetailScreen, setActiveDetailScreen] = useState<CharacterType | EnemyType | null>(null);
 
   useEffect(() => {
     if (!initialized) {
@@ -83,13 +84,14 @@ const Grid = () => {
       }, 0);
   };
 
-  const [hoveredEntity, setHoveredEntity] = useState<{ id: number | null; type: 'character' | 'enemy' | null }>({ id: null, type: null });
-  const handleMouseEnter = (id: number, type: 'character' | 'enemy') => {
-      setHoveredEntity({ id, type });
+  const displayDetailScreen = (entity: CharacterType | EnemyType) => {
+    setActiveDetailScreen(entity);
   };
-
-  const handleMouseLeave = () => {
-    setHoveredEntity({ id: null, type: null });
+  
+  const closeDetailScreen = (event: React.MouseEvent<HTMLDivElement>) => {
+    if (event.target === event.currentTarget) {
+      setActiveDetailScreen(null);
+    }
   };
 
   return (
@@ -101,8 +103,6 @@ const Grid = () => {
             key={char.id}
             className='entity-container'
             onClick={() => toggleMenuVisibility(char.id, 'character')}
-            onMouseEnter={() => handleMouseEnter(char.id, 'character')}
-            onMouseLeave={handleMouseLeave}
             style={{
               position: 'relative',
               gridColumn: (index % 2) === 0 ? 2 : 3,
@@ -117,12 +117,10 @@ const Grid = () => {
                 isVisible={activeMenu.id === char.id && activeMenu.type === 'character'}
                 type='character'
                 onSpell={handleNextTurnClick}
+                detailScreen={() => displayDetailScreen(char)}
               />
             )}
           </div>
-          {hoveredEntity.id === char.id && hoveredEntity.type === 'character' && (
-            <DetailScreen entity={char} />
-          )}
         </React.Fragment>
       ))}
       
@@ -134,8 +132,6 @@ const Grid = () => {
           <div
             className='entity-container'
             onClick={() => toggleMenuVisibility(enemy.id, 'enemy')}
-            onMouseEnter={() => handleMouseEnter(enemy.id, 'enemy')}
-            onMouseLeave={handleMouseLeave}
             style={{
               position: 'relative',
               gridColumn: index % 2 === 0 ? 8 : 9,
@@ -150,14 +146,20 @@ const Grid = () => {
                 isVisible={activeMenu.id === enemy.id && activeMenu.type === 'enemy'}
                 type='enemy'
                 onSpell={handleNextTurnClick}
+                detailScreen={() => displayDetailScreen(enemy)}
               />
             )}
           </div>
-          {hoveredEntity.id === enemy.id && hoveredEntity.type === 'enemy' && (
-            <DetailScreen entity={enemy} />
-          )}
         </React.Fragment>
       ))}
+      {/* Detail Screen */}
+      {activeDetailScreen && (
+        <div className="detail-screen-overlay" onClick={closeDetailScreen}>
+          <div className="detail-screen-content" onClick={(e) => e.stopPropagation()}>
+            <DetailScreen entity={activeDetailScreen} />
+          </div>
+        </div>
+      )}
       {currentTurn == 1 && <Btn onClick={checkTurnOrderAndRunLogic} text="Begin" />}
     </div>
   );
