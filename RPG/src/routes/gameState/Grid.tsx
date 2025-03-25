@@ -3,6 +3,7 @@ import { useState, useCallback, useRef, useEffect  } from 'react';
 import { useAtom } from 'jotai';
 import CharacterAtom, { CharacterType } from '../../atom/CharacterAtom';
 import EnemyAtom, { EnemyType } from '../../atom/BaseEnemyAtom';
+import { turnCountAtom } from '../../atom/UseTurnCountAtom';
 import { useTurnOrder }  from '../../gameMechanics/turnOrder/useTurnOrder';
 import { playerTargetAtom } from '../../atom/PlayerTargetAtom';
 import { runTurnLogic } from '../../gameMechanics/turnOrder/TurnLogic';
@@ -12,6 +13,7 @@ import EnemyDisplay from '../../components/entityDetail/EnemyDisplay';
 import DetailScreen from '../../components/entityDetail/DetailScreen';
 import Btn from '../../components/Btn';
 import './Grid.css';
+import { storeAtom } from '../../atom/storeAtom';
 
 // A simple shuffle function, if needed for enemy order.
 const shuffleArray = <T extends { order?: number }>(array: T[]): T[] => {
@@ -25,6 +27,7 @@ const shuffleArray = <T extends { order?: number }>(array: T[]): T[] => {
 };
 
 const Grid = () => {
+  const currentTurn = storeAtom.get(turnCountAtom); // Read current turn
   const [characters] = useAtom(CharacterAtom);
   const [enemies, setEnemies] = useAtom(EnemyAtom);
   const selectedCharacters = Object.values(characters).filter(char => char.isSelected);
@@ -46,12 +49,13 @@ const Grid = () => {
       setInitialized(true);
     }
   }, [initialized, enemies, setEnemies]);
-    const waitForInput = useCallback((): Promise<void> => {
-      setWaitingForInput(true);
-      return new Promise(resolve => {
-        inputPromiseResolverRef.current = resolve;
-      });
-    }, []);
+  
+  const waitForInput = useCallback((): Promise<void> => {
+    setWaitingForInput(true);
+    return new Promise(resolve => {
+      inputPromiseResolverRef.current = resolve;
+    });
+  }, []);
   const handleNextTurnClick = () => {
     setWaitingForInput(false);
     setActiveMenu({ id: null, type: null }); // Hide menu
@@ -59,19 +63,17 @@ const Grid = () => {
       inputPromiseResolverRef.current();
       inputPromiseResolverRef.current = null;
     }
-};
-
-
-  const handlePlayerTargeted = (entity: EnemyType | CharacterType) => {
-    setPlayerTarget(prev => (prev?.id === entity.id ? null : entity)); // Untarget if already selected
-    console.log("Player targeted", entity.name);
   };
-
 
   const checkTurnOrderAndRunLogic = () => {
     if (turnOrder.length > 0) {
       runTurnLogic(turnOrder, waitForInput);
     }
+  };
+
+  const handlePlayerTargeted = (entity: EnemyType | CharacterType) => {
+    setPlayerTarget(prev => (prev?.id === entity.id ? null : entity)); // Untarget if already selected
+    console.log("Player targeted", entity.name);
   };
 
   const toggleMenuVisibility = (id: number | null, type: 'character' | 'enemy' | null) => {
@@ -156,7 +158,7 @@ const Grid = () => {
           )}
         </React.Fragment>
       ))}
-      <Btn onClick={checkTurnOrderAndRunLogic} text="Begin" />
+      {currentTurn == 1 && <Btn onClick={checkTurnOrderAndRunLogic} text="Begin" />}
     </div>
   );
 };

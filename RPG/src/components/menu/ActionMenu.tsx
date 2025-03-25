@@ -40,6 +40,7 @@ const ActionMenu = ({ isVisible, type, onSpell }: ActionMenuProps) => {
                             {char.spells.map((spell, index) => (
                                 <button 
                                     key={`${char.id}-${index}`}
+                                    className="action-menu-button"
                                     onClick={() => {
                                         onSpell();
                                         handleSpellClick(spell);

@@ -19,10 +19,19 @@ export const runTurnLogic = async (
   waitForInput: () => Promise<void>
 ) => {
   const characters = turnOrder.filter(e => !('target' in e)) as CharacterType[];
+  const enemies = turnOrder.filter(e => 'target' in e) as EnemyType[];
   const currentTurn = storeAtom.get(turnCountAtom); // Read current turn
 
-  for (const entity of turnOrder) {
+  // Check if the game should end
+  const allCharactersDead = characters.every(c => c.health <= 0);
+  const allEnemiesDead = enemies.every(e => e.health <= 0);
+  
+  if (allCharactersDead || allEnemiesDead) {
+    console.log(`Game Over. ${allCharactersDead ? "Enemies Win!" : "Players Win!"}`);
+    return; // Stop running turns
+  }
 
+  for (const entity of turnOrder) {
     handleStatusEffects(entity); 
 
     if ('target' in entity) {
@@ -31,33 +40,25 @@ export const runTurnLogic = async (
 
       if (enemy.health <= 0) {
         console.log(`${enemy.name} died from status effects.`);
-        continue; // Skip this enemy's attack
+        continue; // Skip dead enemies
       }
 
       await new Promise(resolve => setTimeout(resolve, 1500));
 
-      const targetName = getEnemyTargetName(enemy, characters.filter(c => !c.status.includes({ type: 'Dead', duration: Infinity })));
+      const targetName = getEnemyTargetName(enemy, characters.filter(c => c.health > 0));
       const character = characters.find(c => c.name === targetName);
 
       if (!character || enemy.speed === 0) {
-        console.warn(`No valid target found for ${enemy.name} Or enemy speed is 0`);
+        console.warn(`No valid target found for ${enemy.name} or enemy speed is 0`);
         continue;
       }
 
       const updatedHealth = basicEnemyAttack(character, enemy);
       character.health = updatedHealth;
 
-      storeAtom.set(ShakeAtom, (prev) => ({ ...prev, [enemy.id]: true }));
-      storeAtom.set(BaseDamageFlashAtom, (prev) => ({ ...prev, [character.id]: true }));
-      
       if (updatedHealth <= 0 && !character.status.some(s => s.type === "Dead")) {
         character.status.push({ type: "Dead", duration: Infinity });
       }
-
-      setTimeout(() => {
-        storeAtom.set(ShakeAtom, (prev) => ({ ...prev, [enemy.id]: false }));
-        storeAtom.set(BaseDamageFlashAtom, (prev) => ({ ...prev, [character.id]: false }));
-      }, 300);
 
       storeAtom.set(CharacterAtom, (prev) => ({
         ...prev,
@@ -76,6 +77,7 @@ export const runTurnLogic = async (
         console.log(`${character.name} is dead.`);
         continue;
       } 
+
       storeAtom.set(playerTargetAtom, null);
       storeAtom.set(CharacterAtom, prev => ({
         ...prev,
@@ -90,8 +92,6 @@ export const runTurnLogic = async (
       console.log(`Using spell: ${spell}`);
 
       if (playerTarget && 'target' in playerTarget) {
-        storeAtom.set(ShakeAtom, (prev) => ({ ...prev, [character.id]: true }));
-        storeAtom.set(BaseDamageFlashAtom, (prev) => ({ ...prev, [playerTarget.id]: true }));
 
         const updatedHealth = basicCharacterAttack(playerTarget, character, spell as string);
         playerTarget.health = updatedHealth;
@@ -99,11 +99,6 @@ export const runTurnLogic = async (
         if (updatedHealth <= 0 && !playerTarget.status.some(s => s.type === "Dead")) {
           playerTarget.status.push({ type: "Dead", duration: Infinity });
         }
-
-        setTimeout(() => {
-          storeAtom.set(ShakeAtom, (prev) => ({ ...prev, [character.id]: false }));
-          storeAtom.set(BaseDamageFlashAtom, (prev) => ({ ...prev, [playerTarget.id]: false }));
-        }, 300);
 
         storeAtom.set(EnemyAtom, (prev) => ({
           ...prev,
@@ -124,10 +119,14 @@ export const runTurnLogic = async (
       }));
     }
   }
-  
-  console.log(`Turn ${storeAtom.get(turnCountAtom)} ended.`);
+
+  console.log(`Turn ${currentTurn} ended.`);
   storeAtom.set(turnCountAtom, currentTurn + 1);
+
+  // Auto-start next round if the game is still active
+  setTimeout(() => runTurnLogic(turnOrder, waitForInput), 1000);
 };
+
 
 
 const spellEffects: Record<string, (enemy: EnemyType, character: CharacterType, enemyOne?: EnemyType, enemyTwo?: EnemyType) => number> = {
@@ -179,6 +178,13 @@ const spellEffects: Record<string, (enemy: EnemyType, character: CharacterType, 
 };
 
 const basicCharacterAttack = (enemy: EnemyType, character: CharacterType, spell: string) => {
+  setTimeout(() => {
+    storeAtom.set(ShakeAtom, (prev) => ({ ...prev, [character.id]: false }));
+    storeAtom.set(BaseDamageFlashAtom, (prev) => ({ ...prev, [enemy.id]: false }));
+  }, 300);
+
+  storeAtom.set(ShakeAtom, (prev) => ({ ...prev, [character.id]: true }));
+  storeAtom.set(BaseDamageFlashAtom, (prev) => ({ ...prev, [enemy.id]: true }));
 
   if (spellEffects[spell]) {
     return spellEffects[spell](enemy, character);
@@ -190,5 +196,13 @@ const basicCharacterAttack = (enemy: EnemyType, character: CharacterType, spell:
 };
 
 const basicEnemyAttack = (character: CharacterType, enemy: EnemyType) => {
+  setTimeout(() => {
+    storeAtom.set(ShakeAtom, (prev) => ({ ...prev, [enemy.id]: false }));
+    storeAtom.set(BaseDamageFlashAtom, (prev) => ({ ...prev, [character.id]: false }));
+  }, 300);
+
+  storeAtom.set(ShakeAtom, (prev) => ({ ...prev, [enemy.id]: true }));
+  storeAtom.set(BaseDamageFlashAtom, (prev) => ({ ...prev, [character.id]: true }));
+
   return character.health - enemy.attack;
 };
