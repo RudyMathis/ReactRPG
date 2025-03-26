@@ -1,7 +1,12 @@
 import { atom } from 'jotai';
 import CharacterData from "../gameData/characters/CharacterData.json";
 
-type StatusEffect = {
+type buffEffect = {
+    type: string;
+    duration: number;
+    damage?: number;
+};
+type debuffEffect = {
     type: string;
     duration: number;
     damage?: number;
@@ -25,9 +30,11 @@ export type CharacterType = {
     gold: number;
     items: string[];
     spells: string[];
-    status: StatusEffect[];
+    buff: buffEffect[];
+    debuff: debuffEffect[];
     currentTurn: boolean;
     isSelected: boolean;
+    type: string;
 }
 
 const CharacterAtom = atom<Record<number, CharacterType>>(

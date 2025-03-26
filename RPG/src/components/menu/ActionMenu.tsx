@@ -36,8 +36,7 @@ const ActionMenu = ({ isVisible, type, onSpell, detailScreen }: ActionMenuProps)
                     char.currentTurn ? (
                         <div key={char.id} className="action-menu-item">
                             {char.spells.map((spell, index) => (
-                                
-                                spell.endsWith('_Char') && type === 'character' ? ( // Corrected conditional rendering
+                                spell.includes('_Char') && type === 'character' ? (
                                     <button 
                                         key={`${char.id}-${index}`}
                                         className="action-menu-button"
@@ -45,11 +44,12 @@ const ActionMenu = ({ isVisible, type, onSpell, detailScreen }: ActionMenuProps)
                                             onSpell();
                                             handleSpellClick(spell);
                                         }}
-                                        data-spell={spell} 
+                                        data-spell={spell}
+                                        disabled={char.mana < Number(spell.split('Char_')[1])} 
                                     >
-                                        {spell.replace('_', ' ').replace('_', ' ').replace('Char', '')}
+                                        {spell.replace('_', ' ').replace('_', ' ').split('Char')[0]}
                                     </button>
-                                ) : spell.endsWith('_Tar') && type === 'enemy' ? ( // Corrected conditional rendering 
+                                ) : spell.includes('_Tar') && type === 'enemy' ? ( 
                                     <button 
                                         key={`${char.id}-${index}`}
                                         className="action-menu-button"
@@ -57,9 +57,10 @@ const ActionMenu = ({ isVisible, type, onSpell, detailScreen }: ActionMenuProps)
                                             onSpell();
                                             handleSpellClick(spell);
                                         }}
-                                        data-spell={spell} 
+                                        data-spell={spell}
+                                        disabled={char.mana < Number(spell.split('*')[1])}  
                                     >
-                                        {spell.replace('_', ' ').replace('_', ' ').replace('Tar', '')}
+                                        {spell.replace('_', ' ').replace('_', ' ').split('Tar')[0]}
                                 </button>
                                 ) 
                                 : null

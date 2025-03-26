@@ -16,10 +16,12 @@
         "maxExp": 100,
         "gold": 0,
         "items": [],
-        "spells": ["Quick_Attack_Tar", "Swing_Strike_Tar"],
-        "status": [],
+        "spells": ["Quick_Attack_Tar_0", "Swing_Strike_Tar_0"],
+        "buff": [],
+        "debuff": [{"type": "Bleed", "duration": 4}],
         "currentTurn": false,
-        "isSelected": false
+        "isSelected": false,
+        "type": "player"
     },
     "Mage": {
         "id": 2,
@@ -31,17 +33,19 @@
         "defense": 10,
         "speed": 10,
         "speedDefault": 10,
-        "mana": 40,
-        "maxMana": 40,
+        "mana": 100,
+        "maxMana": 100,
         "luck": 10,
         "exp": 0,
         "maxExp": 100,
         "gold": 0,
         "items": [],
-        "spells": ["Fire_Ball_Tar", "Ice_Bolt_Tar"],
-        "status": [],
+        "spells": ["Fire_Ball_Tar_20", "Ice_Bolt_Tar_30"],
+        "buff": [],
+        "debuff": [],
         "currentTurn": false,
-        "isSelected": false
+        "isSelected": false,
+        "type": "player"
     },
     "Cleric": {
         "id": 3,
@@ -60,10 +64,12 @@
         "maxExp": 100,
         "gold": 0,
         "items": [],
-        "spells": ["Heal__Char", "Cure__Char"],
-        "status": [],
+        "spells": ["Heal__Char_20", "Cure__Char_10"],
+        "buff": [],
+        "debuff": [],
         "currentTurn": false,
-        "isSelected": false
+        "isSelected": false,
+        "type": "player"
     },
     "Rogue": {
         "id": 4,
@@ -82,10 +88,12 @@
         "maxExp": 100,
         "gold": 0,
         "items": [],
-        "spells": ["Quick_Attack_Tar", "Backstab_Tar", "Garrote_Tar"],
-        "status": [],
+        "spells": ["Quick_Attack_Tar_0", "Backstab_Tar_0", "Garrote_Tar_0"],
+        "buff": [],
+        "debuff": [],
         "currentTurn": false,
-        "isSelected": false
+        "isSelected": false,
+        "type": "player"
     },
     "Archer": {
         "id": 5,
@@ -104,10 +112,12 @@
         "maxExp": 100,
         "gold": 0,
         "items": [],
-        "spells": ["Multi_Shot_Tar"],
-        "status": [],
+        "spells": ["Multi_Shot_Tar_0"],
+        "buff": [],
+        "debuff": [],
         "currentTurn": false,
-        "isSelected": false
+        "isSelected": false,
+        "type": "player"
     },
     "Bard": {
         "id": 6,
@@ -126,10 +136,12 @@
         "maxExp": 100,
         "gold": 0,
         "items": [],
-        "spells": ["Defense_Up_Char", "Attack_Up_Tar"],
-        "status": [],
+        "spells": ["Defense_Up_Char_0", "Attack_Up_Tar_0"],
+        "buff": [],
+        "debuff": [],
         "currentTurn": false,
-        "isSelected": false
+        "isSelected": false,
+        "type": "player"
     },
     "Monk": {
         "id": 7,
@@ -148,9 +160,11 @@
         "maxExp": 100,
         "gold": 0,
         "items": [],
-        "spells": ["Serenity_Char", "Meditation_Char"],
-        "status": [],
+        "spells": ["Serenity_Char_20", "Meditation_Char_0"],
+        "buff": [],
+        "debuff": [],
         "currentTurn": false,
-        "isSelected": false
+        "isSelected": false,
+        "type": "player"
     }
 }

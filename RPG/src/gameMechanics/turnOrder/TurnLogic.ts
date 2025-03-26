@@ -38,7 +38,7 @@ export const runTurnLogic = async (
       const enemy = storeAtom.get(EnemyAtom)[entity.id];
 
       if (enemy.health <= 0) {
-        console.log(`${enemy.name} died from status effects.`);
+        console.log(`${enemy.name} died from debuff effects.`);
         continue; // Skip dead enemies
       }
 
@@ -55,8 +55,8 @@ export const runTurnLogic = async (
       const updatedHealth = basicEnemyAttack(character, enemy);
       character.health = updatedHealth;
 
-      if (updatedHealth <= 0 && !character.status.some(s => s.type === "Dead")) {
-        character.status.push({ type: "Dead", duration: Infinity });
+      if (updatedHealth <= 0 && !character.debuff.some(d => d.type === "Dead")) {
+        character.debuff.push({ type: "Dead", duration: Infinity });
       }
 
       storeAtom.set(CharacterAtom, (prev) => ({
@@ -95,8 +95,8 @@ export const runTurnLogic = async (
         const updatedHealth = basicCharacterAttack(playerTarget, character, spell as string);
         playerTarget.health = updatedHealth;
 
-        if (updatedHealth <= 0 && !playerTarget.status.some(s => s.type === "Dead")) {
-          playerTarget.status.push({ type: "Dead", duration: Infinity });
+        if (updatedHealth <= 0 && !playerTarget.debuff.some(d => d.type === "Dead")) {
+          playerTarget.debuff.push({ type: "Dead", duration: Infinity });
         }
 
         storeAtom.set(EnemyAtom, (prev) => ({

@@ -1,6 +1,11 @@
 import { atom } from 'jotai';
 import BaseEnemyData from "../gameData/enemies/BaseEnemyData.json";
-type StatusEffect = {
+type buffEffect = {
+    type: string;
+    duration: number;
+    damage?: number;
+};
+type debuffEffect = {
     type: string;
     duration: number;
     damage?: number;
@@ -21,8 +26,10 @@ export type EnemyType = {
     order: number;
     spells: string[];
     target: string[];
-    status: StatusEffect[];
+    buff: buffEffect[];
+    debuff: debuffEffect[];
     isSelected: boolean;
+    type: string;
 }
 
 const EnemyAtom = atom<Record<number, EnemyType>>(

@@ -7,7 +7,7 @@ const TurnOrderDisplay = () => {
     return (
         <div className="turn-order-container">
             {turnOrder.map((entity, index) => (
-                <div key={index} className={`turn-order-item character-sprite ${entity.name} ${entity.status.includes({ type: 'Dead', duration: Infinity }) ? 'remove' : ''}`}>
+                <div key={index} className={`turn-order-item character-sprite ${entity.name} ${entity.debuff.includes({ type: 'Dead', duration: Infinity }) ? 'remove' : ''}`}>
                     {entity.name}
                 </div>
             ))}

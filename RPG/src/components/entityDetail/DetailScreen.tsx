@@ -7,6 +7,9 @@ type CharacterDetailProps = {
 };
 
 const DetailScreen = ({ entity }: CharacterDetailProps) => {
+    const hasDebuff = entity.debuff.length > 0;
+    const hasBuff = entity.buff.length > 0;
+
 
     return (
         <div className="popup">
@@ -20,17 +23,29 @@ const DetailScreen = ({ entity }: CharacterDetailProps) => {
             <p>Mana: <span style={{ color: 'red'}}>{entity.mana}</span> </p>
             <p>Max Mana: <span style={{ color: 'red'}}>{entity.maxMana}</span> </p>
             <p>Luck: <span style={{ color: 'red'}}>{entity.luck}</span> </p>
-            {entity && entity.status.length > 0 && (
-                <p>Status Effects: <span style={{ color: 'red'}}>{entity.status.map((status, index) => (
-                    <div key={index}>
-                        {status.duration > 0 && (
-                            <>
-                                <span>{status.type} (Duration: {status.duration} turns)</span>
-                                <span>{index < entity.status.length - 1 && ', '}</span>
-                            </>
-                        )}
-                    </div>
-                ))}</span></p>
+            {hasDebuff && (
+                <div>
+                    <p>Debuff:</p>
+                    {entity.debuff.map((debuff, index) => (
+                        debuff.duration > 0 && (
+                            <div key={index} style={{ color: 'red' }}>
+                                {debuff.type === 'Dead' ? 'Dead' : `${debuff.type} (Duration: ${debuff.duration} turns)`}
+                            </div>
+                        )
+                    ))}
+                </div>
+            )}
+            {hasBuff && (
+                <div>
+                    <p>Buff:</p>
+                    {entity.buff.map((buff, index) => (
+                        buff.duration > 0 && (
+                            <div key={index} style={{ color: 'red' }}>
+                                {buff.type === 'Dead' ? 'Dead' : `${buff.type} (Duration: ${buff.duration} turns)`}
+                            </div>
+                        )
+                    ))}
+                </div>
             )}
 
             {entity && 'exp' in entity && <p>Experience: <span style={{ color: 'red'}}>{entity.exp}</span> </p>}

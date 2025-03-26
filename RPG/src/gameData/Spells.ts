@@ -5,15 +5,20 @@ import { ShakeAtom } from "../atom/effects/ShakeAtom";
 import { storeAtom } from "../atom/storeAtom";
 
 const spellEffects: Record<string, (enemy: EnemyType, character: CharacterType) => number> = {
-    Fire_Ball_Tar: (enemy, character) => enemy.health - (character.attack + 10),
-    Ice_Bolt_Tar: (enemy, character) => {
-        enemy.status.push({ type: "Frozen", duration: 3 });
+    Fire_Ball_Tar_20: (enemy, character) => enemy.health - (character.attack + 10),
+    Ice_Bolt_Tar_30: (enemy, character) => {
+        enemy.debuff.push({ type: "Frozen", duration: 3 });
         enemy.speed = 0;
+        const spellCost = 30;
+        character.mana -= spellCost;
+
+        console.log(spellCost, character.mana, character, "HELP");
+
         return enemy.health - (character.attack + 5);
     },
     Lightning_Bolt_Tar: (enemy, character) => enemy.health - (character.attack + 15),
     Garrote_Tar: (enemy, character) => {
-        enemy.status.push({ type: "Bleed", duration: 3, damage: 10 });
+        enemy.debuff.push({ type: "Bleed", duration: 3, damage: 10 });
         return enemy.health - (character.attack + 5);
     },
 
@@ -46,16 +51,26 @@ const spellEffects: Record<string, (enemy: EnemyType, character: CharacterType) 
     }
 };
 
-const spellEffectsBuff: Record<string, (character: CharacterType) => number> = {
-    Heal__Char: (character) => {
+const spellEffectsBuff: Record<string, (character: CharacterType,) => number> = {
+    Heal__Char_20: (character) => {
         const heal = character.health + 20;
 
-        if(heal >= character.maxHealth) {
-        return character.health = character.maxHealth
-        } else {
+        const spellCost = 20;
+        character.mana -= spellCost;
+    
+        console.log(spellCost, character.mana);
 
-        return heal;
+        if(heal >= character.maxHealth) {
+            return character.health = character.maxHealth
+        } else {
+            return heal;
         }
+    },
+    Cure__Char: (character) => {
+        if(character.debuff.length > 0 && character.debuff[0].type !== "Dead") {
+            character.debuff.length = 0
+        } 
+        return character.health
     },
 };
 

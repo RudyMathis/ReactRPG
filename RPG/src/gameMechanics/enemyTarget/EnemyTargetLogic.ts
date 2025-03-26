@@ -3,7 +3,7 @@ import type { EnemyType } from '../../atom/BaseEnemyAtom';
 
 export const getEnemyTargetName = (enemy: EnemyType, selectedCharacters: CharacterType[]): string => {
     // Filter out characters who are dead
-    const aliveCharacters = selectedCharacters.filter(character => !character.status.some(s => s.type == "Dead"));
+    const aliveCharacters = selectedCharacters.filter(character => !character.debuff.some(d => d.type == "Dead"));
 
     if (aliveCharacters.length === 0) return ""; // If no alive characters, return empty string
 
