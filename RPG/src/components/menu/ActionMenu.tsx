@@ -47,7 +47,7 @@ const ActionMenu = ({ isVisible, type, onSpell, detailScreen }: ActionMenuProps)
                                         }}
                                         data-spell={spell} 
                                     >
-                                        {spell.replace('_', ' ').split('_')[0]}
+                                        {spell.replace('_', ' ').replace('_', ' ').replace('Char', '')}
                                     </button>
                                 ) : spell.endsWith('_Tar') && type === 'enemy' ? ( // Corrected conditional rendering 
                                     <button 
@@ -59,7 +59,7 @@ const ActionMenu = ({ isVisible, type, onSpell, detailScreen }: ActionMenuProps)
                                         }}
                                         data-spell={spell} 
                                     >
-                                        {spell.replace('_', ' ').split('_')[0]}
+                                        {spell.replace('_', ' ').replace('_', ' ').replace('Tar', '')}
                                 </button>
                                 ) 
                                 : null

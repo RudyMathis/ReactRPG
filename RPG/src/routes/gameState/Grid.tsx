@@ -38,6 +38,7 @@ const Grid = () => {
   const inputPromiseResolverRef = useRef<(() => void) | null>(null);
   const [initialized, setInitialized] = useState(false);
   const [activeDetailScreen, setActiveDetailScreen] = useState<CharacterType | EnemyType | null>(null);
+  const [startOfRound, setStartOfRound] = useState(true);
 
   useEffect(() => {
     if (!initialized) {
@@ -69,6 +70,7 @@ const Grid = () => {
   const checkTurnOrderAndRunLogic = () => {
     if (turnOrder.length > 0) {
       runTurnLogic(turnOrder, waitForInput);
+      setStartOfRound(false);
     }
   };
 
@@ -160,7 +162,7 @@ const Grid = () => {
           </div>
         </div>
       )}
-      {currentTurn == 1 && <Btn onClick={checkTurnOrderAndRunLogic} text="Begin" />}
+      {currentTurn == 1 && startOfRound == true && <Btn onClick={checkTurnOrderAndRunLogic} text="Begin" />}
     </div>
   );
 };

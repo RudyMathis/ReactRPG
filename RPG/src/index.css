@@ -69,6 +69,7 @@ h1 {
 
 button {
 	font-family: "Press Start 2P", system-ui;
+	padding: .5em 1em;
 	cursor: pointer;
 }
 
