@@ -22,7 +22,9 @@ const DetailScreen = ({ entity }: CharacterDetailProps) => {
             <p>Speed: <span style={{ color: 'red'}}>{entity.speed}</span> </p>
             <p>Mana: <span style={{ color: 'red'}}>{entity.mana}</span> </p>
             <p>Max Mana: <span style={{ color: 'red'}}>{entity.maxMana}</span> </p>
-            <p>Luck: <span style={{ color: 'red'}}>{entity.luck}</span> </p>
+            {('luck' in entity) && (
+                <p>Luck: <span style={{ color: 'red'}}>{entity.luck}</span> </p>
+            )}
             {hasDebuff && (
                 <div>
                     <p>Debuff:</p>

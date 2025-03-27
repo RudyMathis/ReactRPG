@@ -3,34 +3,58 @@ import CharacterAtom, { CharacterType } from "../atom/CharacterAtom";
 import { storeAtom } from "../atom/storeAtom";
 
 export const handleStatusEffects = (entity: CharacterType | EnemyType) => {
-    const frozenStatus = entity.debuff.find(d => d.type === "Frozen");
-    const bleedStatus = entity.debuff.find(d => d.type === "Bleed");
+    if (entity.type === "player") {
+        const entityData = storeAtom.get(CharacterAtom)[entity.id];
+        if (!entityData) return false;
 
-    if (frozenStatus) {
-        frozen(entity, frozenStatus);
+        const frozenStatus = entityData.debuff.find(d => d.type === "Frozen");
+        const bleedStatus = entityData.debuff.find(d => d.type === "Bleed");
+        const burnStatus = entityData.debuff.find(d => d.type === "Burn");
+    
+        if (frozenStatus) {
+            frozen(entityData, frozenStatus);
+        }
+    
+        if (bleedStatus) {
+            return Bleed(entityData, bleedStatus);
+        } 
+    
+        if (burnStatus) {
+            return Burn(entityData, burnStatus);
+        } 
+        return false;
+    } else {
+        const entityData = storeAtom.get(EnemyAtom)[entity.id];
+        if (!entityData) return false;
+
+        const frozenStatus = entityData.debuff.find(d => d.type === "Frozen");
+        const bleedStatus = entityData.debuff.find(d => d.type === "Bleed");
+        const burnStatus = entityData.debuff.find(d => d.type === "Burn");
+    
+        if (frozenStatus) {
+            frozen(entityData, frozenStatus);
+        }
+    
+        if (bleedStatus) {
+            return Bleed(entityData, bleedStatus);
+        } 
+    
+        if (burnStatus) {
+            return Burn(entityData, burnStatus);
+        } 
+        return false;
     }
-
-    if (bleedStatus) {
-        return Bleed(entity, bleedStatus);
-    } 
-
-    return false;
 };
 
 const frozen = (entity: CharacterType | EnemyType, frozenStatus: { type: string; duration: number }) => {
-
-    // Remove Frozen status if duration is up
+    // If duration is up, remove the effect and reset speed
     if (frozenStatus.duration <= 0) {
-        entity.debuff = entity.debuff.filter(s => s.type !== "Frozen");
-        frozenStatus.duration = 0;
-        entity.speed = entity.speedDefault;
-
-        if(entity.type === "player"){
+        if (entity.type === "player") {
             storeAtom.set(CharacterAtom, (prev) => ({
                 ...prev,
                 [entity.id]: {
                     ...prev[entity.id],
-                    speed:  entity.speedDefault,
+                    speed: entity.speedDefault,
                     debuff: prev[entity.id].debuff.filter(s => s.type !== "Frozen"),
                 },
             }));
@@ -39,32 +63,151 @@ const frozen = (entity: CharacterType | EnemyType, frozenStatus: { type: string;
                 ...prev,
                 [entity.id]: {
                     ...prev[entity.id],
-                    speed:  entity.speedDefault,
+                    speed: entity.speedDefault,
                     debuff: prev[entity.id].debuff.filter(s => s.type !== "Frozen"),
                 },
             }));
         }
+        return false;
+    } else {
+        // Decrement duration and update the debuff array
+        if (entity.type === "player") {
+            storeAtom.set(CharacterAtom, (prev) => ({
+                ...prev,
+                [entity.id]: {
+                    ...prev[entity.id],
+                    debuff: prev[entity.id].debuff.map(d =>
+                        d.type === "Frozen" ? { ...d, duration: d.duration - 1 } : d
+                    ),
+                },
+            }));
+        } else {
+            storeAtom.set(EnemyAtom, (prev) => ({
+                ...prev,
+                [entity.id]: {
+                    ...prev[entity.id],
+                    debuff: prev[entity.id].debuff.map(d =>
+                        d.type === "Frozen" ? { ...d, duration: d.duration - 1 } : d
+                    ),
+                },
+            }));
+        }
+        return true;
     }
-
-    frozenStatus.duration -= 1;
-
-    return true; // Return true if entity is still frozen
 };
 
 const Bleed = (entity: CharacterType | EnemyType, bleedStatus: { type: string; duration: number, damage?: number }) => {
-    const damage = ((bleedStatus.damage ?? 0) - (entity.defense/10)) || 5; // Default to 5 if no damage is set
+    const damage = ((bleedStatus.damage ?? 0) - entity.defense) || 5;
 
-    // Remove bleed status if duration is up
+    // If duration expired, remove the effect
     if (bleedStatus.duration <= 0) {
-        entity.debuff = entity.debuff.filter(d => d.type !== "Bleed");
-        bleedStatus.duration = 0;
-    } 
-
-    // Apply damage to entity health
-    entity.health -= damage;
-    bleedStatus.duration -= 1;
-    console.log(entity.name, "took", damage, "damage from Bleed.", entity.health);
-
-    return true; // Return true if entity is still Bleed
+        if (entity.type === "player") {
+            storeAtom.set(CharacterAtom, (prev) => ({
+                ...prev,
+                [entity.id]: {
+                    ...prev[entity.id],
+                    debuff: prev[entity.id].debuff.filter(d => d.type !== "Bleed"),
+                },
+            }));
+        } else {
+            storeAtom.set(EnemyAtom, (prev) => ({
+                ...prev,
+                [entity.id]: {
+                    ...prev[entity.id],
+                    debuff: prev[entity.id].debuff.filter(d => d.type !== "Bleed"),
+                },
+            }));
+        }
+        return false;
+    } else {
+        // Update health and decrement duration; remove effect if duration reaches 0
+        if (entity.type === "player") {
+            storeAtom.set(CharacterAtom, (prev) => ({
+                ...prev,
+                [entity.id]: {
+                    ...prev[entity.id],
+                    health: prev[entity.id].health - damage,
+                    debuff: prev[entity.id].debuff
+                        .map(d => d.type === "Bleed" ? { ...d, duration: d.duration - 1 } : d)
+                        .filter(d => d.duration > 0),
+                },
+            }));
+        } else {
+            storeAtom.set(EnemyAtom, (prev) => ({
+                ...prev,
+                [entity.id]: {
+                    ...prev[entity.id],
+                    health: prev[entity.id].health - damage,
+                    debuff: prev[entity.id].debuff
+                        .map(d => d.type === "Bleed" ? { ...d, duration: d.duration - 1 } : d)
+                        .filter(d => d.duration > 0),
+                },
+            }));
+        }
+        console.log(entity.name, "took", damage, "damage from Bleed.");
+        return true;
+    }
 };
 
+const Burn = (entity: CharacterType | EnemyType, burnStatus: { type: string; duration: number, damage?: number }) => {
+    // If duration expired, remove the effect
+    if (burnStatus.duration <= 0) {
+        if (entity.type === "player") {
+            storeAtom.set(CharacterAtom, (prev) => ({
+                ...prev,
+                [entity.id]: {
+                    ...prev[entity.id],
+                    debuff: prev[entity.id].debuff.filter(d => d.type !== "Burn"),
+                },
+            }));
+        } else {
+            storeAtom.set(EnemyAtom, (prev) => ({
+                ...prev,
+                [entity.id]: {
+                    ...prev[entity.id],
+                    debuff: prev[entity.id].debuff.filter(d => d.type !== "Burn"),
+                },
+            }));
+        }
+        return false;
+    } else {
+        let damage = burnStatus.damage ?? 10;
+
+        // Apply fire resistance/vulnerability
+        const fireResistance = entity.resistances.find(res => res.type === "Fire");
+        if (fireResistance) {
+            damage = Math.max(0, damage - fireResistance.value);
+        }
+        const fireVulnerability = entity.vulnerabilities.find(vul => vul.type === "Fire");
+        if (fireVulnerability) {
+            damage += fireVulnerability.value;
+        }
+        
+        // Update health and decrement duration; remove effect if duration reaches 0
+        if (entity.type === "player") {
+            storeAtom.set(CharacterAtom, (prev) => ({
+                ...prev,
+                [entity.id]: {
+                    ...prev[entity.id],
+                    health: Math.max(prev[entity.id].health - damage, 0),
+                    debuff: prev[entity.id].debuff
+                        .map(d => d.type === "Burn" ? { ...d, duration: d.duration - 1 } : d)
+                        .filter(d => d.duration > 0),
+                },
+            }));
+        } else {
+            storeAtom.set(EnemyAtom, (prev) => ({
+                ...prev,
+                [entity.id]: {
+                    ...prev[entity.id],
+                    health: Math.max(prev[entity.id].health - damage, 0),
+                    debuff: prev[entity.id].debuff
+                        .map(d => d.type === "Burn" ? { ...d, duration: d.duration - 1 } : d)
+                        .filter(d => d.duration > 0),
+                },
+            }));
+        }
+        console.log(entity.name, "took", damage, "damage from Burn.");
+        return true;
+    }
+};

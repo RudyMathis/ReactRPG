@@ -7,19 +7,45 @@ import Resistances from "../gameData/Resistances";
 import Vulnerabilites from "./Vulnerabilities";
 
 const spellEffects: Record<string, (enemy: EnemyType, character: CharacterType) => number> = {
-    Fire_Ball_Tar_20: (enemy, character) => enemy.health - (character.attack + 10),
+    Fire_Ball_Tar_20: (enemy, character) =>{ 
+        enemy.debuff.push({ type: "Burn", duration: 3 });
+
+        const spellCost = 20;
+        character.mana -= spellCost;
+
+        const fireResistance = enemy.resistances.find(resistance => resistance.type === Resistances.Fire.type);
+        const fireVulnerability = enemy.vulnerabilities.find(vulnerability => vulnerability.type === Vulnerabilites.Fire.type);
+        
+        if (fireResistance) {
+            return enemy.health - (character.attack - (fireResistance!.value));
+        } else if (fireVulnerability) {
+            return enemy.health - (character.attack + (fireVulnerability!.value));
+        } else {
+            return enemy.health - character.attack;
+        }
+    },
     Ice_Bolt_Tar_30: (enemy, character) => {
         enemy.debuff.push({ type: "Frozen", duration: 3 });
         enemy.speed = 0;
         const spellCost = 30;
         character.mana -= spellCost;
 
-        if (enemy.resistances.find(resistance => resistance.type === Resistances.Ice.type)) {
-            return enemy.health - (character.attack + (5 - (enemy.resistances.find(resistance => resistance.type === Resistances.Ice.type)!.value)));
-        } else if (enemy.vulnerabilities.find(vulnerability => vulnerability.type === Vulnerabilites.Fire.type)) {
-            return enemy.health - (character.attack + (5 + (enemy.vulnerabilities.find(vulnerability => vulnerability.type === Vulnerabilites.Fire.type)!.value)));
+        // if (enemy.resistances.find(resistance => resistance.type === Resistances.Ice.type)) {
+        //     return enemy.health - (character.attack - (enemy.resistances.find(resistance => resistance.type === Resistances.Ice.type)!.value));
+        // } else if (enemy.vulnerabilities.find(vulnerability => vulnerability.type === Vulnerabilites.Ice.type)) {
+        //     return enemy.health - (character.attack + (enemy.vulnerabilities.find(vulnerability => vulnerability.type === Vulnerabilites.Ice.type)!.value));
+        // } else {
+        //     return enemy.health - character.attack;
+        // }
+        const iceResistance = enemy.resistances.find(resistance => resistance.type === Resistances.Ice.type);
+        const iceVulnerability = enemy.vulnerabilities.find(vulnerability => vulnerability.type === Vulnerabilites.Ice.type);
+        
+        if (iceResistance) {
+            return enemy.health - (character.attack - (iceResistance!.value));
+        } else if (iceVulnerability) {
+            return enemy.health - (character.attack + (iceVulnerability!.value));
         } else {
-            return enemy.health - (character.attack + 5);
+            return enemy.health - character.attack;
         }
     },
     Lightning_Bolt_Tar: (enemy, character) => enemy.health - (character.attack + 15),
@@ -36,21 +62,21 @@ const spellEffects: Record<string, (enemy: EnemyType, character: CharacterType) 
         
         if (enemyIndex === -1) {
             console.warn(`Enemy ${enemy.id} not found in sorted list.`);
-            return enemy.health - ((character.attack + 5) - enemy.defense);
+            return enemy.health - (character.attack - enemy.defense);
         }
 
         // Get previous and next enemies if they exist
         const prevEnemy = enemyIndex > 0 ? sortedEnemies[enemyIndex - 1] : null;
         const nextEnemy = enemyIndex < sortedEnemies.length - 1 ? sortedEnemies[enemyIndex + 1] : null;
 
-        enemy.health -= (character.attack + 5 - enemy.defense);
+        enemy.health -= (character.attack - enemy.defense);
 
         if (prevEnemy) {
-            prevEnemy.health -= (character.attack + 5 - enemy.defense);
+            prevEnemy.health -= (character.attack - enemy.defense);
         }
 
         if (nextEnemy) {
-            nextEnemy.health -= (character.attack + 5 - enemy.defense);
+            nextEnemy.health -= (character.attack - enemy.defense);
         }
 
         return enemy.health; // Return updated health of main target

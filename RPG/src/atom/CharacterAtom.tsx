@@ -1,6 +1,16 @@
 import { atom } from 'jotai';
 import CharacterData from "../gameData/characters/CharacterData.json";
 
+type Resistance = {
+    type: string;
+    value: number;
+}
+
+type vulnerability = {
+    type: string;
+    value: number;
+}
+
 type buffEffect = {
     type: string;
     duration: number;
@@ -20,6 +30,8 @@ export type CharacterType = {
     maxHealth: number;
     attack: number;
     defense: number;
+    resistances: Resistance[];
+    vulnerabilities: vulnerability[];
     speed: number;
     speedDefault: number;
     mana: number;
