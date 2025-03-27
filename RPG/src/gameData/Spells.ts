@@ -3,6 +3,8 @@ import { CharacterType } from "../atom/CharacterAtom";
 import { BaseDamageFlashAtom } from "../atom/effects/BaseDamageFlashAtom";
 import { ShakeAtom } from "../atom/effects/ShakeAtom";
 import { storeAtom } from "../atom/storeAtom";
+import Resistances from "../gameData/Resistances";
+import Vulnerabilites from "./Vulnerabilities";
 
 const spellEffects: Record<string, (enemy: EnemyType, character: CharacterType) => number> = {
     Fire_Ball_Tar_20: (enemy, character) => enemy.health - (character.attack + 10),
@@ -12,17 +14,21 @@ const spellEffects: Record<string, (enemy: EnemyType, character: CharacterType) 
         const spellCost = 30;
         character.mana -= spellCost;
 
-        console.log(spellCost, character.mana, character, "HELP");
-
-        return enemy.health - (character.attack + 5);
+        if (enemy.resistances.find(resistance => resistance.type === Resistances.Ice.type)) {
+            return enemy.health - (character.attack + (5 - (enemy.resistances.find(resistance => resistance.type === Resistances.Ice.type)!.value)));
+        } else if (enemy.vulnerabilities.find(vulnerability => vulnerability.type === Vulnerabilites.Fire.type)) {
+            return enemy.health - (character.attack + (5 + (enemy.vulnerabilities.find(vulnerability => vulnerability.type === Vulnerabilites.Fire.type)!.value)));
+        } else {
+            return enemy.health - (character.attack + 5);
+        }
     },
     Lightning_Bolt_Tar: (enemy, character) => enemy.health - (character.attack + 15),
     Garrote_Tar: (enemy, character) => {
-        enemy.debuff.push({ type: "Bleed", duration: 3, damage: 10 });
-        return enemy.health - (character.attack + 5);
+        enemy.debuff.push({ type: "Bleed", duration: 3, damage: (10 - (enemy.defense / 10)) });
+        return enemy.health - (character.attack + (5 - (enemy.defense / 10)));
     },
 
-    Multi_Shot_Tar: (enemy: EnemyType, character: CharacterType) => {
+    Multi_Shot_Tar_0: (enemy: EnemyType, character: CharacterType) => {
         const enemies = Object.values(storeAtom.get(EnemyAtom)); // Get all enemies as an array
         const sortedEnemies = [...enemies].sort((a, b) => a.order - b.order); // Ensure correct order
 
@@ -30,47 +36,51 @@ const spellEffects: Record<string, (enemy: EnemyType, character: CharacterType) 
         
         if (enemyIndex === -1) {
             console.warn(`Enemy ${enemy.id} not found in sorted list.`);
-            return enemy.health - (character.attack + 5);
+            return enemy.health - ((character.attack + 5) - enemy.defense);
         }
 
         // Get previous and next enemies if they exist
         const prevEnemy = enemyIndex > 0 ? sortedEnemies[enemyIndex - 1] : null;
         const nextEnemy = enemyIndex < sortedEnemies.length - 1 ? sortedEnemies[enemyIndex + 1] : null;
 
-        enemy.health -= character.attack + 5;
+        enemy.health -= (character.attack + 5 - enemy.defense);
 
         if (prevEnemy) {
-            prevEnemy.health -= character.attack + 5;
+            prevEnemy.health -= (character.attack + 5 - enemy.defense);
         }
 
         if (nextEnemy) {
-            nextEnemy.health -= character.attack + 5;
+            nextEnemy.health -= (character.attack + 5 - enemy.defense);
         }
 
         return enemy.health; // Return updated health of main target
     }
 };
 
-const spellEffectsBuff: Record<string, (character: CharacterType,) => number> = {
-    Heal__Char_20: (character) => {
-        const heal = character.health + 20;
+const spellEffectsBuff: Record<string, (character: CharacterType, target: CharacterType) => number> = {
+    Heal__Char_20: (character, target) => {
+        const heal = target.health + 20;
 
         const spellCost = 20;
         character.mana -= spellCost;
     
         console.log(spellCost, character.mana);
 
-        if(heal >= character.maxHealth) {
-            return character.health = character.maxHealth
+        if(heal >= target.maxHealth) {
+            return target.health = target.maxHealth
         } else {
             return heal;
         }
     },
-    Cure__Char: (character) => {
-        if(character.debuff.length > 0 && character.debuff[0].type !== "Dead") {
-            character.debuff.length = 0
+    Cure__Char_10: (character, target) => {
+        if(target.debuff.length > 0 && target.debuff[0].type !== "Dead") {
+            target.debuff.length = 0
         } 
-        return character.health
+
+        const spellCost = 10;
+        character.mana -= spellCost;
+
+        return target.health
     },
 };
 
@@ -92,12 +102,12 @@ const basicCharacterAttack = (enemy: EnemyType, character: CharacterType, spell:
 
 };
 
-const basicCharacterBuff = (character: CharacterType, spell: string) => {
+const basicCharacterBuff = (character: CharacterType, target: CharacterType, spell: string) => {
     if (!spellEffectsBuff[spell]) {
         console.warn(`Unknown or missing spell in spellEffectsBuff: "${spell}"`);
-        return character.health; // Return unchanged health if spell is not found
+        return target.health; // Return unchanged health if spell is not found
     }
-    return spellEffectsBuff[spell](character);
+    return spellEffectsBuff[spell](character, target);
 };
 
 const basicEnemyAttack = (character: CharacterType, enemy: EnemyType) => {

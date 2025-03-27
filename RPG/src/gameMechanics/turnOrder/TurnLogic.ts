@@ -112,7 +112,7 @@ export const runTurnLogic = async (
         if(playerTarget !== null) {
 
           if(playerTarget.id === character.id) {
-            const updatedHealth = basicCharacterBuff(character, spell as string);
+            const updatedHealth = basicCharacterBuff(character, playerTarget, spell as string);
             character.health = updatedHealth;
   
             storeAtom.set(CharacterAtom, (prev) => ({
@@ -124,7 +124,7 @@ export const runTurnLogic = async (
             }));
 
           } else {
-            const updatedHealth = basicCharacterBuff(playerTarget, spell as string);
+            const updatedHealth = basicCharacterBuff(character, playerTarget, spell as string);
             playerTarget.health = updatedHealth;
             
             storeAtom.set(CharacterAtom, (prev) => ({
@@ -137,6 +137,7 @@ export const runTurnLogic = async (
           }
         }
       }
+
       // Mark current turn as complete for the character
       storeAtom.set(CharacterAtom, prev => ({
         ...prev,
@@ -146,6 +147,21 @@ export const runTurnLogic = async (
   }
 
   console.log(`Turn ${currentTurn} ended.`);
+  
+      // this is mana regen for now
+  const manaRegenAmount = 10;
+
+  storeAtom.set(CharacterAtom, (prev) => {
+      const updatedCharacters = Object.values(prev).map((char) => ({
+          ...char,
+          mana: char.health > 0 // Only regenerate mana if the character is alive
+              ? Math.min(char.mana + manaRegenAmount, char.maxMana)
+              : char.mana, // If dead, don't change mana
+      }));
+  
+      return Object.fromEntries(updatedCharacters.map((char) => [char.id, char]));
+  });      
+      
   storeAtom.set(turnCountAtom, currentTurn + 1);
 
   // Auto-start next round if the game is still active

@@ -52,7 +52,7 @@ const frozen = (entity: CharacterType | EnemyType, frozenStatus: { type: string;
 };
 
 const Bleed = (entity: CharacterType | EnemyType, bleedStatus: { type: string; duration: number, damage?: number }) => {
-    const damage = bleedStatus.damage || 5; // Default to 5 if no damage is set
+    const damage = ((bleedStatus.damage ?? 0) - (entity.defense/10)) || 5; // Default to 5 if no damage is set
 
     // Remove bleed status if duration is up
     if (bleedStatus.duration <= 0) {
