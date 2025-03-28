@@ -6,15 +6,17 @@ type Resistance = {
     value: number;
 }
 
-type vulnerability = {
+type Vulnerability = {
     type: string;
     value: number;
 }
+
 type BuffEffect = {
     type: string;
     duration: number;
     damage?: number;
 };
+
 type DebuffEffect = {
     type: string;
     duration: number;
@@ -30,7 +32,7 @@ export type EnemyType = {
     attack: number;
     defense: number;
     resistances: Resistance[];
-    vulnerabilities: vulnerability[];
+    vulnerabilities: Vulnerability[];
     speed: number;
     speedDefault: number;
     mana: number;
@@ -42,39 +44,90 @@ export type EnemyType = {
     debuff: DebuffEffect[];
     isSelected: boolean;
     type: string;
+    group: string;
+};
+
+// Predefined enemy groups
+const enemyGroups: Record<string, string> = {
+    "Skeleton": "humanoide",
+    "Ghoul": "humanoide",
+    "Zombie": "humanoide",
+    "Goblin": "humanoide",
+    "Rat": "beast",
+    "Wolf": "beast",
+    "Ent": "elemental",
+};
+
+// Function to determine enemy group
+const determineEnemyGroup = (enemyType: string): string => {
+    return enemyGroups[enemyType] || "unknown";
 };
 
 // Function to get a random element type
-const getRandomElement = () => {
-    const elements = ["Fire", "Ice", "Dark"];
+const getRandomElement = (): string => {
+    const elements = ["Fire", "Ice", "Dark", ""];
     return elements[Math.floor(Math.random() * elements.length)];
 };
 
+// Function to get a random class based on enemy group
+const getRandomClass = (group: string): string => {
+    if (group === "humanoide") {
+        const classes = ["Knight", "Warlock", "Assassin", "Paladin", ""];
+        return classes[Math.floor(Math.random() * classes.length)];
+    } 
+    if (group === "beast") {
+        const classes = ["King", "Alpha", "Rabid", ""];
+        return classes[Math.floor(Math.random() * classes.length)];
+    } 
+    if (group === "elemental") {
+        const classes = ["Old One", ""];
+        return classes[Math.floor(Math.random() * classes.length)];
+    }
+    return ""; 
+};
+
 // Function to get a random enemy type
-const getRandomEnemyType = () => {
-    const enemyTypes = ["Skeleton", "Ghoul", "Zombie", "Rat", "Wolf", "Goblin", "Ent"];
+const getRandomEnemyType = (): string => {
+    const enemyTypes = Object.keys(enemyGroups);
     return enemyTypes[Math.floor(Math.random() * enemyTypes.length)];
 };
 
 // Generate up to 7 unique enemies
 const initialEnemies: Record<number, EnemyType> = {};
-// const enemyCount = Math.floor(Math.random() * 7) + 1; // Between 1 and 7 enemies
-// random enemy count between 4 and 7
-const enemyCount = Math.floor(Math.random() * 4) + 4;
+const enemyCount = Math.floor(Math.random() * 4) + 4; // Random between 4-7
 
 for (let i = 0; i < enemyCount; i++) {
-    const element = getRandomElement();
     const enemyType = getRandomEnemyType();
+    const enemyGroup = determineEnemyGroup(enemyType);
     
-    // Ensure unique IDs by using the loop index
+    const element = getRandomElement();
+    const enemyClass = getRandomClass(enemyGroup);
+
+    // Ensure no duplication in element naming
+    const finalElement = element ? `${element} ` : "";
+    const finalClass = enemyClass ? `${enemyClass} ` : "";
+
+    let finalName = enemyType; // Default to just the name
+
+    // Apply naming format based on group
+    if (enemyGroup === "humanoide") {
+        finalName = `${finalElement} ${enemyType} ${finalClass}`.trim();
+    } else if (enemyGroup === "beast") {
+        finalName = `${finalClass} ${finalElement} ${enemyType}`.trim();
+    } else if (enemyGroup === "elemental") {
+        finalName = `${finalElement} ${enemyType} ${finalClass}`.trim();
+    }
+
+    // Create enemy
     const enemy = EnemyFactory.createEnemy(enemyType, element);
-    enemy.id = i + 100; // Assign a unique ID (1-based index)
-    
+    enemy.id = i + 100;
+    enemy.group = enemyGroup;
+    enemy.name = finalName;
+
     initialEnemies[enemy.id] = enemy;
 }
 
-console.log("Initialized Enemies:", initialEnemies); // Debugging
+console.log("Initialized Enemies:", initialEnemies);
 
 const EnemyAtom = atom(initialEnemies);
-
 export default EnemyAtom;

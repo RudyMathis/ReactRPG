@@ -22,9 +22,6 @@ const DetailScreen = ({ entity }: CharacterDetailProps) => {
             <p>Speed: <span style={{ color: 'red'}}>{entity.speed}</span> </p>
             <p>Mana: <span style={{ color: 'red'}}>{entity.mana}</span> </p>
             <p>Max Mana: <span style={{ color: 'red'}}>{entity.maxMana}</span> </p>
-            {('luck' in entity) && (
-                <p>Luck: <span style={{ color: 'red'}}>{entity.luck}</span> </p>
-            )}
             {hasDebuff && (
                 <div>
                     <p>Debuff:</p>
@@ -52,7 +49,6 @@ const DetailScreen = ({ entity }: CharacterDetailProps) => {
 
             {entity && 'exp' in entity && <p>Experience: <span style={{ color: 'red'}}>{entity.exp}</span> </p>}
             {entity && 'maxExp' in entity && <p>Max Experience: <span style={{ color: 'red'}}>{entity.maxExp}</span> </p>}
-            {entity && 'gold' in entity && <p>Gold: <span style={{ color: 'red'}}>{entity.gold}</span> </p>}
         </div>
     );
 };

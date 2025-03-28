@@ -19,7 +19,8 @@
         "buff": [],
         "debuff": [],
         "isSelected": false,
-        "type": "npc"
+        "type": "npc",
+        "group": "humanoide"
     },
     "Ghoul": {
         "id": 101,
@@ -41,7 +42,8 @@
         "buff": [],
         "debuff": [],
         "isSelected": false,
-        "type": "npc"
+        "type": "npc",
+        "group": "humanoide"
     },
     "Zombie": {
         "id": 102,
@@ -63,7 +65,8 @@
         "buff": [],
         "debuff": [],
         "isSelected": false,
-        "type": "npc"
+        "type": "npc",
+        "group": "humanoide"
     },
     "Rat": {
         "id": 103,
@@ -85,7 +88,8 @@
         "buff": [],
         "debuff": [],
         "isSelected": false,
-        "type": "npc"
+        "type": "npc",
+        "group": "beast"
     },
     "Wolf": {
         "id": 104,
@@ -107,7 +111,8 @@
         "buff": [],
         "debuff": [],
         "isSelected": false,
-        "type": "npc"
+        "type": "npc",
+        "group": "beast"
     },
     "Goblin": {
         "id": 105,
@@ -129,7 +134,8 @@
         "buff": [],
         "debuff": [],
         "isSelected": false,
-        "type": "npc"
+        "type": "npc",
+        "group": "humanoide"
     },
     "Ent": {
         "id": 106,
@@ -151,6 +157,7 @@
         "buff": [],
         "debuff": [],
         "isSelected": false,
-        "type": "npc"
+        "type": "npc",
+        "group": "elemental"
     }
 }

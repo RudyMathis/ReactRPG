@@ -7,6 +7,44 @@ type BaseEnemyDataRecord = Record<string, EnemyType>;
 
 const baseEnemyDataRecord: BaseEnemyDataRecord = BaseEnemyData;
 
+const modifierEffects: Record<string, Partial<EnemyType>> = {
+    "Ice": {
+        health: 30,
+        maxHealth: 30,
+        attack: 5,
+        spells: ["Frostbite"],
+        resistances: [Resistances["Ice"]],
+        vulnerabilities: [Vulnerabilites["Fire"]],
+    },
+    "Fire": {
+        health: 20,
+        maxHealth: 20,
+        attack: 8,
+        speed: 3,
+        spells: ["Flame Burst"],
+        resistances: [Resistances["Fire"]],
+        vulnerabilities: [Vulnerabilites["Ice"]],
+    },
+    "Dark": {
+        defense: 5,
+        spells: ["Shadow Strike"],
+        resistances: [Resistances["Dark"]],
+        vulnerabilities: [Vulnerabilites["Light"]],
+    },
+    "Knight": {
+        defense: 10,
+        attack: 3,
+        health: 15,
+        maxHealth: 15,
+    },
+    "Rabid": {
+        attack: 6,
+        speed: 4,
+        health: 10,
+        maxHealth: 10,
+    }
+};
+
 class EnemyFactory {
     static createEnemy(baseName: string, modifier?: string): EnemyType {
         const baseEnemy = baseEnemyDataRecord[baseName];
@@ -15,7 +53,7 @@ class EnemyFactory {
             throw new Error(`Enemy ${baseName} not found in EnemyData`);
         }
 
-        // Create unique copies of arrays to avoid shared references
+        // Create unique copies to avoid shared references
         let modifiedEnemy: EnemyType = {
             ...baseEnemy,
             spells: [...baseEnemy.spells],
@@ -27,30 +65,20 @@ class EnemyFactory {
         };
 
         // Apply modifier effects if provided
-        if (modifier) {
+        if (modifier && modifierEffects[modifier]) {
+            const effects = modifierEffects[modifier];
+
             modifiedEnemy = {
                 ...modifiedEnemy,
                 name: `${modifier} ${baseEnemy.name}`,
-                health: baseEnemy.health + (modifier === "Ice" ? 30 : modifier === "Fire" ? 20 : 10),
-                maxHealth: baseEnemy.maxHealth + (modifier === "Ice" ? 30 : modifier === "Fire" ? 20 : 10),
-                attack: baseEnemy.attack + (modifier === "Ice" ? 5 : modifier === "Fire" ? 8 : 3),
-                defense: baseEnemy.defense + (modifier === "Dark" ? 5 : 0),
-                speed: baseEnemy.speed + (modifier === "Fire" ? 3 : 0),
-                spells: [
-                    ...modifiedEnemy.spells,
-                    ...(modifier === "Ice" ? ["Frostbite"] : []),
-                    ...(modifier === "Fire" ? ["Flame Burst"] : []),
-                    ...(modifier === "Dark" ? ["Shadow Strike"] : []),
-                ],
-                resistances: [
-                    ...modifiedEnemy.resistances,
-                    ...(modifier in Resistances ? [Resistances[modifier as keyof typeof Resistances]] : []),
-                ],
-                vulnerabilities: [
-                    ...modifiedEnemy.vulnerabilities,
-                    ...(modifier in Vulnerabilites ? [Vulnerabilites[modifier as keyof typeof Vulnerabilites]] : []),
-                ],
-                type: modifier, // Set element type
+                health: modifiedEnemy.health + (effects.health ?? 0),
+                maxHealth: modifiedEnemy.maxHealth + (effects.maxHealth ?? 0),
+                attack: modifiedEnemy.attack + (effects.attack ?? 0),
+                defense: modifiedEnemy.defense + (effects.defense ?? 0),
+                speed: modifiedEnemy.speed + (effects.speed ?? 0),
+                spells: [...modifiedEnemy.spells, ...(effects.spells ?? [])],
+                resistances: [...modifiedEnemy.resistances, ...(effects.resistances ?? [])],
+                vulnerabilities: [...modifiedEnemy.vulnerabilities, ...(effects.vulnerabilities ?? [])]
             };
         }
 
@@ -59,3 +87,4 @@ class EnemyFactory {
 }
 
 export default EnemyFactory;
+

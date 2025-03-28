@@ -30,13 +30,6 @@ const spellEffects: Record<string, (enemy: EnemyType, character: CharacterType) 
         const spellCost = 30;
         character.mana -= spellCost;
 
-        // if (enemy.resistances.find(resistance => resistance.type === Resistances.Ice.type)) {
-        //     return enemy.health - (character.attack - (enemy.resistances.find(resistance => resistance.type === Resistances.Ice.type)!.value));
-        // } else if (enemy.vulnerabilities.find(vulnerability => vulnerability.type === Vulnerabilites.Ice.type)) {
-        //     return enemy.health - (character.attack + (enemy.vulnerabilities.find(vulnerability => vulnerability.type === Vulnerabilites.Ice.type)!.value));
-        // } else {
-        //     return enemy.health - character.attack;
-        // }
         const iceResistance = enemy.resistances.find(resistance => resistance.type === Resistances.Ice.type);
         const iceVulnerability = enemy.vulnerabilities.find(vulnerability => vulnerability.type === Vulnerabilites.Ice.type);
         
@@ -89,8 +82,6 @@ const spellEffectsBuff: Record<string, (character: CharacterType, target: Charac
 
         const spellCost = 20;
         character.mana -= spellCost;
-    
-        console.log(spellCost, character.mana);
 
         if(heal >= target.maxHealth) {
             return target.health = target.maxHealth
