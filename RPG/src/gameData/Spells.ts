@@ -17,9 +17,13 @@ const spellEffects: Record<string, (enemy: EnemyType, character: CharacterType) 
         const fireVulnerability = enemy.vulnerabilities.find(vulnerability => vulnerability.type === Vulnerabilites.Fire.type);
         
         if (fireResistance) {
-            return enemy.health - (character.attack - (fireResistance!.value));
+            if(fireResistance.value < character.attack) {
+                return enemy.health - (character.attack - (fireResistance.value));
+            } else {
+                return enemy.health - 5;
+            }
         } else if (fireVulnerability) {
-            return enemy.health - (character.attack + (fireVulnerability!.value));
+            return enemy.health - (character.attack + (fireVulnerability.value));
         } else {
             return enemy.health - character.attack;
         }
@@ -34,9 +38,13 @@ const spellEffects: Record<string, (enemy: EnemyType, character: CharacterType) 
         const iceVulnerability = enemy.vulnerabilities.find(vulnerability => vulnerability.type === Vulnerabilites.Ice.type);
         
         if (iceResistance) {
-            return enemy.health - (character.attack - (iceResistance!.value));
+            if(iceResistance.value < character.attack) {
+                return enemy.health - (character.attack - (iceResistance.value));
+            } else {
+                return enemy.health - 5;
+            }
         } else if (iceVulnerability) {
-            return enemy.health - (character.attack + (iceVulnerability!.value));
+            return enemy.health - (character.attack + (iceVulnerability.value));
         } else {
             return enemy.health - character.attack;
         }
@@ -114,7 +122,7 @@ const basicCharacterAttack = (enemy: EnemyType, character: CharacterType, spell:
         return spellEffects[spell](enemy, character);
     } else {
         console.warn(`Unknown spell: ${spell}`);
-        return enemy.health - character.attack; // Default attack
+        return enemy.health - character.attack;
     }
 
 };

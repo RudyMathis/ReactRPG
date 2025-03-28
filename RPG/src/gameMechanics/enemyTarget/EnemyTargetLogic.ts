@@ -8,7 +8,7 @@ export const getEnemyTargetName = (enemy: EnemyType, selectedCharacters: Charact
     if (aliveCharacters.length === 0) return ""; // If no alive characters, return empty string
 
     if (enemy.target.includes("TargetSpeedLow")) {
-        const sorted = [...aliveCharacters].sort((a, b) => a.speed - b.speed);
+        const sorted = [...aliveCharacters].sort((a, b) => a.speedDefault - b.speedDefault);
         return sorted[0].name;
     }
 
@@ -22,8 +22,8 @@ export const getEnemyTargetName = (enemy: EnemyType, selectedCharacters: Charact
         return sorted[0].name;
     }
 
-    if (enemy.target.includes("TargetLuckLow")) {
-        const sorted = [...aliveCharacters].sort((a, b) => a.luck - b.luck);
+    if (enemy.target.includes("TargetDefenseLow")) {
+        const sorted = [...aliveCharacters].sort((a, b) => a.defense - b.defense);
         return sorted[0].name;
     }
 

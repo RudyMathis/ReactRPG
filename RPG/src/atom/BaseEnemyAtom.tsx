@@ -104,8 +104,8 @@ for (let i = 0; i < enemyCount; i++) {
     const enemyClass = getRandomClass(enemyGroup);
 
     // Ensure no duplication in element naming
-    const finalElement = element ? `${element} ` : "";
-    const finalClass = enemyClass ? `${enemyClass} ` : "";
+    const finalElement = element ? `${element}` : "";
+    const finalClass = enemyClass ? `${enemyClass}` : "";
 
     let finalName = enemyType; // Default to just the name
 
@@ -119,7 +119,7 @@ for (let i = 0; i < enemyCount; i++) {
     }
 
     // Create enemy
-    const enemy = EnemyFactory.createEnemy(enemyType, element);
+    const enemy = EnemyFactory.createEnemy(enemyType, [element, enemyClass]);
     enemy.id = i + 100;
     enemy.group = enemyGroup;
     enemy.name = finalName;
