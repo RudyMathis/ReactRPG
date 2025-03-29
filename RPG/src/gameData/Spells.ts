@@ -4,32 +4,28 @@ import { BaseDamageFlashAtom } from "../atom/effects/BaseDamageFlashAtom";
 import { ShakeAtom } from "../atom/effects/ShakeAtom";
 import { storeAtom } from "../atom/storeAtom";
 import Resistances from "../gameData/Resistances";
+import Debuffs from "./Debuffs";
 import Vulnerabilites from "./Vulnerabilities";
 
 const spellEffects: Record<string, (enemy: EnemyType, character: CharacterType) => number> = {
     Fire_Ball_Tar_20: (enemy, character) =>{ 
-        enemy.debuff.push({ type: "Burn", duration: 3 });
-
+        enemy.debuff.push({ type: Debuffs.Burn.type, duration: 3 });
         const spellCost = 20;
         character.mana -= spellCost;
 
-        const fireResistance = enemy.resistances.find(resistance => resistance.type === Resistances.Fire.type);
-        const fireVulnerability = enemy.vulnerabilities.find(vulnerability => vulnerability.type === Vulnerabilites.Fire.type);
+        const fireResistance = enemy.resistances.find(res => res.type ===  Resistances.Fire.type);
+        const fireVulnerability = enemy.vulnerabilities.find(vul => vul.type === Vulnerabilites.Fire.type);
         
         if (fireResistance) {
-            if(fireResistance.value < character.attack) {
-                return enemy.health - (character.attack - (fireResistance.value));
-            } else {
-                return enemy.health - 5;
-            }
+            return enemy.health - Math.max(1, character.attack - Resistances.Fire.value);
         } else if (fireVulnerability) {
-            return enemy.health - (character.attack + (fireVulnerability.value));
+            return enemy.health - character.attack + Vulnerabilites.Fire.value;
         } else {
             return enemy.health - character.attack;
         }
     },
     Ice_Bolt_Tar_30: (enemy, character) => {
-        enemy.debuff.push({ type: "Frozen", duration: 3 });
+        enemy.debuff.push({ type: Debuffs.Frozen.type, duration: 3 });
         enemy.speed = 0;
         const spellCost = 30;
         character.mana -= spellCost;
@@ -37,22 +33,18 @@ const spellEffects: Record<string, (enemy: EnemyType, character: CharacterType) 
         const iceResistance = enemy.resistances.find(resistance => resistance.type === Resistances.Ice.type);
         const iceVulnerability = enemy.vulnerabilities.find(vulnerability => vulnerability.type === Vulnerabilites.Ice.type);
         
-        if (iceResistance) {
-            if(iceResistance.value < character.attack) {
-                return enemy.health - (character.attack - (iceResistance.value));
-            } else {
-                return enemy.health - 5;
-            }
+        if(iceResistance) {
+            return enemy.health - Math.max(1, character.attack - Resistances.Ice.value);
         } else if (iceVulnerability) {
-            return enemy.health - (character.attack + (iceVulnerability.value));
+            return enemy.health - character.attack + Vulnerabilites.Ice.value;
         } else {
             return enemy.health - character.attack;
         }
     },
-    Lightning_Bolt_Tar: (enemy, character) => enemy.health - (character.attack + 15),
-    Garrote_Tar: (enemy, character) => {
-        enemy.debuff.push({ type: "Bleed", duration: 3, damage: (10 - (enemy.defense / 10)) });
-        return enemy.health - (character.attack + (5 - (enemy.defense / 10)));
+    Lightning_Bolt_Tar_40: (enemy, character) => enemy.health - (character.attack + 15),
+    Garrote_Tar_0: (enemy, character) => {
+        enemy.debuff.push({ type: Debuffs.Bleed.type, duration: 3});
+        return enemy.health - Math.max(5, character.attack - enemy.defense);
     },
 
     Multi_Shot_Tar_0: (enemy: EnemyType, character: CharacterType) => {
@@ -63,21 +55,21 @@ const spellEffects: Record<string, (enemy: EnemyType, character: CharacterType) 
         
         if (enemyIndex === -1) {
             console.warn(`Enemy ${enemy.id} not found in sorted list.`);
-            return enemy.health - (character.attack - enemy.defense);
+            return enemy.health - (character.attack -  Math.max(5, enemy.defense));
         }
 
         // Get previous and next enemies if they exist
         const prevEnemy = enemyIndex > 0 ? sortedEnemies[enemyIndex - 1] : null;
         const nextEnemy = enemyIndex < sortedEnemies.length - 1 ? sortedEnemies[enemyIndex + 1] : null;
 
-        enemy.health -= (character.attack - enemy.defense);
+        enemy.health -= (character.attack - Math.max(5, enemy.defense));
 
         if (prevEnemy) {
-            prevEnemy.health -= (character.attack - enemy.defense);
+            prevEnemy.health -= (character.attack - Math.max(5, enemy.defense));
         }
 
         if (nextEnemy) {
-            nextEnemy.health -= (character.attack - enemy.defense);
+            nextEnemy.health -= (character.attack - Math.max(5, enemy.defense));
         }
 
         return enemy.health; // Return updated health of main target
@@ -122,7 +114,7 @@ const basicCharacterAttack = (enemy: EnemyType, character: CharacterType, spell:
         return spellEffects[spell](enemy, character);
     } else {
         console.warn(`Unknown spell: ${spell}`);
-        return enemy.health - character.attack;
+        return enemy.health - Math.max(5, character.attack - enemy.defense);
     }
 
 };
@@ -144,7 +136,7 @@ const basicEnemyAttack = (character: CharacterType, enemy: EnemyType) => {
     storeAtom.set(ShakeAtom, (prev) => ({ ...prev, [enemy.id]: true }));
     storeAtom.set(BaseDamageFlashAtom, (prev) => ({ ...prev, [character.id]: true }));
 
-    return character.health - enemy.attack;
+    return character.health - Math.max(1, enemy.attack - character.defense);
 };
 
 export { basicCharacterAttack, basicCharacterBuff, basicEnemyAttack };

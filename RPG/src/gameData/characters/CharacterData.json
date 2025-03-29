@@ -40,7 +40,7 @@
         "exp": 0,
         "maxExp": 100,
         "items": [],
-        "spells": ["Fire_Ball_Tar_20", "Ice_Bolt_Tar_30"],
+        "spells": ["Fire_Ball_Tar_20", "Ice_Bolt_Tar_30", "Lightning_Bolt_Tar_40"],
         "buff": [],
         "debuff": [],
         "currentTurn": false,

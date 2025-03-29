@@ -12,16 +12,16 @@ const elementEffects: Record<string, Partial<EnemyType>> = {
         attack: 5,
         defense: 5,
         spells: ["Frostbite"],
-        resistances: [Resistances["Ice"]],
-        vulnerabilities: [Vulnerabilites["Fire"]],
+        resistances: [Resistances.Ice],
+        vulnerabilities: [Vulnerabilites.Ice],
     },
     "Fire": {
         health: 30,
         maxHealth: 30,
         attack: 15,
         spells: ["Flame Burst"],
-        resistances: [Resistances["Fire"]],
-        vulnerabilities: [Vulnerabilites["Ice"]],
+        resistances: [Resistances.Fire],
+        vulnerabilities: [Vulnerabilites.Fire],
     },
     "Dark": {
         health: 30,
@@ -29,8 +29,8 @@ const elementEffects: Record<string, Partial<EnemyType>> = {
         attack: 5,
         defense: 5,
         spells: ["Shadow Strike"],
-        resistances: [Resistances["Dark"]],
-        vulnerabilities: [Vulnerabilites["Light"]],
+        resistances: [Resistances.Dark],
+        vulnerabilities: [Vulnerabilites.Dark],
     }
 };
 
