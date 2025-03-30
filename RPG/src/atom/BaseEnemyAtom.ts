@@ -59,18 +59,18 @@ const enemyGroups: Record<string, string> = {
 };
 
 // Function to determine enemy group
-const determineEnemyGroup = (enemyType: string): string => {
+export const determineEnemyGroup = (enemyType: string): string => {
     return enemyGroups[enemyType] || "unknown";
 };
 
 // Function to get a random element type
-const getRandomElement = (): string => {
+export const getRandomElement = (): string => {
     const elements = ["Fire", "Ice", "Dark", ""];
     return elements[Math.floor(Math.random() * elements.length)];
 };
 
 // Function to get a random class based on enemy group
-const getRandomClass = (group: string): string => {
+export const getRandomClass = (group: string): string => {
     if (group === "humanoide") {
         const classes = ["Knight", "Warlock", "Assassin", "Paladin", ""];
         return classes[Math.floor(Math.random() * classes.length)];
@@ -87,7 +87,7 @@ const getRandomClass = (group: string): string => {
 };
 
 // Function to get a random enemy type
-const getRandomEnemyType = (): string => {
+export const getRandomEnemyType = (): string => {
     const enemyTypes = Object.keys(enemyGroups);
     return enemyTypes[Math.floor(Math.random() * enemyTypes.length)];
 };

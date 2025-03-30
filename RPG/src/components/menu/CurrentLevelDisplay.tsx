@@ -1,8 +1,8 @@
 import { useAtom } from "jotai";
-import { GameLevelAtom } from "../atom/GameLevelAtom";
+import { GameLevelAtom } from "../../atom/GameLevelAtom";
 
 const CurrentLevelDisplay = () => {
-    const [currentGameLevel] = useAtom(GameLevelAtom); // Use `useAtom` for reactivity
+    const [currentGameLevel] = useAtom(GameLevelAtom);
 
     return (
         <h1>Current {currentGameLevel.level} - {currentGameLevel.round}</h1>

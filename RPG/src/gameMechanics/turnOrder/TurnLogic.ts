@@ -19,9 +19,7 @@ export const runTurnLogic = async (
   waitForInput: () => Promise<void>
 ) => {
   const characters = turnOrder.filter(e => !('target' in e)) as CharacterType[];
-  // const enemies = turnOrder.filter(e => 'target' in e) as EnemyType[];
   const currentTurn = storeAtom.get(turnCountAtom); // Read current turn
-
 
   if (handleAllCharactersDead()) return;
   if (handleAllEnemiesDead()) return;
@@ -32,9 +30,14 @@ export const runTurnLogic = async (
       // Enemy turn
       const enemy = storeAtom.get(EnemyAtom)[entity.id];
 
+      if (!enemy) {
+        console.warn(`Enemy with ID ${entity.id} not found in EnemyAtom.`);
+        continue; // Skip this iteration
+      }
+    
       if (enemy.health <= 0) {
-        console.log(`${enemy.name} died from debuff effects.`);
-        continue; // Skip dead enemies
+          console.log(`${enemy.name} died from debuff effects.`);
+          continue; // Skip dead enemies
       }
 
       await new Promise(resolve => setTimeout(resolve, 1500));
@@ -163,16 +166,20 @@ const handleAllEnemiesDead = () => {
   if (allEnemiesDead) {
     storeAtom.set(GameLevelAtom, (prev) => ({
       ...prev,
-      level: prev.level,
-      round: prev.round + 1,
-      isLevelOver: false,  
       isRoundOver: true  
     }));
-    console.log(`Game Over. You Win`);
-    return true; // Indicate that all enemies are dead
+    
+    storeAtom.set(CharacterAtom, prev => {
+      return Object.fromEntries(Object.entries(prev).map(([id, char]) => {
+        return [id, { ...char, currentTurn: false }];
+      }));
+    });
+
+    return true;
   }
   return false;
 };
+
 
 
 const handleAllCharactersDead = () => { 

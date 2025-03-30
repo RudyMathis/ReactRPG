@@ -130,30 +130,53 @@ const Bleed = (entity: CharacterType | EnemyType, bleedStatus: { type: string; d
         // Apply percentage-based damage reduction
         const damage = Math.max(1, Math.round(baseDamage * (1 / (1 + defense / 100))));
 
-        // Update health and decrement duration
+        // Check if the entity is a player or enemy
         if (entity.type === "player") {
-            store.storeAtom.set(CharacterAtom, (prev) => ({
-                ...prev,
-                [entity.id]: {
-                    ...prev[entity.id],
-                    health: prev[entity.id].health - damage,
-                    debuff: prev[entity.id].debuff
-                        .map(d => d.type === Debuffs.Bleed.type ? { ...d, duration: d.duration - 1 } : d)
-                        .filter(d => d.duration > 0),
-                },
-            }));
+            // Apply Bleed damage to Player
+            store.storeAtom.set(CharacterAtom, (prev) => {
+                const updatedEntity = prev[entity.id];
+                const newHealth = Math.max(updatedEntity.health - damage, 0);
+
+                // Remove Bleed debuff if health is zero or less
+                const updatedDebuff = newHealth > 0 
+                    ? updatedEntity.debuff.map(d => d.type === Debuffs.Bleed.type ? { ...d, duration: d.duration - 1 } : d).filter(d => d.duration > 0)
+                    : updatedEntity.debuff.filter(d => d.type !== Debuffs.Bleed.type);
+
+                return {
+                    ...prev,
+                    [entity.id]: {
+                        ...updatedEntity,
+                        health: newHealth,
+                        debuff: updatedDebuff,
+                    },
+                };
+            });
         } else {
-            store.storeAtom.set(EnemyAtom, (prev) => ({
-                ...prev[entity.id],
-                health: prev[entity.id].health - damage,
-                debuff: prev[entity.id].debuff
-                    .map(d => d.type === Debuffs.Bleed.type ? { ...d, duration: d.duration - 1 } : d)
-                    .filter(d => d.duration > 0),
-            }));
+            // Apply Bleed damage to Enemy
+            store.storeAtom.set(EnemyAtom, (prev) => {
+                const updatedEntity = prev[entity.id];
+                const newHealth = Math.max(updatedEntity.health - damage, 0);
+
+                // Remove Bleed debuff if health is zero or less
+                const updatedDebuff = newHealth > 0 
+                    ? updatedEntity.debuff.map(d => d.type === Debuffs.Bleed.type ? { ...d, duration: d.duration - 1 } : d).filter(d => d.duration > 0)
+                    : updatedEntity.debuff.filter(d => d.type !== Debuffs.Bleed.type);
+
+                return {
+                    ...prev,
+                    [entity.id]: {
+                        ...updatedEntity,
+                        health: newHealth,
+                        debuff: updatedDebuff,
+                    },
+                };
+            });
         }
 
         console.log(entity.name, "took", damage, "damage from Bleed.");
-        return true;
+        
+        // If health reached 0, return false to stop further processing for this Bleed
+        return entity.health > 0;
     }
 };
 

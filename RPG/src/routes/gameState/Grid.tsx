@@ -14,17 +14,7 @@ import DetailScreen from '../../components/entityDetail/DetailScreen';
 import Btn from '../../components/Btn';
 import './Grid.css';
 import { storeAtom } from '../../atom/storeAtom';
-
-// A simple shuffle function, if needed for enemy order.
-const shuffleArray = <T extends { order?: number }>(array: T[]): T[] => {
-  const shuffled = [...array].sort(() => Math.random() - 0.5);
-
-  // Reassign the 'order' based on the shuffled positions
-  return shuffled.map((item, index) => ({
-    ...item,
-    order: index + 1,
-  }));
-};
+import { GameLevelAtom } from '../../atom/GameLevelAtom';
 
 const Grid = () => {
   const currentTurn = storeAtom.get(turnCountAtom); // Read current turn
@@ -36,21 +26,25 @@ const Grid = () => {
   const [playerTarget, setPlayerTarget] = useAtom(playerTargetAtom);
   const [waitingForInput, setWaitingForInput] = useState(false);
   const inputPromiseResolverRef = useRef<(() => void) | null>(null);
-  const [initialized, setInitialized] = useState(false);
+  // const [initialized, setInitialized] = useState(false);
+  const [gameLevel] = useAtom(GameLevelAtom);
   const [activeDetailScreen, setActiveDetailScreen] = useState<CharacterType | EnemyType | null>(null);
   const [startOfRound, setStartOfRound] = useState(true);
 
   useEffect(() => {
-    if (!initialized) {
-      const shuffled = shuffleArray(Object.values(enemies)); // Shuffle enemies once
-      const reorderedEnemies = shuffled.reduce((acc: Record<number, EnemyType>, enemy, index) => {
-        acc[enemy.id] = { ...enemy, order: index + 1 };
+    if (!gameLevel.isRoundOver) {
+      // When a new round starts (isRoundOver becomes false),
+      // reinitialize enemy ordering.
+      const enemyArray = Object.values(enemies);
+      const shuffled = enemyArray.sort(() => Math.random() - 0.5)
+        .map((enemy, index) => ({ ...enemy, order: index + 1 }));
+      const reorderedEnemies = shuffled.reduce((acc: Record<number, EnemyType>, enemy) => {
+        acc[enemy.id] = enemy;
         return acc;
       }, {});
       setEnemies(reorderedEnemies);
-      setInitialized(true);
     }
-  }, [initialized, enemies, setEnemies]);
+  }, [gameLevel.isRoundOver]);
   
   const waitForInput = useCallback((): Promise<void> => {
     setWaitingForInput(true);

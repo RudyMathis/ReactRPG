@@ -1,9 +1,15 @@
+import { useAtom } from "jotai";
+import { GameLevelAtom } from "../../atom/GameLevelAtom";
 import NavigateBtn from "../../components/NavigateBtn";
 import Grid from "./Grid";
 import TurnOrderDisplay from "../../gameMechanics/turnOrder/TurnOrderDisplay";
-import CurrentLevelDisplay from "../../components/CurrentLevelDisplay";
-import './LevelLayout.css'
+import CurrentLevelDisplay from "../../components/menu/CurrentLevelDisplay";
+import EndofRoundDisplay from "../../components/menu/EndOfRoundDisplay";
+import './LevelLayout.css';
+
 const LevelLayout = () => {
+    const [currentGameLevel] = useAtom(GameLevelAtom);
+    const isRoundOver = currentGameLevel.isRoundOver;
 
     return (
         <div className="level-layout">
@@ -13,8 +19,9 @@ const LevelLayout = () => {
             </div>
             <Grid />
             <TurnOrderDisplay />
+            {isRoundOver && <EndofRoundDisplay />}
         </div>
     );
 }
 
-export default LevelLayout
+export default LevelLayout;

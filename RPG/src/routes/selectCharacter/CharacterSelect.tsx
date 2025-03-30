@@ -1,8 +1,12 @@
 import CharacterSheets from "./CharacterSheets";
 import NavigateBtn from "../../components/NavigateBtn";
 import "./CharacterSelect.css";
+import { GameLevelAtom } from "../../atom/GameLevelAtom";
+import { useAtom } from "jotai";
 
 const CharacterSelect = () => {
+
+    const [currentGameLevel] = useAtom(GameLevelAtom);
 
     return (
         <>
@@ -11,7 +15,7 @@ const CharacterSelect = () => {
                 <NavigateBtn locationValue="/" location="Main Menu" />
             </div>
             <CharacterSheets />
-            <NavigateBtn className="adventure" locationValue="/game" location="Begin your adventure" />
+            <NavigateBtn locationValue={`/game/${currentGameLevel.level}-${currentGameLevel.round}`} location="Begin your adventure" />
         </>
     );
 };
