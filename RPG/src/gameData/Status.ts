@@ -14,7 +14,6 @@ export const handleStatusEffects = (entity: CharacterType | EnemyType) => {
         const frozenStatus = entityData.debuff.find(d => d.type === Debuffs.Frozen.type);
         const bleedStatus = entityData.debuff.find(d => d.type === Debuffs.Bleed.type);
         const burnStatus = entityData.debuff.find(d => d.type === Debuffs.Burn.type);
-        console.log(frozenStatus, bleedStatus, burnStatus);
     
         if (frozenStatus) {
             frozen(entityData, frozenStatus);

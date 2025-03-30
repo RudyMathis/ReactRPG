@@ -38,7 +38,6 @@ export type CharacterType = {
     maxMana: number;
     exp: number;
     maxExp: number;
-    items: string[];
     spells: string[];
     buff: buffEffect[];
     debuff: debuffEffect[];

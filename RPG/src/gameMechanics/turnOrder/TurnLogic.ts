@@ -1,6 +1,7 @@
 import { storeAtom } from "../../atom/storeAtom";
 import { turnCountAtom } from "../../atom/UseTurnCountAtom";
 import { playerTargetAtom } from '../../atom/PlayerTargetAtom';
+import { GameLevelAtom } from "../../atom/GameLevelAtom";
 import CharacterAtom from '../../atom/CharacterAtom';
 import EnemyAtom from '../../atom/BaseEnemyAtom';
 import { getEnemyTargetName } from '../enemyTarget/EnemyTargetLogic';
@@ -18,18 +19,12 @@ export const runTurnLogic = async (
   waitForInput: () => Promise<void>
 ) => {
   const characters = turnOrder.filter(e => !('target' in e)) as CharacterType[];
-  const enemies = turnOrder.filter(e => 'target' in e) as EnemyType[];
+  // const enemies = turnOrder.filter(e => 'target' in e) as EnemyType[];
   const currentTurn = storeAtom.get(turnCountAtom); // Read current turn
 
-  // Check if the game should end
-  const allCharactersDead = characters.every(c => c.health <= 0);
-  const allEnemiesDead = enemies.every(e => e.health <= 0);
-  
-  if (allCharactersDead || allEnemiesDead) {
-    console.log(`Game Over. ${allCharactersDead ? "Enemies Win!" : "Players Win!"}`);
-    return; // Stop running turns
-  }
 
+  if (handleAllCharactersDead()) return;
+  if (handleAllEnemiesDead()) return;
   for (const entity of turnOrder) {
     handleStatusEffects(entity); 
 
@@ -68,6 +63,8 @@ export const runTurnLogic = async (
       }));
 
       console.log(`Enemy ${enemy.name} attacked ${character.name} for ${enemy.attack} damage.`);
+      if (handleAllCharactersDead()) return;
+      if (handleAllEnemiesDead()) return;      
     } else {
       // Character turn
       const character = entity as CharacterType;
@@ -107,7 +104,8 @@ export const runTurnLogic = async (
           },
         }));
 
-      } else {
+        console.log(playerTarget, updatedHealth)
+        if (handleAllEnemiesDead()) return;      } else {
         
         if(playerTarget !== null) {
 
@@ -143,27 +141,62 @@ export const runTurnLogic = async (
         ...prev,
         [character.id]: { ...character, currentTurn: false }
       }));
+
+      if (handleAllCharactersDead()) return;
+      if (handleAllEnemiesDead()) return;      
+      console.log(EnemyAtom);
     }
   }
-
   console.log(`Turn ${currentTurn} ended.`);
   
-      // this is mana regen for now
-  const manaRegenAmount = 10;
-
-  storeAtom.set(CharacterAtom, (prev) => {
-      const updatedCharacters = Object.values(prev).map((char) => ({
-          ...char,
-          mana: char.health > 0 // Only regenerate mana if the character is alive
-              ? Math.min(char.mana + manaRegenAmount, char.maxMana)
-              : char.mana, // If dead, don't change mana
-      }));
-  
-      return Object.fromEntries(updatedCharacters.map((char) => [char.id, char]));
-  });      
+  handleManaRegen();
       
   storeAtom.set(turnCountAtom, currentTurn + 1);
 
   // Auto-start next round if the game is still active
   setTimeout(() => runTurnLogic(turnOrder, waitForInput), 1000);
 };
+
+const handleAllEnemiesDead = () => {
+  const allEnemiesDead = Object.values(storeAtom.get(EnemyAtom)).every(e => e.health <= 0);
+
+  if (allEnemiesDead) {
+    storeAtom.set(GameLevelAtom, (prev) => ({
+      ...prev,
+      level: prev.level,
+      round: prev.round + 1,
+      isLevelOver: false,  
+      isRoundOver: true  
+    }));
+    console.log(`Game Over. You Win`);
+    return true; // Indicate that all enemies are dead
+  }
+  return false;
+};
+
+
+const handleAllCharactersDead = () => { 
+  // Check if the game should end
+  const allCharactersDead =  Object.values(storeAtom.get(CharacterAtom)).every(e => e.health <= 0);
+  
+  if (allCharactersDead) {
+    console.log(`Game Over. ${allCharactersDead}. You Lose`);
+    return true; // Stop running turns
+  }
+  return false;
+}
+
+const handleManaRegen = () => {
+  const manaRegenAmount = 10;
+
+  storeAtom.set(CharacterAtom, (prev) => {
+      const updatedCharacters = Object.values(prev).map((char) => ({
+          ...char,
+          mana: char.health > 0
+          ? Math.min(char.mana + manaRegenAmount, char.maxMana)
+          : char.mana, // If dead, don't change mana
+      }));
+  
+      return Object.fromEntries(updatedCharacters.map((char) => [char.id, char]));
+  });   
+}
