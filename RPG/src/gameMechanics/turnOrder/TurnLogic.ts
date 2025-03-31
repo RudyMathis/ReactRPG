@@ -18,146 +18,147 @@ export const runTurnLogic = async (
   turnOrder: (CharacterType | EnemyType)[],
   waitForInput: () => Promise<void>
 ) => {
-  const characters = turnOrder.filter(e => !('target' in e)) as CharacterType[];
-  const currentTurn = storeAtom.get(turnCountAtom); // Read current turn
+  const currentTurnOrder = [...turnOrder]; // Create a copy to avoid modifying the original
+  const currentTurn = storeAtom.get(turnCountAtom);
 
   if (handleAllCharactersDead()) return;
   if (handleAllEnemiesDead()) return;
-  for (const entity of turnOrder) {
-    handleStatusEffects(entity); 
 
-    if ('target' in entity) {
-      // Enemy turn
-      const enemy = storeAtom.get(EnemyAtom)[entity.id];
+  for (let i = 0; i < currentTurnOrder.length; i++) {
+      let entity = currentTurnOrder[i]; // Use let to reassign
 
-      if (!enemy) {
-        console.warn(`Enemy with ID ${entity.id} not found in EnemyAtom.`);
-        continue; // Skip this iteration
-      }
-    
-      if (enemy.health <= 0) {
-          console.log(`${enemy.name} died from debuff effects.`);
-          continue; // Skip dead enemies
+      // Re-fetch the entity from the store to get the latest state
+      if (entity.type === "player") {
+          entity = storeAtom.get(CharacterAtom)[entity.id];
+      } else {
+          entity = storeAtom.get(EnemyAtom)[entity.id];
       }
 
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      if (!entity) continue; // Skip if entity is no longer in the store
 
-      const targetName = getEnemyTargetName(enemy, characters.filter(c => c.health > 0));
-      const character = characters.find(c => c.name === targetName);
+      handleStatusEffects(entity);
 
-      if (!character || enemy.speed === 0) {
-        console.warn(`No valid target found for ${enemy.name} or enemy speed is 0`);
-        continue;
+      // Re-fetch the entity AGAIN after status effects are applied.
+      if (entity.type === "player") {
+          entity = storeAtom.get(CharacterAtom)[entity.id];
+          currentTurnOrder[i] = entity;
+      } else {
+          entity = storeAtom.get(EnemyAtom)[entity.id];
+          currentTurnOrder[i] = entity;
       }
 
-      const updatedHealth = basicEnemyAttack(character, enemy);
-      character.health = updatedHealth;
+      if ('target' in entity) {
+          // Enemy turn logic (remains mostly the same)
+          const enemy = storeAtom.get(EnemyAtom)[entity.id];
 
-      if (updatedHealth <= 0 && !character.debuff.some(d => d.type === "Dead")) {
-        character.debuff.push({ type: "Dead", duration: Infinity });
-      }
+          if (!enemy) {
+              console.warn(`Enemy with ID ${entity.id} not found in EnemyAtom.`);
+              continue;
+          }
 
-      storeAtom.set(CharacterAtom, (prev) => ({
-        ...prev,
-        [character.id]: {
-          ...prev[character.id],
-          health: updatedHealth, 
-        },
-      }));
+          if (enemy.health <= 0) {
+              console.log(`${enemy.name} died from debuff effects.`);
+              continue;
+          }
 
-      console.log(`Enemy ${enemy.name} attacked ${character.name} for ${enemy.attack} damage.`);
-      if (handleAllCharactersDead()) return;
-      if (handleAllEnemiesDead()) return;      
-    } else {
-      // Character turn
-      const character = entity as CharacterType;
+          await new Promise(resolve => setTimeout(resolve, 1500));
 
-      if (character.health <= 0) {
-        console.log(`${character.name} is dead.`);
-        continue;
-      } 
+          const targetName = getEnemyTargetName(enemy, currentTurnOrder.filter(c => c.type === 'player' && c.health > 0) as CharacterType[]);
+          const character = currentTurnOrder.find(c => c.name === targetName) as CharacterType;
 
-      storeAtom.set(playerTargetAtom, null);
-      storeAtom.set(CharacterAtom, prev => ({
-        ...prev,
-        [character.id]: { ...character, currentTurn: true }
-      }));
+          if (!character || enemy.speed === 0) {
+              console.warn(`No valid target found for ${enemy.name} or enemy speed is 0`);
+              continue;
+          }
 
-      console.log(`Character ${character.name}'s turn. Waiting for user input...`);
-      await waitForInput();
-      
-      const playerTarget = storeAtom.get(playerTargetAtom);
-      const spell = storeAtom.get(selectedSpellAtom);
-      console.log(`Using spell: ${spell}`);
+          const updatedHealth = basicEnemyAttack(character, enemy);
 
-      if (playerTarget && 'target' in playerTarget) {
-
-        const updatedHealth = basicCharacterAttack(playerTarget, character, spell as string);
-        playerTarget.health = updatedHealth;
-
-        if (updatedHealth <= 0 && !playerTarget.debuff.some(d => d.type === "Dead")) {
-          playerTarget.debuff.push({ type: "Dead", duration: Infinity });
-        }
-
-        storeAtom.set(EnemyAtom, (prev) => ({
-          ...prev,
-          [playerTarget.id]: {
-            ...prev[playerTarget.id],
-            health: updatedHealth,
-          },
-        }));
-
-        console.log(playerTarget, updatedHealth)
-        if (handleAllEnemiesDead()) return;      } else {
-        
-        if(playerTarget !== null) {
-
-          if(playerTarget.id === character.id) {
-            const updatedHealth = basicCharacterBuff(character, playerTarget, spell as string);
-            character.health = updatedHealth;
-  
-            storeAtom.set(CharacterAtom, (prev) => ({
+          storeAtom.set(CharacterAtom, (prev) => ({
               ...prev,
               [character.id]: {
-                ...prev[character.id],
-                health: updatedHealth
+                  ...prev[character.id],
+                  health: updatedHealth,
               },
-            }));
+          }));
 
-          } else {
-            const updatedHealth = basicCharacterBuff(character, playerTarget, spell as string);
-            playerTarget.health = updatedHealth;
-            
-            storeAtom.set(CharacterAtom, (prev) => ({
-              ...prev,
-              [playerTarget.id]: {
-                ...prev[playerTarget.id],
-                health: updatedHealth
-              },
-            }));
+          console.log(`Enemy ${enemy.name} attacked ${character.name} for ${enemy.attack} damage.`);
+          if (handleAllCharactersDead()) return;
+          if (handleAllEnemiesDead()) return;
+      } else {
+          // Character turn logic (remains mostly the same)
+          const character = entity as CharacterType;
+
+          if (character.health <= 0) {
+              console.log(`${character.name} is dead.`);
+              continue;
           }
-        }
+
+          storeAtom.set(playerTargetAtom, null);
+          storeAtom.set(CharacterAtom, prev => ({
+              ...prev,
+              [character.id]: { ...character, currentTurn: true }
+          }));
+
+          console.log(`Character ${character.name}'s turn. Waiting for user input...`);
+          await waitForInput();
+
+          const playerTarget = storeAtom.get(playerTargetAtom);
+          const spell = storeAtom.get(selectedSpellAtom);
+          console.log(`Using spell: ${spell}`);
+
+          if (playerTarget && 'target' in playerTarget) {
+              const updatedHealth = basicCharacterAttack(playerTarget, character, spell as string);
+
+              storeAtom.set(EnemyAtom, (prev) => ({
+                  ...prev,
+                  [playerTarget.id]: {
+                      ...prev[playerTarget.id],
+                      health: updatedHealth,
+                  },
+              }));
+
+              if (handleAllEnemiesDead()) return;
+          } else {
+              if (playerTarget !== null) {
+                  if (playerTarget.id === character.id) {
+                      const updatedHealth = basicCharacterBuff(character, playerTarget, spell as string);
+
+                      storeAtom.set(CharacterAtom, (prev) => ({
+                          ...prev,
+                          [character.id]: {
+                              ...prev[character.id],
+                              health: updatedHealth
+                          },
+                      }));
+                  } else {
+                      const updatedHealth = basicCharacterBuff(character, playerTarget, spell as string);
+
+                      storeAtom.set(CharacterAtom, (prev) => ({
+                          ...prev,
+                          [playerTarget.id]: {
+                              ...prev[playerTarget.id],
+                              health: updatedHealth
+                          },
+                      }));
+                  }
+              }
+          }
+
+          storeAtom.set(CharacterAtom, prev => ({
+              ...prev,
+              [character.id]: { ...character, currentTurn: false }
+          }));
+
+          if (handleAllCharactersDead()) return;
+          if (handleAllEnemiesDead()) return;
       }
-
-      // Mark current turn as complete for the character
-      storeAtom.set(CharacterAtom, prev => ({
-        ...prev,
-        [character.id]: { ...character, currentTurn: false }
-      }));
-
-      if (handleAllCharactersDead()) return;
-      if (handleAllEnemiesDead()) return;      
-      console.log(EnemyAtom);
-    }
   }
+
   console.log(`Turn ${currentTurn} ended.`);
-  
   handleManaRegen();
-      
   storeAtom.set(turnCountAtom, currentTurn + 1);
 
-  // Auto-start next round if the game is still active
-  setTimeout(() => runTurnLogic(turnOrder, waitForInput), 1000);
+  setTimeout(() => runTurnLogic(currentTurnOrder, waitForInput), 1000);
 };
 
 const handleAllEnemiesDead = () => {
@@ -174,6 +175,8 @@ const handleAllEnemiesDead = () => {
         return [id, { ...char, currentTurn: false }];
       }));
     });
+    
+    handleGainExperience();
 
     return true;
   }
@@ -207,3 +210,27 @@ const handleManaRegen = () => {
       return Object.fromEntries(updatedCharacters.map((char) => [char.id, char]));
   });   
 }
+
+const handleGainExperience = () => {
+  const enemyAmount = Object.keys(storeAtom.get(EnemyAtom)).length;
+  storeAtom.set(CharacterAtom, (prev) => {
+    const updatedCharacters = Object.values(prev).map((char) => {
+      if (char.health > 0 && char.isSelected) {
+        const newExp = char.exp + char.level * 10 * enemyAmount;
+        const newLevel = newExp >= char.maxExp ? char.level + 1 : char.level;
+        const newMaxExp = newLevel > char.level ? char.maxExp + char.level * 100 : char.maxExp;
+        
+        return {
+          ...char,
+          exp: newExp,
+          level: newLevel,
+          maxExp: newMaxExp,
+        };
+      }
+      return char;
+    });
+    console.log(updatedCharacters);
+
+    return Object.fromEntries(updatedCharacters.map((char) => [char.id, char]));
+  });
+};

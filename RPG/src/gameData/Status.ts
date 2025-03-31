@@ -1,6 +1,6 @@
 import EnemyAtom, { EnemyType } from "../atom/BaseEnemyAtom";
 import CharacterAtom, { CharacterType } from "../atom/CharacterAtom";
-import * as store from "../atom/storeAtom";
+import { storeAtom } from "../atom/storeAtom";
 import Debuffs from "./Debuffs";
 import Resistances from "./Resistances";
 import Vulnerabilites from "./Vulnerabilities";
@@ -8,7 +8,7 @@ import Vulnerabilites from "./Vulnerabilities";
 export const handleStatusEffects = (entity: CharacterType | EnemyType) => {
     if (entity.type === "player") {
         // const entityData = storeAtom.get(CharacterAtom)[entity.id];
-        const entityData = store.storeAtom.get(CharacterAtom)[entity.id];
+        const entityData = storeAtom.get(CharacterAtom)[entity.id];
         if (!entityData) return false;
 
         const frozenStatus = entityData.debuff.find(d => d.type === Debuffs.Frozen.type);
@@ -29,14 +29,14 @@ export const handleStatusEffects = (entity: CharacterType | EnemyType) => {
         return false;
     } else {
         // const entityData = storeAtom.get(EnemyAtom)[entity.id];
-        const entityData = store.storeAtom.get(EnemyAtom)[entity.id];
+        const entityData = storeAtom.get(EnemyAtom)[entity.id];
 
         if (!entityData) return false;
 
         const frozenStatus = entityData.debuff.find(d => d.type === Debuffs.Frozen.type);
         const bleedStatus = entityData.debuff.find(d => d.type === Debuffs.Bleed.type);
         const burnStatus = entityData.debuff.find(d => d.type === Debuffs.Burn.type);
-    
+
         if (frozenStatus) {
             frozen(entityData, frozenStatus);
         }
@@ -56,7 +56,7 @@ const frozen = (entity: CharacterType | EnemyType, frozenStatus: { type: string;
     // If duration is up, remove the effect and reset speed
     if (frozenStatus.duration <= 0) {
         if (entity.type === "player") {
-            store.storeAtom.set(CharacterAtom, (prev) => ({
+            storeAtom.set(CharacterAtom, (prev) => ({
                 ...prev,
                 [entity.id]: {
                     ...prev[entity.id],
@@ -65,7 +65,7 @@ const frozen = (entity: CharacterType | EnemyType, frozenStatus: { type: string;
                 },
             }));
         } else {
-            store.storeAtom.set(EnemyAtom, (prev) => ({
+            storeAtom.set(EnemyAtom, (prev) => ({
                 ...prev,
                 [entity.id]: {
                     ...prev[entity.id],
@@ -78,7 +78,7 @@ const frozen = (entity: CharacterType | EnemyType, frozenStatus: { type: string;
     } else {
         // Decrement duration and update the debuff array
         if (entity.type === "player") {
-            store.storeAtom.set(CharacterAtom, (prev) => ({
+            storeAtom.set(CharacterAtom, (prev) => ({
                 ...prev,
                 [entity.id]: {
                     ...prev[entity.id],
@@ -88,7 +88,7 @@ const frozen = (entity: CharacterType | EnemyType, frozenStatus: { type: string;
                 },
             }));
         } else {
-            store.storeAtom.set(EnemyAtom, (prev) => ({
+            storeAtom.set(EnemyAtom, (prev) => ({
                 ...prev,
                 [entity.id]: {
                     ...prev[entity.id],
@@ -102,11 +102,10 @@ const frozen = (entity: CharacterType | EnemyType, frozenStatus: { type: string;
     }
 };
 
-const Bleed = (entity: CharacterType | EnemyType, bleedStatus: { type: string; duration: number, damage?: number }) => {
-    // If duration expired, remove the effect
+const Bleed = (entity: CharacterType | EnemyType, bleedStatus: { type: string; duration: number; damage?: number }) => {
     if (bleedStatus.duration <= 0) {
         if (entity.type === "player") {
-            store.storeAtom.set(CharacterAtom, (prev) => ({
+            storeAtom.set(CharacterAtom, (prev) => ({
                 ...prev,
                 [entity.id]: {
                     ...prev[entity.id],
@@ -114,7 +113,7 @@ const Bleed = (entity: CharacterType | EnemyType, bleedStatus: { type: string; d
                 },
             }));
         } else {
-            store.storeAtom.set(EnemyAtom, (prev) => ({
+            storeAtom.set(EnemyAtom, (prev) => ({
                 ...prev,
                 [entity.id]: {
                     ...prev[entity.id],
@@ -125,20 +124,14 @@ const Bleed = (entity: CharacterType | EnemyType, bleedStatus: { type: string; d
         return false;
     } else {
         const baseDamage = bleedStatus.damage ?? 10;
-        const defense = entity.defense ?? 0;
+        const damage = Math.max(1, baseDamage);
 
-        // Apply percentage-based damage reduction
-        const damage = Math.max(1, Math.round(baseDamage * (1 / (1 + defense / 100))));
-
-        // Check if the entity is a player or enemy
         if (entity.type === "player") {
-            // Apply Bleed damage to Player
-            store.storeAtom.set(CharacterAtom, (prev) => {
+            storeAtom.set(CharacterAtom, (prev) => {
                 const updatedEntity = prev[entity.id];
                 const newHealth = Math.max(updatedEntity.health - damage, 0);
 
-                // Remove Bleed debuff if health is zero or less
-                const updatedDebuff = newHealth > 0 
+                const updatedDebuff = newHealth > 0
                     ? updatedEntity.debuff.map(d => d.type === Debuffs.Bleed.type ? { ...d, duration: d.duration - 1 } : d).filter(d => d.duration > 0)
                     : updatedEntity.debuff.filter(d => d.type !== Debuffs.Bleed.type);
 
@@ -151,14 +144,15 @@ const Bleed = (entity: CharacterType | EnemyType, bleedStatus: { type: string; d
                     },
                 };
             });
+            const updatedPlayer = storeAtom.get(CharacterAtom)[entity.id];
+            console.log(entity.name, "took", damage, "damage from Bleed.", updatedPlayer.health, "remaining.");
+            return updatedPlayer.health > 0;
         } else {
-            // Apply Bleed damage to Enemy
-            store.storeAtom.set(EnemyAtom, (prev) => {
+            storeAtom.set(EnemyAtom, (prev) => {
                 const updatedEntity = prev[entity.id];
                 const newHealth = Math.max(updatedEntity.health - damage, 0);
 
-                // Remove Bleed debuff if health is zero or less
-                const updatedDebuff = newHealth > 0 
+                const updatedDebuff = newHealth > 0
                     ? updatedEntity.debuff.map(d => d.type === Debuffs.Bleed.type ? { ...d, duration: d.duration - 1 } : d).filter(d => d.duration > 0)
                     : updatedEntity.debuff.filter(d => d.type !== Debuffs.Bleed.type);
 
@@ -171,21 +165,17 @@ const Bleed = (entity: CharacterType | EnemyType, bleedStatus: { type: string; d
                     },
                 };
             });
+            const updatedEnemy = storeAtom.get(EnemyAtom)[entity.id];
+            console.log(entity.name, "took", damage, "damage from Bleed.", updatedEnemy.health, "remaining.");
+            return updatedEnemy.health > 0;
         }
-
-        console.log(entity.name, "took", damage, "damage from Bleed.");
-        
-        // If health reached 0, return false to stop further processing for this Bleed
-        return entity.health > 0;
     }
 };
 
-
 const Burn = (entity: CharacterType | EnemyType, burnStatus: { type: string; duration: number, damage?: number }) => {
-    // If duration expired, remove the effect
     if (burnStatus.duration <= 0) {
         if (entity.type === "player") {
-            store.storeAtom.set(CharacterAtom, (prev) => ({
+            storeAtom.set(CharacterAtom, (prev) => ({
                 ...prev,
                 [entity.id]: {
                     ...prev[entity.id],
@@ -193,7 +183,7 @@ const Burn = (entity: CharacterType | EnemyType, burnStatus: { type: string; dur
                 },
             }));
         } else {
-            store.storeAtom.set(EnemyAtom, (prev) => ({
+            storeAtom.set(EnemyAtom, (prev) => ({
                 ...prev,
                 [entity.id]: {
                     ...prev[entity.id],
@@ -204,17 +194,12 @@ const Burn = (entity: CharacterType | EnemyType, burnStatus: { type: string; dur
         return false;
     } else {
         const baseDamage = burnStatus.damage ?? 10;
-
-        // Get fire resistance and vulnerability values (default to 0 if not found)
-        const fireResistance = entity.resistances.find(res => res.type ===  Resistances.Fire.type)?.value ?? 0;
+        const fireResistance = entity.resistances.find(res => res.type === Resistances.Fire.type)?.value ?? 0;
         const fireVulnerability = entity.vulnerabilities.find(vul => vul.type === Vulnerabilites.Fire.type)?.value ?? 0;
-
-        // Calculate final damage after resistance and vulnerability
         const damage = Math.max(1, baseDamage + fireVulnerability - fireResistance);
 
-        // Update health and decrement duration
         if (entity.type === "player") {
-            store.storeAtom.set(CharacterAtom, (prev) => ({
+            storeAtom.set(CharacterAtom, (prev) => ({
                 ...prev,
                 [entity.id]: {
                     ...prev[entity.id],
@@ -224,8 +209,11 @@ const Burn = (entity: CharacterType | EnemyType, burnStatus: { type: string; dur
                         .filter(d => d.duration > 0),
                 },
             }));
+            const updatedPlayer = storeAtom.get(CharacterAtom)[entity.id];
+            console.log(entity.name, "took", damage, "damage from Burn.", updatedPlayer.health, "remaining.");
+            return true;
         } else {
-            store.storeAtom.set(EnemyAtom, (prev) => ({
+            storeAtom.set(EnemyAtom, (prev) => ({
                 ...prev,
                 [entity.id]: {
                     ...prev[entity.id],
@@ -235,10 +223,10 @@ const Burn = (entity: CharacterType | EnemyType, burnStatus: { type: string; dur
                         .filter(d => d.duration > 0),
                 },
             }));
+            const updatedEnemy = storeAtom.get(EnemyAtom)[entity.id];
+            console.log(entity.name, "took", damage, "damage from Burn.", updatedEnemy.health, "remaining.");
+            return true;
         }
-
-        console.log(entity.name, "took", damage, "damage from Burn.");
-        return true;
     }
 };
 
