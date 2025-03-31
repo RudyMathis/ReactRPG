@@ -156,7 +156,7 @@ const Grid = () => {
           </div>
         </div>
       )}
-      {currentTurn == 1 && startOfRound == true && <Btn onClick={checkTurnOrderAndRunLogic} text="Begin" />}
+      {currentTurn == 1 && startOfRound == true && <Btn onClick={checkTurnOrderAndRunLogic} className="begin" text="Begin" />}
     </div>
   );
 };

@@ -78,15 +78,22 @@ const spellEffects: Record<string, (enemy: EnemyType, character: CharacterType) 
 
 const spellEffectsBuff: Record<string, (character: CharacterType, target: CharacterType) => number> = {
     Heal__Char_20: (character, target) => {
-        const heal = target.health + 20;
-
+        const heal = 20;
         const spellCost = 20;
         character.mana -= spellCost;
 
-        if(heal >= target.maxHealth) {
-            return target.health = target.maxHealth
+        if( character.id === target.id) {
+            if(heal + character.health >= character.maxHealth) {
+                return character.health = character.maxHealth
+            } else {
+                return heal + character.health;
+            }    
         } else {
-            return heal;
+            if(heal + target.health >= target.maxHealth) {
+                return target.health = target.maxHealth
+            } else {
+                return heal + target.health;
+            }
         }
     },
     Cure__Char_10: (character, target) => {

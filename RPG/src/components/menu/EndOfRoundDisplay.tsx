@@ -1,14 +1,25 @@
 import { startNewRound, GameLevelAtom } from "../../atom/GameLevelAtom";
 import { useNavigate } from 'react-router';
 import { storeAtom } from "../../atom/storeAtom";
+import Btn from "../Btn";
+import { GainExperience } from "../../gameMechanics/GainExperince";
+import { FullRestore } from "../../gameMechanics/FullRestore";
 
 const EndofRoundDisplay = () => {
     const navigate = useNavigate();
+    const AdditionalExperience = 50;
 
-    const handleNavigation = () => {
+    const handleNavigation = (gainXP = false, fullResotre = false) => {
+        if (gainXP) {
+            GainExperience(AdditionalExperience);
+        }
+
+        if (fullResotre) {
+            FullRestore();
+        }
+
         startNewRound(); // Start the next round
 
-        // Delay navigation until the state is updated
         setTimeout(() => {
             const updatedGameLevel = storeAtom.get(GameLevelAtom);
             navigate(`/game/${updatedGameLevel.level}-${updatedGameLevel.round}`);
@@ -20,15 +31,16 @@ const EndofRoundDisplay = () => {
             position: 'absolute',
             top: '50%',
             left: '50%',
-            transform: 'translate(-50%, -50%)'
+            transform: 'translate(-50%, -50%)',
         }}>
-            <button onClick={handleNavigation}>Next Round</button>
-            <h2>Blessing</h2>
-            <h2>Additional Experience</h2>
-            <h2>Full Restore</h2>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+                <Btn onClick={() => handleNavigation()} text="Next Round" />
+                <h2>Blessing</h2>
+                <Btn onClick={() => handleNavigation(true, false)} text="Additional Experience & Next Round" />
+                <Btn onClick={() => handleNavigation(false, true)} text="Full Restore & Next Round" />
+            </div>
         </div>
     );
 };
 
 export default EndofRoundDisplay;
-

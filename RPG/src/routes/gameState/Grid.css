@@ -51,3 +51,11 @@
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     z-index: 10; 
 }
+
+
+.begin {
+    position: absolute;
+    top: 25%;
+    left: 50%;
+    transform: translateX(-50%);
+}

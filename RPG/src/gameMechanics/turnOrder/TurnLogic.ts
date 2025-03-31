@@ -8,6 +8,7 @@ import { getEnemyTargetName } from '../enemyTarget/EnemyTargetLogic';
 import { selectedSpellAtom } from "../../atom/SelectedSpellAtom";
 import { handleStatusEffects } from '../../gameData/Status';
 import { basicCharacterAttack, basicCharacterBuff, basicEnemyAttack } from '../../gameData/Spells';
+import { GainExperience } from "../GainExperince";
 
 // Derive types from the atoms
 type CharacterType = (typeof CharacterAtom) extends import('jotai').Atom<Record<number, infer T>> ? T : never;
@@ -25,7 +26,7 @@ export const runTurnLogic = async (
   if (handleAllEnemiesDead()) return;
 
   for (let i = 0; i < currentTurnOrder.length; i++) {
-      let entity = currentTurnOrder[i]; // Use let to reassign
+      let entity = currentTurnOrder[i];
 
       // Re-fetch the entity from the store to get the latest state
       if (entity.type === "player") {
@@ -34,11 +35,10 @@ export const runTurnLogic = async (
           entity = storeAtom.get(EnemyAtom)[entity.id];
       }
 
-      if (!entity) continue; // Skip if entity is no longer in the store
+      if (!entity) continue;
 
       handleStatusEffects(entity);
 
-      // Re-fetch the entity AGAIN after status effects are applied.
       if (entity.type === "player") {
           entity = storeAtom.get(CharacterAtom)[entity.id];
           currentTurnOrder[i] = entity;
@@ -48,7 +48,7 @@ export const runTurnLogic = async (
       }
 
       if ('target' in entity) {
-          // Enemy turn logic (remains mostly the same)
+          // Enemy turn logic
           const enemy = storeAtom.get(EnemyAtom)[entity.id];
 
           if (!enemy) {
@@ -72,20 +72,13 @@ export const runTurnLogic = async (
           }
 
           const updatedHealth = basicEnemyAttack(character, enemy);
-
-          storeAtom.set(CharacterAtom, (prev) => ({
-              ...prev,
-              [character.id]: {
-                  ...prev[character.id],
-                  health: updatedHealth,
-              },
-          }));
+          CharacterHealthUpdate(character, updatedHealth);
 
           console.log(`Enemy ${enemy.name} attacked ${character.name} for ${enemy.attack} damage.`);
           if (handleAllCharactersDead()) return;
           if (handleAllEnemiesDead()) return;
       } else {
-          // Character turn logic (remains mostly the same)
+          // Character turn logic
           const character = entity as CharacterType;
 
           if (character.health <= 0) {
@@ -122,24 +115,10 @@ export const runTurnLogic = async (
               if (playerTarget !== null) {
                   if (playerTarget.id === character.id) {
                       const updatedHealth = basicCharacterBuff(character, playerTarget, spell as string);
-
-                      storeAtom.set(CharacterAtom, (prev) => ({
-                          ...prev,
-                          [character.id]: {
-                              ...prev[character.id],
-                              health: updatedHealth
-                          },
-                      }));
+                      CharacterHealthUpdate(character, updatedHealth);
                   } else {
                       const updatedHealth = basicCharacterBuff(character, playerTarget, spell as string);
-
-                      storeAtom.set(CharacterAtom, (prev) => ({
-                          ...prev,
-                          [playerTarget.id]: {
-                              ...prev[playerTarget.id],
-                              health: updatedHealth
-                          },
-                      }));
+                      CharacterHealthUpdate(playerTarget, updatedHealth);
                   }
               }
           }
@@ -175,15 +154,14 @@ const handleAllEnemiesDead = () => {
         return [id, { ...char, currentTurn: false }];
       }));
     });
-    
-    handleGainExperience();
+
+    const enemyAmount = Object.keys(storeAtom.get(EnemyAtom)).length;
+    GainExperience(enemyAmount);
 
     return true;
   }
   return false;
 };
-
-
 
 const handleAllCharactersDead = () => { 
   // Check if the game should end
@@ -211,35 +189,12 @@ const handleManaRegen = () => {
   });   
 }
 
-const handleGainExperience = () => {
-  const enemyAmount = Object.keys(storeAtom.get(EnemyAtom)).length;
-  storeAtom.set(CharacterAtom, (prev) => {
-    const updatedCharacters = Object.values(prev).map((char) => {
-      if (char.health > 0 && char.isSelected) {
-        const newExp = char.exp + char.level * 10 * enemyAmount + 50;
-        const newLevel = newExp >= char.maxExp ? char.level + 1 : char.level;
-        const newMaxExp = newLevel > char.level ? char.maxExp + char.level * 100 : char.maxExp;
-        const levelUp = char.level * 3;
-        
-        return {
-          ...char,
-          exp: newExp,
-          level: newLevel,
-          maxExp: newMaxExp,
-          health: char.health + levelUp,
-          maxHealth: char.maxHealth + levelUp,
-          attack: char.attack + levelUp,
-          defense: char.defense + levelUp,
-          speed: char.speed + levelUp,
-          speedDefault: char.speedDefault + levelUp,
-          mana: char.maxMana > 0 ? char.mana + levelUp : 0,
-          maxMana: char.maxMana > 0 ? char.maxMana + levelUp: 0,
-        };
-      }
-      return char;
-    });
-    console.log(updatedCharacters);
-
-    return Object.fromEntries(updatedCharacters.map((char) => [char.id, char]));
-  });
-};
+const CharacterHealthUpdate = (playerTarget: CharacterType, updatedHealth: number) => { 
+  storeAtom.set(CharacterAtom, (prev) => ({
+    ...prev,
+    [playerTarget.id]: {
+        ...prev[playerTarget.id],
+        health: updatedHealth
+    },
+  }));
+}

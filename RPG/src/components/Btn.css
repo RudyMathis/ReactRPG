@@ -7,10 +7,3 @@
     line-height: 1.1rem;
     padding: 1rem;
 }
-
-.begin {
-    position: absolute;
-    top: 25%;
-    left: 50%;
-    transform: translateX(-50%);
-}
