@@ -4,14 +4,17 @@ import { storeAtom } from "../../atom/storeAtom";
 import Btn from "../Btn";
 import { GainExperience } from "../../gameMechanics/GainExperince";
 import { FullRestore } from "../../gameMechanics/FullRestore";
+import CharacterAtom from "../../atom/CharacterAtom";
 
 const EndofRoundDisplay = () => {
     const navigate = useNavigate();
-    const AdditionalExperience = 50;
+    const AdditionalExperience = 10;
+    const characters = storeAtom.get(CharacterAtom);
+    const selectedCharacters = Object.values(characters).filter(char => char.isSelected);
 
     const handleNavigation = (gainXP = false, fullResotre = false) => {
         if (gainXP) {
-            GainExperience(AdditionalExperience);
+            GainExperience(AdditionalExperience, selectedCharacters.length);
         }
 
         if (fullResotre) {

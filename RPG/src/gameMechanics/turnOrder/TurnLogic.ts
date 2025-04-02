@@ -156,7 +156,10 @@ const handleAllEnemiesDead = () => {
     });
 
     const enemyAmount = Object.keys(storeAtom.get(EnemyAtom)).length;
-    GainExperience(enemyAmount);
+    const characters = storeAtom.get(CharacterAtom);
+    const selectedCharacters = Object.values(characters).filter(char => char.isSelected);
+
+    GainExperience(enemyAmount, selectedCharacters.length);
 
     return true;
   }

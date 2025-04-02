@@ -43,8 +43,12 @@ const spellEffects: Record<string, (enemy: EnemyType, character: CharacterType) 
     },
     Lightning_Bolt_Tar_40: (enemy, character) => enemy.health - (character.attack + 15),
     Garrote_Tar_0: (enemy, character) => {
-        enemy.debuff.push({ type: Debuffs.Bleed.type, duration: 3});
-        return enemy.health - Math.max(5, character.attack - enemy.defense);
+        if(enemy.debuff.find(d => d.type === Debuffs.Bleed.type)) {
+            return enemy.health - Math.max(5, character.attack - enemy.defense);
+        } else {
+            enemy.debuff.push({ type: Debuffs.Bleed.type, duration: 3});
+            return enemy.health - Math.max(5, character.attack - enemy.defense);
+        }
     },
 
     Multi_Shot_Tar_0: (enemy: EnemyType, character: CharacterType) => {

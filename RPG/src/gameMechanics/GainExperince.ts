@@ -1,11 +1,12 @@
 import CharacterAtom from "../atom/CharacterAtom";
 import { storeAtom } from "../atom/storeAtom";
 
-export const GainExperience = (enemyAmount: number) => {
+export const GainExperience = (enemyAmount: number, charactersAmount: number) => {
     storeAtom.set(CharacterAtom, (prev) => {
         const updatedCharacters = Object.values(prev).map((char) => {
+            
             if (char.health > 0 && char.isSelected) {
-                const newExp = char.exp + char.level * 10 * enemyAmount;
+                const newExp = (char.exp + char.level) * 10 * (enemyAmount / charactersAmount);
                 const newLevel = newExp >= char.maxExp ? char.level + 1 : char.level;
                 const newMaxExp = newLevel > char.level ? char.maxExp + char.level * 100 : char.maxExp;
                 const levelUp = char.level * 3;
