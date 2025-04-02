@@ -13,9 +13,9 @@ export const GameLevelAtom = atom({
     isLevelOver: false,
 });
 
-const generateNewEnemies = (round: number): Record<number, EnemyType> => {
+const generateNewEnemies = (round: number, level: number): Record<number, EnemyType> => {
     const newEnemies: Record<number, EnemyType> = {};
-    const enemyCount = Math.floor(Math.random() * 4) + 4; // Random between 4-7
+    const enemyCount = Math.floor(Math.random() * 1) + 1; // Random between 4-7
 
     for (let i = 0; i < enemyCount; i++) {
         // Pick a random enemy type from your predefined groups
@@ -44,9 +44,10 @@ const generateNewEnemies = (round: number): Record<number, EnemyType> => {
         enemy.name = finalName;
 
         // Scale enemy stats for the new round
-        enemy.health = enemy.health + round * 10;
-        enemy.maxHealth = enemy.maxHealth + round * 10;
-        enemy.attack = enemy.attack + round * 2;
+        enemy.health = enemy.health + round * 10 * level;
+        enemy.maxHealth = enemy.maxHealth + round * 10 * level;
+        enemy.attack = enemy.attack + round * 2 * level;
+        enemy.level = level;
         enemy.order = i + 1;
 
         newEnemies[enemy.id] = enemy;
@@ -59,16 +60,29 @@ export const startNewRound = () => {
   // Increment the round and reset the round-over flag
     storeAtom.set(GameLevelAtom, prev => {
         const newRound = prev.round + 1;
-        return {
-        ...prev,
-        round: newRound,
-        isRoundOver: false,
-        };
+        if(newRound > 3) {
+            const newLevel = prev.level + 1;
+
+            return {
+                ...prev,
+                    round: 1,
+                    isRoundOver: false,
+                    level: newLevel,
+                };
+        } else {
+
+            return {
+            ...prev,
+                round: newRound,
+                isRoundOver: false,
+            };
+        }
     });
 
     // Use the updated round value for generating enemies
     const updatedRound = storeAtom.get(GameLevelAtom).round;
-    const newEnemies = generateNewEnemies(updatedRound);
+    const updateLevel = storeAtom.get(GameLevelAtom).level;
+    const newEnemies = generateNewEnemies(updatedRound, updateLevel);
     storeAtom.set(EnemyAtom, newEnemies);
 
     // Reset turn counter
