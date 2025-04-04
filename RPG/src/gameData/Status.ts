@@ -11,9 +11,9 @@ export const handleStatusEffects = (entity: CharacterType | EnemyType) => {
         const entityData = storeAtom.get(CharacterAtom)[entity.id];
         if (!entityData) return false;
 
-        const frozenStatus = entityData.debuff.find(d => d.type === Debuffs.Frozen.type);
-        const bleedStatus = entityData.debuff.find(d => d.type === Debuffs.Bleed.type);
-        const burnStatus = entityData.debuff.find(d => d.type === Debuffs.Burn.type);
+        const frozenStatus = entityData.debuffs.find(d => d.type === Debuffs.Frozen.type);
+        const bleedStatus = entityData.debuffs.find(d => d.type === Debuffs.Bleed.type);
+        const burnStatus = entityData.debuffs.find(d => d.type === Debuffs.Burn.type);
     
         if (frozenStatus) {
             frozen(entityData, frozenStatus);
@@ -33,9 +33,9 @@ export const handleStatusEffects = (entity: CharacterType | EnemyType) => {
 
         if (!entityData) return false;
 
-        const frozenStatus = entityData.debuff.find(d => d.type === Debuffs.Frozen.type);
-        const bleedStatus = entityData.debuff.find(d => d.type === Debuffs.Bleed.type);
-        const burnStatus = entityData.debuff.find(d => d.type === Debuffs.Burn.type);
+        const frozenStatus = entityData.debuffs.find(d => d.type === Debuffs.Frozen.type);
+        const bleedStatus = entityData.debuffs.find(d => d.type === Debuffs.Bleed.type);
+        const burnStatus = entityData.debuffs.find(d => d.type === Debuffs.Burn.type);
 
         if (frozenStatus) {
             frozen(entityData, frozenStatus);
@@ -61,7 +61,7 @@ const frozen = (entity: CharacterType | EnemyType, frozenStatus: { type: string;
                 [entity.id]: {
                     ...prev[entity.id],
                     speed: entity.speedDefault,
-                    debuff: prev[entity.id].debuff.filter(s => s.type !== Debuffs.Frozen.type),
+                    debuff: prev[entity.id].debuffs.filter(s => s.type !== Debuffs.Frozen.type),
                 },
             }));
         } else {
@@ -70,7 +70,7 @@ const frozen = (entity: CharacterType | EnemyType, frozenStatus: { type: string;
                 [entity.id]: {
                     ...prev[entity.id],
                     speed: entity.speedDefault,
-                    debuff: prev[entity.id].debuff.filter(s => s.type !== Debuffs.Frozen.type),
+                    debuff: prev[entity.id].debuffs.filter(s => s.type !== Debuffs.Frozen.type),
                 },
             }));
         }
@@ -82,7 +82,7 @@ const frozen = (entity: CharacterType | EnemyType, frozenStatus: { type: string;
                 ...prev,
                 [entity.id]: {
                     ...prev[entity.id],
-                    debuff: prev[entity.id].debuff.map(d =>
+                    debuff: prev[entity.id].debuffs.map(d =>
                         d.type === Debuffs.Frozen.type ? { ...d, duration: d.duration - 1 } : d
                     ),
                 },
@@ -92,7 +92,7 @@ const frozen = (entity: CharacterType | EnemyType, frozenStatus: { type: string;
                 ...prev,
                 [entity.id]: {
                     ...prev[entity.id],
-                    debuff: prev[entity.id].debuff.map(d =>
+                    debuff: prev[entity.id].debuffs.map(d =>
                         d.type === Debuffs.Frozen.type ? { ...d, duration: d.duration - 1 } : d
                     ),
                 },
@@ -109,7 +109,7 @@ const Bleed = (entity: CharacterType | EnemyType, bleedStatus: { type: string; d
                 ...prev,
                 [entity.id]: {
                     ...prev[entity.id],
-                    debuff: prev[entity.id].debuff.filter(d => d.type !== Debuffs.Bleed.type),
+                    debuff: prev[entity.id].debuffs.filter(d => d.type !== Debuffs.Bleed.type),
                 },
             }));
         } else {
@@ -117,7 +117,7 @@ const Bleed = (entity: CharacterType | EnemyType, bleedStatus: { type: string; d
                 ...prev,
                 [entity.id]: {
                     ...prev[entity.id],
-                    debuff: prev[entity.id].debuff.filter(d => d.type !== Debuffs.Bleed.type),
+                    debuff: prev[entity.id].debuffs.filter(d => d.type !== Debuffs.Bleed.type),
                 },
             }));
         }
@@ -132,8 +132,8 @@ const Bleed = (entity: CharacterType | EnemyType, bleedStatus: { type: string; d
                 const newHealth = Math.max(updatedEntity.health - damage, 0);
 
                 const updatedDebuff = newHealth > 0
-                    ? updatedEntity.debuff.map(d => d.type === Debuffs.Bleed.type ? { ...d, duration: d.duration - 1 } : d).filter(d => d.duration > 0)
-                    : updatedEntity.debuff.filter(d => d.type !== Debuffs.Bleed.type);
+                    ? updatedEntity.debuffs.map(d => d.type === Debuffs.Bleed.type ? { ...d, duration: d.duration - 1 } : d).filter(d => d.duration > 0)
+                    : updatedEntity.debuffs.filter(d => d.type !== Debuffs.Bleed.type);
 
                 return {
                     ...prev,
@@ -153,8 +153,8 @@ const Bleed = (entity: CharacterType | EnemyType, bleedStatus: { type: string; d
                 const newHealth = Math.max(updatedEntity.health - damage, 0);
 
                 const updatedDebuff = newHealth > 0
-                    ? updatedEntity.debuff.map(d => d.type === Debuffs.Bleed.type ? { ...d, duration: d.duration - 1 } : d).filter(d => d.duration > 0)
-                    : updatedEntity.debuff.filter(d => d.type !== Debuffs.Bleed.type);
+                    ? updatedEntity.debuffs.map(d => d.type === Debuffs.Bleed.type ? { ...d, duration: d.duration - 1 } : d).filter(d => d.duration > 0)
+                    : updatedEntity.debuffs.filter(d => d.type !== Debuffs.Bleed.type);
 
                 return {
                     ...prev,
@@ -179,7 +179,7 @@ const Burn = (entity: CharacterType | EnemyType, burnStatus: { type: string; dur
                 ...prev,
                 [entity.id]: {
                     ...prev[entity.id],
-                    debuff: prev[entity.id].debuff.filter(d => d.type !== Debuffs.Burn.type),
+                    debuff: prev[entity.id].debuffs.filter(d => d.type !== Debuffs.Burn.type),
                 },
             }));
         } else {
@@ -187,7 +187,7 @@ const Burn = (entity: CharacterType | EnemyType, burnStatus: { type: string; dur
                 ...prev,
                 [entity.id]: {
                     ...prev[entity.id],
-                    debuff: prev[entity.id].debuff.filter(d => d.type !== Debuffs.Burn.type),
+                    debuff: prev[entity.id].debuffs.filter(d => d.type !== Debuffs.Burn.type),
                 },
             }));
         }
@@ -204,7 +204,7 @@ const Burn = (entity: CharacterType | EnemyType, burnStatus: { type: string; dur
                 [entity.id]: {
                     ...prev[entity.id],
                     health: Math.max(prev[entity.id].health - damage, 0),
-                    debuff: prev[entity.id].debuff
+                    debuff: prev[entity.id].debuffs
                         .map(d => d.type === Debuffs.Burn.type ? { ...d, duration: d.duration - 1 } : d)
                         .filter(d => d.duration > 0),
                 },
@@ -218,7 +218,7 @@ const Burn = (entity: CharacterType | EnemyType, burnStatus: { type: string; dur
                 [entity.id]: {
                     ...prev[entity.id],
                     health: Math.max(prev[entity.id].health - damage, 0),
-                    debuff: prev[entity.id].debuff
+                    debuff: prev[entity.id].debuffs
                         .map(d => d.type === Debuffs.Burn.type ? { ...d, duration: d.duration - 1 } : d)
                         .filter(d => d.duration > 0),
                 },

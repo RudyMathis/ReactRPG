@@ -9,7 +9,7 @@ import Vulnerabilites from "./Vulnerabilities";
 
 const spellEffects: Record<string, (enemy: EnemyType, character: CharacterType) => number> = {
     Fire_Ball_Tar_20: (enemy, character) =>{ 
-        enemy.debuff.push({ type: Debuffs.Burn.type, duration: 3 });
+        enemy.debuffs.push({ type: Debuffs.Burn.type, duration: 3 });
         const spellCost = 20;
         character.mana -= spellCost;
 
@@ -25,7 +25,7 @@ const spellEffects: Record<string, (enemy: EnemyType, character: CharacterType) 
         }
     },
     Ice_Bolt_Tar_30: (enemy, character) => {
-        enemy.debuff.push({ type: Debuffs.Frozen.type, duration: 3 });
+        enemy.debuffs.push({ type: Debuffs.Frozen.type, duration: 3 });
         enemy.speed = 0;
         const spellCost = 30;
         character.mana -= spellCost;
@@ -43,10 +43,10 @@ const spellEffects: Record<string, (enemy: EnemyType, character: CharacterType) 
     },
     Lightning_Bolt_Tar_40: (enemy, character) => enemy.health - (character.attack + 15),
     Garrote_Tar_0: (enemy, character) => {
-        if(enemy.debuff.find(d => d.type === Debuffs.Bleed.type)) {
+        if(enemy.debuffs.find(d => d.type === Debuffs.Bleed.type)) {
             return enemy.health - Math.max(5, character.attack - enemy.defense);
         } else {
-            enemy.debuff.push({ type: Debuffs.Bleed.type, duration: 3});
+            enemy.debuffs.push({ type: Debuffs.Bleed.type, duration: 3});
             return enemy.health - Math.max(5, character.attack - enemy.defense);
         }
     },
@@ -101,8 +101,8 @@ const spellEffectsBuff: Record<string, (character: CharacterType, target: Charac
         }
     },
     Cure__Char_10: (character, target) => {
-        if(target.debuff.length > 0 && target.debuff[0].type !== "Dead") {
-            target.debuff.length = 0
+        if(target.debuffs.length > 0 && target.debuffs[0].type !== "Dead") {
+            target.debuffs.length = 0
         } 
 
         const spellCost = 10;

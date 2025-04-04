@@ -39,8 +39,9 @@ export type CharacterType = {
     exp: number;
     maxExp: number;
     spells: string[];
-    buff: buffEffect[];
-    debuff: debuffEffect[];
+    buffs: buffEffect[];
+    debuffs: debuffEffect[];
+    blessings: string[];
     currentTurn: boolean;
     isSelected: boolean;
     type: string;

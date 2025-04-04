@@ -59,8 +59,8 @@ class EnemyFactory {
             spells: [...baseEnemy.spells],
             resistances: [...baseEnemy.resistances],
             vulnerabilities: [...baseEnemy.vulnerabilities],
-            buff: baseEnemy.buff ? baseEnemy.buff.map(b => ({ ...b })) : [],
-            debuff: baseEnemy.debuff ? baseEnemy.debuff.map(d => ({ ...d })) : [],
+            buffs: baseEnemy.buffs ? baseEnemy.buffs.map(b => ({ ...b })) : [],
+            debuffs: baseEnemy.debuffs ? baseEnemy.debuffs.map(d => ({ ...d })) : [],
             target: [...baseEnemy.target],
         };
 

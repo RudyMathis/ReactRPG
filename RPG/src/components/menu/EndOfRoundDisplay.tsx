@@ -5,6 +5,9 @@ import Btn from "../Btn";
 import { GainExperience } from "../../gameMechanics/GainExperince";
 import { FullRestore } from "../../gameMechanics/FullRestore";
 import CharacterAtom from "../../atom/CharacterAtom";
+import { Blessings } from "../../gameData/Blessings";
+import { blessingAtom } from "../../atom/BlessingsAtom";
+import { BlessingsData } from "../../gameData/characters/BlessingsData";
 
 const EndofRoundDisplay = () => {
     const navigate = useNavigate();
@@ -12,7 +15,7 @@ const EndofRoundDisplay = () => {
     const characters = storeAtom.get(CharacterAtom);
     const selectedCharacters = Object.values(characters).filter(char => char.isSelected);
 
-    const handleNavigation = (gainXP = false, fullResotre = false) => {
+    const handleNavigation = (gainXP = false, fullResotre = false, blessings = false) => {
         if (gainXP) {
             GainExperience(AdditionalExperience, selectedCharacters.length);
         }
@@ -20,6 +23,19 @@ const EndofRoundDisplay = () => {
         if (fullResotre) {
             FullRestore();
         }
+
+        if (blessings) {
+            const characters = storeAtom.get(CharacterAtom);
+            const selectedCharacters = Object.values(characters).filter(char => char.isSelected);
+            const blessableCharacters = selectedCharacters.filter(c =>
+                c.blessings.length < BlessingsData.length
+            );
+        
+            const randomCharacter = blessableCharacters[Math.floor(Math.random() * blessableCharacters.length)];
+            Blessings(randomCharacter);
+            
+        }
+        
 
         startNewRound(); // Start the next round
 
@@ -38,9 +54,9 @@ const EndofRoundDisplay = () => {
         }}>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
                 <Btn onClick={() => handleNavigation()} text="Next Round" />
-                <h2>Blessing</h2>
-                <Btn onClick={() => handleNavigation(true, false)} text="Additional Experience & Next Round" />
-                <Btn onClick={() => handleNavigation(false, true)} text="Full Restore & Next Round" />
+                {storeAtom.get(blessingAtom) !== true && <Btn onClick={() => handleNavigation(false, false, true)} text="Blessing & Next Round" />}
+                <Btn onClick={() => handleNavigation(true, false, false)} text="Additional Experience & Next Round" />
+                <Btn onClick={() => handleNavigation(false, true, false)} text="Full Restore & Next Round" />
             </div>
         </div>
     );
