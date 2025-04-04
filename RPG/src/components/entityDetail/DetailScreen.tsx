@@ -10,17 +10,16 @@ const DetailScreen = ({ entity }: CharacterDetailProps) => {
     const hasDebuff = entity.debuffs.length > 0;
     const hasBuff = entity.buffs.length > 0;
 
-
     return (
         <div className="popup">
             <h2>{entity.name}</h2>
             <p>Level: <span style={{ color: 'red'}}>{entity.level}</span> </p>
-            <p>Health: <span style={{ color: 'red'}}>{entity.health <= 0 ? 0 : entity.health}</span> </p>
+            <p>Health: <span style={{ color: 'red'}}>{entity.health >= 0 ? entity.health : 0}</span> </p>
             <p>Max Health: <span style={{ color: 'red'}}>{entity.maxHealth}</span> </p>
             <p>Attack: <span style={{ color: 'red'}}>{entity.attack}</span> </p>
             <p>Defense: <span style={{ color: 'red'}}>{entity.defense}</span> </p>
             <p>Speed: <span style={{ color: 'red'}}>{entity.speed}</span> </p>
-            <p>Mana: <span style={{ color: 'red'}}>{entity.mana}</span> </p>
+            <p>Mana: <span style={{ color: 'red'}}>{entity.mana >= 0 ? entity.mana : 0}</span> </p>
             <p>Max Mana: <span style={{ color: 'red'}}>{entity.maxMana}</span> </p>
             {hasDebuff && (
                 <div>

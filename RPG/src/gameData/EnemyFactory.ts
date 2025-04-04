@@ -19,7 +19,9 @@ const elementEffects: Record<string, Partial<EnemyType>> = {
         health: 30,
         maxHealth: 30,
         attack: 15,
-        spells: ["Flame Burst"],
+        mana: 30,
+        maxMana: 30,
+        spells: ["Fire_Ball_Tar$20"],
         resistances: [Resistances.Fire],
         vulnerabilities: [Vulnerabilites.Fire],
     },
@@ -49,9 +51,12 @@ class EnemyFactory {
     static createEnemy(baseName: string, modifiers: string[] = []): EnemyType {
         const baseEnemy = baseEnemyDataRecord[baseName];
 
+        const addedMana: number = 50;
+        // temporally value
+
         if (!baseEnemy) {
             throw new Error(`Enemy ${baseName} not found in EnemyData`);
-        }
+        } 
 
         // Create unique copies to avoid shared references
         let modifiedEnemy: EnemyType = {
@@ -109,6 +114,14 @@ class EnemyFactory {
                 };
             }
         });
+
+        if (baseEnemy.maxMana === 0 && modifiedEnemy.name.includes("Fire")) {
+            modifiedEnemy = {
+                ...modifiedEnemy,
+                mana: addedMana,
+                maxMana: addedMana
+            }
+        }
         return modifiedEnemy;
     }
 }

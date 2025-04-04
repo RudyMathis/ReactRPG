@@ -70,8 +70,10 @@ export const runTurnLogic = async (
               console.warn(`No valid target found for ${enemy.name} or enemy speed is 0`);
               continue;
           }
+          const spell = storeAtom.get(selectedSpellAtom);
+          const spellCost = Number(spell?.split('$')[1]);
 
-          const updatedHealth = basicEnemyAttack(character, enemy);
+          const updatedHealth = basicEnemyAttack(character, enemy, character, spellCost);
           CharacterHealthUpdate(character, updatedHealth);
 
           console.log(`Enemy ${enemy.name} attacked ${character.name} for ${enemy.attack} damage.`);
@@ -97,10 +99,11 @@ export const runTurnLogic = async (
 
           const playerTarget = storeAtom.get(playerTargetAtom);
           const spell = storeAtom.get(selectedSpellAtom);
+          const spellCost = Number(spell?.split('$')[1]);
           console.log(`Using spell: ${spell}`);
 
           if (playerTarget && 'target' in playerTarget) {
-              const updatedHealth = basicCharacterAttack(playerTarget, character, spell as string);
+              const updatedHealth = basicCharacterAttack(playerTarget, character, spell as string, spellCost);
 
               storeAtom.set(EnemyAtom, (prev) => ({
                   ...prev,
@@ -114,10 +117,10 @@ export const runTurnLogic = async (
           } else {
               if (playerTarget !== null) {
                   if (playerTarget.id === character.id) {
-                      const updatedHealth = basicCharacterBuff(character, playerTarget, spell as string);
+                      const updatedHealth = basicCharacterBuff(character, playerTarget, spell as string, spellCost);
                       CharacterHealthUpdate(character, updatedHealth);
                   } else {
-                      const updatedHealth = basicCharacterBuff(character, playerTarget, spell as string);
+                      const updatedHealth = basicCharacterBuff(character, playerTarget, spell as string, spellCost);
                       CharacterHealthUpdate(playerTarget, updatedHealth);
                   }
               }
