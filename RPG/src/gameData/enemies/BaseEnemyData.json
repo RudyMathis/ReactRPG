@@ -20,6 +20,7 @@
         "debuffs": [],
         "isSelected": false,
         "type": "npc",
+        "resource_type": "mana",
         "group": "humanoide"
     },
     "Ghoul": {
@@ -43,6 +44,7 @@
         "debuffs": [],
         "isSelected": false,
         "type": "npc",
+        "resource_type": "mana",
         "group": "humanoide"
     },
     "Zombie": {
@@ -66,6 +68,7 @@
         "debuffs": [],
         "isSelected": false,
         "type": "npc",
+        "resource_type": "mana",
         "group": "humanoide"
     },
     "Rat": {
@@ -89,6 +92,7 @@
         "debuffs": [],
         "isSelected": false,
         "type": "npc",
+        "resource_type": "mana",
         "group": "beast"
     },
     "Wolf": {
@@ -112,6 +116,7 @@
         "debuffs": [],
         "isSelected": false,
         "type": "npc",
+        "resource_type": "mana",
         "group": "beast"
     },
     "Goblin": {
@@ -135,6 +140,7 @@
         "debuffs": [],
         "isSelected": false,
         "type": "npc",
+        "resource_type": "mana",
         "group": "humanoide"
     },
     "Ent": {
@@ -158,6 +164,7 @@
         "debuffs": [],
         "isSelected": false,
         "type": "npc",
+        "resource_type": "mana",
         "group": "elemental"
     }
 }

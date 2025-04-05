@@ -44,6 +44,7 @@ export type EnemyType = {
     debuffs: DebuffEffect[];
     isSelected: boolean;
     type: string;
+    resource_type: string;
     group: string;
 };
 

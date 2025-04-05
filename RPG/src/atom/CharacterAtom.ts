@@ -45,6 +45,7 @@ export type CharacterType = {
     currentTurn: boolean;
     isSelected: boolean;
     type: string;
+    resource_type: string;
 }
 
 const CharacterAtom = atom<Record<number, CharacterType>>(

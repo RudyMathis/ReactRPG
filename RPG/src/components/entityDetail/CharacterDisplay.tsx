@@ -15,7 +15,7 @@ const CharacterDisplay: React.FC<CharacterDisplayProps> = ({ character}) => {
             {character.currentTurn && <CurrentTurnArrow />}
             <div className='entity-bar-container'>
                 <HealthBar health={character.health <= 0 ? 0 : character.health} maxHealth={character.maxHealth} />
-                {character.maxMana > 0 && <ManaBar mana={character.mana} maxMana={character.maxMana} />}
+                {character.maxMana > 0 && <ManaBar mana={character.mana} maxMana={character.maxMana} resourceType={character.resource_type} />}
             </div>
             <div className={`character-sprite ${character.name} ${character.health <= 0 ? 'dead' : ''}`}>
                 <BaseEntityDisplay entity={character}/>

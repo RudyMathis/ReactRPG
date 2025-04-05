@@ -9,6 +9,7 @@ import { selectedSpellAtom } from "../../atom/SelectedSpellAtom";
 import { handleStatusEffects } from '../../gameData/Status';
 import { basicCharacterAttack, basicCharacterBuff, basicEnemyAttack } from '../../gameData/Spells';
 import { GainExperience } from "../GainExperince";
+import { ManaRegen } from "../ManaRegen";
 
 // Derive types from the atoms
 type CharacterType = (typeof CharacterAtom) extends import('jotai').Atom<Record<number, infer T>> ? T : never;
@@ -137,7 +138,7 @@ export const runTurnLogic = async (
   }
 
   console.log(`Turn ${currentTurn} ended.`);
-  handleManaRegen();
+  ManaRegen();
   storeAtom.set(turnCountAtom, currentTurn + 1);
 
   setTimeout(() => runTurnLogic(currentTurnOrder, waitForInput), 1000);
@@ -178,21 +179,6 @@ const handleAllCharactersDead = () => {
     return true; // Stop running turns
   }
   return false;
-}
-
-const handleManaRegen = () => {
-  const manaRegenAmount = 10;
-
-  storeAtom.set(CharacterAtom, (prev) => {
-      const updatedCharacters = Object.values(prev).map((char) => ({
-          ...char,
-          mana: char.health > 0
-          ? Math.min(char.mana + manaRegenAmount, char.maxMana)
-          : char.mana, // If dead, don't change mana
-      }));
-  
-      return Object.fromEntries(updatedCharacters.map((char) => [char.id, char]));
-  });   
 }
 
 const CharacterHealthUpdate = (playerTarget: CharacterType, updatedHealth: number) => { 

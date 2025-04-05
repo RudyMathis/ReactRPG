@@ -12,16 +12,17 @@
         "speed": 20,
         "speedDefault": 20,
         "mana": 0,
-        "maxMana": 0,
+        "maxMana": 100,
         "exp": 30,
         "maxExp": 100,
         "spells": ["Quick_Attack_Tar$0", "Swing_Strike_Tar$0"],
         "buffs": [],
-        "debuffs": [{"type": "Bleed", "duration": 4}],
+        "debuffs": [],
         "blessings":[],
         "currentTurn": false,
         "isSelected": false,
-        "type": "player"
+        "type": "player",
+        "resource_type": "rage"
     },
     "Mage": {
         "id": 2,
@@ -45,7 +46,8 @@
         "blessings":[],
         "currentTurn": false,
         "isSelected": false,
-        "type": "player"
+        "type": "player",
+        "resource_type": "mana"
     },
     "Cleric": {
         "id": 3,
@@ -69,7 +71,8 @@
         "blessings":[],
         "currentTurn": false,
         "isSelected": false,
-        "type": "player"
+        "type": "player",
+        "resource_type": "mana"
     },
     "Rogue": {
         "id": 4,
@@ -83,17 +86,18 @@
         "vulnerabilities":[],
         "speed": 60,
         "speedDefault": 60,
-        "mana": 0,
-        "maxMana": 0,
+        "mana": 100,
+        "maxMana": 100,
         "exp": 0,
         "maxExp": 100,
-        "spells": ["Quick_Attack_Tar$0", "Backstab_Tar$0", "Garrote_Tar$0"],
+        "spells": ["Quick_Attack_Tar$0", "Backstab_Tar$0", "Garrote_Tar$40"],
         "buffs": [],
         "debuffs": [],
         "blessings":[],
         "currentTurn": false,
         "isSelected": false,
-        "type": "player"
+        "type": "player",
+        "resource_type": "energy"
     },
     "Archer": {
         "id": 5,
@@ -107,8 +111,8 @@
         "vulnerabilities":[],
         "speed": 20,
         "speedDefault": 20,
-        "mana": 0,
-        "maxMana": 0,
+        "mana": 100,
+        "maxMana": 100,
         "exp": 0,
         "maxExp": 100,
         "spells": ["Multi_Shot_Tar$0"],
@@ -117,7 +121,8 @@
         "blessings":[],
         "currentTurn": false,
         "isSelected": false,
-        "type": "player"
+        "type": "player",
+        "resource_type": "energy"
     },
     "Bard": {
         "id": 6,
@@ -131,8 +136,8 @@
         "vulnerabilities":[],
         "speed": 30,
         "speedDefault": 30,
-        "mana": 40,
-        "maxMana": 100,
+        "mana": 200,
+        "maxMana": 200,
         "exp": 0,
         "maxExp": 100,
         "spells": ["Defense_Up_Char$0", "Attack_Up_Tar$0"],
@@ -141,7 +146,8 @@
         "blessings":[],
         "currentTurn": false,
         "isSelected": false,
-        "type": "player"
+        "type": "player",
+        "resource_type": "mana"
     },
     "Monk": {
         "id": 7,
@@ -165,6 +171,7 @@
         "blessings":[],
         "currentTurn": false,
         "isSelected": false,
-        "type": "player"
+        "type": "player",
+        "resource_type": "energy"
     }
 }

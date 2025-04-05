@@ -77,8 +77,10 @@ const spellEffects: Record<string, (enemy: EnemyType, character: CharacterType, 
         }
     },
     Lightning_Bolt_Tar$40: (enemy, character) => enemy.health - (character.attack + 15),
-    Garrote_Tar$0: (enemy, character, target) => {
+    Garrote_Tar$40: (enemy, character, target, spellCost) => {
         if(target === character) {
+            spellCost = 40;
+            enemy.mana -= spellCost;
             if (character.debuffs.find(d => d.type === Debuffs.Bleed.type)) {
                 return character.health - Math.max(5, enemy.attack - character.defense);
             } else {
@@ -86,6 +88,8 @@ const spellEffects: Record<string, (enemy: EnemyType, character: CharacterType, 
                 return character.health - Math.max(5, character.attack - character.defense);
             }
         } else {
+            spellCost = 40;
+            character.mana -= spellCost;
             if(enemy.debuffs.find(d => d.type === Debuffs.Bleed.type)) {
                 return enemy.health - Math.max(5, character.attack - enemy.defense);
             } else {
