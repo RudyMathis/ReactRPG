@@ -77,6 +77,19 @@ const spellEffects: Record<string, (enemy: EnemyType, character: CharacterType, 
         }
     },
     Lightning_Bolt_Tar$40: (enemy, character) => enemy.health - (character.attack + 15),
+    Shadow_Strike_Tar$0: (enemy, character, target, spellCost) =>{
+        if(target === character) {
+            spellCost = 0;
+            enemy.mana -= spellCost;
+
+            return character.health - Math.max(5, character.attack - character.defense);
+        } else {
+            spellCost = 0;
+            character.mana -= spellCost;
+
+            return enemy.health - Math.max(5, character.attack - enemy.defense);
+        }
+    },
     Garrote_Tar$40: (enemy, character, target, spellCost) => {
         if(target === character) {
             spellCost = 40;
@@ -98,7 +111,6 @@ const spellEffects: Record<string, (enemy: EnemyType, character: CharacterType, 
             }
         }
     },
-
     Multi_Shot_Tar$0: (enemy: EnemyType, character: CharacterType) => {
         const enemies = Object.values(storeAtom.get(EnemyAtom)); // Get all enemies as an array
         const sortedEnemies = [...enemies].sort((a, b) => a.order - b.order); // Ensure correct order
@@ -125,7 +137,81 @@ const spellEffects: Record<string, (enemy: EnemyType, character: CharacterType, 
         }
 
         return enemy.health; // Return updated health of main target
-    }
+    },
+    "Heroic_Strike_Tar$-20": (enemy, character, target, spellCost) => {
+        if(target === character) {
+            spellCost = 20;
+            enemy.mana += spellCost;
+
+            return character.health - Math.max(5, character.attack - character.defense);
+        } else {
+            spellCost = 20;
+            character.mana += spellCost;
+
+            return enemy.health - Math.max(5, character.attack - enemy.defense);
+        }
+    },
+    Devastate__Tar$60: (enemy, character, target, spellCost) => {
+        if(target === character) {
+
+            spellCost = 60;
+            enemy.mana -= spellCost;
+            character.defense = 0;
+
+            if (character.debuffs.find(d => d.type === Debuffs.Sundered.type)) {
+                return character.health - Math.max(5, enemy.attack - character.defense);
+            } else {
+                character.debuffs.push({ type: Debuffs.Sundered.type, duration: 3 });
+                return character.health - Math.max(5, character.attack - character.defense);
+            }
+        } else {
+
+            spellCost = 60;
+            character.mana -= spellCost;
+            enemy.defense = 0;
+
+            if(enemy.debuffs.find(d => d.type === Debuffs.Sundered.type)) {
+                return enemy.health - Math.max(5, character.attack - enemy.defense);
+            } else {
+                enemy.debuffs.push({ type: Debuffs.Sundered.type, duration: 3});
+                return enemy.health - Math.max(5, character.attack - enemy.defense);
+            }
+            
+        }
+    },
+    Frostbite__Tar$20: (enemy, character, target, spellCost) => {
+        if(target === character) {
+            character.speed -= 10;
+            spellCost = 20;
+            enemy.mana -= spellCost;
+    
+            const iceResistance = character.resistances.find(resistance => resistance.type === Resistances.Ice.type);
+            const iceVulnerability = character.vulnerabilities.find(vulnerability => vulnerability.type === Vulnerabilites.Ice.type);
+            
+            if(iceResistance) {
+                return character.health - Math.max(1, enemy.attack - Resistances.Ice.value);
+            } else if (iceVulnerability) {
+                return character.health - enemy.attack + Vulnerabilites.Ice.value;
+            } else {
+                return character.health - enemy.attack;
+            }
+        } else {
+            enemy.speed -= 10;
+            spellCost = 20;
+            character.mana -= spellCost;
+    
+            const iceResistance = enemy.resistances.find(resistance => resistance.type === Resistances.Ice.type);
+            const iceVulnerability = enemy.vulnerabilities.find(vulnerability => vulnerability.type === Vulnerabilites.Ice.type);
+            
+            if(iceResistance) {
+                return enemy.health - Math.max(1, character.attack - Resistances.Ice.value);
+            } else if (iceVulnerability) {
+                return enemy.health - character.attack + Vulnerabilites.Ice.value;
+            } else {
+                return enemy.health - character.attack;
+            }
+        }
+    },
 };
 
 const spellEffectsBuff: Record<string, (character: CharacterType, target: CharacterType, spellCost: number) => number> = {
@@ -187,7 +273,7 @@ const basicCharacterBuff = (character: CharacterType, target: CharacterType, spe
     return spellEffectsBuff[spell](character, target, spellCost);
 };
 
-const basicEnemyAttack = (character: CharacterType, enemy: EnemyType, target: CharacterType, spellCost: number) => {
+const basicEnemyAttack = (character: CharacterType, enemy: EnemyType, target: CharacterType) => {
     setTimeout(() => {
         storeAtom.set(ShakeAtom, (prev) => ({ ...prev, [enemy.id]: false }));
         storeAtom.set(BaseDamageFlashAtom, (prev) => ({ ...prev, [character.id]: false }));
@@ -196,25 +282,37 @@ const basicEnemyAttack = (character: CharacterType, enemy: EnemyType, target: Ch
     storeAtom.set(ShakeAtom, (prev) => ({ ...prev, [enemy.id]: true }));
     storeAtom.set(BaseDamageFlashAtom, (prev) => ({ ...prev, [character.id]: true }));
 
-    // Check if the enemy has any spell available to use
     if (enemy.spells && enemy.spells.length > 0) {
-        // Randomly pick a spell from the list
-        const randomSpell = enemy.spells[Math.floor(Math.random() * enemy.spells.length)];
+        // Filter spells the enemy can afford
+        const usableSpells = enemy.spells.filter(spell => {
+            const match = spell.match(/\$(-?\d+)$/); // Extract cost from spell string
+            const cost = match ? parseInt(match[1], 10) : 0;
+            return enemy.mana >= cost;
+        });
 
-        console.log(`Enemy ${enemy.name} is using spell: ${randomSpell}`, enemy.spells);
+        if (usableSpells.length > 0) {
+            const chosenSpell = usableSpells[Math.floor(Math.random() * usableSpells.length)];
 
-        // If the spell exists in the spell effects, apply it
-        if (spellEffects[randomSpell] && enemy.mana >= spellCost ) {
-            return spellEffects[randomSpell](enemy, character, target, spellCost);
+            const match = chosenSpell.match(/\$(-?\d+)$/);
+            const spellCost = match ? parseInt(match[1], 10) : 0;
+
+            console.log(`Enemy ${enemy.name} is using spell: ${chosenSpell} with cost ${spellCost}`);
+
+            if (typeof spellEffects[chosenSpell] === 'function') {
+                return spellEffects[chosenSpell](enemy, character, target, spellCost);
+            } else {
+                console.warn(`Spell effect for '${chosenSpell}' not found in spellEffects.`);
+            }
+            
         } else {
-            console.warn(`Unknown spell: ${randomSpell}`);
-            // Default attack if no valid spell effect exists
-            return character.health - Math.max(1, enemy.attack - character.defense);
+            console.warn(`Enemy ${enemy.name} has no usable spells with ${enemy.mana} mana.`);
         }
     } else {
-        console.warn(`Enemy ${enemy.name} has no available spells.`);
-        return character.health - Math.max(1, enemy.attack - enemy.defense); // Default attack if no spells are available
+        console.warn(`Enemy ${enemy.name} has no spells defined.`);
     }
+
+    // Fallback: basic attack
+    return character.health - Math.max(1, enemy.attack - character.defense);
 };
 
 

@@ -30,6 +30,7 @@ export type CharacterType = {
     maxHealth: number;
     attack: number;
     defense: number;
+    defenseDefault: number;
     resistances: Resistance[];
     vulnerabilities: vulnerability[];
     speed: number;

@@ -13,8 +13,6 @@ export const ManaRegen = () => {
             ? Math.min(char.mana + manaRegenAmount, char.maxMana) 
             : char.resource_type === "energy" 
             ? Math.min(char.mana + energryRegenAmount, char.maxMana)
-            : char.resource_type === "rage" 
-            ? 0  
             : char.mana 
             : char.mana, // If dead, don't change mana
         }));

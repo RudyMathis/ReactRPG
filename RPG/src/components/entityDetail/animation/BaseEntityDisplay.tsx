@@ -21,13 +21,14 @@ const entityImages: Record<string, string> = {
     Rogue_dead: '/assets/characters/rogue_dead.png',
     Archer: '/assets/characters/archer.png',
     Archer_dead: '/assets/characters/archer_dead.png',
+    Goblin: '/assets/characters/goblin.png',
 };
 
 function BaseEntityDisplay({ entity }: CharacterDetailProps) {
     const [shakingEntities] = useAtom(ShakeAtom);
     const [flashEntities] = useAtom(BaseDamageFlashAtom);
 
-    const imageSrc = entityImages[entity.name] || '/assets/default.png';
+    const imageSrc = entityImages[entity.name] || entityImages[(entity as EnemyType).base] || '/assets/default.png';
     const imageSrcDead = entityImages[entity.name + '_dead'] || '/assets/default.png';
 
     const isShaking = shakingEntities[entity.id] ?? false;
@@ -36,9 +37,10 @@ function BaseEntityDisplay({ entity }: CharacterDetailProps) {
     
     return (
         <div className="sprite-container">
-            <div key={key} 
+            <div key={key}
+                data-entity-modified={(entity.name).match(/Fire|Ice|Dark/)}
                 className={`sprite ${isShaking ? "shake" : ""} ${isFlashing ? "flash-red" : ""}`}>
-                {entity.health > 0 ? <img src={imageSrc} alt={entity.name} /> : <img src={imageSrcDead} alt={`${entity.name} is dead`} />}
+                {entity.health > 0 ? <img src={imageSrc} className="character" alt={entity.name} /> : <img src={imageSrcDead} alt={`${entity.name} is dead`} />}
             </div>
         </div>
     );

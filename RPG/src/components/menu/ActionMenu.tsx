@@ -45,7 +45,7 @@ const ActionMenu = ({ isVisible, type, onSpell, detailScreen }: ActionMenuProps)
                                             handleSpellClick(spell);
                                         }}
                                         data-spell={spell}
-                                        disabled={char.mana < Number(spell.split('Char_')[1])} 
+                                        disabled={char.mana < Number(spell.split('$')[1])} 
                                     >
                                         {spell.replace('_', ' ').replace('_', ' ').split('Char')[0]}
                                     </button>
@@ -58,7 +58,7 @@ const ActionMenu = ({ isVisible, type, onSpell, detailScreen }: ActionMenuProps)
                                             handleSpellClick(spell);
                                         }}
                                         data-spell={spell}
-                                        disabled={char.mana < Number(spell.split('*')[1])}  
+                                        disabled={char.mana < Number(spell.split('$')[1])}  
                                     >
                                         {spell.replace('_', ' ').replace('_', ' ').split('Tar')[0]}
                                 </button>

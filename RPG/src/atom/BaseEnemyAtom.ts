@@ -31,6 +31,7 @@ export type EnemyType = {
     maxHealth: number;
     attack: number;
     defense: number;
+    defenseDefault: number;
     resistances: Resistance[];
     vulnerabilities: Vulnerability[];
     speed: number;
@@ -45,6 +46,7 @@ export type EnemyType = {
     isSelected: boolean;
     type: string;
     resource_type: string;
+    base: string;
     group: string;
 };
 

@@ -35,3 +35,21 @@
 .flash-red {
     animation: flash-red .3s ease-in-out;
 }
+
+[data-entity-modified="Fire"] img {
+    filter: drop-shadow(1px 1px red) drop-shadow(1px -1px red)
+    drop-shadow(-1px 1px red) drop-shadow(-1px -1px red)
+    drop-shadow(-20px 20px 4px rgba(0, 0, 0, 0.75));
+}
+
+[data-entity-modified="Ice"] img {
+    filter: drop-shadow(1px 1px lightblue) drop-shadow(1px -1px lightblue)
+    drop-shadow(-1px 1px lightblue) drop-shadow(-1px -1px lightblue)
+    drop-shadow(-20px 20px 4px rgba(0, 0, 0, 0.75));
+}
+
+[data-entity-modified="Dark"] img {
+    filter: drop-shadow(1px 1px purple) drop-shadow(1px -1px purple)
+    drop-shadow(-1px 1px purple) drop-shadow(-1px -1px purple)
+    drop-shadow(-20px 20px 4px rgba(0, 0, 0, 0.75));
+}

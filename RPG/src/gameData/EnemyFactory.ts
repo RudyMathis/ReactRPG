@@ -11,7 +11,9 @@ const elementEffects: Record<string, Partial<EnemyType>> = {
     "Ice": {
         attack: 5,
         defense: 5,
-        spells: ["Frostbite"],
+        mana: 30,
+        maxMana: 30,
+        spells: ["Frostbite__Tar$20"],
         resistances: [Resistances.Ice],
         vulnerabilities: [Vulnerabilites.Ice],
     },
@@ -30,7 +32,7 @@ const elementEffects: Record<string, Partial<EnemyType>> = {
         maxHealth: 30,
         attack: 5,
         defense: 5,
-        spells: ["Shadow Strike"],
+        spells: ["Shadow_Strike_Tar$0"],
         resistances: [Resistances.Dark],
         vulnerabilities: [Vulnerabilites.Dark],
     }
@@ -112,10 +114,11 @@ class EnemyFactory {
                     resistances: [...modifiedEnemy.resistances, ...(effects.resistances ?? [])],
                     vulnerabilities: [...modifiedEnemy.vulnerabilities, ...(effects.vulnerabilities ?? [])]
                 };
+                console.log(modifiedEnemy.spells, "modified enemy");
             }
         });
 
-        if (baseEnemy.maxMana === 0 && modifiedEnemy.name.includes("Fire")) {
+        if (baseEnemy.maxMana === 0 && modifiedEnemy.name.includes("Fire") || modifiedEnemy.name.includes("Ice")) {
             modifiedEnemy = {
                 ...modifiedEnemy,
                 mana: addedMana,

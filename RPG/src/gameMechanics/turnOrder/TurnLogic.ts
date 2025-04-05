@@ -71,15 +71,14 @@ export const runTurnLogic = async (
               console.warn(`No valid target found for ${enemy.name} or enemy speed is 0`);
               continue;
           }
-          const spell = storeAtom.get(selectedSpellAtom);
-          const spellCost = Number(spell?.split('$')[1]);
 
-          const updatedHealth = basicEnemyAttack(character, enemy, character, spellCost);
+          const updatedHealth = basicEnemyAttack(character, enemy, character) ?? character.health;
           CharacterHealthUpdate(character, updatedHealth);
 
           console.log(`Enemy ${enemy.name} attacked ${character.name} for ${enemy.attack} damage.`);
           if (handleAllCharactersDead()) return;
           if (handleAllEnemiesDead()) return;
+          
       } else {
           // Character turn logic
           const character = entity as CharacterType;
