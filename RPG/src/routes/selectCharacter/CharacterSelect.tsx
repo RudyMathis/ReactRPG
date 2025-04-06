@@ -1,13 +1,10 @@
 import CharacterSheets from "./CharacterSheets";
 import NavigateBtn from "../../components/NavigateBtn";
 import "./CharacterSelect.css";
-import { GameLevelAtom } from "../../atom/GameLevelAtom";
-import { useAtom } from "jotai";
-// import { useEffect, useState } from "react";
 
 const CharacterSelect = () => {
 
-    const [currentGameLevel] = useAtom(GameLevelAtom);
+    // const [currentGameLevel] = useAtom(GameLevelAtom);
     // const [message, setMessage] = useState<string>('');
 
     // useEffect(() => {
@@ -25,7 +22,7 @@ const CharacterSelect = () => {
                 <NavigateBtn locationValue="/" location="Main Menu" />
             </div>
             <CharacterSheets />
-            <NavigateBtn locationValue={`/game/${currentGameLevel.level}-${currentGameLevel.round}`} location="Begin your adventure" />
+            <NavigateBtn locationValue={`/game`} location="Begin your adventure" />
         </>
     );
 };

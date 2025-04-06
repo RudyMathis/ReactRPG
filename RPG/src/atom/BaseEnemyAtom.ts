@@ -97,7 +97,7 @@ export const getRandomEnemyType = (): string => {
 
 // Generate up to 7 unique enemies
 const initialEnemies: Record<number, EnemyType> = {};
-const enemyCount = Math.floor(Math.random() * 1) + 1; // Random between 4-7
+const enemyCount = Math.floor(Math.random() * 1) + 2; // Random between 4-7
 
 for (let i = 0; i < enemyCount; i++) {
     const enemyType = getRandomEnemyType();

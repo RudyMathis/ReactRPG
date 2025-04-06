@@ -3,7 +3,6 @@ import { useState, useCallback, useRef, useEffect  } from 'react';
 import { useAtom } from 'jotai';
 import CharacterAtom, { CharacterType } from '../../atom/CharacterAtom';
 import EnemyAtom, { EnemyType } from '../../atom/BaseEnemyAtom';
-import { turnCountAtom } from '../../atom/UseTurnCountAtom';
 import { useTurnOrder }  from '../../gameMechanics/turnOrder/useTurnOrder';
 import { playerTargetAtom } from '../../atom/PlayerTargetAtom';
 import { runTurnLogic } from '../../gameMechanics/turnOrder/TurnLogic';
@@ -13,11 +12,9 @@ import EnemyDisplay from '../../components/entityDetail/EnemyDisplay';
 import DetailScreen from '../../components/entityDetail/DetailScreen';
 import Btn from '../../components/Btn';
 import './Grid.css';
-import { storeAtom } from '../../atom/storeAtom';
 import { GameLevelAtom } from '../../atom/GameLevelAtom';
 
 const Grid = () => {
-  const currentTurn = storeAtom.get(turnCountAtom); // Read current turn
   const [characters] = useAtom(CharacterAtom);
   const [enemies, setEnemies] = useAtom(EnemyAtom);
   const selectedCharacters = Object.values(characters).filter(char => char.isSelected);
@@ -26,10 +23,9 @@ const Grid = () => {
   const [playerTarget, setPlayerTarget] = useAtom(playerTargetAtom);
   const [waitingForInput, setWaitingForInput] = useState(false);
   const inputPromiseResolverRef = useRef<(() => void) | null>(null);
-  // const [initialized, setInitialized] = useState(false);
   const [gameLevel] = useAtom(GameLevelAtom);
   const [activeDetailScreen, setActiveDetailScreen] = useState<CharacterType | EnemyType | null>(null);
-  const [startOfRound, setStartOfRound] = useState(true);
+  const [currentGameLevel] = useAtom(GameLevelAtom);
 
   useEffect(() => {
     if (!gameLevel.isRoundOver) {
@@ -64,7 +60,7 @@ const Grid = () => {
   const checkTurnOrderAndRunLogic = () => {
     if (turnOrder.length > 0) {
       runTurnLogic(turnOrder, waitForInput);
-      setStartOfRound(false);
+      currentGameLevel.isRoundOver = true
     }
   };
 
@@ -156,7 +152,7 @@ const Grid = () => {
           </div>
         </div>
       )}
-      {currentTurn == 1 && startOfRound == true && <Btn onClick={checkTurnOrderAndRunLogic} className="begin" text="Begin" />}
+      {currentGameLevel.isRoundOver == false && <Btn onClick={checkTurnOrderAndRunLogic} className="begin" text="Begin" />}
     </div>
   );
 };

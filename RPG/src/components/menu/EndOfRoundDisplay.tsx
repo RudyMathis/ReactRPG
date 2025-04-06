@@ -1,5 +1,4 @@
-import { startNewRound, GameLevelAtom } from "../../atom/GameLevelAtom";
-import { useNavigate } from 'react-router';
+import { GameLevelAtom, startNewRound } from "../../atom/GameLevelAtom";
 import { storeAtom } from "../../atom/storeAtom";
 import Btn from "../Btn";
 import { GainExperience } from "../../gameMechanics/GainExperince";
@@ -8,12 +7,15 @@ import CharacterAtom from "../../atom/CharacterAtom";
 import { Blessings } from "../../gameData/Blessings";
 import { blessingAtom } from "../../atom/BlessingsAtom";
 import { BlessingsData } from "../../gameData/characters/BlessingsData";
+import { useAtom } from "jotai";
+import { turnCountAtom } from "../../atom/UseTurnCountAtom";
 
 const EndofRoundDisplay = () => {
-    const navigate = useNavigate();
     const AdditionalExperience = 10;
     const characters = storeAtom.get(CharacterAtom);
     const selectedCharacters = Object.values(characters).filter(char => char.isSelected);
+    const [currentGameLevel] = useAtom(GameLevelAtom);
+    
 
     const handleNavigation = (gainXP = false, fullResotre = false, blessings = false) => {
         if (gainXP) {
@@ -35,14 +37,11 @@ const EndofRoundDisplay = () => {
             Blessings(randomCharacter);
             
         }
+        localStorage.setItem('turnCount', '1');
+        storeAtom.set(turnCountAtom, 1);
         
-
+        currentGameLevel.isRoundOver = true
         startNewRound(); // Start the next round
-
-        setTimeout(() => {
-            const updatedGameLevel = storeAtom.get(GameLevelAtom);
-            navigate(`/game/${updatedGameLevel.level}-${updatedGameLevel.round}`);
-        }, 0);
     };
 
     return (

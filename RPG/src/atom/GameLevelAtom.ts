@@ -6,25 +6,40 @@ import { turnCountAtom } from './UseTurnCountAtom';
 import { getRandomEnemyType, getRandomElement, getRandomClass, determineEnemyGroup } from './BaseEnemyAtom';
 import EnemyFactory from '../gameData/EnemyFactory';
 
-export const GameLevelAtom = atom({
-    round: 1,
-    level: 1,
-    isRoundOver: false,
-    isLevelOver: false,
-});
+// Function to get initial GameLevelAtom state from localStorage
+const getInitialGameLevel = () => {
+    const savedLevel = localStorage.getItem('Level');
+    const savedRound = localStorage.getItem('Round');
+
+    if (savedLevel && savedRound) {
+        return {
+            round: parseInt(savedRound, 10),
+            level: parseInt(savedLevel, 10),
+            isRoundOver: false,
+            isLevelOver: false,
+        };
+    }
+
+    return {
+        round: 1,
+        level: 1,
+        isRoundOver: false,
+        isLevelOver: false,
+    };
+};
+
+export const GameLevelAtom = atom(getInitialGameLevel());
 
 const generateNewEnemies = (round: number, level: number): Record<number, EnemyType> => {
     const newEnemies: Record<number, EnemyType> = {};
-    const enemyCount = Math.floor(Math.random() * 1) + 1; // Random between 4-7
+    const enemyCount = Math.floor(Math.random() * 1) + 2;
 
     for (let i = 0; i < enemyCount; i++) {
-        // Pick a random enemy type from your predefined groups
         const enemyType = getRandomEnemyType();
         const enemyGroup = determineEnemyGroup(enemyType);
         const element = getRandomElement();
         const enemyClass = getRandomClass(enemyGroup);
 
-        // Build the enemy's display name using your naming conventions
         const finalElement = element ? `${element}` : "";
         const finalClass = enemyClass ? `${enemyClass}` : "";
         let finalName = enemyType;
@@ -37,13 +52,11 @@ const generateNewEnemies = (round: number, level: number): Record<number, EnemyT
             finalName = `${finalElement} ${enemyType} ${finalClass}`.trim();
         }
 
-        // Use EnemyFactory to create the enemy from the template
         const enemy = EnemyFactory.createEnemy(enemyType, [element, enemyClass]);
-        enemy.id = i + 100; // assign a new unique id
+        enemy.id = i + 100;
         enemy.group = enemyGroup;
         enemy.name = finalName;
 
-        // Scale enemy stats for the new round
         enemy.health = enemy.health + round * 10 * level;
         enemy.maxHealth = enemy.maxHealth + round * 10 * level;
         enemy.attack = enemy.attack + round * 2 * level;
@@ -52,39 +65,34 @@ const generateNewEnemies = (round: number, level: number): Record<number, EnemyT
 
         newEnemies[enemy.id] = enemy;
     }
-    
+
     return newEnemies;
 };
 
 export const startNewRound = () => {
-  // Increment the round and reset the round-over flag
     storeAtom.set(GameLevelAtom, prev => {
         const newRound = prev.round + 1;
-        if(newRound > 3) {
-            const newLevel = prev.level + 1;
+        let newLevel = prev.level;
 
-            return {
-                ...prev,
-                    round: 1,
-                    isRoundOver: false,
-                    level: newLevel,
-                };
-        } else {
-
-            return {
-            ...prev,
-                round: newRound,
-                isRoundOver: false,
-            };
+        if (newRound > 3) {
+            newLevel++;
+            return { ...prev, round: 1, isRoundOver: false, level: newLevel };
         }
+
+        return { ...prev, round: newRound, isRoundOver: false };
     });
 
-    // Use the updated round value for generating enemies
-    const updatedRound = storeAtom.get(GameLevelAtom).round;
-    const updateLevel = storeAtom.get(GameLevelAtom).level;
-    const newEnemies = generateNewEnemies(updatedRound, updateLevel);
-    storeAtom.set(EnemyAtom, newEnemies);
+    const { level, round } = storeAtom.get(GameLevelAtom);
 
-    // Reset turn counter
+    localStorage.setItem('Level', JSON.stringify(level));
+    localStorage.setItem('Round', JSON.stringify(round));
+
+    // Clear existing enemies from local storage and generate new ones
+    localStorage.removeItem('enemies');
+    const newEnemies = generateNewEnemies(round, level);
+    storeAtom.set(EnemyAtom, newEnemies);
+    localStorage.setItem('enemies', JSON.stringify(newEnemies));
+
     storeAtom.set(turnCountAtom, 1);
+    console.log("Round:", round, "Level:", level);
 };

@@ -11,16 +11,32 @@ import { basicCharacterAttack, basicCharacterBuff, basicEnemyAttack } from '../.
 import { GainExperience } from "../GainExperince";
 import { ManaRegen } from "../ManaRegen";
 
-// Derive types from the atoms
 type CharacterType = (typeof CharacterAtom) extends import('jotai').Atom<Record<number, infer T>> ? T : never;
 type EnemyType = (typeof EnemyAtom) extends import('jotai').Atom<Record<number, infer T>> ? T : never;
 
+const loadInitialStates = () => {
+  const savedCharacters = localStorage.getItem('characters');
+  const savedEnemies = localStorage.getItem('enemies');
+  const savedTurnCount = localStorage.getItem('turnCount');
+
+  if (savedCharacters) {
+      storeAtom.set(CharacterAtom, JSON.parse(savedCharacters));
+  }
+  if (savedEnemies) {
+      storeAtom.set(EnemyAtom, JSON.parse(savedEnemies));
+  }
+  if (savedTurnCount) {
+      storeAtom.set(turnCountAtom, parseInt(savedTurnCount, 10));
+  }
+};
+
+loadInitialStates();
 
 export const runTurnLogic = async (
   turnOrder: (CharacterType | EnemyType)[],
   waitForInput: () => Promise<void>
 ) => {
-  const currentTurnOrder = [...turnOrder]; // Create a copy to avoid modifying the original
+  const currentTurnOrder = [...turnOrder];
   const currentTurn = storeAtom.get(turnCountAtom);
 
   if (handleAllCharactersDead()) return;
@@ -29,27 +45,16 @@ export const runTurnLogic = async (
   for (let i = 0; i < currentTurnOrder.length; i++) {
       let entity = currentTurnOrder[i];
 
-      // Re-fetch the entity from the store to get the latest state
-      if (entity.type === "player") {
-          entity = storeAtom.get(CharacterAtom)[entity.id];
-      } else {
-          entity = storeAtom.get(EnemyAtom)[entity.id];
-      }
+      entity = entity.type === "player" ? storeAtom.get(CharacterAtom)[entity.id] : storeAtom.get(EnemyAtom)[entity.id];
 
       if (!entity) continue;
 
       handleStatusEffects(entity);
 
-      if (entity.type === "player") {
-          entity = storeAtom.get(CharacterAtom)[entity.id];
-          currentTurnOrder[i] = entity;
-      } else {
-          entity = storeAtom.get(EnemyAtom)[entity.id];
-          currentTurnOrder[i] = entity;
-      }
-
+      entity = entity.type === "player" ? storeAtom.get(CharacterAtom)[entity.id] : storeAtom.get(EnemyAtom)[entity.id];
+      currentTurnOrder[i] = entity;
+      console.log("Entity before target check:", entity);
       if ('target' in entity) {
-          // Enemy turn logic
           const enemy = storeAtom.get(EnemyAtom)[entity.id];
 
           if (!enemy) {
@@ -72,15 +77,13 @@ export const runTurnLogic = async (
               continue;
           }
 
-          const updatedHealth = basicEnemyAttack(character, enemy, character) ?? character.health;
-          CharacterHealthUpdate(character, updatedHealth);
+          const updatedCharacterHealth = basicEnemyAttack(character, enemy, character) ?? character.health;
+          CharacterHealthUpdate(character, updatedCharacterHealth);
 
           console.log(`Enemy ${enemy.name} attacked ${character.name} for ${enemy.attack} damage.`);
           if (handleAllCharactersDead()) return;
           if (handleAllEnemiesDead()) return;
-          
       } else {
-          // Character turn logic
           const character = entity as CharacterType;
 
           if (character.health <= 0) {
@@ -103,27 +106,20 @@ export const runTurnLogic = async (
           console.log(`Using spell: ${spell}`);
 
           if (playerTarget && 'target' in playerTarget) {
-              const updatedHealth = basicCharacterAttack(playerTarget, character, spell as string, spellCost);
+              const updatedEnemyHealth = basicCharacterAttack(playerTarget, character, spell as string, spellCost);
 
               storeAtom.set(EnemyAtom, (prev) => ({
                   ...prev,
                   [playerTarget.id]: {
                       ...prev[playerTarget.id],
-                      health: updatedHealth,
+                      health: updatedEnemyHealth,
                   },
               }));
 
               if (handleAllEnemiesDead()) return;
-          } else {
-              if (playerTarget !== null) {
-                  if (playerTarget.id === character.id) {
-                      const updatedHealth = basicCharacterBuff(character, playerTarget, spell as string, spellCost);
-                      CharacterHealthUpdate(character, updatedHealth);
-                  } else {
-                      const updatedHealth = basicCharacterBuff(character, playerTarget, spell as string, spellCost);
-                      CharacterHealthUpdate(playerTarget, updatedHealth);
-                  }
-              }
+          } else if (playerTarget) {
+              const updatedTargetHealth = basicCharacterBuff(character, playerTarget, spell as string, spellCost);
+              CharacterHealthUpdate(playerTarget.id === character.id ? character : playerTarget, updatedTargetHealth);
           }
 
           storeAtom.set(CharacterAtom, prev => ({
@@ -139,7 +135,10 @@ export const runTurnLogic = async (
   console.log(`Turn ${currentTurn} ended.`);
   ManaRegen();
   storeAtom.set(turnCountAtom, currentTurn + 1);
-
+  // Save states to localStorage
+  localStorage.setItem('characters', JSON.stringify(storeAtom.get(CharacterAtom)));
+  localStorage.setItem('enemies', JSON.stringify(storeAtom.get(EnemyAtom))); // save enemies here.
+  localStorage.setItem('turnCount', JSON.stringify(storeAtom.get(turnCountAtom)));
   setTimeout(() => runTurnLogic(currentTurnOrder, waitForInput), 1000);
 };
 
