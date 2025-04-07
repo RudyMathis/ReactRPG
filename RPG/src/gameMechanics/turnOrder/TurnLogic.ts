@@ -136,6 +136,7 @@ export const runTurnLogic = async (
   ManaRegen();
   storeAtom.set(turnCountAtom, currentTurn + 1);
   // Save states to localStorage
+  localStorage.setItem('currentTurn', JSON.stringify(currentTurn + 1));
   localStorage.setItem('characters', JSON.stringify(storeAtom.get(CharacterAtom)));
   localStorage.setItem('enemies', JSON.stringify(storeAtom.get(EnemyAtom))); // save enemies here.
   localStorage.setItem('turnCount', JSON.stringify(storeAtom.get(turnCountAtom)));

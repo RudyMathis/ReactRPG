@@ -4,32 +4,43 @@ import { storeAtom } from "../atom/storeAtom";
 export const GainExperience = (enemyAmount: number, charactersAmount: number) => {
     storeAtom.set(CharacterAtom, (prev) => {
         const updatedCharacters = Object.values(prev).map((char) => {
-            
             if (char.health > 0 && char.isSelected) {
-                const newExp = (char.exp + char.level) * 10 * (enemyAmount / charactersAmount);
-                const newLevel = newExp >= char.maxExp ? char.level + 1 : char.level;
-                const newMaxExp = newLevel > char.level ? char.maxExp + char.level * 100 : char.maxExp;
-                const levelUp = char.level * 3;
-                
+                const expGained = Math.round(10 * char.level * (enemyAmount / charactersAmount));
+                let totalExp = char.exp + expGained;
+                let level = char.level;
+                let maxExp = level * 100;
+
+                // Handle level-ups (may be multiple)
+                while (totalExp >= maxExp) {
+                    totalExp -= maxExp;
+                    level += 1;
+                    maxExp = level * 100;
+                }
+
+                const levelUpBonus = (level - char.level) * 3;
+
+                console.log("expGained", expGained, "finalExp", totalExp, "level", level, "maxExp", maxExp);
+
                 return {
                     ...char,
-                    exp: newExp,
-                    level: newLevel,
-                    maxExp: newMaxExp,
-                    health: char.health + levelUp,
-                    maxHealth: char.maxHealth + levelUp,
-                    attack: char.attack + levelUp,
-                    defense: char.defense + levelUp,
-                    speed: char.speed + levelUp,
-                    speedDefault: char.speedDefault + levelUp,
-                    mana: char.maxMana > 0 ? char.mana + levelUp : 0,
-                    maxMana: char.maxMana > 0 ? char.maxMana + levelUp: 0,
+                    exp: totalExp,
+                    level: level,
+                    maxExp: maxExp,
+                    health: char.health + levelUpBonus,
+                    maxHealth: char.maxHealth + levelUpBonus,
+                    attack: char.attack + levelUpBonus,
+                    defense: char.defense + levelUpBonus,
+                    speed: char.speed + levelUpBonus,
+                    speedDefault: char.speedDefault + levelUpBonus,
+                    mana: char.maxMana > 0 ? char.mana + levelUpBonus : 0,
+                    maxMana: char.maxMana > 0 ? char.maxMana + levelUpBonus : 0,
                 };
             }
             return char;
         });
-        console.log("EXPERINCE GAIN", updatedCharacters);
-    
+
+        console.log("EXPERIENCE GAIN", updatedCharacters);
+
         return Object.fromEntries(updatedCharacters.map((char) => [char.id, char]));
     });
 };

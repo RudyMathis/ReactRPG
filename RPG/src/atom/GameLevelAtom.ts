@@ -94,5 +94,6 @@ export const startNewRound = () => {
     localStorage.setItem('enemies', JSON.stringify(newEnemies));
 
     storeAtom.set(turnCountAtom, 1);
+    localStorage.setItem('turnCount', '1');
     console.log("Round:", round, "Level:", level);
 };

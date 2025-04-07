@@ -6,6 +6,9 @@ import Resistances from "./Resistances";
 import Vulnerabilites from "./Vulnerabilities";
 
 export const handleStatusEffects = (entity: CharacterType | EnemyType) => {
+    setTimeout(() => {
+    }, 1000);
+    
     if (entity.type === "player") {
         // const entityData = storeAtom.get(CharacterAtom)[entity.id];
         const entityData = storeAtom.get(CharacterAtom)[entity.id];
@@ -33,7 +36,6 @@ export const handleStatusEffects = (entity: CharacterType | EnemyType) => {
         } 
         return false;
     } else {
-        // const entityData = storeAtom.get(EnemyAtom)[entity.id];
         const entityData = storeAtom.get(EnemyAtom)[entity.id];
 
         if (!entityData) return false;
@@ -71,7 +73,7 @@ const frozen = (entity: CharacterType | EnemyType, frozenStatus: { type: string;
                 [entity.id]: {
                     ...prev[entity.id],
                     speed: entity.speedDefault,
-                    debuff: prev[entity.id].debuffs.filter(s => s.type !== Debuffs.Frozen.type),
+                    debuffs: prev[entity.id].debuffs.filter(s => s.type !== Debuffs.Frozen.type),
                 },
             }));
         } else {
@@ -80,7 +82,7 @@ const frozen = (entity: CharacterType | EnemyType, frozenStatus: { type: string;
                 [entity.id]: {
                     ...prev[entity.id],
                     speed: entity.speedDefault,
-                    debuff: prev[entity.id].debuffs.filter(s => s.type !== Debuffs.Frozen.type),
+                    debuffs: prev[entity.id].debuffs.filter(s => s.type !== Debuffs.Frozen.type),
                 },
             }));
         }
@@ -92,7 +94,7 @@ const frozen = (entity: CharacterType | EnemyType, frozenStatus: { type: string;
                 ...prev,
                 [entity.id]: {
                     ...prev[entity.id],
-                    debuff: prev[entity.id].debuffs.map(d =>
+                    debuffs: prev[entity.id].debuffs.map(d =>
                         d.type === Debuffs.Frozen.type ? { ...d, duration: d.duration - 1 } : d
                     ),
                 },
@@ -102,7 +104,7 @@ const frozen = (entity: CharacterType | EnemyType, frozenStatus: { type: string;
                 ...prev,
                 [entity.id]: {
                     ...prev[entity.id],
-                    debuff: prev[entity.id].debuffs.map(d =>
+                    debuffs: prev[entity.id].debuffs.map(d =>
                         d.type === Debuffs.Frozen.type ? { ...d, duration: d.duration - 1 } : d
                     ),
                 },
@@ -119,7 +121,7 @@ const Bleed = (entity: CharacterType | EnemyType, bleedStatus: { type: string; d
                 ...prev,
                 [entity.id]: {
                     ...prev[entity.id],
-                    debuff: prev[entity.id].debuffs.filter(d => d.type !== Debuffs.Bleed.type),
+                    debuffs: prev[entity.id].debuffs.filter(d => d.type !== Debuffs.Bleed.type),
                 },
             }));
         } else {
@@ -127,7 +129,7 @@ const Bleed = (entity: CharacterType | EnemyType, bleedStatus: { type: string; d
                 ...prev,
                 [entity.id]: {
                     ...prev[entity.id],
-                    debuff: prev[entity.id].debuffs.filter(d => d.type !== Debuffs.Bleed.type),
+                    debuffs: prev[entity.id].debuffs.filter(d => d.type !== Debuffs.Bleed.type),
                 },
             }));
         }
@@ -155,6 +157,7 @@ const Bleed = (entity: CharacterType | EnemyType, bleedStatus: { type: string; d
                 };
             });
             const updatedPlayer = storeAtom.get(CharacterAtom)[entity.id];
+            console.log(entity.name, "took", damage, "damage from Bleed.", baseDamage, "baseDamage.", updatedPlayer.health, "remaining.", bleedStatus.damage);
 
             return updatedPlayer.health > 0;
         } else {
@@ -189,7 +192,7 @@ const Burn = (entity: CharacterType | EnemyType, burnStatus: { type: string; dur
                 ...prev,
                 [entity.id]: {
                     ...prev[entity.id],
-                    debuff: prev[entity.id].debuffs.filter(d => d.type !== Debuffs.Burn.type),
+                    debuffs: prev[entity.id].debuffs.filter(d => d.type !== Debuffs.Burn.type),
                 },
             }));
         } else {
@@ -197,7 +200,7 @@ const Burn = (entity: CharacterType | EnemyType, burnStatus: { type: string; dur
                 ...prev,
                 [entity.id]: {
                     ...prev[entity.id],
-                    debuff: prev[entity.id].debuffs.filter(d => d.type !== Debuffs.Burn.type),
+                    debuffs: prev[entity.id].debuffs.filter(d => d.type !== Debuffs.Burn.type),
                 },
             }));
         }
@@ -206,15 +209,16 @@ const Burn = (entity: CharacterType | EnemyType, burnStatus: { type: string; dur
         const baseDamage = burnStatus.damage ?? 10;
         const fireResistance = entity.resistances.find(res => res.type === Resistances.Fire.type)?.value ?? 0;
         const fireVulnerability = entity.vulnerabilities.find(vul => vul.type === Vulnerabilites.Fire.type)?.value ?? 0;
-        const damage = Math.max(1, baseDamage + fireVulnerability - fireResistance);
-
+        const multipleBurns = entity.debuffs.filter(d => d.type === Debuffs.Burn.type).length;
+        const damage = Math.max(1, (baseDamage * multipleBurns) + fireVulnerability - fireResistance);
+        
         if (entity.type === "player") {
             storeAtom.set(CharacterAtom, (prev) => ({
                 ...prev,
                 [entity.id]: {
                     ...prev[entity.id],
                     health: Math.max(prev[entity.id].health - damage, 0),
-                    debuff: prev[entity.id].debuffs
+                    debuffs: prev[entity.id].debuffs
                         .map(d => d.type === Debuffs.Burn.type ? { ...d, duration: d.duration - 1 } : d)
                         .filter(d => d.duration > 0),
                 },
@@ -228,7 +232,7 @@ const Burn = (entity: CharacterType | EnemyType, burnStatus: { type: string; dur
                 [entity.id]: {
                     ...prev[entity.id],
                     health: Math.max(prev[entity.id].health - damage, 0),
-                    debuff: prev[entity.id].debuffs
+                    debuffs: prev[entity.id].debuffs
                         .map(d => d.type === Debuffs.Burn.type ? { ...d, duration: d.duration - 1 } : d)
                         .filter(d => d.duration > 0),
                 },
@@ -249,7 +253,7 @@ const Sundered = (entity: CharacterType | EnemyType, sunderedStatus: { type: str
                 [entity.id]: {
                     ...prev[entity.id],
                     defense: entity.defenseDefault,
-                    debuff: prev[entity.id].debuffs.filter(s => s.type !== Debuffs.Sundered.type),
+                    debuffs: prev[entity.id].debuffs.filter(s => s.type !== Debuffs.Sundered.type),
                 },
             }));
         } else {
@@ -258,7 +262,7 @@ const Sundered = (entity: CharacterType | EnemyType, sunderedStatus: { type: str
                 [entity.id]: {
                     ...prev[entity.id],
                     defense: entity.defenseDefault,
-                    debuff: prev[entity.id].debuffs.filter(s => s.type !== Debuffs.Sundered.type),
+                    debuffs: prev[entity.id].debuffs.filter(s => s.type !== Debuffs.Sundered.type),
                 },
             }));
         }
@@ -270,7 +274,7 @@ const Sundered = (entity: CharacterType | EnemyType, sunderedStatus: { type: str
                 ...prev,
                 [entity.id]: {
                     ...prev[entity.id],
-                    debuff: prev[entity.id].debuffs.map(d =>
+                    debuffs: prev[entity.id].debuffs.map(d =>
                         d.type === Debuffs.Sundered.type ? { ...d, duration: d.duration - 1 } : d
                     ),
                 },
@@ -280,7 +284,7 @@ const Sundered = (entity: CharacterType | EnemyType, sunderedStatus: { type: str
                 ...prev,
                 [entity.id]: {
                     ...prev[entity.id],
-                    debuff: prev[entity.id].debuffs.map(d =>
+                    debuffs: prev[entity.id].debuffs.map(d =>
                         d.type === Debuffs.Sundered.type ? { ...d, duration: d.duration - 1 } : d
                     ),
                 },

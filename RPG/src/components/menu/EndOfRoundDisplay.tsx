@@ -37,8 +37,9 @@ const EndofRoundDisplay = () => {
             Blessings(randomCharacter);
             
         }
-        localStorage.setItem('turnCount', '1');
         storeAtom.set(turnCountAtom, 1);
+        localStorage.setItem('turnCount', JSON.stringify(turnCountAtom));
+        localStorage.setItem('characters', JSON.stringify(storeAtom.get(CharacterAtom)));
         
         currentGameLevel.isRoundOver = true
         startNewRound(); // Start the next round

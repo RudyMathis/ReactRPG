@@ -256,6 +256,9 @@ const basicCharacterAttack = (enemy: EnemyType, character: CharacterType, spell:
     storeAtom.set(ShakeAtom, (prev) => ({ ...prev, [character.id]: true }));
     storeAtom.set(BaseDamageFlashAtom, (prev) => ({ ...prev, [enemy.id]: true }));
 
+    setTimeout(() => {
+    }, 1000);
+
     if (spellEffects[spell]) {
         return spellEffects[spell](enemy, character, enemy, spellCost);
     } else {
@@ -266,6 +269,9 @@ const basicCharacterAttack = (enemy: EnemyType, character: CharacterType, spell:
 };
 
 const basicCharacterBuff = (character: CharacterType, target: CharacterType, spell: string, spellCost: number) => {
+    setTimeout(() => {
+    }, 1000);
+
     if (!spellEffectsBuff[spell]) {
         console.warn(`Unknown or missing spell in spellEffectsBuff: "${spell}"`);
         return target.health; // Return unchanged health if spell is not found
@@ -281,6 +287,9 @@ const basicEnemyAttack = (character: CharacterType, enemy: EnemyType, target: Ch
 
     storeAtom.set(ShakeAtom, (prev) => ({ ...prev, [enemy.id]: true }));
     storeAtom.set(BaseDamageFlashAtom, (prev) => ({ ...prev, [character.id]: true }));
+
+    setTimeout(() => {
+    }, 1000);
 
     if (enemy.spells && enemy.spells.length > 0) {
         // Filter spells the enemy can afford

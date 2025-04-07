@@ -10,7 +10,7 @@ export const FullRestore = () => {
                     ...char,
                     health: char.maxHealth,
                     mana: char.maxMana,
-                    debuff: [],
+                    debuffs: [],
                 };
             }
             return char;
