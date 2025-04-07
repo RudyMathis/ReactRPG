@@ -95,3 +95,21 @@
         -3px -3px 0 blue,
         3px -3px 0 blue;
 }
+
+[data-damage-type="Lightning"] {
+    color: #000;
+    text-shadow:
+        3px 3px 0 yellow,
+        -3px 3px 0 yellow,
+        -3px -3px 0 yellow,
+        3px -3px 0 yellow;
+}
+
+[data-damage-type="Physical"] {
+    color: #000;
+    text-shadow:
+        3px 3px 0 white,
+        -3px 3px 0 white,
+        -3px -3px 0 white,
+        3px -3px 0 white;
+}

@@ -70,7 +70,9 @@ export const runTurnLogic = async (
           await new Promise(resolve => setTimeout(resolve, 1500));
 
           const targetName = getEnemyTargetName(enemy, currentTurnOrder.filter(c => c.type === 'player' && c.health > 0) as CharacterType[]);
-          const character = currentTurnOrder.find(c => c.name === targetName) as CharacterType;
+          // const character = currentTurnOrder.find(c => c.name === targetName) as CharacterType;
+          const character = Object.values(storeAtom.get(CharacterAtom)).find(c => c.name === targetName && c.health > 0);
+
 
           if (!character || enemy.speed === 0) {
               console.warn(`No valid target found for ${enemy.name} or enemy speed is 0`);

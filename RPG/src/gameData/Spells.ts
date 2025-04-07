@@ -17,13 +17,15 @@ const spellEffects: Record<string, (enemy: EnemyType, character: CharacterType, 
     
             const fireResistance = character.resistances.find(res => res.type ===  Resistances.Fire.type);
             const fireVulnerability = character.vulnerabilities.find(vul => vul.type === Vulnerabilites.Fire.type);
+            const damageResistance = Math.max(1, Math.round(enemy.attack - Resistances.Fire.value))
+            const damageVulnerability = Math.round(enemy.attack + Vulnerabilites.Fire.value)
             
             if (fireResistance) {
-                HandleDamageEffect(Math.max(1, enemy.attack - Resistances.Fire.value), "Fire", "player", character.id);
-                return character.health - Math.max(1, enemy.attack - Resistances.Fire.value);
+                HandleDamageEffect(damageResistance, "Fire", "player", character.id);
+                return character.health - damageResistance;
             } else if (fireVulnerability) {
-                HandleDamageEffect(enemy.attack + Vulnerabilites.Fire.value, "Fire", "player", character.id);
-                return character.health - enemy.attack + Vulnerabilites.Fire.value;
+                HandleDamageEffect(damageVulnerability, "Fire", "player", character.id);
+                return character.health - damageVulnerability;
             } else {
                 HandleDamageEffect(enemy.attack, "Fire", "player", character.id);
                 return character.health - enemy.attack;
@@ -35,13 +37,15 @@ const spellEffects: Record<string, (enemy: EnemyType, character: CharacterType, 
     
             const fireResistance = enemy.resistances.find(res => res.type ===  Resistances.Fire.type);
             const fireVulnerability = enemy.vulnerabilities.find(vul => vul.type === Vulnerabilites.Fire.type);
+            const damageResistance = Math.max(1, Math.round(character.attack - Resistances.Fire.value))
+            const damageVulnerability = Math.round(character.attack + Vulnerabilites.Fire.value)
             
             if (fireResistance) {
-                HandleDamageEffect(Math.max(1, character.attack - Resistances.Fire.value), "Fire", "npc", enemy.id);
-                return enemy.health - Math.max(1, character.attack - Resistances.Fire.value);
+                HandleDamageEffect(damageResistance, "Fire", "npc", enemy.id);
+                return enemy.health - damageResistance;
             } else if (fireVulnerability) {
-                HandleDamageEffect(character.attack + Vulnerabilites.Fire.value, "Fire", "npc", enemy.id);
-                return enemy.health - character.attack + Vulnerabilites.Fire.value;
+                HandleDamageEffect(damageVulnerability, "Fire", "npc", enemy.id);
+                return enemy.health - damageVulnerability;
             } else {
                 HandleDamageEffect(character.attack, "Fire", "npc", enemy.id);
                 return enemy.health - character.attack;
@@ -57,13 +61,15 @@ const spellEffects: Record<string, (enemy: EnemyType, character: CharacterType, 
     
             const iceResistance = character.resistances.find(resistance => resistance.type === Resistances.Ice.type);
             const iceVulnerability = character.vulnerabilities.find(vulnerability => vulnerability.type === Vulnerabilites.Ice.type);
+            const damageResistance = Math.max(1, Math.round(enemy.attack - Resistances.Ice.value))
+            const damageVulnerability = Math.round(enemy.attack + Vulnerabilites.Ice.value)
             
             if(iceResistance) {
-                HandleDamageEffect(Math.max(1, enemy.attack - Resistances.Ice.value), "Ice", "player", character.id);
-                return character.health - Math.max(1, enemy.attack - Resistances.Ice.value);
+                HandleDamageEffect(damageResistance, "Ice", "player", character.id);
+                return character.health - damageResistance;
             } else if (iceVulnerability) {
-                HandleDamageEffect(enemy.attack + Vulnerabilites.Ice.value, "Ice", "player", character.id);
-                return character.health - enemy.attack + Vulnerabilites.Ice.value;
+                HandleDamageEffect(damageVulnerability, "Ice", "player", character.id);
+                return character.health - damageVulnerability;
             } else {
                 HandleDamageEffect(enemy.attack, "Ice", "player", character.id);
                 return character.health - enemy.attack;
@@ -76,20 +82,64 @@ const spellEffects: Record<string, (enemy: EnemyType, character: CharacterType, 
     
             const iceResistance = enemy.resistances.find(resistance => resistance.type === Resistances.Ice.type);
             const iceVulnerability = enemy.vulnerabilities.find(vulnerability => vulnerability.type === Vulnerabilites.Ice.type);
+            const damageResistance = Math.max(1, Math.round(character.attack - Resistances.Ice.value))
+            const damageVulnerability = Math.round(character.attack + Vulnerabilites.Ice.value)
             
             if(iceResistance) {
-                HandleDamageEffect(Math.max(1, character.attack - Resistances.Ice.value), "Ice", "npc", enemy.id);
-                return enemy.health - Math.max(1, character.attack - Resistances.Ice.value);
+                HandleDamageEffect(damageResistance, "Ice", "npc", enemy.id);
+                return enemy.health - damageResistance;
             } else if (iceVulnerability) {
-                HandleDamageEffect(character.attack + Vulnerabilites.Ice.value, "Ice", "npc", enemy.id);
-                return enemy.health - character.attack + Vulnerabilites.Ice.value;
+                HandleDamageEffect(damageVulnerability, "Ice", "npc", enemy.id);
+                return enemy.health - damageVulnerability;
             } else {
                 HandleDamageEffect(character.attack, "Ice", "npc", enemy.id);
                 return enemy.health - character.attack;
             }
         }
     },
-    Lightning_Bolt_Tar$40: (enemy, character) => enemy.health - (character.attack + 15),
+    Lightning_Bolt_Tar$40: (enemy, character, target, spellCost) =>{
+        if(target === character) {
+            spellCost = 40;
+            enemy.mana -= spellCost;
+    
+            const lightningResistance = character.resistances.find(res => res.type ===  Resistances.Lightning.type);
+            const lightningVulnerability = character.vulnerabilities.find(vul => vul.type === Vulnerabilites.Lightning.type);
+            const damageResistance = Math.max(1, Math.round(enemy.attack - Resistances.Lightning.value))
+            const damageVulnerability = Math.round(enemy.attack + Vulnerabilites.Lightning.value)
+            const damage = Math.round(enemy.attack * 1.25)
+            
+            if (lightningResistance) {
+                HandleDamageEffect(damageResistance, "Lightning", "player", character.id);
+                return character.health - damageResistance;
+            } else if (lightningVulnerability) {
+                HandleDamageEffect(damageVulnerability, "Lightning", "player", character.id);
+                return character.health - damageVulnerability;
+            } else {
+                HandleDamageEffect(damage, "Lightning", "player", character.id);
+                return character.health - damage;
+            }
+        } else {
+            const spellCost = 40;
+            character.mana -= spellCost;
+    
+            const lightningResistance = enemy.resistances.find(res => res.type ===  Resistances.Lightning.type);
+            const lightningVulnerability = enemy.vulnerabilities.find(vul => vul.type === Vulnerabilites.Lightning.type);
+            const damageResistance = Math.max(1, Math.round(character.attack - Resistances.Lightning.value))
+            const damageVulnerability = Math.round(character.attack + Vulnerabilites.Lightning.value)
+            const damage = Math.round(character.attack * 1.25)
+            
+            if (lightningResistance) {
+                HandleDamageEffect(damageResistance, "Lightning", "npc", enemy.id);
+                return enemy.health - damageResistance;
+            } else if (lightningVulnerability) {
+                HandleDamageEffect(damageVulnerability, "Lightning", "npc", enemy.id);
+                return enemy.health - damageVulnerability;
+            } else {
+                HandleDamageEffect(damage, "Lightning", "npc", enemy.id);
+                return enemy.health - damage;
+            }
+        }
+    },
     Shadow_Strike_Tar$0: (enemy, character, target, spellCost) =>{
         if(target === character) {
             spellCost = 0;
@@ -107,20 +157,28 @@ const spellEffects: Record<string, (enemy: EnemyType, character: CharacterType, 
         if(target === character) {
             spellCost = 40;
             enemy.mana -= spellCost;
+            const bleedDamage = Math.max(5, Math.round(enemy.attack - character.defense));
+
             if (character.debuffs.find(d => d.type === Debuffs.Bleed.type)) {
-                return character.health - Math.max(5, enemy.attack - character.defense);
+                HandleDamageEffect(bleedDamage, "Physical", "player", character.id);
+                return character.health - bleedDamage;
             } else {
                 character.debuffs.push({ type: Debuffs.Bleed.type, duration: 3 });
-                return character.health - Math.max(5, character.attack - character.defense);
+                HandleDamageEffect(bleedDamage, "Physical", "player", character.id);
+                return character.health - bleedDamage;
             }
         } else {
             spellCost = 40;
             character.mana -= spellCost;
+            const bleedDamage = Math.max(5, Math.round(character.attack - enemy.defense));
+
             if(enemy.debuffs.find(d => d.type === Debuffs.Bleed.type)) {
-                return enemy.health - Math.max(5, character.attack - enemy.defense);
+                HandleDamageEffect(bleedDamage, "Physical", "npc", enemy.id);
+                return enemy.health - bleedDamage;
             } else {
                 enemy.debuffs.push({ type: Debuffs.Bleed.type, duration: 3});
-                return enemy.health - Math.max(5, character.attack - enemy.defense);
+                HandleDamageEffect(bleedDamage, "Physical", "npc", enemy.id);
+                return enemy.health - bleedDamage;
             }
         }
     },
