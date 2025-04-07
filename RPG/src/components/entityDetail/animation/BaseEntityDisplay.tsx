@@ -22,6 +22,10 @@ const entityImages: Record<string, string> = {
     Archer: '/assets/characters/archer.png',
     Archer_dead: '/assets/characters/archer_dead.png',
     Goblin: '/assets/characters/goblin.png',
+    Skeleton: '/assets/characters/skeleton.png',
+    Zombie: '/assets/characters/zombie.png',
+    Ghoul: '/assets/characters/ghoul.png',
+    Ent: '/assets/characters/ent.png',
 };
 
 function BaseEntityDisplay({ entity }: CharacterDetailProps) {

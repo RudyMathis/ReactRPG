@@ -75,18 +75,6 @@ button {
 
 /* temp */
 
-.character-sprite.Skeleton {
-    background-color: red;
-}
-
-.character-sprite.Ghoul {
-    background-color: blue;
-}
-
-.character-sprite.Zombie {
-    background-color: green;
-}
-
 .character-sprite.Rat {
     background-color: yellow;
 }
@@ -95,11 +83,11 @@ button {
     background-color: purple;
 }
 
-.character-sprite.Bard{
+.character-sprite.Bard {
     background-color: orange;
 }
 
-.character-sprite.Monk, .character-sprite.Ent {
+.character-sprite.Monk {
     background-color: pink;
 }
 
