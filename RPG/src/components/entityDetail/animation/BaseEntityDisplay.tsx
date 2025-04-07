@@ -4,6 +4,7 @@ import { ShakeAtom } from "../../../atom/effects/ShakeAtom";
 import { BaseDamageFlashAtom } from "../../../atom/effects/BaseDamageFlashAtom";
 import "./BaseEntityDisplay.css"; 
 import { useAtom } from "jotai";
+import { DamageEffectAtom } from "../../../atom/effects/DamageEffectAtom";
 
 type CharacterDetailProps = {
     entity: CharacterType | EnemyType;
@@ -31,6 +32,7 @@ const entityImages: Record<string, string> = {
 function BaseEntityDisplay({ entity }: CharacterDetailProps) {
     const [shakingEntities] = useAtom(ShakeAtom);
     const [flashEntities] = useAtom(BaseDamageFlashAtom);
+    const [damageEffect] = useAtom(DamageEffectAtom);
 
     const imageSrc = entityImages[entity.name] || entityImages[(entity as EnemyType).base] || '/assets/default.png';
     const imageSrcDead = entityImages[entity.name + '_dead'] || '/assets/default.png';
@@ -38,13 +40,15 @@ function BaseEntityDisplay({ entity }: CharacterDetailProps) {
     const isShaking = shakingEntities[entity.id] ?? false;
     const isFlashing = flashEntities[entity.id] ?? false;
     const key = isShaking ? `${entity.id}-shaking` : (isFlashing ? `${entity.id}-flashing-shaking` : `${entity.id}`);
+
     
     return (
         <div className="sprite-container">
+            {damageEffect.isDisplay && entity.type === damageEffect.target && damageEffect.target && damageEffect.entityId === entity.id && <div className={`damage-effect ${entity.type}`} data-damage-type={damageEffect.damageType}>{damageEffect.damage}</div>}
             <div key={key}
                 data-entity-modified={(entity.name).match(/Fire|Ice|Dark/)}
                 className={`sprite ${isShaking ? "shake" : ""} ${isFlashing ? "flash-red" : ""}`}>
-                {entity.health > 0 ? <img src={imageSrc} className="character" alt={entity.name} /> : <img src={imageSrcDead} alt={`${entity.name} is dead`} />}
+                {entity.health > 0 ? <img src={imageSrc} className={entity.type} alt={entity.name} /> : <img src={imageSrcDead} alt={`${entity.name} is dead`} />}
             </div>
         </div>
     );

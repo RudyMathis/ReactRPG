@@ -1,6 +1,7 @@
 import EnemyAtom, { EnemyType } from "../atom/BaseEnemyAtom";
 import CharacterAtom, { CharacterType } from "../atom/CharacterAtom";
 import { storeAtom } from "../atom/storeAtom";
+import { HandleDamageEffect } from "../gameMechanics/HandleDamageEffect";
 import Debuffs from "./Debuffs";
 import Resistances from "./Resistances";
 import Vulnerabilites from "./Vulnerabilities";
@@ -66,7 +67,7 @@ export const handleStatusEffects = (entity: CharacterType | EnemyType) => {
 
 const frozen = (entity: CharacterType | EnemyType, frozenStatus: { type: string; duration: number }) => {
     // If duration is up, remove the effect and reset speed
-    if (frozenStatus.duration <= 0) {
+    if (frozenStatus.duration <= 0 || entity.health <= 0) {
         if (entity.type === "player") {
             storeAtom.set(CharacterAtom, (prev) => ({
                 ...prev,
@@ -115,7 +116,7 @@ const frozen = (entity: CharacterType | EnemyType, frozenStatus: { type: string;
 };
 
 const Bleed = (entity: CharacterType | EnemyType, bleedStatus: { type: string; duration: number; damage?: number }) => {
-    if (bleedStatus.duration <= 0) {
+    if (bleedStatus.duration <= 0 || entity.health <= 0) {
         if (entity.type === "player") {
             storeAtom.set(CharacterAtom, (prev) => ({
                 ...prev,
@@ -186,7 +187,7 @@ const Bleed = (entity: CharacterType | EnemyType, bleedStatus: { type: string; d
 };
 
 const Burn = (entity: CharacterType | EnemyType, burnStatus: { type: string; duration: number, damage?: number }) => {
-    if (burnStatus.duration <= 0) {
+    if (burnStatus.duration <= 0 || entity.health <= 0) {
         if (entity.type === "player") {
             storeAtom.set(CharacterAtom, (prev) => ({
                 ...prev,
@@ -225,6 +226,7 @@ const Burn = (entity: CharacterType | EnemyType, burnStatus: { type: string; dur
             }));
             const updatedPlayer = storeAtom.get(CharacterAtom)[entity.id];
             console.log(entity.name, "took", damage, "damage from Burn.", updatedPlayer.health, "remaining.");
+            HandleDamageEffect(damage, "Fire", "player", entity.id);
             return true;
         } else {
             storeAtom.set(EnemyAtom, (prev) => ({
@@ -239,6 +241,7 @@ const Burn = (entity: CharacterType | EnemyType, burnStatus: { type: string; dur
             }));
             const updatedEnemy = storeAtom.get(EnemyAtom)[entity.id];
             console.log(entity.name, "took", damage, "damage from Burn.", updatedEnemy.health, "remaining.");
+            HandleDamageEffect(damage, "Fire", "npc", entity.id);
             return true;
         }
     }
@@ -246,7 +249,7 @@ const Burn = (entity: CharacterType | EnemyType, burnStatus: { type: string; dur
 
 const Sundered = (entity: CharacterType | EnemyType, sunderedStatus: { type: string; duration: number }) => {
     // If duration is up, remove the effect and reset speed
-    if (sunderedStatus.duration <= 0) {
+    if (sunderedStatus.duration <= 0 || entity.health <= 0) {
         if (entity.type === "player") {
             storeAtom.set(CharacterAtom, (prev) => ({
                 ...prev,

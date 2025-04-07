@@ -4,6 +4,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
 }
 
 .sprite img {
@@ -52,4 +53,45 @@
     filter: drop-shadow(1px 1px purple) drop-shadow(1px -1px purple)
     drop-shadow(-1px 1px purple) drop-shadow(-1px -1px purple)
     drop-shadow(-20px 20px 4px rgba(0, 0, 0, 0.75));
+}
+
+.damage-effect {
+    animation: floatUp 1s ease-out forwards;
+}
+
+@keyframes floatUp {
+    0% { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(-30px); }
+}
+
+.damage-effect.player {
+    position: absolute;
+    bottom: 100px;
+    right: 100px;
+    z-index: 3;
+}
+
+.damage-effect.npc {
+    position: absolute;
+    bottom: 100px;
+    left: 100px;
+    z-index: 3;
+}
+
+[data-damage-type="Fire"] {
+    color: #fff;
+    text-shadow:
+        3px 3px 0 red,
+        -3px 3px 0 red,
+        -3px -3px 0 red,
+        3px -3px 0 red;
+}
+
+[data-damage-type="Ice"] {
+    color: #fff;
+    text-shadow:
+        3px 3px 0 blue,
+        -3px 3px 0 blue,
+        -3px -3px 0 blue,
+        3px -3px 0 blue;
 }

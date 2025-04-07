@@ -3,6 +3,7 @@ import { CharacterType } from "../atom/CharacterAtom";
 import { BaseDamageFlashAtom } from "../atom/effects/BaseDamageFlashAtom";
 import { ShakeAtom } from "../atom/effects/ShakeAtom";
 import { storeAtom } from "../atom/storeAtom";
+import { HandleDamageEffect } from "../gameMechanics/HandleDamageEffect";
 import Resistances from "../gameData/Resistances";
 import Debuffs from "./Debuffs";
 import Vulnerabilites from "./Vulnerabilities";
@@ -18,10 +19,13 @@ const spellEffects: Record<string, (enemy: EnemyType, character: CharacterType, 
             const fireVulnerability = character.vulnerabilities.find(vul => vul.type === Vulnerabilites.Fire.type);
             
             if (fireResistance) {
+                HandleDamageEffect(Math.max(1, enemy.attack - Resistances.Fire.value), "Fire", "player", character.id);
                 return character.health - Math.max(1, enemy.attack - Resistances.Fire.value);
             } else if (fireVulnerability) {
+                HandleDamageEffect(enemy.attack + Vulnerabilites.Fire.value, "Fire", "player", character.id);
                 return character.health - enemy.attack + Vulnerabilites.Fire.value;
             } else {
+                HandleDamageEffect(enemy.attack, "Fire", "player", character.id);
                 return character.health - enemy.attack;
             }
         } else {
@@ -33,10 +37,13 @@ const spellEffects: Record<string, (enemy: EnemyType, character: CharacterType, 
             const fireVulnerability = enemy.vulnerabilities.find(vul => vul.type === Vulnerabilites.Fire.type);
             
             if (fireResistance) {
+                HandleDamageEffect(Math.max(1, character.attack - Resistances.Fire.value), "Fire", "npc", enemy.id);
                 return enemy.health - Math.max(1, character.attack - Resistances.Fire.value);
             } else if (fireVulnerability) {
+                HandleDamageEffect(character.attack + Vulnerabilites.Fire.value, "Fire", "npc", enemy.id);
                 return enemy.health - character.attack + Vulnerabilites.Fire.value;
             } else {
+                HandleDamageEffect(character.attack, "Fire", "npc", enemy.id);
                 return enemy.health - character.attack;
             }
         }
@@ -52,10 +59,13 @@ const spellEffects: Record<string, (enemy: EnemyType, character: CharacterType, 
             const iceVulnerability = character.vulnerabilities.find(vulnerability => vulnerability.type === Vulnerabilites.Ice.type);
             
             if(iceResistance) {
+                HandleDamageEffect(Math.max(1, enemy.attack - Resistances.Ice.value), "Ice", "player", character.id);
                 return character.health - Math.max(1, enemy.attack - Resistances.Ice.value);
             } else if (iceVulnerability) {
+                HandleDamageEffect(enemy.attack + Vulnerabilites.Ice.value, "Ice", "player", character.id);
                 return character.health - enemy.attack + Vulnerabilites.Ice.value;
             } else {
+                HandleDamageEffect(enemy.attack, "Ice", "player", character.id);
                 return character.health - enemy.attack;
             }
         } else {
@@ -68,10 +78,13 @@ const spellEffects: Record<string, (enemy: EnemyType, character: CharacterType, 
             const iceVulnerability = enemy.vulnerabilities.find(vulnerability => vulnerability.type === Vulnerabilites.Ice.type);
             
             if(iceResistance) {
+                HandleDamageEffect(Math.max(1, character.attack - Resistances.Ice.value), "Ice", "npc", enemy.id);
                 return enemy.health - Math.max(1, character.attack - Resistances.Ice.value);
             } else if (iceVulnerability) {
+                HandleDamageEffect(character.attack + Vulnerabilites.Ice.value, "Ice", "npc", enemy.id);
                 return enemy.health - character.attack + Vulnerabilites.Ice.value;
             } else {
+                HandleDamageEffect(character.attack, "Ice", "npc", enemy.id);
                 return enemy.health - character.attack;
             }
         }
@@ -247,7 +260,9 @@ const spellEffectsBuff: Record<string, (character: CharacterType, target: Charac
     },
 };
 
+
 const basicCharacterAttack = (enemy: EnemyType, character: CharacterType, spell: string, spellCost: number) => {
+
     setTimeout(() => {
         storeAtom.set(ShakeAtom, (prev) => ({ ...prev, [character.id]: false }));
         storeAtom.set(BaseDamageFlashAtom, (prev) => ({ ...prev, [enemy.id]: false }));
@@ -323,6 +338,5 @@ const basicEnemyAttack = (character: CharacterType, enemy: EnemyType, target: Ch
     // Fallback: basic attack
     return character.health - Math.max(1, enemy.attack - character.defense);
 };
-
 
 export { basicCharacterAttack, basicCharacterBuff, basicEnemyAttack };
