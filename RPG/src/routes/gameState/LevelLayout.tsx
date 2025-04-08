@@ -10,6 +10,7 @@ import './LevelLayout.css';
 const LevelLayout = () => {
     const [currentGameLevel] = useAtom(GameLevelAtom);
     const isRoundOver = currentGameLevel.isRoundOver;
+    localStorage.setItem('inProgressGame', 'true')
 
     return (
         <div className="level-layout">
@@ -19,7 +20,7 @@ const LevelLayout = () => {
             </div>
             <Grid />
             <TurnOrderDisplay />
-            {isRoundOver && <EndofRoundDisplay />}
+            {isRoundOver &&<EndofRoundDisplay />}
         </div>
     );
 }

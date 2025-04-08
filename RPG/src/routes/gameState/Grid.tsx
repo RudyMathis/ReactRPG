@@ -60,8 +60,8 @@ const Grid = () => {
   const checkTurnOrderAndRunLogic = () => {
     if (turnOrder.length > 0) {
       runTurnLogic(turnOrder, waitForInput);
-      currentGameLevel.isRoundOver = true
     }
+    currentGameLevel.isRoundOver = true
   };
 
   const handlePlayerTargeted = (entity: EnemyType | CharacterType) => {

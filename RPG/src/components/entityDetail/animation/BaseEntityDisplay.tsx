@@ -27,6 +27,8 @@ const entityImages: Record<string, string> = {
     Zombie: '/assets/characters/zombie.png',
     Ghoul: '/assets/characters/ghoul.png',
     Ent: '/assets/characters/ent.png',
+    Rat: '/assets/characters/rat.png',
+    Wolf: '/assets/characters/wolf.png',
 };
 
 function BaseEntityDisplay({ entity }: CharacterDetailProps) {

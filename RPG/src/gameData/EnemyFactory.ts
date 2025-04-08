@@ -1,4 +1,4 @@
-import { EnemyType } from "../atom/BaseEnemyAtom";
+import { determineEnemyGroup, EnemyType, getRandomClass, getRandomElement, getRandomEnemyType } from "../atom/BaseEnemyAtom";
 import BaseEnemyData from "../gameData/enemies/BaseEnemyData.json";
 import Resistances from "../gameData/Resistances";
 import Vulnerabilites from "./Vulnerabilities";
@@ -129,8 +129,33 @@ class EnemyFactory {
     }
 }
 
+export const generateInitialEnemies = (): Record<number, EnemyType> => {
+    const initialEnemies: Record<number, EnemyType> = {};
+    const enemyCount = Math.floor(Math.random() * 1) + 2; // 3 to 6 enemies
+
+    for (let i = 0; i < enemyCount; i++) {
+        const enemyType = getRandomEnemyType();
+        const group = determineEnemyGroup(enemyType);
+
+        const element = getRandomElement();
+        const enemyClass = getRandomClass(group);
+
+        let name = enemyType;
+        if (group === "humanoide") name = `${element} ${enemyType} ${enemyClass}`.trim();
+        else if (group === "beast") name = `${enemyClass} ${element} ${enemyType}`.trim();
+        else if (group === "elemental") name = `${element} ${enemyType} ${enemyClass}`.trim();
+
+        const enemy = EnemyFactory.createEnemy(enemyType, [element, enemyClass]);
+        enemy.id = i + 100;
+        enemy.group = group;
+        enemy.name = name;
+
+        initialEnemies[enemy.id] = enemy;
+    }
+
+    return initialEnemies;
+};
 
 
 
 export default EnemyFactory;
-

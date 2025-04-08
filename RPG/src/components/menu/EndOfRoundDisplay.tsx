@@ -40,8 +40,10 @@ const EndofRoundDisplay = () => {
         storeAtom.set(turnCountAtom, 1);
         localStorage.setItem('turnCount', JSON.stringify(turnCountAtom));
         localStorage.setItem('characters', JSON.stringify(storeAtom.get(CharacterAtom)));
-        
+        localStorage.setItem('currentEntityTurn', "0");
+
         currentGameLevel.isRoundOver = true
+
         startNewRound(); // Start the next round
     };
 
