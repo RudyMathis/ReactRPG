@@ -4,7 +4,7 @@ import { playerTargetAtom } from '../../atom/PlayerTargetAtom';
 import { GameLevelAtom } from "../../atom/GameLevelAtom";
 import CharacterAtom from '../../atom/CharacterAtom';
 import EnemyAtom from '../../atom/BaseEnemyAtom';
-import { getEnemyTargetName } from '../enemyTarget/EnemyTargetLogic';
+import { getEnemyTarget } from '../enemyTarget/EnemyTargetLogic';
 import { selectedSpellAtom } from "../../atom/SelectedSpellAtom";
 import { handleStatusEffects } from '../../gameData/Status';
 import { basicCharacterAttack, basicCharacterBuff, basicEnemyAttack } from '../../gameData/Spells';
@@ -77,8 +77,11 @@ export const runTurnLogic = async (
 
       await new Promise(resolve => setTimeout(resolve, 1500));
 
-      const targetName = getEnemyTargetName(enemy, currentTurnOrder.filter(c => c.type === 'player' && c.health > 0) as CharacterType[]);
-      const character = Object.values(storeAtom.get(CharacterAtom)).find(c => c.name === targetName && c.health > 0);
+      const allCharacters = Object.values(storeAtom.get(CharacterAtom));
+      const alivePlayers = allCharacters.filter(c => c.type === 'player' && c.health > 0 && c.isSelected) as CharacterType[];
+
+      const target = getEnemyTarget(enemy, alivePlayers);
+      const character = Object.values(storeAtom.get(CharacterAtom)).find(c => c.id === target?.id && c.health > 0 && c.isSelected);
 
       if (!character || enemy.speed === 0) {
         console.warn(`No valid target found for ${enemy.name} or enemy speed is 0`);

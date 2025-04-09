@@ -27,15 +27,19 @@ export const Blessings = (character: CharacterType) => {
         case "Blessing of Damage":
             BlessingOfDamage(liveCharacter);
             break;
-        case "Blessing of Life":
-            BlessingOfLife(liveCharacter);
+        case "Blessing of Holy Damage":
+            BlessingOfHolyDamage(liveCharacter);
+            break;
+        case "Blessing of Fire Damage":
+            BlessingOfFireDamage(liveCharacter);
+            break;
+        case "Blessing of Mana Regen":
+            BlessingOfManaRegen(liveCharacter);
             break;
     }
 
     checkIfAllSelectedCharactersAreFullyBlessed();
 };
-
-
 
 const checkIfAllSelectedCharactersAreFullyBlessed = () => {
     const allCharacters = Object.values(storeAtom.get(CharacterAtom));
@@ -51,8 +55,6 @@ const checkIfAllSelectedCharactersAreFullyBlessed = () => {
     }
 };
 
-
-
 const BlessingOfLight = (character: CharacterType) => {
     storeAtom.set(CharacterAtom, (prev) => {
         const updatedChar = prev[character.id];
@@ -65,6 +67,7 @@ const BlessingOfLight = (character: CharacterType) => {
                 blessings: [...updatedChar.blessings, "Blessing of Light"],
             }
         };
+        console.log("updated", updated, "updatedChar", updatedChar);
 
         return updated;
     });
@@ -87,7 +90,7 @@ const BlessingOfDamage = (character: CharacterType) => {
     });
 };
 
-const BlessingOfLife = (character: CharacterType) => {
+const BlessingOfHolyDamage = (character: CharacterType) => {
     storeAtom.set(CharacterAtom, (prev) => {
         const updatedChar = prev[character.id];
 
@@ -95,8 +98,39 @@ const BlessingOfLife = (character: CharacterType) => {
             ...prev,
             [character.id]: {
                 ...updatedChar,
-                attack: updatedChar.attack * 1.25,
-                blessings: [...updatedChar.blessings, "Blessing of Life"],
+                blessings: [...updatedChar.blessings, "Blessing of Holy Damage"],
+            }
+        };
+
+        return updated;
+    });
+};
+
+const BlessingOfFireDamage = (character: CharacterType) => {
+    storeAtom.set(CharacterAtom, (prev) => {
+        const updatedChar = prev[character.id];
+
+        const updated = {
+            ...prev,
+            [character.id]: {
+                ...updatedChar,
+                blessings: [...updatedChar.blessings, "Blessing of Fire Damage"],
+            }
+        };
+
+        return updated;
+    });
+};
+
+const BlessingOfManaRegen = (character: CharacterType) => {
+    storeAtom.set(CharacterAtom, (prev) => {
+        const updatedChar = prev[character.id];
+
+        const updated = {
+            ...prev,
+            [character.id]: {
+                ...updatedChar,
+                blessings: [...updatedChar.blessings, "Blessing of Mana Regen"],
             }
         };
 

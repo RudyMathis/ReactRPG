@@ -57,9 +57,15 @@ const generateNewEnemies = (round: number, level: number): Record<number, EnemyT
         enemy.group = enemyGroup;
         enemy.name = finalName;
 
-        enemy.health = enemy.health + round * 10 * level;
-        enemy.maxHealth = enemy.maxHealth + round * 10 * level;
-        enemy.attack = enemy.attack + round * 2 * level;
+        enemy.health = enemy.health * (level * .5) * (round * .5);
+        enemy.maxHealth = enemy.maxHealth * (level * .5) * (round * .5);
+        enemy.mana = enemy.mana * (level * .5) * (round * .5);
+        enemy.maxMana = enemy.maxMana * (level * .5) * (round * .5);
+        enemy.defense = enemy.defense * (level * .5) * (round * .5);
+        enemy.defenseDefault = enemy.defenseDefault * (level * .5) * (round * .5);
+        enemy.speed = enemy.speed * (level * .5) * (round * .5);
+        enemy.speedDefault = enemy.speedDefault * (level * .5) * (round * .5);
+        enemy.attack = enemy.attack * (level * .5) * (round * .5);
         enemy.level = level;
         enemy.order = i + 1;
 

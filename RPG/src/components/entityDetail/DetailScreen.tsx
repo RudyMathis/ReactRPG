@@ -27,7 +27,7 @@ const DetailScreen = ({ entity }: CharacterDetailProps) => {
                     {entity.debuffs.map((debuff, index) => (
                         debuff.duration > 0 && (
                             <div key={index} style={{ color: 'red' }}>
-                                {debuff.type === 'Dead' ? 'Dead' : `${debuff.type} (Duration: ${debuff.duration} turns)`}
+                                {`${debuff.type} (Duration: ${debuff.duration} turns)`}
                             </div>
                         )
                     ))}
@@ -39,12 +39,14 @@ const DetailScreen = ({ entity }: CharacterDetailProps) => {
                     {entity.buffs.map((buff, index) => (
                         buff.duration > 0 && (
                             <div key={index} style={{ color: 'red' }}>
-                                {buff.type === 'Dead' ? 'Dead' : `${buff.type} (Duration: ${buff.duration} turns)`}
+                                {`${buff.type} (Duration: ${buff.duration} turns)`}
                             </div>
                         )
                     ))}
                 </div>
             )}
+            {entity.resistances.length > 0 && <p>Resistances: <span style={{ color: 'red'}}>{entity.resistances.map(res => res.type).join(', ')}</span> </p>}
+            {entity.vulnerabilities.length > 0 && <p>Vulnerabilities: <span style={{ color: 'red'}}>{entity.vulnerabilities.map(vuln => vuln.type).join(', ')}</span> </p>}
             {entity && 'blessings' in entity && entity.blessings.length > 0 && <p>Blessings: <span style={{ color: 'red'}}>{entity.blessings.length > 1 ? entity.blessings.join(', ') : entity.blessings}</span> </p>}
             {entity && 'exp' in entity && <p>Experience: <span style={{ color: 'red'}}>{entity.exp}</span> </p>}
             {entity && 'maxExp' in entity && <p>Max Experience: <span style={{ color: 'red'}}>{entity.maxExp}</span> </p>}

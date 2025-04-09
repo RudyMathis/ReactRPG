@@ -1,31 +1,36 @@
 import type { CharacterType } from '../../atom/CharacterAtom';
 import type { EnemyType } from '../../atom/BaseEnemyAtom';
 
-export const getEnemyTargetName = (enemy: EnemyType, selectedCharacters: CharacterType[]): string => {
-    // Filter out characters who are dead
-    const aliveCharacters = selectedCharacters.filter(character => !character.debuffs.some(d => d.type == "Dead"));
+export const getEnemyTarget = (
+    enemy: EnemyType,
+    aliveCharacters: CharacterType[]
+  ): CharacterType | null => {
+      if (aliveCharacters.length === 0) return null;
+  
+      const targetType = enemy.target;
+  
+      if (targetType.includes("TargetSpeedLow")) {
+          return aliveCharacters.reduce((lowest, current) =>
+              current.speedDefault < lowest.speedDefault ? current : lowest
+          );
+      }
+      if (targetType.includes("TargetHealthLow")) {
+          return aliveCharacters.reduce((lowest, current) =>
+              current.health < lowest.health ? current : lowest
+          );
+      }
+      if (targetType.includes("TargetDefenseLow")) {
+          return aliveCharacters.reduce((lowest, current) =>
+              current.defense < lowest.defense ? current : lowest
+          );
+      }
+      if (targetType.includes("TargetRandom")) {
+          const randomIndex = Math.floor(Math.random() * aliveCharacters.length);
+          return aliveCharacters[randomIndex];
+      }
+  
+      // Fallback: return first alive character
+      return aliveCharacters[0];
+  };
+  
 
-    if (aliveCharacters.length === 0) return ""; // If no alive characters, return empty string
-
-    if (enemy.target.includes("TargetSpeedLow")) {
-        const sorted = [...aliveCharacters].sort((a, b) => a.speedDefault - b.speedDefault);
-        return sorted[0].name;
-    }
-
-    if (enemy.target.includes("TargetRandom")) {
-        const sorted = [...aliveCharacters].sort(() => Math.random() - 0.5);
-        return sorted[0].name;
-    }
-
-    if (enemy.target.includes("TargetHealthLow")) {
-        const sorted = [...aliveCharacters].sort((a, b) => a.health - b.health);
-        return sorted[0].name;
-    }
-
-    if (enemy.target.includes("TargetDefenseLow")) {
-        const sorted = [...aliveCharacters].sort((a, b) => a.defense - b.defense);
-        return sorted[0].name;
-    }
-
-    return "";
-};

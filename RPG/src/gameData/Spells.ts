@@ -39,16 +39,16 @@ const spellEffects: Record<string, (enemy: EnemyType, character: CharacterType, 
             const fireVulnerability = enemy.vulnerabilities.find(vul => vul.type === Vulnerabilites.Fire.type);
             const damageResistance = Math.max(1, Math.round(character.attack - Resistances.Fire.value))
             const damageVulnerability = Math.round(character.attack + Vulnerabilites.Fire.value)
-            
+
             if (fireResistance) {
                 HandleDamageEffect(damageResistance, "Fire", "npc", enemy.id);
-                return enemy.health - damageResistance;
+                return enemy.health - (damageResistance + AdditionalBlessingDamage(character));
             } else if (fireVulnerability) {
                 HandleDamageEffect(damageVulnerability, "Fire", "npc", enemy.id);
-                return enemy.health - damageVulnerability;
+                return enemy.health - (damageVulnerability + AdditionalBlessingDamage(character));
             } else {
                 HandleDamageEffect(character.attack, "Fire", "npc", enemy.id);
-                return enemy.health - character.attack;
+                return enemy.health - (character.attack + AdditionalBlessingDamage(character));
             }
         }
     },
@@ -87,13 +87,13 @@ const spellEffects: Record<string, (enemy: EnemyType, character: CharacterType, 
             
             if(iceResistance) {
                 HandleDamageEffect(damageResistance, "Ice", "npc", enemy.id);
-                return enemy.health - damageResistance;
+                return enemy.health - (damageResistance + AdditionalBlessingDamage(character));
             } else if (iceVulnerability) {
                 HandleDamageEffect(damageVulnerability, "Ice", "npc", enemy.id);
-                return enemy.health - damageVulnerability;
+                return enemy.health - (damageVulnerability + AdditionalBlessingDamage(character));
             } else {
                 HandleDamageEffect(character.attack, "Ice", "npc", enemy.id);
-                return enemy.health - character.attack;
+                return enemy.health - (character.attack + AdditionalBlessingDamage(character));
             }
         }
     },
@@ -127,16 +127,16 @@ const spellEffects: Record<string, (enemy: EnemyType, character: CharacterType, 
             const damageResistance = Math.max(1, Math.round(character.attack - Resistances.Lightning.value))
             const damageVulnerability = Math.round(character.attack + Vulnerabilites.Lightning.value)
             const damage = Math.round(character.attack * 1.25)
-            
+            console.log("TEST", AdditionalBlessingDamage(character))
             if (lightningResistance) {
                 HandleDamageEffect(damageResistance, "Lightning", "npc", enemy.id);
-                return enemy.health - damageResistance;
+                return enemy.health - (damageResistance + AdditionalBlessingDamage(character));
             } else if (lightningVulnerability) {
                 HandleDamageEffect(damageVulnerability, "Lightning", "npc", enemy.id);
-                return enemy.health - damageVulnerability;
+                return enemy.health - (damageVulnerability + AdditionalBlessingDamage(character));
             } else {
                 HandleDamageEffect(damage, "Lightning", "npc", enemy.id);
-                return enemy.health - damage;
+                return enemy.health - (damage + AdditionalBlessingDamage(character));
             }
         }
     },
@@ -150,7 +150,7 @@ const spellEffects: Record<string, (enemy: EnemyType, character: CharacterType, 
             spellCost = 0;
             character.mana -= spellCost;
 
-            return enemy.health - Math.max(5, character.attack - enemy.defense);
+            return enemy.health - Math.max(5, (character.attack + AdditionalBlessingDamage(character)) - enemy.defense);
         }
     },
     Garrote_Tar$40: (enemy, character, target, spellCost) => {
@@ -174,11 +174,11 @@ const spellEffects: Record<string, (enemy: EnemyType, character: CharacterType, 
 
             if(enemy.debuffs.find(d => d.type === Debuffs.Bleed.type)) {
                 HandleDamageEffect(bleedDamage, "Physical", "npc", enemy.id);
-                return enemy.health - bleedDamage;
+                return enemy.health - (bleedDamage + AdditionalBlessingDamage(character));
             } else {
                 enemy.debuffs.push({ type: Debuffs.Bleed.type, duration: 3});
                 HandleDamageEffect(bleedDamage, "Physical", "npc", enemy.id);
-                return enemy.health - bleedDamage;
+                return enemy.health - (bleedDamage + AdditionalBlessingDamage(character));
             }
         }
     },
@@ -190,21 +190,21 @@ const spellEffects: Record<string, (enemy: EnemyType, character: CharacterType, 
         
         if (enemyIndex === -1) {
             console.warn(`Enemy ${enemy.id} not found in sorted list.`);
-            return enemy.health - (character.attack -  Math.max(5, enemy.defense));
+            return enemy.health - ((character.attack + AdditionalBlessingDamage(character)) -  Math.max(5, enemy.defense));
         }
 
         // Get previous and next enemies if they exist
         const prevEnemy = enemyIndex > 0 ? sortedEnemies[enemyIndex - 1] : null;
         const nextEnemy = enemyIndex < sortedEnemies.length - 1 ? sortedEnemies[enemyIndex + 1] : null;
 
-        enemy.health -= (character.attack - Math.max(5, enemy.defense));
+        enemy.health -= ((character.attack + AdditionalBlessingDamage(character)) - Math.max(5, enemy.defense));
 
         if (prevEnemy) {
-            prevEnemy.health -= (character.attack - Math.max(5, enemy.defense));
+            prevEnemy.health -= ((character.attack + AdditionalBlessingDamage(character)) - Math.max(5, enemy.defense));
         }
 
         if (nextEnemy) {
-            nextEnemy.health -= (character.attack - Math.max(5, enemy.defense));
+            nextEnemy.health -= ((character.attack + AdditionalBlessingDamage(character)) - Math.max(5, enemy.defense));
         }
 
         return enemy.health; // Return updated health of main target
@@ -219,7 +219,7 @@ const spellEffects: Record<string, (enemy: EnemyType, character: CharacterType, 
             spellCost = 20;
             character.mana += spellCost;
 
-            return enemy.health - Math.max(5, character.attack - enemy.defense);
+            return enemy.health - Math.max(5, (character.attack + AdditionalBlessingDamage(character)) - enemy.defense);
         }
     },
     Devastate__Tar$60: (enemy, character, target, spellCost) => {
@@ -242,10 +242,10 @@ const spellEffects: Record<string, (enemy: EnemyType, character: CharacterType, 
             enemy.defense = 0;
 
             if(enemy.debuffs.find(d => d.type === Debuffs.Sundered.type)) {
-                return enemy.health - Math.max(5, character.attack - enemy.defense);
+                return enemy.health - Math.max(5, (character.attack + AdditionalBlessingDamage(character)) - enemy.defense);
             } else {
                 enemy.debuffs.push({ type: Debuffs.Sundered.type, duration: 3});
-                return enemy.health - Math.max(5, character.attack - enemy.defense);
+                return enemy.health - Math.max(5, (character.attack + AdditionalBlessingDamage(character)) - enemy.defense);
             }
             
         }
@@ -275,11 +275,11 @@ const spellEffects: Record<string, (enemy: EnemyType, character: CharacterType, 
             const iceVulnerability = enemy.vulnerabilities.find(vulnerability => vulnerability.type === Vulnerabilites.Ice.type);
             
             if(iceResistance) {
-                return enemy.health - Math.max(1, character.attack - Resistances.Ice.value);
+                return enemy.health - Math.max(1, (character.attack + AdditionalBlessingDamage(character)) - Resistances.Ice.value);
             } else if (iceVulnerability) {
-                return enemy.health - character.attack + Vulnerabilites.Ice.value;
+                return enemy.health - (character.attack + AdditionalBlessingDamage(character)) + Vulnerabilites.Ice.value;
             } else {
-                return enemy.health - character.attack;
+                return enemy.health - (character.attack + AdditionalBlessingDamage(character));
             }
         }
     },
@@ -307,7 +307,7 @@ const spellEffectsBuff: Record<string, (character: CharacterType, target: Charac
         }
     },
     Cure__Char$10: (character, target, spellCost) => {
-        if(target.debuffs.length > 0 && target.debuffs[0].type !== "Dead") {
+        if(target.debuffs.length > 0 && target.health > 0) {
             target.debuffs.length = 0
         } 
 
@@ -336,7 +336,7 @@ const basicCharacterAttack = (enemy: EnemyType, character: CharacterType, spell:
         return spellEffects[spell](enemy, character, enemy, spellCost);
     } else {
         console.warn(`Unknown spell: ${spell}`);
-        return enemy.health - Math.max(5, character.attack - enemy.defense);
+        return enemy.health - Math.max(5, (character.attack + AdditionalBlessingDamage(character)) - enemy.defense);
     }
 
 };
@@ -395,6 +395,24 @@ const basicEnemyAttack = (character: CharacterType, enemy: EnemyType, target: Ch
 
     // Fallback: basic attack
     return character.health - Math.max(1, enemy.attack - character.defense);
+};
+
+const AdditionalBlessingDamage = (character: CharacterType) => {
+    let bonusDamage = 0;
+
+    character.blessings.forEach((blessing) => {
+        switch (blessing) {
+            case "Blessing of Holy Damage":
+                bonusDamage += Math.round(Math.max(10, character.attack * 1.25));
+            break;
+            case "Blessing of Fire Damage":
+                bonusDamage += Math.round(Math.max(10, character.attack * 1.25));
+            break;
+            // Add more blessing types here
+        }
+    });
+
+    return bonusDamage;
 };
 
 export { basicCharacterAttack, basicCharacterBuff, basicEnemyAttack };
