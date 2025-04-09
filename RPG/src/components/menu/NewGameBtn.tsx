@@ -19,7 +19,9 @@ export const NewGameBtn = () => {
         localStorage.removeItem("turnCount");
         localStorage.removeItem("Level");
         localStorage.removeItem("Round");
-    
+        localStorage.removeItem('selectedParty');
+        localStorage.removeItem('currentEntityTurn');
+        
         setCharacters(() => {
             const resetCharacters: { [id: number]: CharacterType } = {};
             for (const char of Object.values(CharacterData)) {

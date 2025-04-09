@@ -3,6 +3,7 @@ type BtnProps = {
     onClick: () => void;
     text: string
     className?: string
+    disabled?: boolean
 }
 
 const Btn = ({ onClick, text, className }: BtnProps) => {

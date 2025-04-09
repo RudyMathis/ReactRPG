@@ -20,7 +20,7 @@ const LevelLayout = () => {
             </div>
             <Grid />
             <TurnOrderDisplay />
-            {isRoundOver &&<EndofRoundDisplay />}
+            {isRoundOver && <EndofRoundDisplay />}
         </div>
     );
 }
