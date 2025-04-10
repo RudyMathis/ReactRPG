@@ -4,7 +4,7 @@ import { storeAtom } from './storeAtom';
 import EnemyAtom from './BaseEnemyAtom';
 import { turnCountAtom } from './UseTurnCountAtom';
 import { getRandomEnemyType, getRandomElement, getRandomClass, determineEnemyGroup } from './BaseEnemyAtom';
-import EnemyFactory from '../gameData/EnemyFactory';
+import EnemyFactory from '../gameData/enemies/EnemyFactory';
 
 // Function to get initial GameLevelAtom state from localStorage
 const getInitialGameLevel = () => {

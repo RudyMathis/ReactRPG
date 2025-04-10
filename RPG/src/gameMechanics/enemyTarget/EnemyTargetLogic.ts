@@ -2,35 +2,33 @@ import type { CharacterType } from '../../atom/CharacterAtom';
 import type { EnemyType } from '../../atom/BaseEnemyAtom';
 
 export const getEnemyTarget = (
-    enemy: EnemyType,
-    aliveCharacters: CharacterType[]
-  ): CharacterType | null => {
-      if (aliveCharacters.length === 0) return null;
-  
-      const targetType = enemy.target;
-  
-      if (targetType.includes("TargetSpeedLow")) {
-          return aliveCharacters.reduce((lowest, current) =>
-              current.speedDefault < lowest.speedDefault ? current : lowest
-          );
-      }
-      if (targetType.includes("TargetHealthLow")) {
-          return aliveCharacters.reduce((lowest, current) =>
-              current.health < lowest.health ? current : lowest
-          );
-      }
-      if (targetType.includes("TargetDefenseLow")) {
-          return aliveCharacters.reduce((lowest, current) =>
-              current.defense < lowest.defense ? current : lowest
-          );
-      }
-      if (targetType.includes("TargetRandom")) {
-          const randomIndex = Math.floor(Math.random() * aliveCharacters.length);
-          return aliveCharacters[randomIndex];
-      }
-  
-      // Fallback: return first alive character
-      return aliveCharacters[0];
-  };
-  
+        enemy: EnemyType,
+        aliveCharacters: CharacterType[]
+): CharacterType | null => {
+    if (aliveCharacters.length === 0) return null;
 
+    const targetType = enemy.target;
+
+    if (targetType.includes("TargetSpeedLow")) {
+        return aliveCharacters.reduce((lowest, current) =>
+            current.speedDefault < lowest.speedDefault ? current : lowest
+        );
+    }
+    if (targetType.includes("TargetHealthLow")) {
+        return aliveCharacters.reduce((lowest, current) =>
+            current.health < lowest.health ? current : lowest
+        );
+    }
+    if (targetType.includes("TargetDefenseLow")) {
+        return aliveCharacters.reduce((lowest, current) =>
+            current.defense < lowest.defense ? current : lowest
+        );
+    }
+    if (targetType.includes("TargetRandom")) {
+        const randomIndex = Math.floor(Math.random() * aliveCharacters.length);
+        return aliveCharacters[randomIndex];
+    }
+
+    // Fallback: return first alive character
+    return aliveCharacters[0];
+};

@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router';
 import './MainMenu.css';
-import UserNameInput from '../../components/menu/UserNameInput';
-import { NewGameBtn } from '../../components/menu/NewGameBtn';
-import { ContinueGameBtn } from '../../components/menu/ContinueGameBtn';
+import UserNameInput from './UserNameInput';
+import { NewGameBtn } from './NewGameBtn';
+import { ContinueGameBtn } from './ContinueGameBtn';
 import { useEffect, useState } from 'react';
 
 const MainMenu = () => {

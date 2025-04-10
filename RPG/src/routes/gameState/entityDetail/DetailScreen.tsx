@@ -1,5 +1,5 @@
-import type { CharacterType } from "../../atom/CharacterAtom";
-import type { EnemyType } from"../../atom/BaseEnemyAtom";
+import type { CharacterType } from "../../../atom/CharacterAtom";
+import type { EnemyType } from"../../../atom/BaseEnemyAtom";
 import './DetailScreen.css'
 
 type CharacterDetailProps = {

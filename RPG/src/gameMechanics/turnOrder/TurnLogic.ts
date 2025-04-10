@@ -51,15 +51,16 @@ export const runTurnLogic = async (
     } else {
       entity = currentTurnOrder[i];
     }
+
     saveData(i);
 
     if (!entity) continue;
-
     handleStatusEffects(entity);
-
     entity = entity.type === "player" ? storeAtom.get(CharacterAtom)[entity.id] : storeAtom.get(EnemyAtom)[entity.id];
+
     if(savedTurn) {
       i = parseInt(savedTurn);
+      saveData(i);
     }
 
     if ('target' in entity) {
@@ -151,12 +152,15 @@ export const runTurnLogic = async (
       } else {
         saveData(i + 1);
       }
+
     }
+    saveData(i + 1);
   }
 
   ManaRegen();
   storeAtom.set(turnCountAtom, currentTurn + 1);
   saveData();
+
   console.log(`Turn ${currentTurn} ended.`);
   setTimeout(() => runTurnLogic(currentTurnOrder, waitForInput), 1000);
 };

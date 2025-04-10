@@ -3,8 +3,8 @@ import { GameLevelAtom } from "../../atom/GameLevelAtom";
 import NavigateBtn from "../../components/NavigateBtn";
 import Grid from "./Grid";
 import TurnOrderDisplay from "../../gameMechanics/turnOrder/TurnOrderDisplay";
-import CurrentLevelDisplay from "../../components/menu/CurrentLevelDisplay";
-import EndofRoundDisplay from "../../components/menu/EndOfRoundDisplay";
+import CurrentLevelDisplay from "./CurrentLevelDisplay";
+import EndofRoundDisplay from "./EndOfRoundDisplay";
 import './LevelLayout.css';
 
 const LevelLayout = () => {

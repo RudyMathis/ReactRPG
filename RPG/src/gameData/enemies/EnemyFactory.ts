@@ -1,7 +1,7 @@
-import { determineEnemyGroup, EnemyType, getRandomClass, getRandomElement, getRandomEnemyType } from "../atom/BaseEnemyAtom";
-import BaseEnemyData from "../gameData/enemies/BaseEnemyData.json";
-import Resistances from "../gameData/Resistances";
-import Vulnerabilites from "./Vulnerabilities";
+import { determineEnemyGroup, EnemyType, getRandomClass, getRandomElement, getRandomEnemyType } from "../../atom/BaseEnemyAtom";
+import BaseEnemyData from "./BaseEnemyData.json";
+import Resistances from "../Resistances";
+import Vulnerabilites from "../Vulnerabilities";
 
 type BaseEnemyDataRecord = Record<string, EnemyType>;
 

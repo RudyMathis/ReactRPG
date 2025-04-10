@@ -1,5 +1,5 @@
 import { atom } from 'jotai';
-import EnemyFactory from '../gameData/EnemyFactory';
+import EnemyFactory from '../gameData/enemies/EnemyFactory';
 
 type Resistance = {
     type: string;

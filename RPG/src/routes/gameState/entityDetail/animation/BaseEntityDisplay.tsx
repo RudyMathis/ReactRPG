@@ -1,10 +1,10 @@
-import type { CharacterType } from "../../../atom/CharacterAtom";
-import type { EnemyType } from "../../../atom/BaseEnemyAtom";
-import { ShakeAtom } from "../../../atom/effects/ShakeAtom";
-import { BaseDamageFlashAtom } from "../../../atom/effects/BaseDamageFlashAtom";
+import type { CharacterType } from "../../../../atom/CharacterAtom";
+import type { EnemyType } from "../../../../atom/BaseEnemyAtom";
+import { ShakeAtom } from "../../../../atom/effects/ShakeAtom";
+import { BaseDamageFlashAtom } from "../../../../atom/effects/BaseDamageFlashAtom";
 import "./BaseEntityDisplay.css"; 
 import { useAtom } from "jotai";
-import { DamageEffectAtom } from "../../../atom/effects/DamageEffectAtom";
+import { DamageEffectAtom } from "../../../../atom/effects/DamageEffectAtom";
 
 type CharacterDetailProps = {
     entity: CharacterType | EnemyType;

@@ -1,11 +1,11 @@
 import { useNavigate } from "react-router";
-import Btn from "../Btn";
+import Btn from "../../components/Btn";
 import characterAtom, { CharacterType } from "../../atom/CharacterAtom";
 import CharacterData  from "../../gameData/characters/CharacterData.json";
 import { useAtom } from "jotai";
 import { GameLevelAtom } from "../../atom/GameLevelAtom";
 import EnemyAtom from "../../atom/BaseEnemyAtom";
-import { generateInitialEnemies } from "../../gameData/EnemyFactory";
+import { generateInitialEnemies } from "../../gameData/enemies/EnemyFactory";
 export const NewGameBtn = () => {
     const navigate = useNavigate();
     const [, setCharacters] = useAtom(characterAtom);

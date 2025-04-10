@@ -1,10 +1,10 @@
 import { GameLevelAtom, startNewRound } from "../../atom/GameLevelAtom";
 import { storeAtom } from "../../atom/storeAtom";
-import Btn from "../Btn";
+import Btn from "../../components/Btn";
 import { GainExperience } from "../../gameMechanics/GainExperince";
 import { FullRestore } from "../../gameMechanics/FullRestore";
 import CharacterAtom from "../../atom/CharacterAtom";
-import { Blessings } from "../../gameData/Blessings";
+import { Blessings } from "../../gameData/characters/Blessings";
 import { blessingAtom } from "../../atom/BlessingsAtom";
 import { BlessingsData } from "../../gameData/characters/BlessingsData";
 import { useAtom } from "jotai";
@@ -41,6 +41,7 @@ const EndofRoundDisplay = () => {
         localStorage.setItem('turnCount', JSON.stringify(turnCountAtom));
         localStorage.setItem('characters', JSON.stringify(storeAtom.get(CharacterAtom)));
         localStorage.setItem('currentEntityTurn', "0");
+        console.log("END OF ROUND")
 
         currentGameLevel.isRoundOver = true
 

@@ -1,6 +1,6 @@
 import HealthBar from './bars/HealthBar';
 import ManaBar from './bars/ManaBar';
-import { CharacterType } from '../../atom/CharacterAtom';
+import { CharacterType } from '../../../atom/CharacterAtom';
 import BaseEntityDisplay from './animation/BaseEntityDisplay';
 import CurrentTurnArrow from './CurrentTurnArrow';
 

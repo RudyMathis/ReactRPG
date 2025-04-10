@@ -1,6 +1,6 @@
 import HealthBar from './bars/HealthBar';
 import ManaBar from './bars/ManaBar';
-import { EnemyType } from '../../atom/BaseEnemyAtom';
+import { EnemyType } from '../../../atom/BaseEnemyAtom';
 import BaseEntityDisplay from './animation/BaseEntityDisplay';
 
 type EnemyDisplay = {

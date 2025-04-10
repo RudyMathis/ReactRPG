@@ -1,9 +1,9 @@
-import CharacterAtom from "../atom/CharacterAtom"
-import { storeAtom } from "../atom/storeAtom"
-import Resistances from "./Resistances"
-import { CharacterType } from "../atom/CharacterAtom"
-import { BlessingsData } from "./characters/BlessingsData";
-import { blessingAtom } from "../atom/BlessingsAtom";
+import CharacterAtom from "../../atom/CharacterAtom"
+import { storeAtom } from "../../atom/storeAtom"
+import Resistances from "../Resistances"
+import { CharacterType } from "../../atom/CharacterAtom"
+import { BlessingsData } from "./BlessingsData";
+import { blessingAtom } from "../../atom/BlessingsAtom";
 
 export const Blessings = (character: CharacterType) => {
     const allCharacters = storeAtom.get(CharacterAtom);
