@@ -3,7 +3,7 @@ import { CharacterType } from "../../atom/CharacterAtom";
 import { BaseDamageFlashAtom } from "../../atom/effects/BaseDamageFlashAtom";
 import { ShakeAtom } from "../../atom/effects/ShakeAtom";
 import { storeAtom } from "../../atom/storeAtom";
-import attacks from "./attacks/attacks";
+import attacks from "./attacks/Attacks";
 
 export const EnemyAttack = (character: CharacterType, enemy: EnemyType, target: CharacterType) => {
     setTimeout(() => {
@@ -15,7 +15,7 @@ export const EnemyAttack = (character: CharacterType, enemy: EnemyType, target: 
     storeAtom.set(BaseDamageFlashAtom, (prev) => ({ ...prev, [character.id]: true }));
 
     setTimeout(() => {
-    }, 1000);
+    }, 300);
 
     if (enemy.spells && enemy.spells.length > 0) {
         // Filter spells the enemy can afford

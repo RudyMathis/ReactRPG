@@ -4,7 +4,7 @@ import { BaseDamageFlashAtom } from "../../atom/effects/BaseDamageFlashAtom";
 import { ShakeAtom } from "../../atom/effects/ShakeAtom";
 import { storeAtom } from "../../atom/storeAtom";
 import { AdditionalBlessingDamage } from "./AdditionalBlessingDamage";
-import attacks from "./attacks/attacks";
+import attacks from "./attacks/Attacks";
 
 export const CharacterAttack = (enemy: EnemyType, character: CharacterType, spell: string, spellCost: number) => {
 
@@ -17,7 +17,7 @@ export const CharacterAttack = (enemy: EnemyType, character: CharacterType, spel
     storeAtom.set(BaseDamageFlashAtom, (prev) => ({ ...prev, [enemy.id]: true }));
 
     setTimeout(() => {
-    }, 1000);
+    }, 300);
 
     if (attacks[spell]) {
         return attacks[spell](enemy, character, enemy, spellCost);

@@ -6,6 +6,7 @@ import { useAtom } from "jotai";
 import { useNavigate } from "react-router";
 import Btn from "../../components/Btn";
 import { GameLevelAtom } from "../../atom/GameLevelAtom";
+import { SaveData } from "../../gameMechanics/SaveData";
 
 const CharacterSelect = () => {
 
@@ -27,6 +28,7 @@ const CharacterSelect = () => {
         if (selectedCharacters.length !== 3) return;
 
         localStorage.setItem("selectedParty", "true");
+        SaveData();
         currentGameLevel.isRoundOver = false
         navigate("/game");
     };

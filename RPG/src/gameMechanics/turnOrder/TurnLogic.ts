@@ -6,12 +6,13 @@ import CharacterAtom from '../../atom/CharacterAtom';
 import EnemyAtom from '../../atom/BaseEnemyAtom';
 import { getEnemyTarget } from '../enemyTarget/EnemyTargetLogic';
 import { selectedSpellAtom } from "../../atom/SelectedSpellAtom";
-import { handleStatusEffects } from '../../gameData/Status';
 import { GainExperience } from "../GainExperince";
 import { ManaRegen } from "../ManaRegen";
 import { CharacterAttack } from "../../gameData/spellData/CharacterAttack";
 import { CharacterBuff } from "../../gameData/spellData/CharacterBuff";
 import { EnemyAttack } from "../../gameData/spellData/EnemyAttack";
+import { Statuses } from "../../gameData/spellData/statuses/Statuses";
+import { SaveData } from "../SaveData";
 
 type CharacterType = (typeof CharacterAtom) extends import('jotai').Atom<Record<number, infer T>> ? T : never;
 type EnemyType = (typeof EnemyAtom) extends import('jotai').Atom<Record<number, infer T>> ? T : never;
@@ -45,7 +46,7 @@ export const runTurnLogic = async (
   if (handleAllEnemiesDead()) return;
 
   while (i < turnOrder.length) {
-      saveData(i); // Save the current turn before processing
+      SaveData(i); // Save the current turn before processing
 
       let entity = turnOrder[i];
 
@@ -54,11 +55,13 @@ export const runTurnLogic = async (
           continue;
       }
 
-      handleStatusEffects(entity);
+      Statuses(entity);
       entity = entity.type === "player" ? storeAtom.get(CharacterAtom)[entity.id] : storeAtom.get(EnemyAtom)[entity.id];
 
       if ('target' in entity) {
           const enemy = storeAtom.get(EnemyAtom)[entity.id];
+          setTimeout(() => {
+          }, 1000);
 
           if (!enemy) {
               console.warn(`Enemy with ID ${entity.id} not found in EnemyAtom.`);
@@ -94,7 +97,9 @@ export const runTurnLogic = async (
           i++;
       } else {
           const character = entity as CharacterType;
-
+          setTimeout(() => {
+          }, 1000);
+          
           if (character.health <= 0) {
               console.log(`${character.name} is dead.`);
               i++;
@@ -126,7 +131,8 @@ export const runTurnLogic = async (
                   },
               }));
 
-              if (handleAllEnemiesDead()) return;
+          if (handleAllCharactersDead() || handleAllEnemiesDead()) return;
+
           } else if (playerTarget) {
               const updatedTargetHealth = CharacterBuff(character, playerTarget, spell as string, spellCost);
               CharacterHealthUpdate(playerTarget.id === character.id ? character : playerTarget, updatedTargetHealth);
@@ -144,20 +150,12 @@ export const runTurnLogic = async (
 
   ManaRegen();
   storeAtom.set(turnCountAtom, currentTurn + 1);
-  saveData(0); // Save the final turn data
+  SaveData(0); // Save the final turn data
 
   console.log(`Turn ${currentTurn} ended.`);
   setTimeout(() => runTurnLogic(turnOrder, waitForInput), 1000);
 };
 
-const saveData = (currentEntityTurn?: number) => {
-  if (currentEntityTurn !== undefined) {
-      localStorage.setItem('currentEntityTurn', currentEntityTurn.toString());
-  }
-  localStorage.setItem('characters', JSON.stringify(storeAtom.get(CharacterAtom)));
-  localStorage.setItem('enemies', JSON.stringify(storeAtom.get(EnemyAtom)));
-  localStorage.setItem('turnCount', JSON.stringify(storeAtom.get(turnCountAtom)));
-};
 
 const handleAllEnemiesDead = () => {
   const allEnemiesDead = Object.values(storeAtom.get(EnemyAtom)).every(e => e.health <= 0);
