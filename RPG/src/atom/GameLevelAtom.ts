@@ -34,6 +34,11 @@ const generateNewEnemies = (round: number, level: number): Record<number, EnemyT
     const newEnemies: Record<number, EnemyType> = {};
     const enemyCount = Math.floor(Math.random() * 1) + 2;
 
+    // Prevent values < 1
+    const levelMultiplier = Math.max(1, level * 0.5);
+    const roundMultiplier = Math.max(1, round * 0.5);
+    const scale = levelMultiplier * roundMultiplier;
+
     for (let i = 0; i < enemyCount; i++) {
         const enemyType = getRandomEnemyType();
         const enemyGroup = determineEnemyGroup(enemyType);
@@ -53,19 +58,25 @@ const generateNewEnemies = (round: number, level: number): Record<number, EnemyT
         }
 
         const enemy = EnemyFactory.createEnemy(enemyType, [element, enemyClass]);
+
+        // Clone base stats before scaling
+        const base = structuredClone(enemy);
+
         enemy.id = i + 100;
         enemy.group = enemyGroup;
         enemy.name = finalName;
 
-        enemy.health = enemy.health * (level * .5) * (round * .5);
-        enemy.maxHealth = enemy.maxHealth * (level * .5) * (round * .5);
-        enemy.mana = enemy.mana * (level * .5) * (round * .5);
-        enemy.maxMana = enemy.maxMana * (level * .5) * (round * .5);
-        enemy.defense = enemy.defense * (level * .5) * (round * .5);
-        enemy.defenseDefault = enemy.defenseDefault * (level * .5) * (round * .5);
-        enemy.speed = enemy.speed * (level * .5) * (round * .5);
-        enemy.speedDefault = enemy.speedDefault * (level * .5) * (round * .5);
-        enemy.attack = enemy.attack * (level * .5) * (round * .5);
+        // Ensure never weaker than base stats
+        enemy.health = Math.round(Math.max(base.health, base.health * scale));
+        enemy.maxHealth = Math.round(Math.max(base.maxHealth, base.maxHealth * scale));
+        enemy.mana = Math.round(Math.max(base.mana, base.mana * scale));
+        enemy.maxMana = Math.round(Math.max(base.maxMana, base.maxMana * scale));
+        enemy.defense = Math.round(Math.max(base.defense, base.defense * scale));
+        enemy.defenseDefault = Math.round(Math.max(base.defenseDefault, base.defenseDefault * scale));
+        enemy.speed = Math.round(Math.max(base.speed, base.speed * scale));
+        enemy.speedDefault = Math.round(Math.max(base.speedDefault, base.speedDefault * scale));
+        enemy.attack = Math.round(Math.max(base.attack, base.attack * scale));
+
         enemy.level = level;
         enemy.order = i + 1;
 
@@ -74,6 +85,7 @@ const generateNewEnemies = (round: number, level: number): Record<number, EnemyT
 
     return newEnemies;
 };
+
 
 export const startNewRound = () => {
     storeAtom.set(GameLevelAtom, prev => {

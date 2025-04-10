@@ -94,7 +94,7 @@
         "maxMana": 100,
         "exp": 0,
         "maxExp": 100,
-        "spells": ["Quick_Attack_Tar$0", "Backstab_Tar$0", "Garrote_Tar$40"],
+        "spells": ["Quick_Attack_Tar$0", "Backstab_Tar$0", "Garrote__Tar$40"],
         "buffs": [],
         "debuffs": [],
         "blessings":[],
