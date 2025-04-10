@@ -27,7 +27,12 @@ export const NewGameBtn = () => {
             for (const char of Object.values(CharacterData)) {
                 resetCharacters[char.id] = {
                     ...char,
-                    isSelected: false
+                    level: 1,
+                    isSelected: false,
+                    buffs: [],
+                    debuffs: [],
+                    currentTurn: false,
+
                 };
             }
             return resetCharacters;

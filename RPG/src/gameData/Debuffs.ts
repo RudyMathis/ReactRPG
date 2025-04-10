@@ -4,9 +4,9 @@ export type Debuff = {
 
 // Base resistance values
 const Debuffs = {
-    Frozen: { type: "Frozen"},
-    Burn: { type: "Burn"},
     Bleed: { type: "Bleed"},
+    Burn: { type: "Burn"},
+    Frozen: { type: "Frozen"},
     Sundered: { type: "Sundered"},
 };
 

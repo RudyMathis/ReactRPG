@@ -5,8 +5,9 @@ import { BaseDamageFlashAtom } from "../../../../atom/effects/BaseDamageFlashAto
 import "./BaseEntityDisplay.css"; 
 import { useAtom } from "jotai";
 import { DamageEffectAtom } from "../../../../atom/effects/DamageEffectAtom";
+import { useEffect, useRef, useState } from "react";
 
-type CharacterDetailProps = {
+type EnityDetailProps = {
     entity: CharacterType | EnemyType;
 };
 
@@ -31,10 +32,23 @@ const entityImages: Record<string, string> = {
     Wolf: '/assets/characters/wolf.png',
 };
 
-function BaseEntityDisplay({ entity }: CharacterDetailProps) {
+function BaseEntityDisplay({ entity }: EnityDetailProps) {
     const [shakingEntities] = useAtom(ShakeAtom);
     const [flashEntities] = useAtom(BaseDamageFlashAtom);
     const [damageEffect] = useAtom(DamageEffectAtom);
+
+    const prevHealthRef = useRef(entity.health);
+    const [calculatedDamage, setCalculatedDamage] = useState<number | null>(null);
+
+    useEffect(() => {
+        const prev = prevHealthRef.current;
+        if (entity.health < prev) {
+            const damageTaken = prev - entity.health;
+            setCalculatedDamage(damageTaken);
+            setTimeout(() => setCalculatedDamage(null), 1000); // Hide after 1s
+        }
+        prevHealthRef.current = entity.health;
+    }, [entity.health]);
 
     const imageSrc = entityImages[entity.name] || entityImages[(entity as EnemyType).base] || '/assets/default.png';
     const imageSrcDead = entityImages[entity.name + '_dead'] || '/assets/default.png';
@@ -46,7 +60,17 @@ function BaseEntityDisplay({ entity }: CharacterDetailProps) {
     
     return (
         <div className="sprite-container">
-            {damageEffect.isDisplay && entity.type === damageEffect.target && damageEffect.target && damageEffect.entityId === entity.id && <div className={`damage-effect ${entity.type}`} data-damage-type={damageEffect.damageType}>{damageEffect.damage}</div>}
+            {
+                damageEffect.isDisplay && 
+                entity.type === damageEffect.target && 
+                damageEffect.target && 
+                damageEffect.entityId === entity.id && 
+                <div className={`damage-effect ${entity.type}`} data-damage-type={entity.debuffs.map(d => d.type)}>
+                    {/* {damageEffect.damage} */}
+                    {calculatedDamage}
+                    {entity.debuffs.map(d => d.type).join(', ')}
+                </div>
+            }
             <div key={key}
                 data-entity-modified={(entity.name).match(/Fire|Ice|Dark/)}
                 className={`sprite ${isShaking ? "shake" : ""} ${isFlashing ? "flash-red" : ""}`}>
