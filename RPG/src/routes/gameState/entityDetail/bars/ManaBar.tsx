@@ -12,7 +12,7 @@ const ManaBar: React.FC<ManaBarProps> = ({ mana, maxMana, resourceType }) => {
 
     switch (resourceType) {
         case 'mana':
-            resourceColor = 'blue';
+            resourceColor = 'dodgerblue';
             break;
         case 'energy':
             resourceColor = 'yellow';
@@ -30,7 +30,10 @@ const ManaBar: React.FC<ManaBarProps> = ({ mana, maxMana, resourceType }) => {
             <div 
                 className="bar-fill"
                 style={{ width: `${manaPercent}%`, backgroundColor: manaPercent > 0 ? resourceColor : 'lightgray' }}
-            ></div>
+            >
+                <span className={`bar-text ${resourceColor}`}>{mana}/{maxMana}</span>
+
+            </div>
         </div>
     );
 }

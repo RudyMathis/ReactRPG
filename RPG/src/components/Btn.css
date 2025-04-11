@@ -1,9 +1,8 @@
 .btn {
     color: white;
     background-color: #222222;
-    border: 1px solid goldenrod;
+    border: 1px solid white;
     width: max-content;
-    border-radius: 15px;
     line-height: 1.1rem;
     padding: 1rem;
 }

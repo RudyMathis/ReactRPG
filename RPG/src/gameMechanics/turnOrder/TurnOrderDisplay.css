@@ -1,8 +1,34 @@
 .turn-order-container {
+    position: absolute;
+    top: 5%;
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
-    gap: .5rem;
-    border: 1px solid white;
-    padding: 1rem;
+    justify-content: center;
+    gap: 2rem;
+}
+.turn-order-portrait {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 50px;
+}
+.turn-order-portrait p{
+    margin-top: 10px;
+    text-align: center;
+    font-size: .75rem;
+}
+
+.turn-order-container .character-sprite {
+    width: 50px;
+    height: 50px;
+    overflow: hidden;
+}
+
+.turn-order-container .character-sprite img {
+    width: 150%;
+    height: 150%;
+    object-fit: cover; 
 }
 
 .turn-order-item {
@@ -12,4 +38,20 @@
 
 .turn-order-item.remove {
     display: none;
+}
+
+.turn-order-item[data-entity-modified="Dark"] {
+    border: 1px solid purple;
+}
+
+.turn-order-item[data-entity-modified="Ice"] {
+    border: 1px solid dodgerblue;
+}
+
+.turn-order-item[data-entity-modified="Fire"] {
+    border: 1px solid red;
+}
+
+.turn-order-item[data-entity-modified="Lightning"] {
+    border: 1px solid yellow;
 }

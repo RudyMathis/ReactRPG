@@ -1,11 +1,12 @@
 .current-turn-arrow {
     position: absolute;
-    top: -200%;
+    top: -80%;
     left: 50%;
     transform: translateX(-50%);
     color: white;
     font-size: 2rem;
     animation: floatArrow 1s infinite ease-in-out;
+    filter:drop-shadow(-5px 5px 1px rgba(0, 0, 0, 0.75))
 }
 
 @keyframes floatArrow {

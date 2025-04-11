@@ -1,6 +1,6 @@
 .sprite-container {
-    width: 128px;
-    height: 128px;
+    width: 100px;
+    height: 100px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -8,10 +8,10 @@
 }
 
 .sprite img {
-    width: 128px;
-    height: 128px;
+    width: 100px;
+    height: 100px;
     object-fit: contain;
-    filter: drop-shadow(-20px 20px 4px rgba(0, 0, 0, 0.75));
+    filter: drop-shadow(-10px 1px 3px rgba(0, 0, 0, 0.75));
     transition: filter 0.1s ease-in-out;
 }
 
@@ -37,22 +37,26 @@
     animation: flash-red .3s ease-in-out;
 }
 
+.npc {
+    filter:drop-shadow(10px 1px 4px rgba(0, 0, 0, 0.75));
+}
+
 [data-entity-modified="Fire"] img {
     filter: drop-shadow(1px 1px red) drop-shadow(1px -1px red)
     drop-shadow(-1px 1px red) drop-shadow(-1px -1px red)
-    drop-shadow(-20px 20px 4px rgba(0, 0, 0, 0.75));
+    drop-shadow(10px 1px 4px rgba(0, 0, 0, 0.75));
 }
 
 [data-entity-modified="Ice"] img {
-    filter: drop-shadow(1px 1px lightblue) drop-shadow(1px -1px lightblue)
-    drop-shadow(-1px 1px lightblue) drop-shadow(-1px -1px lightblue)
-    drop-shadow(-20px 20px 4px rgba(0, 0, 0, 0.75));
+    filter: drop-shadow(1px 1px dodgerblue) drop-shadow(1px -1px dodgerblue)
+    drop-shadow(-1px 1px dodgerblue) drop-shadow(-1px -1px dodgerblue)
+    drop-shadow(10px 1px 4px rgba(0, 0, 0, 0.75));
 }
 
 [data-entity-modified="Dark"] img {
     filter: drop-shadow(1px 1px purple) drop-shadow(1px -1px purple)
     drop-shadow(-1px 1px purple) drop-shadow(-1px -1px purple)
-    drop-shadow(-20px 20px 4px rgba(0, 0, 0, 0.75));
+    drop-shadow(10px 1px 4px rgba(0, 0, 0, 0.75));
 }
 
 .damage-effect {

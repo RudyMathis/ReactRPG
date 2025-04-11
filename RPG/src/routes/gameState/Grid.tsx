@@ -97,8 +97,8 @@ const Grid = () => {
             onClick={() => toggleMenuVisibility(char.id, 'character')}
             style={{
               position: 'relative',
-              gridColumn: (index % 2) === 0 ? 2 : 3,
-              gridRow: ((index + 1)* 2) + 1
+              gridColumn: (index % 2) === 0 ? 4 : 5,
+              gridRow: ((index + 5)* 2) + 1
             }}
           >
             <div onClick={() => handlePlayerTargeted(char)}>
@@ -126,8 +126,8 @@ const Grid = () => {
             onClick={() => toggleMenuVisibility(enemy.id, 'enemy')}
             style={{
               position: 'relative',
-              gridColumn: index % 2 === 0 ? 8 : 9,
-              gridRow: ((index + 1)* 2) + 1
+              gridColumn: index % 2 === 0 ? 16 : 17,
+              gridRow: ((index + 5)* 2) + 1
             }}
           >
             <div onClick={() => handlePlayerTargeted(enemy)}>

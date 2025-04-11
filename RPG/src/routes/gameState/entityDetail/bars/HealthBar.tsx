@@ -12,8 +12,10 @@ const HealthBar: React.FC<HealthBarProps> = ({ health, maxHealth }) => {
         <div className="bar">
             <div 
                 className="bar-fill"
-                style={{ width: `${healthPercent}%`, backgroundColor: healthPercent == 100 ? 'green' : healthPercent > 30 ? 'yellow' : 'red' }}
-            ></div>
+                style={{ width: `${healthPercent}%`, backgroundColor: healthPercent == 100 ? 'limegreen' : healthPercent > 30 ? 'yellow' : 'red' }}
+            >
+                <span className="bar-text">{health}/{maxHealth}</span>
+            </div>
         </div>
     );
 }
