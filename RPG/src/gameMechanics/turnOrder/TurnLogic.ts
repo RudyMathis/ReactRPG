@@ -45,6 +45,7 @@ export const runTurnLogic = async (
   if (handleAllCharactersDead()) return;
   if (handleAllEnemiesDead()) return;
 
+  console.log("Turn Order:", turnOrder);
   while (i < turnOrder.length) {
       SaveData(i); // Save the current turn before processing
 
@@ -57,7 +58,6 @@ export const runTurnLogic = async (
 
       Statuses(entity);
       entity = entity.type === "player" ? storeAtom.get(CharacterAtom)[entity.id] : storeAtom.get(EnemyAtom)[entity.id];
-
       if ('target' in entity) {
           const enemy = storeAtom.get(EnemyAtom)[entity.id];
           setTimeout(() => {

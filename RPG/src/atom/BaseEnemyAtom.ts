@@ -12,12 +12,14 @@ type Vulnerability = {
 }
 
 type BuffEffect = {
+    name: string;
     type: string;
     duration: number;
     damage?: number;
 };
 
 type DebuffEffect = {
+    name: string;
     type: string;
     duration: number;
     damage?: number;

@@ -27,7 +27,7 @@ const DetailScreen = ({ entity }: CharacterDetailProps) => {
                     {entity.debuffs.map((debuff, index) => (
                         debuff.duration > 0 && (
                             <div key={index} style={{ color: 'red' }}>
-                                {`${debuff.type} (Duration: ${debuff.duration} turns)`}
+                                {`${debuff.name} (Duration: ${debuff.duration} turns)`}
                             </div>
                         )
                     ))}
@@ -39,7 +39,7 @@ const DetailScreen = ({ entity }: CharacterDetailProps) => {
                     {entity.buffs.map((buff, index) => (
                         buff.duration > 0 && (
                             <div key={index} style={{ color: 'red' }}>
-                                {`${buff.type} (Duration: ${buff.duration} turns)`}
+                                {`${buff.name} (Duration: ${buff.duration} turns)`}
                             </div>
                         )
                     ))}

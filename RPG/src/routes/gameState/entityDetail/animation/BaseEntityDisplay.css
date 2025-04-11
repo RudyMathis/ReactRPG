@@ -56,7 +56,7 @@
 }
 
 .damage-effect {
-    animation: floatUp 1s ease-out forwards;
+    animation: floatUp 3s ease-out forwards;
 }
 
 @keyframes floatUp {
@@ -78,7 +78,7 @@
     z-index: 3;
 }
 
-[data-damage-type="Fire"] {
+.damage-effect[data-damage-type="Fire"] {
     color: #fff;
     text-shadow:
         3px 3px 0 red,
@@ -105,7 +105,7 @@
         3px -3px 0 yellow;
 }
 
-[data-damage-type="Physical"] {
+.damage-effect[data-damage-type="Physical"] {
     color: #000;
     text-shadow:
         3px 3px 0 white,

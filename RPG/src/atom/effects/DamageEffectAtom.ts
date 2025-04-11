@@ -1,9 +1,13 @@
 import { atom } from "jotai";
 
-export const DamageEffectAtom = atom<{ damage: number, isDisplay: boolean, damageType: string, target: string, entityId: number }>({
-    damage: 0,
+export const DamageEffectAtom = atom<{
+    effects: { damage: number; type: string }[];
+    target: "player" | "npc";
+    entityId: number;
+    isDisplay: boolean;
+}>({
+    effects: [],
+    target: "npc",
+    entityId: 0, 
     isDisplay: false,
-    damageType: "",
-    target: "",
-    entityId: 0
 });

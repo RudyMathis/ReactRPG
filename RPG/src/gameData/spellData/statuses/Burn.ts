@@ -6,7 +6,7 @@ import Debuffs from "../../Debuffs";
 import Resistances from "../../Resistances";
 import Vulnerabilites from "../../Vulnerabilities";
 
-export const Burn = (entity: CharacterType | EnemyType, burnStatus: { type: string; duration: number, damage?: number }) => {
+export const Burn = (entity: CharacterType | EnemyType, burnStatus: { type: string; duration: number }) => {
     if (burnStatus.duration <= 0 || entity.health <= 0) {
         if (entity.type === "player") {
             storeAtom.set(CharacterAtom, (prev) => ({
@@ -27,7 +27,7 @@ export const Burn = (entity: CharacterType | EnemyType, burnStatus: { type: stri
         }
         return false;
     } else {
-        const baseDamage = burnStatus.damage ?? 10;
+        const baseDamage = Debuffs.Burn.damage ?? 10;
         const fireResistance = entity.resistances.find(res => res.type === Resistances.Fire.type)?.value ?? 0;
         const fireVulnerability = entity.vulnerabilities.find(vul => vul.type === Vulnerabilites.Fire.type)?.value ?? 0;
         const multipleBurns = entity.debuffs.filter(d => d.type === Debuffs.Burn.type).length;

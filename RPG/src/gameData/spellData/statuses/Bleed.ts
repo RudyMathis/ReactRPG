@@ -4,7 +4,7 @@ import { storeAtom } from "../../../atom/storeAtom";
 import { HandleDamageEffect } from "../../../gameMechanics/HandleDamageEffect";
 import Debuffs from "../../Debuffs";
 
-export const Bleed = (entity: CharacterType | EnemyType, bleedStatus: { type: string; duration: number; damage?: number }) => {
+export const Bleed = (entity: CharacterType | EnemyType, bleedStatus: { type: string; duration: number }) => {
     if (bleedStatus.duration <= 0 || entity.health <= 0) {
         if (entity.type === "player") {
             storeAtom.set(CharacterAtom, (prev) => ({
@@ -25,7 +25,7 @@ export const Bleed = (entity: CharacterType | EnemyType, bleedStatus: { type: st
         }
         return false;
     } else {
-        const baseDamage = bleedStatus.damage ?? 10;
+        const baseDamage = Debuffs.Bleed.damage ?? 10;
         const damage = Math.max(1, baseDamage);
 
         if (entity.type === "player") {
@@ -47,7 +47,7 @@ export const Bleed = (entity: CharacterType | EnemyType, bleedStatus: { type: st
                 };
             });
             const updatedPlayer = storeAtom.get(CharacterAtom)[entity.id];
-            console.log(entity.name, "took", damage, "damage from Bleed.", baseDamage, "baseDamage.", updatedPlayer.health, "remaining.", bleedStatus.damage);
+            console.log(entity.name, "took", damage, "damage from Bleed.", baseDamage, "baseDamage.", updatedPlayer.health, "remaining.", bleedStatus.duration, "DEBUFF damage.", Debuffs.Bleed.damage);
             HandleDamageEffect(damage, "Physical", "player", entity.id);
             return updatedPlayer.health > 0;
         } else {
@@ -69,7 +69,7 @@ export const Bleed = (entity: CharacterType | EnemyType, bleedStatus: { type: st
                 };
             });
             const updatedEnemy = storeAtom.get(EnemyAtom)[entity.id];
-            console.log(entity.name, "took", damage, "damage from Bleed.", updatedEnemy.health, "remaining.");
+            console.log(entity.name, "took", damage, "damage from Bleed.", updatedEnemy.health, "remaining.", bleedStatus.duration, "DEBUFF damage.", Debuffs.Bleed.damage);
             HandleDamageEffect(damage, "Physical", "npc", entity.id);
             return updatedEnemy.health > 0;
         }

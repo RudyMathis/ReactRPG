@@ -13,7 +13,10 @@ const DevastateTar60 = (enemy: EnemyType, character: CharacterType, target: Char
         if (character.debuffs.find(d => d.type === Debuffs.Sundered.type)) {
             return character.health - Math.max(5, enemy.attack - character.defense);
         } else {
-            character.debuffs.push({ type: Debuffs.Sundered.type, duration: 3 });
+            character.debuffs.push({
+                type: Debuffs.Sundered.type, duration: 3,
+                name: Debuffs.Sundered.name
+            });
             return character.health - Math.max(5, character.attack - character.defense);
         }
     } else {
@@ -25,7 +28,10 @@ const DevastateTar60 = (enemy: EnemyType, character: CharacterType, target: Char
         if(enemy.debuffs.find(d => d.type === Debuffs.Sundered.type)) {
             return enemy.health - Math.max(5, (character.attack + AdditionalBlessingDamage(character)) - enemy.defense);
         } else {
-            enemy.debuffs.push({ type: Debuffs.Sundered.type, duration: 3});
+            enemy.debuffs.push({
+                type: Debuffs.Sundered.type, duration: 3,
+                name: Debuffs.Sundered.name
+            });
             return enemy.health - Math.max(5, (character.attack + AdditionalBlessingDamage(character)) - enemy.defense);
         }
         

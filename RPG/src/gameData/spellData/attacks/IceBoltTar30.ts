@@ -8,7 +8,10 @@ import { AdditionalBlessingDamage } from "../AdditionalBlessingDamage";
 
 const IceBoltTar20 = (enemy: EnemyType, character: CharacterType, target: CharacterType | EnemyType, spellCost: number) =>{ 
     if(target === character) {
-        character.debuffs.push({ type: Debuffs.Frozen.type, duration: 3 });
+        character.debuffs.push({
+            type: Debuffs.Frozen.type, duration: 3,
+            name: Debuffs.Frozen.name
+        });
         character.speed = 0;
         spellCost = 30;
         enemy.mana -= spellCost;
@@ -29,7 +32,10 @@ const IceBoltTar20 = (enemy: EnemyType, character: CharacterType, target: Charac
             return character.health - enemy.attack;
         }
     } else {
-        enemy.debuffs.push({ type: Debuffs.Frozen.type, duration: 3 });
+        enemy.debuffs.push({
+            type: Debuffs.Frozen.type, duration: 3,
+            name: Debuffs.Frozen.name
+        });
         enemy.speed = 0;
         spellCost = 30;
         character.mana -= spellCost;

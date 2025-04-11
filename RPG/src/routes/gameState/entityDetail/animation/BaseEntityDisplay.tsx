@@ -5,13 +5,11 @@ import { BaseDamageFlashAtom } from "../../../../atom/effects/BaseDamageFlashAto
 import "./BaseEntityDisplay.css"; 
 import { useAtom } from "jotai";
 import { DamageEffectAtom } from "../../../../atom/effects/DamageEffectAtom";
-import { useEffect, useRef, useState } from "react";
 
 type EnityDetailProps = {
     entity: CharacterType | EnemyType;
 };
 
-// Map the entity names to image sources
 const entityImages: Record<string, string> = {
     Warrior: '/assets/characters/warrior.png',
     Warrior_dead: '/assets/characters/warrior_dead.png',
@@ -37,19 +35,6 @@ function BaseEntityDisplay({ entity }: EnityDetailProps) {
     const [flashEntities] = useAtom(BaseDamageFlashAtom);
     const [damageEffect] = useAtom(DamageEffectAtom);
 
-    const prevHealthRef = useRef(entity.health);
-    const [calculatedDamage, setCalculatedDamage] = useState<number | null>(null);
-
-    useEffect(() => {
-        const prev = prevHealthRef.current;
-        if (entity.health < prev) {
-            const damageTaken = prev - entity.health;
-            setCalculatedDamage(damageTaken);
-            setTimeout(() => setCalculatedDamage(null), 1000); // Hide after 1s
-        }
-        prevHealthRef.current = entity.health;
-    }, [entity.health]);
-
     const imageSrc = entityImages[entity.name] || entityImages[(entity as EnemyType).base] || '/assets/default.png';
     const imageSrcDead = entityImages[entity.name + '_dead'] || '/assets/default.png';
 
@@ -65,10 +50,23 @@ function BaseEntityDisplay({ entity }: EnityDetailProps) {
                 entity.type === damageEffect.target && 
                 damageEffect.target && 
                 damageEffect.entityId === entity.id && 
-                <div className={`damage-effect ${entity.type}`} data-damage-type={entity.debuffs.map(d => d.type)}>
-                    {/* {damageEffect.damage} */}
-                    {calculatedDamage}
-                    {entity.debuffs.map(d => d.type).join(', ')}
+                <div >
+                    {damageEffect.effects.map((e, i) => (
+                        <div key={i} className="damage-line">
+                            <span
+                                className={`damage-effect ${entity.type}`}
+                                data-damage-type={e.type}
+                                style={{
+                                    animationDelay: `${i * 1}s`,
+                                    animation: 'floatUp 1s ease-out forwards',
+                                    left: `${Math.random() * 10 - 5}px`, // slight horizontal offset
+                                    top: `${Math.random() * 10 - 5}px`, // slight horizontal offset
+                                }}
+                            >
+                                {e.damage}
+                            </span>
+                        </div>
+                    ))}
                 </div>
             }
             <div key={key}

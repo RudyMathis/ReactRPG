@@ -8,7 +8,10 @@ import { AdditionalBlessingDamage } from "../AdditionalBlessingDamage";
 
 const FireBallTar20 = (enemy: EnemyType, character: CharacterType, target: CharacterType | EnemyType, spellCost: number) =>{ 
     if(target === character) {
-        character.debuffs.push({ type: Debuffs.Burn.type, duration: 3 });
+        character.debuffs.push({
+            type: Debuffs.Burn.type, duration: 3,
+            name: Debuffs.Burn.name
+        });
         spellCost = 20;
         enemy.mana -= spellCost;
 
@@ -28,7 +31,10 @@ const FireBallTar20 = (enemy: EnemyType, character: CharacterType, target: Chara
             return character.health - enemy.attack;
         }
     } else {
-        enemy.debuffs.push({ type: Debuffs.Burn.type, duration: 3 });
+        enemy.debuffs.push({
+            type: Debuffs.Burn.type, duration: 3,
+            name: Debuffs.Burn.name
+        });
         const spellCost = 20;
         character.mana -= spellCost;
 

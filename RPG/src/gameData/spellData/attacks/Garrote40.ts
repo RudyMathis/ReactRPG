@@ -14,7 +14,10 @@ const GarroteTar40 = (enemy: EnemyType, character: CharacterType, target: Charac
             HandleDamageEffect(bleedDamage, "Physical", "player", character.id);
             return character.health - bleedDamage;
         } else {
-            character.debuffs.push({ type: Debuffs.Bleed.type, duration: 3 });
+            character.debuffs.push({
+                type: Debuffs.Bleed.type, duration: 3,
+                name: Debuffs.Bleed.name
+            });
             HandleDamageEffect(bleedDamage, "Physical", "player", character.id);
             return character.health - bleedDamage;
         }
@@ -27,7 +30,10 @@ const GarroteTar40 = (enemy: EnemyType, character: CharacterType, target: Charac
             HandleDamageEffect(bleedDamage, "Physical", "npc", enemy.id);
             return enemy.health - bleedDamage;
         } else {
-            enemy.debuffs.push({ type: Debuffs.Bleed.type, duration: 3});
+            enemy.debuffs.push({
+                type: Debuffs.Bleed.type, duration: 3,
+                name: Debuffs.Bleed.name
+            });
             HandleDamageEffect(bleedDamage, "Physical", "npc", enemy.id);
             return enemy.health - bleedDamage;
         }
