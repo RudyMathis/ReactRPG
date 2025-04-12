@@ -1,13 +1,12 @@
-.board{
+.board {
     display: grid;
     position: relative;
     grid-template-columns: repeat(20, 1fr);
     grid-template-rows: repeat(16, 1fr);
     gap: 0.5em;
     background-image: url('/assets/backgrounds/stock-background.jpg');
-    background-size: contain;
     background-repeat: round;
-    height: 600px;
+    height: 700px;
     margin: 1em 0;
 }
 

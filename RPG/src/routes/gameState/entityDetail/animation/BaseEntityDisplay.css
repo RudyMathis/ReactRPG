@@ -11,8 +11,15 @@
     width: 100px;
     height: 100px;
     object-fit: contain;
-    filter: drop-shadow(-10px 1px 3px rgba(0, 0, 0, 0.75));
     transition: filter 0.1s ease-in-out;
+}
+
+.sprite.player img {
+    filter: drop-shadow(-10px 1px 3px rgba(0, 0, 0, 0.75));
+}
+
+.sprite.npc img {
+    filter: drop-shadow(10px 1px 3px rgba(0, 0, 0, 0.75));
 }
 
 

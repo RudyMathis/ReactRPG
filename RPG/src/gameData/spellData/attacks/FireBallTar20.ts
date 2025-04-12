@@ -19,7 +19,8 @@ const FireBallTar20 = (enemy: EnemyType, character: CharacterType, target: Chara
         const fireVulnerability = character.vulnerabilities.find(vul => vul.type === Vulnerabilites.Fire.type);
         const damageResistance = Math.max(1, Math.round(enemy.attack - Resistances.Fire.value))
         const damageVulnerability = Math.round(enemy.attack + Vulnerabilites.Fire.value)
-        
+        const damage = Math.max(5, Math.round(enemy.attack))
+
         if (fireResistance) {
             HandleDamageEffect(damageResistance, "Fire", "player", character.id);
             return character.health - damageResistance;
@@ -28,7 +29,7 @@ const FireBallTar20 = (enemy: EnemyType, character: CharacterType, target: Chara
             return character.health - damageVulnerability;
         } else {
             HandleDamageEffect(enemy.attack, "Fire", "player", character.id);
-            return character.health - enemy.attack;
+            return character.health - damage;
         }
     } else {
         enemy.debuffs.push({

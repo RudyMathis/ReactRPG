@@ -33,7 +33,8 @@ const entityImages: Record<string, string> = {
 function BaseEntityDisplay({ entity }: EnityDetailProps) {
     const [shakingEntities] = useAtom(ShakeAtom);
     const [flashEntities] = useAtom(BaseDamageFlashAtom);
-    const [damageEffect] = useAtom(DamageEffectAtom);
+    const [damageEffectMap] = useAtom(DamageEffectAtom);
+    const effectData = damageEffectMap[entity.id];
 
     const imageSrc = entityImages[entity.name] || entityImages[(entity as EnemyType).base] || '/assets/default.png';
     const imageSrcDead = entityImages[entity.name + '_dead'] || '/assets/default.png';
@@ -46,32 +47,32 @@ function BaseEntityDisplay({ entity }: EnityDetailProps) {
     return (
         <div className="sprite-container">
             {
-                damageEffect.isDisplay && 
-                entity.type === damageEffect.target && 
-                damageEffect.target && 
-                damageEffect.entityId === entity.id && 
-                <div >
-                    {damageEffect.effects.map((e, i) => (
-                        <div key={i} className="damage-line">
-                            <span
-                                className={`damage-effect ${entity.type}`}
-                                data-damage-type={e.type}
-                                style={{
-                                    animationDelay: `${i * 1}s`,
-                                    animation: 'floatUp 1s ease-out forwards',
-                                    left: `${Math.random() * 10 - 5}px`, // slight horizontal offset
-                                    top: `${Math.random() * 10 - 5}px`, // slight horizontal offset
-                                }}
-                            >
-                                {e.damage}
-                            </span>
-                        </div>
-                    ))}
-                </div>
+                effectData?.isDisplay &&
+                entity.type === effectData.target && (
+                    <div>
+                        {effectData.effects.map((e, i) => (
+                            <div key={i} className="damage-line">
+                                <span
+                                    className={`damage-effect ${entity.type}`}
+                                    data-damage-type={e.type}
+                                    style={{
+                                        animationDelay: `${i * 1}s`,
+                                        animation: 'floatUp 1s ease-out forwards',
+                                        left: `${Math.random() * 10 - 5}px`,
+                                        top: `${Math.random() * 10 - 5}px`,
+                                    }}
+                                >
+                                    {e.damage}
+                                </span>
+                            </div>
+                        ))}
+                    </div>
+                )
             }
+
             <div key={key}
                 data-entity-modified={(entity.name).match(/Fire|Ice|Dark/)}
-                className={`sprite ${isShaking ? "shake" : ""} ${isFlashing ? "flash-red" : ""}`}>
+                className={`sprite ${entity.type} ${isShaking ? "shake" : ""} ${isFlashing ? "flash-red" : ""}`}>
                 {entity.health > 0 ? <img src={imageSrc} className={entity.type} alt={entity.name} /> : <img src={imageSrcDead} alt={`${entity.name} is dead`} />}
             </div>
         </div>

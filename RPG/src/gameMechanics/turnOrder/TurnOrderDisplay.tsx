@@ -1,4 +1,4 @@
-import {useTurnOrder} from "./useTurnOrder";
+import { useTurnOrder } from "./useTurnOrder";
 import './TurnOrderDisplay.css';
 import { EnemyType } from "../../atom/BaseEnemyAtom";
 
@@ -12,11 +12,17 @@ const TurnOrderDisplay = () => {
     return (
         <div className="turn-order-container">
             {turnOrder.map((entity, index) => {
-                const imageSrc = entityImages[entity?.name] || entityImages[(entity as EnemyType)?.base] || '/assets/default.png';
+                const imageSrc = entityImages[entity.name] 
+                    || (entity as EnemyType)?.base && entityImages[(entity as EnemyType).base] 
+                    || '/assets/default.png';
+
                 return (
-                    <div className="turn-order-portrait">
-                        <div key={index} data-entity-modified={(entity.name).match(/Fire|Ice|Dark/)} className={`turn-order-item character-sprite ${entity.name} ${entity.health <= 0 ? 'remove' : ''}`}>
-                                <img src={imageSrc} className={entity.type} alt={entity.name} />
+                    <div className="turn-order-portrait" key={entity.id ?? index}>
+                        <div
+                            data-entity-modified={(entity.name).match(/Fire|Ice|Dark/)}
+                            className={`turn-order-item character-sprite ${entity.name} ${entity.health <= 0 ? 'remove' : ''}`}
+                        >
+                            <img src={imageSrc} className={entity.type} alt={entity.name} />
                         </div>
                         <p>{entity.name}</p>
                     </div>
@@ -25,6 +31,5 @@ const TurnOrderDisplay = () => {
         </div>
     );
 };
-
 
 export default TurnOrderDisplay;
