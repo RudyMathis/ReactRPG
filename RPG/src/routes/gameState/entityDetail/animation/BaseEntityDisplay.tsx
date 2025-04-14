@@ -1,6 +1,6 @@
 import type { CharacterType } from "../../../../atom/CharacterAtom";
 import type { EnemyType } from "../../../../atom/BaseEnemyAtom";
-import { ShakeAtom } from "../../../../atom/effects/ShakeAtom";
+import { AttackAnimationAtom } from "../../../../atom/effects/AttackAnimationAtom";
 import { BaseDamageFlashAtom } from "../../../../atom/effects/BaseDamageFlashAtom";
 import "./BaseEntityDisplay.css"; 
 import { useAtom } from "jotai";
@@ -11,27 +11,29 @@ type EnityDetailProps = {
 };
 
 const entityImages: Record<string, string> = {
-    Warrior: '/assets/characters/warrior.png',
-    Warrior_dead: '/assets/characters/warrior_dead.png',
-    Mage: '/assets/characters/mage.png', 
-    Mage_dead: '/assets/characters/mage_dead.png', 
-    Cleric: '/assets/characters/cleric.png',
-    Cleric_dead: '/assets/characters/cleric_dead.png',
-    Rogue: '/assets/characters/rogue.png',
-    Rogue_dead: '/assets/characters/rogue_dead.png',
-    Archer: '/assets/characters/archer.png',
-    Archer_dead: '/assets/characters/archer_dead.png',
-    Goblin: '/assets/characters/goblin.png',
-    Skeleton: '/assets/characters/skeleton.png',
-    Zombie: '/assets/characters/zombie.png',
-    Ghoul: '/assets/characters/ghoul.png',
-    Ent: '/assets/characters/ent.png',
-    Rat: '/assets/characters/rat.png',
-    Wolf: '/assets/characters/wolf.png',
+    Warrior: '/assets/characters/Warrior_Attack.png',
+    // Warrior_dead: '/assets/characters/warrior_dead.png',
+    Mage: '/assets/characters/Mage_Attack.png', 
+    // Mage_dead: '/assets/characters/mage_dead.png', 
+    Cleric: '/assets/characters/Cleric_Attack.png',
+    // Cleric_dead: '/assets/characters/cleric_dead.png',
+    Rogue: '/assets/characters/Rogue_Attack.png',
+    // Rogue_dead: '/assets/characters/rogue_dead.png',
+    Archer: '/assets/characters/Archer_Attack.png',
+    // Archer_dead: '/assets/characters/archer_dead.png',
+    Goblin: '/assets/characters/Goblin.png',
+    Skeleton: '/assets/characters/Skeleton.png',
+    Zombie: '/assets/characters/Zombie.png',
+    Ghoul: '/assets/characters/Ghoul.png',
+    Ent: '/assets/characters/Ent.png',
+    Rat: '/assets/characters/Rat.png',
+    Wolf: '/assets/characters/Wolf.png',
+    Monk: '/assets/characters/Monk_Attack.png',
+    Shaman: '/assets/characters/Shaman_Attack.png',
 };
 
 function BaseEntityDisplay({ entity }: EnityDetailProps) {
-    const [shakingEntities] = useAtom(ShakeAtom);
+    const [attackingEntities] = useAtom(AttackAnimationAtom);
     const [flashEntities] = useAtom(BaseDamageFlashAtom);
     const [damageEffectMap] = useAtom(DamageEffectAtom);
     const effectData = damageEffectMap[entity.id];
@@ -39,13 +41,14 @@ function BaseEntityDisplay({ entity }: EnityDetailProps) {
     const imageSrc = entityImages[entity.name] || entityImages[(entity as EnemyType).base] || '/assets/default.png';
     const imageSrcDead = entityImages[entity.name + '_dead'] || '/assets/default.png';
 
-    const isShaking = shakingEntities[entity.id] ?? false;
+    const isAttacking = attackingEntities[entity.id] ?? false;
     const isFlashing = flashEntities[entity.id] ?? false;
-    const key = isShaking ? `${entity.id}-shaking` : (isFlashing ? `${entity.id}-flashing-shaking` : `${entity.id}`);
+    const key = isAttacking ? `${entity.id}-attacking` : (isFlashing ? `${entity.id}-flashing-attacking` : `${entity.id}`);
 
     
     return (
-        <div className="sprite-container">
+        <div className={`sprite-container ${entity.type}${isAttacking ? " attack-move" : ""}`}>
+
             {
                 effectData?.isDisplay &&
                 entity.type === effectData.target && (
@@ -69,12 +72,15 @@ function BaseEntityDisplay({ entity }: EnityDetailProps) {
                     </div>
                 )
             }
-
-            <div key={key}
+            {entity.health > 0 ? <img 
+                key={key} src={imageSrc}
                 data-entity-modified={(entity.name).match(/Fire|Ice|Dark/)}
-                className={`sprite ${entity.type} ${isShaking ? "shake" : ""} ${isFlashing ? "flash-red" : ""}`}>
-                {entity.health > 0 ? <img src={imageSrc} className={entity.type} alt={entity.name} /> : <img src={imageSrcDead} alt={`${entity.name} is dead`} />}
-            </div>
+                className={`sprite ${entity.type} ${entity.name}${isAttacking ? " attack" : ""} ${isFlashing ? "flash-red" : ""}`}
+                alt={entity.name} 
+            /> 
+            : 
+            <img src={imageSrcDead} alt={`${entity.name} is dead`} />}
+
         </div>
     );
 }

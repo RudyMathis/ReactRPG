@@ -1,52 +1,52 @@
+
 .sprite-container {
-    width: 100px;
-    height: 100px;
+    width: 65px;
+    height: 96px;
     display: flex;
     justify-content: center;
+    justify-content: flex-start; 
     align-items: center;
     position: relative;
+    overflow: hidden;
 }
 
-.sprite img {
-    width: 100px;
-    height: 100px;
-    object-fit: contain;
-    transition: filter 0.1s ease-in-out;
+.sprite {
+    height: 96px;
+    object-fit: initial; 
+    image-rendering: pixelated;
+    position: absolute;
 }
 
-.sprite.player img {
-    filter: drop-shadow(-10px 1px 3px rgba(0, 0, 0, 0.75));
+.sprite.player {
+    width: 200px; 
+    left: -136px;
+    filter: drop-shadow(-2px 2px 2px black);
 }
 
-.sprite.npc img {
-    filter: drop-shadow(10px 1px 3px rgba(0, 0, 0, 0.75));
+.sprite.npc {
+    position: relative;
+    width: 96px; 
+    filter: drop-shadow(2px 2px 2px black);
 }
 
+.sprite.npc.Rat, .sprite.npc.Goblin {
+    height: 64px;
+}
+
+.sprite-container:has(.Ent) {
+    width: 96px;
+    height: 96px;
+}
 
 @keyframes flash-red {
     0%, 100% { filter: none; }
     50% { filter: drop-shadow(0 0 8px red) saturate(200%) brightness(1.5); }
 }
 
-@keyframes shake {
-    0% { transform: translateX(0); }
-    25% { transform: translateX(-5px); }
-    50% { transform: translateX(5px); }
-    75% { transform: translateX(-5px); }
-    100% { transform: translateX(0); }
-}
-
-.shake {
-    animation: shake 0.3s ease-in-out 1;
-}
-
 .flash-red {
     animation: flash-red .3s ease-in-out;
 }
 
-.npc {
-    filter:drop-shadow(10px 1px 4px rgba(0, 0, 0, 0.75));
-}
 
 [data-entity-modified="Fire"] img {
     filter: drop-shadow(1px 1px red) drop-shadow(1px -1px red)
@@ -124,3 +124,34 @@
         -3px -3px 0 white,
         3px -3px 0 white;
 }
+
+@keyframes attackMoveAnimation {
+    0% { transform: translateX(0); }
+    50% { transform: translateX(200px); }
+    100% { transform: translateX(0); } 
+}
+
+.attack-move.player {
+    animation: attackMoveAnimation .9s linear 1; 
+}
+
+@keyframes attackNPCMoveAnimation {
+    0% { transform: translateX(0); }
+    50% { transform: translateX(-200px); }
+    100% { transform: translateX(0); } 
+}
+
+
+.attack-move.npc {
+    animation: attackNPCMoveAnimation .9s linear 1 reverse; 
+}
+
+@keyframes attackAnimation {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(200px); } 
+}
+
+.attack.player {
+    animation: attackAnimation .3s steps(3) 3; 
+}
+

@@ -79,18 +79,7 @@ button {
 	cursor: pointer;
 }
 
-/* temp */
-
-.character-sprite.Bard {
-    background-color: orange;
-}
-
-.character-sprite.Monk {
-    background-color: pink;
-}
-
 .character-sprite.dead {
-	background-color: darkgray;
 	cursor: not-allowed;
 }
 

@@ -129,9 +129,9 @@
         "type": "player",
         "resource_type": "energy"
     },
-    "Bard": {
+    "Shaman": {
         "id": 6,
-        "name": "Bard",
+        "name": "Shaman",
         "level": 1,
         "health": 150,
         "maxHealth": 150,
@@ -172,7 +172,7 @@
         "maxMana": 100,
         "exp": 0,
         "maxExp": 100,
-        "spells": ["Serenity_Char$20", "Meditation_Char$0"],
+        "spells": ["Serenity_Char$20", "Meditation_Char$0", "Quick_Attack_Tar$0"],
         "buffs": [],
         "debuffs": [],
         "blessings":[],
