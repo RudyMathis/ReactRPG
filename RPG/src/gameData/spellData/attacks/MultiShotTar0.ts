@@ -12,7 +12,9 @@ const MultiShotTar0 = (
 ) => {
     spellCost = 0;
 
-    if (target === character) {
+    const targetCharacter = 'id' in target && target.id === character.id && target.type === character.type
+
+    if(targetCharacter) {
         enemy.mana -= spellCost;
 
         const characters = Object.values(storeAtom.get(CharacterAtom));

@@ -33,7 +33,7 @@ export const HandleDamageEffect = (
                     isDisplay: false,
                 }
             }));
-        }, 1000);
+        }, 0);
 
         return newEffects;
     });

@@ -27,10 +27,10 @@
     height: 100px;
     background-color: transparent;
 }
-.character-sprite.dead {
+/* .character-sprite.dead {
     filter:grayscale(1);
     background-color: transparent;
-}
+} */
 
 .entity-container:hover {
     cursor: pointer;

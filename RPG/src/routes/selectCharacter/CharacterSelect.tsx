@@ -41,13 +41,12 @@ const CharacterSelect = () => {
                 <NavigateBtn locationValue="/" location="Main Menu" />
             </div>
             <CharacterSheets />
-
+        {selectedCharacters.length === 3 &&
             <Btn 
                 className="start-game-btn"
                 onClick={handleBeginAdventure}
-                disabled={selectedCharacters.length !== 3}
                 text="Begin Adventure"
-            />
+            />}
         </>
     );
 };

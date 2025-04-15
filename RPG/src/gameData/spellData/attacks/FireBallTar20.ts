@@ -7,7 +7,9 @@ import Vulnerabilites from "../../Vulnerabilities";
 import { AdditionalBlessingDamage } from "../AdditionalBlessingDamage";
 
 const FireBallTar20 = (enemy: EnemyType, character: CharacterType, target: CharacterType | EnemyType, spellCost: number) =>{ 
-    if(target === character) {
+    const targetCharacter = 'id' in target && target.id === character.id && target.type === character.type
+
+    if(targetCharacter) {
         character.debuffs.push({
             type: Debuffs.Burn.type, duration: 3,
             name: Debuffs.Burn.name

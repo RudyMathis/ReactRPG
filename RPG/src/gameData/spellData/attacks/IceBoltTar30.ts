@@ -7,7 +7,9 @@ import Vulnerabilites from "../../Vulnerabilities";
 import { AdditionalBlessingDamage } from "../AdditionalBlessingDamage";
 
 const IceBoltTar20 = (enemy: EnemyType, character: CharacterType, target: CharacterType | EnemyType, spellCost: number) =>{ 
-    if(target === character) {
+    const targetCharacter = 'id' in target && target.id === character.id && target.type === character.type
+
+    if(targetCharacter) {
         character.debuffs.push({
             type: Debuffs.Frozen.type, duration: 3,
             name: Debuffs.Frozen.name

@@ -1,10 +1,8 @@
 import { useTurnOrder } from "./useTurnOrder";
 import './TurnOrderDisplay.css';
 import { EnemyType } from "../../atom/BaseEnemyAtom";
+import { EntityImages } from "../../components/EntityImages";
 
-const entityImages: Record<string, string> = {
-    Goblin: '/assets/characters/goblin_face.png',
-};
 
 const TurnOrderDisplay = () => {
     const turnOrder = useTurnOrder();
@@ -12,8 +10,8 @@ const TurnOrderDisplay = () => {
     return (
         <div className="turn-order-container">
             {turnOrder.map((entity, index) => {
-                const imageSrc = entityImages[entity.name] 
-                    || (entity as EnemyType)?.base && entityImages[(entity as EnemyType).base] 
+                const imageSrc = EntityImages[entity.name] 
+                    || (entity as EnemyType)?.base && EntityImages[(entity as EnemyType).base] 
                     || '/assets/default.png';
 
                 return (
@@ -22,7 +20,7 @@ const TurnOrderDisplay = () => {
                             data-entity-modified={(entity.name).match(/Fire|Ice|Dark/)}
                             className={`turn-order-item character-sprite ${entity.name} ${entity.health <= 0 ? 'remove' : ''}`}
                         >
-                            <img src={imageSrc} className={entity.type} alt={entity.name.replace('_', ' ')} />
+                            <img src={imageSrc} className={`turn-order-sprite ${entity.type} ${entity.name}`} alt={entity.name.replace('_', ' ')} />
                         </div>
                         <p>{entity.name.replace('_', ' ')}</p>
                     </div>

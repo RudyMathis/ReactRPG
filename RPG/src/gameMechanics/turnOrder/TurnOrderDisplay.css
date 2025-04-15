@@ -7,28 +7,56 @@
     justify-content: center;
     gap: 2rem;
 }
+
 .turn-order-portrait {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 50px;
 }
+
 .turn-order-portrait p{
     margin-top: 10px;
     text-align: center;
     font-size: .75rem;
 }
 
+.turn-order-sprite {
+    image-rendering: pixelated;
+}
+
 .turn-order-container .character-sprite {
     width: 50px;
     height: 50px;
     overflow: hidden;
+    object-fit: cover; 
 }
 
-.turn-order-container .character-sprite img {
-    width: 150%;
-    height: 150%;
+.turn-order-container .character-sprite .player {
+    height: 175%;
     object-fit: cover; 
+    object-position: 0 10px;
+}
+
+.turn-order-container .character-sprite .npc {
+    height: 200%;
+    object-position: 0 25px;
+}
+
+.turn-order-container .npc.Ent {
+    object-position: 25px 25px;
+}
+
+.turn-order-container .npc.Manticore {
+    object-position: 0 5px;
+}
+
+.turn-order-container .npc.Goblin {
+    object-position: 15px 25px;
+}
+.turn-order-container .npc.Rat {
+    height: 175%;
+    object-position: 15px 10px;
 }
 
 .turn-order-item {

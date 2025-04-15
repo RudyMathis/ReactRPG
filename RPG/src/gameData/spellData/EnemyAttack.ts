@@ -1,6 +1,6 @@
 import { EnemyType } from "../../atom/BaseEnemyAtom";
 import { CharacterType } from "../../atom/CharacterAtom";
-import { BaseDamageFlashAtom } from "../../atom/effects/BaseDamageFlashAtom";
+import { FlashAnimationAtom } from "../../atom/effects/FlashAnimationAtom";
 import { AttackAnimationAtom } from "../../atom/effects/AttackAnimationAtom";
 import { storeAtom } from "../../atom/storeAtom";
 import attacks from "./attacks/Attacks";
@@ -8,11 +8,11 @@ import attacks from "./attacks/Attacks";
 export const EnemyAttack = (character: CharacterType, enemy: EnemyType, target: CharacterType) => {
     setTimeout(() => {
         storeAtom.set(AttackAnimationAtom, (prev) => ({ ...prev, [enemy.id]: false }));
-        storeAtom.set(BaseDamageFlashAtom, (prev) => ({ ...prev, [character.id]: false }));
+        storeAtom.set(FlashAnimationAtom, (prev) => ({ ...prev, [character.id]: false }));
     }, 2700);
 
     storeAtom.set(AttackAnimationAtom, (prev) => ({ ...prev, [enemy.id]: true }));
-    storeAtom.set(BaseDamageFlashAtom, (prev) => ({ ...prev, [character.id]: true }));
+    storeAtom.set(FlashAnimationAtom, (prev) => ({ ...prev, [character.id]: true }));
 
     setTimeout(() => {
     }, 2700);

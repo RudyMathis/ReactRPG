@@ -121,7 +121,7 @@ export const runTurnLogic = async (
           console.log(`Using spell: ${spell}`);
 
           if (playerTarget && 'target' in playerTarget) {
-              const updatedEnemyHealth = CharacterAttack(playerTarget, character, spell as string, spellCost);
+              const updatedEnemyHealth = CharacterAttack(playerTarget, character, playerTarget, spell as string, spellCost);
 
               storeAtom.set(EnemyAtom, (prev) => ({
                   ...prev,
