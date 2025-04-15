@@ -12,7 +12,7 @@ const DetailScreen = ({ entity }: CharacterDetailProps) => {
 
     return (
         <div className="popup">
-            <h2>{entity.name}</h2>
+            <h2>{entity.name.replace('_', ' ')}</h2>
             <p>Level: <span style={{ color: 'red'}}>{entity.level}</span> </p>
             <p>Health: <span style={{ color: 'red'}}>{entity.health >= 0 ? entity.health : 0}</span> </p>
             <p>Max Health: <span style={{ color: 'red'}}>{entity.maxHealth}</span> </p>

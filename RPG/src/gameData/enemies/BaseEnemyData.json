@@ -1,7 +1,7 @@
 {
-    "Skeleton": {
+    "Death_Knight": {
         "id": 100,
-        "name": "Skeleton",
+        "name": "Death_Knight",
         "level": 1,
         "health": 200,
         "maxHealth": 200,
@@ -22,12 +22,12 @@
         "isSelected": false,
         "type": "npc",
         "resource_type": "mana",
-        "base": "Skeleton",
+        "base": "Death_Knight",
         "group": "humanoide"
     },
-    "Ghoul": {
+    "Ent": {
         "id": 101,
-        "name": "Ghoul",
+        "name": "Ent",
         "level": 1,
         "health": 50,
         "maxHealth": 50,
@@ -48,12 +48,12 @@
         "isSelected": false,
         "type": "npc",
         "resource_type": "mana",
-        "base": "Ghoul",
-        "group": "humanoide"
+        "base": "Ent",
+        "group": "elemental"
     },
-    "Zombie": {
+    "Ettin": {
         "id": 102,
-        "name": "Zombie",
+        "name": "Ettin",
         "level": 1,
         "health": 150,
         "maxHealth": 150,
@@ -74,12 +74,12 @@
         "isSelected": false,
         "type": "npc",
         "resource_type": "mana",
-        "base": "Zombie",
+        "base": "Ettin",
         "group": "humanoide"
     },
-    "Rat": {
+    "Ghoul": {
         "id": 103,
-        "name": "Rat",
+        "name": "Ghoul",
         "level": 1,
         "health": 100,
         "maxHealth": 100,
@@ -100,38 +100,38 @@
         "isSelected": false,
         "type": "npc",
         "resource_type": "mana",
-        "base": "Rat",
-        "group": "beast"
+        "base": "Ghoul",
+        "group": "humanoide"
     },
-    "Wolf": {
+    "Goblin": {
         "id": 104,
-        "name": "Wolf",
+        "name": "Goblin",
         "level": 1,
         "health": 100,
         "maxHealth": 100,
-        "attack": 15,
-        "defense": 15,
-        "defenseDefault": 15,
+        "attack": 1,
+        "defense": 1,
+        "defenseDefault": 1,        
         "resistances":[],
         "vulnerabilities":[],
-        "speed": 20,
-        "speedDefault": 20,
+        "speed": 30,
+        "speedDefault": 30,
         "mana": 0,
         "maxMana": 0,
         "order": 0,
         "spells": [],
-        "target": ["TargetRandom"],
+        "target": ["TargetSpeedLow"],
         "buffs": [],
         "debuffs": [],
         "isSelected": false,
         "type": "npc",
         "resource_type": "mana",
-        "base": "Wolf",
-        "group": "beast"
+        "base": "Goblin",
+        "group": "humanoide"
     },
-    "Goblin": {
+    "Manticore": {
         "id": 105,
-        "name": "Goblin",
+        "name": "Manticore",
         "level": 1,
         "health": 150,
         "maxHealth": 150,
@@ -152,12 +152,12 @@
         "isSelected": false,
         "type": "npc",
         "resource_type": "mana",
-        "base": "Goblin",
-        "group": "humanoide"
+        "base": "Manticore",
+        "group": "beast"
     },
-    "Ent": {
+    "Rat": {
         "id": 106,
-        "name": "Ent",
+        "name": "Rat",
         "level": 1,
         "health": 200,
         "maxHealth": 200,
@@ -178,7 +178,59 @@
         "isSelected": false,
         "type": "npc",
         "resource_type": "mana",
-        "base": "Ent",
-        "group": "elemental"
+        "base": "Rat",
+        "group": "beast"
+    },
+    "Skeleton": {
+        "id": 107,
+        "name": "Skeleton",
+        "level": 1,
+        "health": 200,
+        "maxHealth": 200,
+        "attack": 10,
+        "defense": 20,
+        "defenseDefault": 20,
+        "resistances":[],
+        "vulnerabilities":[],
+        "speed": 80,
+        "speedDefault": 80,
+        "mana": 40,
+        "maxMana": 40,
+        "order": 0,
+        "spells": [],
+        "target": ["TargetDefenseLow"],
+        "buffs": [],
+        "debuffs": [],
+        "isSelected": false,
+        "type": "npc",
+        "resource_type": "mana",
+        "base": "Skeleton",
+        "group": "humanoide"
+    },
+    "Zombie": {
+        "id": 108,
+        "name": "Zombie",
+        "level": 1,
+        "health": 200,
+        "maxHealth": 200,
+        "attack": 10,
+        "defense": 20,
+        "defenseDefault": 20,
+        "resistances":[],
+        "vulnerabilities":[],
+        "speed": 80,
+        "speedDefault": 80,
+        "mana": 40,
+        "maxMana": 40,
+        "order": 0,
+        "spells": [],
+        "target": ["TargetDefenseLow"],
+        "buffs": [],
+        "debuffs": [],
+        "isSelected": false,
+        "type": "npc",
+        "resource_type": "mana",
+        "base": "Zombie",
+        "group": "humanoide"
     }
 }

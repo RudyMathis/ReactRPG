@@ -33,7 +33,7 @@
     height: 64px;
 }
 
-.sprite-container:has(.Ent) {
+.sprite-container:has(.Ent), .sprite-container:has(.Ettin), .sprite-container:has(.Manticore) {
     width: 96px;
     height: 96px;
 }

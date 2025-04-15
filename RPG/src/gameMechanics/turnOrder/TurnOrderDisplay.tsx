@@ -22,9 +22,9 @@ const TurnOrderDisplay = () => {
                             data-entity-modified={(entity.name).match(/Fire|Ice|Dark/)}
                             className={`turn-order-item character-sprite ${entity.name} ${entity.health <= 0 ? 'remove' : ''}`}
                         >
-                            <img src={imageSrc} className={entity.type} alt={entity.name} />
+                            <img src={imageSrc} className={entity.type} alt={entity.name.replace('_', ' ')} />
                         </div>
-                        <p>{entity.name}</p>
+                        <p>{entity.name.replace('_', ' ')}</p>
                     </div>
                 );
             })}

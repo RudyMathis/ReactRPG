@@ -11,25 +11,23 @@ type EnityDetailProps = {
 };
 
 const entityImages: Record<string, string> = {
-    Warrior: '/assets/characters/Warrior_Attack.png',
-    // Warrior_dead: '/assets/characters/warrior_dead.png',
-    Mage: '/assets/characters/Mage_Attack.png', 
-    // Mage_dead: '/assets/characters/mage_dead.png', 
-    Cleric: '/assets/characters/Cleric_Attack.png',
-    // Cleric_dead: '/assets/characters/cleric_dead.png',
-    Rogue: '/assets/characters/Rogue_Attack.png',
-    // Rogue_dead: '/assets/characters/rogue_dead.png',
     Archer: '/assets/characters/Archer_Attack.png',
-    // Archer_dead: '/assets/characters/archer_dead.png',
-    Goblin: '/assets/characters/Goblin.png',
-    Skeleton: '/assets/characters/Skeleton.png',
-    Zombie: '/assets/characters/Zombie.png',
-    Ghoul: '/assets/characters/Ghoul.png',
-    Ent: '/assets/characters/Ent.png',
-    Rat: '/assets/characters/Rat.png',
-    Wolf: '/assets/characters/Wolf.png',
+    Cleric: '/assets/characters/Cleric_Attack.png',
+    Knight: '/assets/characters/Knight_Attack.png',
+    Mage: '/assets/characters/Mage_Attack.png', 
     Monk: '/assets/characters/Monk_Attack.png',
+    Rogue: '/assets/characters/Rogue_Attack.png',
     Shaman: '/assets/characters/Shaman_Attack.png',
+    Warrior: '/assets/characters/Warrior_Attack.png',
+    Death_Knight: '/assets/enemies/Death_Knight.png',
+    Ent: '/assets/enemies/Ent.png',
+    Ettin: '/assets/enemies/Ettin.png',
+    Goblin: '/assets/enemies/Goblin.png',
+    Ghoul: '/assets/enemies/Ghoul.png',
+    Manticore: '/assets/enemies/Manticore.png',
+    Rat: '/assets/enemies/Rat.png',
+    Skeleton: '/assets/enemies/Skeleton.png',
+    Zombie: '/assets/enemies/Zombie.png',
 };
 
 function BaseEntityDisplay({ entity }: EnityDetailProps) {
@@ -45,10 +43,8 @@ function BaseEntityDisplay({ entity }: EnityDetailProps) {
     const isFlashing = flashEntities[entity.id] ?? false;
     const key = isAttacking ? `${entity.id}-attacking` : (isFlashing ? `${entity.id}-flashing-attacking` : `${entity.id}`);
 
-    
     return (
         <div className={`sprite-container ${entity.type}${isAttacking ? " attack-move" : ""}`}>
-
             {
                 effectData?.isDisplay &&
                 entity.type === effectData.target && (
@@ -76,11 +72,10 @@ function BaseEntityDisplay({ entity }: EnityDetailProps) {
                 key={key} src={imageSrc}
                 data-entity-modified={(entity.name).match(/Fire|Ice|Dark/)}
                 className={`sprite ${entity.type} ${entity.name}${isAttacking ? " attack" : ""} ${isFlashing ? "flash-red" : ""}`}
-                alt={entity.name} 
+                alt={entity.name.replace('_', ' ')} 
             /> 
             : 
-            <img src={imageSrcDead} alt={`${entity.name} is dead`} />}
-
+            <img src={imageSrcDead} alt={`${entity.name.replace('_', ' ')} is dead`} />}
         </div>
     );
 }
