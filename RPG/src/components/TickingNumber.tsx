@@ -13,8 +13,14 @@ const TickingNumber: React.FC<TickingNumberProps> = ({ value, duration = 300, cl
         if (displayed === value) return;
 
         const diff = Math.abs(value - displayed);
-        const stepTime = Math.max(duration / diff, 20);
+        const stepTime = Math.max(duration / diff, 5);
         const direction = value > displayed ? 1 : -1;
+        const percentDiff = diff / Math.max(displayed, 1);
+
+        if (percentDiff > 0.8) {
+            setDisplayed(value);
+            return;
+        }
 
         const interval = setInterval(() => {
             setDisplayed(prev => {

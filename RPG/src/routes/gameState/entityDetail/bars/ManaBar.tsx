@@ -34,7 +34,7 @@ const ManaBar: React.FC<ManaBarProps> = ({ mana, maxMana, resourceType }) => {
                 style={{ width: `${manaPercent}%`, backgroundColor: manaPercent > 0 ? resourceColor : 'lightgray' }}
             >
                 <span className={`bar-text ${resourceColor}`}>
-                    <TickingNumber value={mana} duration={300} />
+                    <TickingNumber value={mana} duration={100} />
                 </span>
             </div>
         </div>

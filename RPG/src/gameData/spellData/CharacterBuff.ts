@@ -2,7 +2,7 @@ import { CharacterType } from "../../atom/CharacterAtom";
 import buffs from "./buffs/Buffs";
 export const CharacterBuff = (character: CharacterType, target: CharacterType, spell: string, spellCost: number) => {
     setTimeout(() => {
-    }, 2700);
+    }, 2000);
 
     if (!buffs[spell]) {
         console.warn(`Unknown or missing spell in buffs: "${spell}"`);

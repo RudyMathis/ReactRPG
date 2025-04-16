@@ -9,13 +9,13 @@ export const EnemyAttack = (character: CharacterType, enemy: EnemyType, target: 
     setTimeout(() => {
         storeAtom.set(AttackAnimationAtom, (prev) => ({ ...prev, [enemy.id]: false }));
         storeAtom.set(FlashAnimationAtom, (prev) => ({ ...prev, [character.id]: false }));
-    }, 2700);
+    }, 1000);
 
     storeAtom.set(AttackAnimationAtom, (prev) => ({ ...prev, [enemy.id]: true }));
     storeAtom.set(FlashAnimationAtom, (prev) => ({ ...prev, [character.id]: true }));
 
     setTimeout(() => {
-    }, 2700);
+    }, 2000);
 
     if (enemy.spells && enemy.spells.length > 0) {
         // Filter spells the enemy can afford

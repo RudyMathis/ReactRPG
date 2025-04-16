@@ -44,8 +44,7 @@ export const Burn = (entity: CharacterType | EnemyType, burnStatus: { type: stri
                         .filter(d => d.duration > 0),
                 },
             }));
-            const updatedPlayer = storeAtom.get(CharacterAtom)[entity.id];
-            console.log(entity.name, "took", damage, "damage from Burn.", updatedPlayer.health, "remaining.");
+
             HandleDamageEffect(damage, "Fire", "player", entity.id);
             return true;
         } else {
@@ -59,8 +58,7 @@ export const Burn = (entity: CharacterType | EnemyType, burnStatus: { type: stri
                         .filter(d => d.duration > 0),
                 },
             }));
-            const updatedEnemy = storeAtom.get(EnemyAtom)[entity.id];
-            console.log(entity.name, "took", damage, "damage from Burn.", updatedEnemy.health, "remaining.");
+
             HandleDamageEffect(damage, "Fire", "npc", entity.id);
             return true;
         }

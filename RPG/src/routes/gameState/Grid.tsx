@@ -26,7 +26,13 @@ const Grid = () => {
   const [gameLevel] = useAtom(GameLevelAtom);
   const [activeDetailScreen, setActiveDetailScreen] = useState<CharacterType | EnemyType | null>(null);
   const [currentGameLevel] = useAtom(GameLevelAtom);
-
+  const checkTurnOrderAndRunLogic = () => {
+    if (turnOrder.length > 0) {
+      runTurnLogic(turnOrder, waitForInput);
+    }
+    currentGameLevel.isRoundOver = true
+  };
+  
   useEffect(() => {
     if (!gameLevel.isRoundOver) {
       // When a new round starts (isRoundOver becomes false),
@@ -48,6 +54,7 @@ const Grid = () => {
       inputPromiseResolverRef.current = resolve;
     });
   }, []);
+
   const handleNextTurnClick = () => {
     setWaitingForInput(false);
     setActiveMenu({ id: null, type: null }); // Hide menu
@@ -55,13 +62,6 @@ const Grid = () => {
       inputPromiseResolverRef.current();
       inputPromiseResolverRef.current = null;
     }
-  };
-
-  const checkTurnOrderAndRunLogic = () => {
-    if (turnOrder.length > 0) {
-      runTurnLogic(turnOrder, waitForInput);
-    }
-    currentGameLevel.isRoundOver = true
   };
 
   const handlePlayerTargeted = (entity: EnemyType | CharacterType) => {

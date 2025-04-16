@@ -15,7 +15,7 @@ const HealthBar: React.FC<HealthBarProps> = ({ health, maxHealth }) => {
                 className="bar-fill"
                 style={{ width: `${healthPercent}%`, backgroundColor: healthPercent == 100 ? 'limegreen' : healthPercent > 30 ? 'yellow' : 'red' }}
             >
-                <TickingNumber className="bar-text" value={health} duration={300} />
+                <TickingNumber className="bar-text" value={health} duration={100} />
             </div>
         </div>
     );

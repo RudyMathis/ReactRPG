@@ -11,7 +11,6 @@ const MultiShotTar0 = (
     spellCost: number
 ) => {
     spellCost = 0;
-
     const targetCharacter = 'id' in target && target.id === character.id && target.type === character.type
 
     if(targetCharacter) {
@@ -27,7 +26,7 @@ const MultiShotTar0 = (
             return character.health;
         }
 
-        const damage = Math.max(5, Math.round(character.attack + AdditionalBlessingDamage(character)) - character.defense);
+        const damage = Math.max(5, Math.round(enemy.attack) - character.defense);
         HandleDamageEffect(damage, "Physical", "player", character.id);
         character.health -= damage;
 
@@ -58,6 +57,7 @@ const MultiShotTar0 = (
         }
 
         const damage = Math.max(5, Math.round(character.attack + AdditionalBlessingDamage(character)) - enemy.defense);
+        
         HandleDamageEffect(damage, "Physical", "npc", enemy.id);
         enemy.health -= damage;
 

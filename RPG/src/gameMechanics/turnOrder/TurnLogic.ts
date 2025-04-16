@@ -51,17 +51,18 @@ export const runTurnLogic = async (
 
       let entity = turnOrder[i];
 
-      if (!entity) {
+      if (!entity || entity.health <= 0) {
+          console.log(`${entity.name} is dead.`);
           i++;
           continue;
       }
 
-      Statuses(entity);
       entity = entity.type === "player" ? storeAtom.get(CharacterAtom)[entity.id] : storeAtom.get(EnemyAtom)[entity.id];
+      Statuses(entity);
       if ('target' in entity) {
           const enemy = storeAtom.get(EnemyAtom)[entity.id];
           setTimeout(() => {
-          }, 1000);
+          }, 2000);
 
           if (!enemy) {
               console.warn(`Enemy with ID ${entity.id} not found in EnemyAtom.`);
@@ -75,7 +76,7 @@ export const runTurnLogic = async (
               continue;
           }
 
-          await new Promise(resolve => setTimeout(resolve, 1500));
+          await new Promise(resolve => setTimeout(resolve, 2000));
 
           const allCharacters = Object.values(storeAtom.get(CharacterAtom));
           const alivePlayers = allCharacters.filter(c => c.type === 'player' && c.health > 0 && c.isSelected) as CharacterType[];
@@ -98,7 +99,7 @@ export const runTurnLogic = async (
       } else {
           const character = entity as CharacterType;
           setTimeout(() => {
-          }, 1000);
+          }, 2000);
           
           if (character.health <= 0) {
               console.log(`${character.name} is dead.`);

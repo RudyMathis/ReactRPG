@@ -6,18 +6,18 @@ import { storeAtom } from "../../atom/storeAtom";
 import { AdditionalBlessingDamage } from "./AdditionalBlessingDamage";
 import attacks from "./attacks/Attacks";
 
-export const CharacterAttack = (enemy: EnemyType, character: CharacterType, target: EnemyType | CharacterType, spell: string, spellCost: number) => {
+export const CharacterAttack = (enemy: EnemyType, character: CharacterType, _target: EnemyType | CharacterType, spell: string, spellCost: number) => {
 
     setTimeout(() => {
         storeAtom.set(AttackAnimationAtom, (prev) => ({ ...prev, [character.id]: false }));
         storeAtom.set(FlashAnimationAtom, (prev) => ({ ...prev, [enemy.id]: false }));
-    }, 2700);
+    }, 1000);
 
     storeAtom.set(AttackAnimationAtom, (prev) => ({ ...prev, [character.id]: true }));
     storeAtom.set(FlashAnimationAtom, (prev) => ({ ...prev, [enemy.id]: true }));
 
     setTimeout(() => {
-    }, 2700);
+    }, 2000);
 
     if (attacks[spell]) {
         return attacks[spell](enemy, character, enemy, spellCost);
