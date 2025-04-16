@@ -122,7 +122,7 @@ const Grid = () => {
       .map((enemy, index) => (
         <React.Fragment key={enemy.id}>
           <div
-            className='entity-container'
+            className={`entity-container ${enemy.type}${enemy.health <= 0 ? ' dead' : ''}`}
             onClick={() => toggleMenuVisibility(enemy.id, 'enemy')}
             style={{
               position: 'relative',

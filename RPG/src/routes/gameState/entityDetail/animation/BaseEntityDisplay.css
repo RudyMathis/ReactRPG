@@ -143,7 +143,6 @@
     100% { transform: translateX(0); } 
 }
 
-
 .attack-move.npc {
     animation: attackNPCMoveAnimation .9s linear 1 reverse; 
 }
@@ -166,12 +165,12 @@
     filter: drop-shadow(-2px 2px 2px black);
 }
 
-.death-effect {
-    animation: deathAnimation .6s steps(1) 1;
+.death-effect.player {
+    animation: deathPlayerAnimation .6s steps(1) 1;
     animation-delay: 1s;
 }
 
-@keyframes deathAnimation {
+@keyframes deathPlayerAnimation {
     0% { transform: translateX(-217px); width: 280px; }
     33% { transform: translateX(-154px);  width: 280px;}
     66% { transform: translateX(-90px); width: 280px; }

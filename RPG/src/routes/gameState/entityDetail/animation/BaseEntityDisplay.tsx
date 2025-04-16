@@ -26,47 +26,58 @@ function BaseEntityDisplay({ entity }: EnityDetailProps) {
 
     return (
         <>
-            {
-                effectData?.isDisplay &&
-                entity.type === effectData.target && 
-                (
-                    <div>
-                        {effectData.effects.map((e, i) => (
-                            <div key={i} className="damage-line">
-                                <span
-                                    className={`damage-effect ${entity.type}`}
-                                    data-damage-type={e.type}
-                                    style={{
-                                        animationDelay: `${(i + 1) * 1}s`,
-                                        animation: 'damageAnimation 0.9s ease-out forwards',
-                                        left: `${Math.random() * 20 - 10}px`,
-                                    }}
-                                >
-                                    {e.damage}
-                                </span>
-                            </div>
-                        ))}
-                    </div>
-                )
-            }
-            <div className={`sprite-container ${entity.type}${isAttacking ? " attack-move" : ""}`}>
-                {entity.health > 0 ? 
+            {effectData?.isDisplay && entity.type === effectData.target && (
+                <div>
+                    {effectData.effects.map((e, i) => (
+                        <div key={i} className="damage-line">
+                            <span
+                                className={`damage-effect ${entity.type}`}
+                                data-damage-type={e.type}
+                                style={{
+                                    animationDelay: `${(i + 1) * 1}s`,
+                                    animation: 'damageAnimation 0.9s ease-out forwards',
+                                    left: `${Math.random() * 20 - 10}px`,
+                                }}
+                            >
+                                {e.damage}
+                            </span>
+                        </div>
+                    ))}
+                </div>
+            )}
+    
+            <div className="sprite-container">
+                {entity.health > 0 ? (
                     <img 
-                        key={key} src={imageSrc}
+                        key={key}
+                        src={imageSrc}
                         data-entity-modified={(entity.name).match(/Fire|Ice|Dark/)}
                         className={`sprite ${entity.type} 
-                        ${entity.name}${isAttacking ? " attack" : ""} 
-                        ${isFlashing || effectData?.isDisplay &&
-                            entity.type === effectData.target
-                            ? 
-                            "flash-damage" : ""}`}
-                        alt={entity.name.replace('_', ' ')} 
-                    /> 
-                : 
-                    <img className="sprite_death death-effect" src={imageSrcDead} alt={`${entity.name.replace('_', ' ')} is dead`} />}
+                            ${entity.name}${isAttacking ? " attack" : ""} 
+                            ${isFlashing || (effectData?.isDisplay && entity.type === effectData.target)
+                                ? " flash-damage"
+                                : ""}`}
+                        alt={entity.name.replace('_', ' ')}
+                    />
+                ) : entity.type === "npc" ? (
+                    <img
+                        key={key}
+                        src={imageSrc}
+                        data-entity-modified={(entity.name).match(/Fire|Ice|Dark/)}
+                        className={`sprite ${entity.type} ${entity.name}`}
+                        alt={`${entity.name.replace('_', ' ')} is dead`}
+                    />
+                ) : (
+                    <img
+                        className={`sprite_death death-effect ${entity.type}`}
+                        src={imageSrcDead}
+                        alt={`${entity.name.replace('_', ' ')} is dead`}
+                    />
+                )}
             </div>
         </>
     );
+    
 }
 
 export default BaseEntityDisplay;

@@ -15,10 +15,10 @@ const TurnOrderDisplay = () => {
                     || '/assets/default.png';
 
                 return (
-                    <div className="turn-order-portrait" key={entity.id ?? index}>
+                    <div className={`turn-order-portrait ${entity.type}${entity.health <= 0 ? ' dead' : ''}`} key={entity.id ?? index}>
                         <div
                             data-entity-modified={(entity.name).match(/Fire|Ice|Dark/)}
-                            className={`turn-order-item character-sprite ${entity.name} ${entity.health <= 0 ? 'remove' : ''}`}
+                            className={`turn-order-item character-sprite ${entity.name}`}
                         >
                             <img src={imageSrc} className={`turn-order-sprite ${entity.type} ${entity.name}`} alt={entity.name.replace('_', ' ')} />
                         </div>
