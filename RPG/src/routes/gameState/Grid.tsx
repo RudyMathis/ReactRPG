@@ -13,6 +13,9 @@ import DetailScreen from './entityDetail/DetailScreen';
 import Btn from '../../components/Btn';
 import './Grid.css';
 import { GameLevelAtom } from '../../atom/GameLevelAtom';
+import { AttackAnimationAtom } from '../../atom/effects/AttackAnimationAtom';
+import Overlay from '../../components/Overlay';
+
 
 const Grid = () => {
   const [characters] = useAtom(CharacterAtom);
@@ -26,6 +29,9 @@ const Grid = () => {
   const [gameLevel] = useAtom(GameLevelAtom);
   const [activeDetailScreen, setActiveDetailScreen] = useState<CharacterType | EnemyType | null>(null);
   const [currentGameLevel] = useAtom(GameLevelAtom);
+  const [attackingEntities] = useAtom(AttackAnimationAtom);
+  // const isAttacking = attackingEntities[entity?.id] ?? false; // Use optional chaining
+
   const checkTurnOrderAndRunLogic = () => {
     if (turnOrder.length > 0) {
       runTurnLogic(turnOrder, waitForInput);
@@ -88,9 +94,11 @@ const Grid = () => {
 
   return (
     <div className="board">
+      <Overlay />
       {/* Render selected characters */}
       {selectedCharacters.map((char, index) => (
         <React.Fragment key={char.id}>
+          
           <div
             key={char.id}
             className='entity-container'
@@ -101,6 +109,7 @@ const Grid = () => {
               gridRow: ((index + 5)* 2) + 1
             }}
           >
+            <div className={`shadow ${char.type}${attackingEntities[char.id] ? ' follow' : ''}`}></div>
             <div onClick={() => handlePlayerTargeted(char)}>
               <CharacterDisplay character={char} />
             </div>
@@ -130,6 +139,7 @@ const Grid = () => {
               gridRow: ((index + 5)* 2) + 1
             }}
           >
+            <div className={`shadow ${enemy.type}${attackingEntities[enemy.id] ? ' follow' : ''}`}></div>
             <div onClick={() => handlePlayerTargeted(enemy)}>
               <EnemyDisplay enemy={enemy} />
             </div>

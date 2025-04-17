@@ -8,7 +8,6 @@
     background-size: 1416px 690px;
     width: 1416px;
     height: 690px;
-    /* margin: 1em 0; */
     image-rendering: pixelated;
 }
 
@@ -27,10 +26,6 @@
     height: 100px;
     background-color: transparent;
 }
-/* .character-sprite.dead {
-    filter:grayscale(1);
-    background-color: transparent;
-} */
 
 .entity-container:hover {
     cursor: pointer;
@@ -56,10 +51,52 @@
     z-index: 10; 
 }
 
-
 .begin {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    z-index: 3;
+}
+
+.shadow.player {
+    position: absolute;
+    bottom: 15px;
+    left: -100px;
+    width: 150px;
+    height: 40px;
+	border-radius: 30%;
+    background-color: rgba(0, 0, 0, 0.75);
+	filter: blur(8px);
+	transform: rotate3d(1, 1, 1, 15deg);
+    z-index: 0;
+}
+
+.shadow.follow.player {
+	animation: followPlayerAnimation .9s linear 1 forwards;
+}
+
+@keyframes followPlayerAnimation {
+    50% { bottom: 0px; left: -40px; width: 75px; transform: translateX(200px); filter: blur(4px); }
+}
+
+.shadow.npc {
+    position: absolute;
+    bottom: 15px;
+    left: 40px;
+    width: 150px;
+    height: 40px;
+	border-radius: 30%;
+    background-color: rgba(0, 0, 0, 0.75);
+	filter: blur(8px);
+	transform: rotate3d(1, 1, 1, -20deg);
+    z-index: 0;
+}
+
+.shadow.follow.npc {
+	animation: followNPCAnimation .9s linear 1 reverse;
+}
+
+@keyframes followNPCAnimation {
+    50% { bottom: 0px; left: 40px; width: 75px; transform: translateX(-200px); filter: blur(4px); }
 }

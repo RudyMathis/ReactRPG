@@ -1,0 +1,104 @@
+.blur {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 10%;
+    z-index: 2;
+    -webkit-mask-image: radial-gradient(
+        ellipse at center,
+        rgba(0, 0, 0, 1) 20%,
+        rgba(0, 0, 0, 0) 100%
+    );
+    mask-image: radial-gradient(
+        ellipse at center,
+        rgba(0, 0, 0, 1) 20%,
+        rgba(0, 0, 0, 0) 100%
+    );
+    pointer-events: none;
+}
+
+.glow-center {
+    position: absolute;
+    left: 50%;
+    bottom: 40%;
+    width: 40%;
+    height: 40%;
+    transform: translate(-50%, 50%);
+    z-index: 2;
+    border-radius: 50%;
+    -webkit-mask-image: radial-gradient(
+        ellipse at center,
+        rgba(0, 0, 0, 1) 10%,
+        rgba(0, 0, 0, 0) 100%
+    );
+    mask-image: radial-gradient(
+        ellipse at center,
+        rgba(0, 0, 0, 1) 10%,
+        rgba(0, 0, 0, 0) 100%
+    );
+    background-color: rgba(255, 255, 255, .3);
+
+    pointer-events: none;
+}
+
+.blur-overlay-top {
+    top: -20px;
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+}
+
+.blur-overlay-top-bottom {
+    top: calc(10% - 40px);
+    backdrop-filter: blur(1px);
+    -webkit-backdrop-filter: blur(1px);
+}
+
+.blur-overlay-bottom-top {
+    bottom: calc(10% - 40px);
+    backdrop-filter: blur(1px);
+    -webkit-backdrop-filter: blur(1px);
+}
+
+.blur-overlay-bottom {
+    bottom: -20px;
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+}
+
+.blur.blur-overlay-left {
+    top: 0;
+    left: -10px;
+    width: 15%;
+    height: 100%;
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    -webkit-mask-image: radial-gradient(
+        ellipse at center,
+        rgba(0, 0, 0, 1) 20%,
+        rgba(0, 0, 0, 0) 100%
+    );
+    mask-image: radial-gradient(
+        ellipse at center,
+        rgba(0, 0, 0, 1) 20%,
+        rgba(0, 0, 0, 0) 100%
+    );
+}
+
+.blur.blur-overlay-right {
+    top: 0;
+    left: 85%;
+    width: 15%;
+    height: 100%;
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    -webkit-mask-image: radial-gradient(
+        ellipse at center,
+        rgba(0, 0, 0, 1) 20%,
+        rgba(0, 0, 0, 0) 100%
+    );
+    mask-image: radial-gradient(
+        ellipse at center,
+        rgba(0, 0, 0, 1) 20%,
+        rgba(0, 0, 0, 0) 100%
+    );
+}
