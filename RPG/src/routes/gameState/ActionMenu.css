@@ -1,9 +1,17 @@
 .action-menu-container {
     position: absolute;
     top: 0;
-    background-color: transparent;
-    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.75);
-    z-index: 4;
+    z-index: 3;
+    width: max-content;
+    line-height: 1.1rem;
+    padding: 1rem;
+    font-size: 1.25rem;
+    image-rendering: pixelated;
+    border-image-slice: 10 10 10 10;
+    border-image-width: 80px 80px 80px 80px;
+    border-image-source: url("/assets/Button_Border.png");
+    border-image-repeat: stretch stretch;
+    color: #cecece;
 }
 .action-menu-container.character {
     left: 120%;
@@ -15,9 +23,20 @@
 .action-menu-item {
     display: flex;
     flex-direction: column;
-    gap: 5px;
 }
 
 .action-menu-button {
     padding: 5px 10px;
+    background-color: #101042;
+    color: #cecece;
+    border: 1px solid #101042;
+}
+.action-menu-button:disabled, .action-menu-button:disabled:hover {
+    cursor: not-allowed;
+    filter: brightness(0.5);
+}
+
+.action-menu-button:hover {
+    cursor: pointer;
+    filter: brightness(1.2);
 }

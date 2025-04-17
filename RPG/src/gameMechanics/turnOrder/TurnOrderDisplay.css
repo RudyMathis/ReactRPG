@@ -5,7 +5,7 @@
     transform: translateX(-50%);
     display: flex;
     justify-content: center;
-    gap: 2rem;
+    gap: 2em;
     z-index: 3;
 }
 
@@ -16,11 +16,12 @@
     width: 50px;
 }
 
-.turn-order-portrait p{
+/* .turn-order-portrait p{
     margin-top: 10px;
     text-align: center;
     font-size: .75rem;
-}
+    width: 12em;
+} */
 
 .turn-order-sprite {
     image-rendering: pixelated;
@@ -65,7 +66,7 @@
     padding: .5rem;
 }
 
-.turn-order-item.remove {
+.turn-order-portrait.dead {
     display: none;
 }
 

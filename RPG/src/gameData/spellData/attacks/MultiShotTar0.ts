@@ -27,8 +27,6 @@ const MultiShotTar0 = (
         }
 
         const damage = Math.max(5, Math.round(enemy.attack) - character.defense);
-        HandleDamageEffect(damage, "Physical", "player", character.id);
-        character.health -= damage;
 
         const prevCharacter = characterIndex > 0 ? sortedCharacters[characterIndex - 1] : null;
         const nextCharacter = characterIndex < sortedCharacters.length - 1 ? sortedCharacters[characterIndex + 1] : null;
@@ -43,7 +41,8 @@ const MultiShotTar0 = (
             HandleDamageEffect(damage, "Physical", "player", nextCharacter.id);
         }
 
-        return enemy.health;
+        HandleDamageEffect(damage, "Physical", "player", character.id);
+        return character.health -= damage;
     } else {
         character.mana -= spellCost;
 
@@ -57,9 +56,6 @@ const MultiShotTar0 = (
         }
 
         const damage = Math.max(5, Math.round(character.attack + AdditionalBlessingDamage(character)) - enemy.defense);
-        
-        HandleDamageEffect(damage, "Physical", "npc", enemy.id);
-        enemy.health -= damage;
 
         const prevEnemy = enemyIndex > 0 ? sortedEnemies[enemyIndex - 1] : null;
         const nextEnemy = enemyIndex < sortedEnemies.length - 1 ? sortedEnemies[enemyIndex + 1] : null;
@@ -74,7 +70,8 @@ const MultiShotTar0 = (
             HandleDamageEffect(damage, "Physical", "npc", nextEnemy.id);
         }
 
-        return enemy.health;
+        HandleDamageEffect(damage, "Physical", "npc", enemy.id);
+        return enemy.health -= damage;
     }
 };
 

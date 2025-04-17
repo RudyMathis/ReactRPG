@@ -22,7 +22,7 @@ const TurnOrderDisplay = () => {
                         >
                             <img src={imageSrc} className={`turn-order-sprite ${entity.type} ${entity.name}`} alt={entity.name.replace('_', ' ')} />
                         </div>
-                        <p>{entity.name.replace('_', ' ')}</p>
+                        {/* <p>{entity.name.replace('_', ' ')}</p> */}
                     </div>
                 );
             })}

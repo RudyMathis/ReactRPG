@@ -1,15 +1,15 @@
-.current-turn-arrow {
+.current-turn-arrow img{
     position: absolute;
-    top: -80%;
-    left: 50%;
-    transform: translateX(-50%);
-    color: white;
-    font-size: 2rem;
+    top: 34%;
+    left: -100%;
+    width: 32px;
+    height: 26px;
     animation: floatArrow 1s infinite ease-in-out;
-    filter:drop-shadow(-5px 5px 1px rgba(0, 0, 0, 0.75))
+    image-rendering: pixelated;
+    z-index: 3;
 }
 
 @keyframes floatArrow {
-    0%, 100% { transform: translateX(-50%) translateY(0); }
-    50% { transform: translateX(-50%) translateY(-10px); }
+    0%, 100% { transform: translateX(-50%); }
+    50% { transform: translateX(0); }
 }

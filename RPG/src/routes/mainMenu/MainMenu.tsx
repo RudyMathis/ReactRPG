@@ -1,13 +1,12 @@
-import { useNavigate } from 'react-router';
 import './MainMenu.css';
 import UserNameInput from './UserNameInput';
 import { NewGameBtn } from './NewGameBtn';
 import { ContinueGameBtn } from './ContinueGameBtn';
 import { useEffect, useState } from 'react';
+import NavigateBtn from '../../components/NavigateBtn';
 
 const MainMenu = () => {
     const [isInProgress, setIsInProgress] = useState(false);
-    const navigate = useNavigate();
 
     useEffect(() => {
         const inProgressGame = localStorage.getItem('inProgressGame');
@@ -16,17 +15,13 @@ const MainMenu = () => {
         }
     }, []); // Empty dependency array -> runs once on mount
 
-    const handleOptions = () => {
-        navigate('/options');
-    };
-
     return (
         <div className="main-menu">
             <h1>React RPG</h1>
             <UserNameInput />
             <NewGameBtn />
             {isInProgress && <ContinueGameBtn />}
-            <button onClick={handleOptions}>Options</button>
+            <NavigateBtn locationValue="/options" location="Options" />
         </div>
     );
 };

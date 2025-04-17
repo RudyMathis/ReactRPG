@@ -3,6 +3,7 @@ const Overlay = () => {
 
     return (
         <>
+            <div className="vignette"></div>
             <div className="blur blur-overlay-top"></div>
             <div className="blur blur-overlay-top-bottom"></div>
             <div className="blur blur-overlay-bottom-top"></div>
