@@ -16,7 +16,6 @@ import { GameLevelAtom } from '../../atom/GameLevelAtom';
 import { AttackAnimationAtom } from '../../atom/effects/AttackAnimationAtom';
 import Overlay from '../../components/Overlay';
 
-
 const Grid = () => {
   const [characters] = useAtom(CharacterAtom);
   const [enemies, setEnemies] = useAtom(EnemyAtom);
@@ -30,7 +29,6 @@ const Grid = () => {
   const [activeDetailScreen, setActiveDetailScreen] = useState<CharacterType | EnemyType | null>(null);
   const [currentGameLevel] = useAtom(GameLevelAtom);
   const [attackingEntities] = useAtom(AttackAnimationAtom);
-  // const isAttacking = attackingEntities[entity?.id] ?? false; // Use optional chaining
 
   const checkTurnOrderAndRunLogic = () => {
     if (turnOrder.length > 0) {
@@ -93,7 +91,7 @@ const Grid = () => {
   };
 
   return (
-    <div className="board">
+    <div className="board" style={{ backgroundImage: `url(${localStorage.getItem('background')})`}}>
       <Overlay />
       {/* Render selected characters */}
       {selectedCharacters.map((char, index) => (
