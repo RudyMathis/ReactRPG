@@ -1,7 +1,7 @@
-import HealthBar from './bars/HealthBar';
-import ManaBar from './bars/ManaBar';
+import HealthBar from '../bars/HealthBar';
+import ManaBar from '../bars/ManaBar';
 import { EnemyType } from '../../../atom/BaseEnemyAtom';
-import BaseEntityDisplay from './animation/BaseEntityDisplay';
+import BaseEntityDisplay from './BaseEntityDisplay';
 import { AttackAnimationAtom } from '../../../atom/effects/AttackAnimationAtom';
 import { useAtom } from 'jotai';
 

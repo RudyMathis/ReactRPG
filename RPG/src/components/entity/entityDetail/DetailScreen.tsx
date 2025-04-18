@@ -22,19 +22,19 @@ const DetailScreen = ({ entity }: CharacterDetailProps) => {
             <p>Mana: <span style={{ color: 'red'}}>{entity.mana >= 0 ? entity.mana : 0}</span> </p>
             <p>Max Mana: <span style={{ color: 'red'}}>{entity.maxMana}</span> </p>
             {hasDebuff && (
-                <div>
+                <>
                     <p>Debuff:</p>
                     {entity.debuffs.map((debuff, index) => (
                         debuff.duration > 0 && (
-                            <div key={index} style={{ color: 'red' }}>
+                            <div key={index} style={{ color: 'red', backgroundColor: 'var(--background-secondary)' }}>
                                 {`${debuff.name} (Duration: ${debuff.duration} turns)`}
                             </div>
                         )
                     ))}
-                </div>
+                </>
             )}
             {hasBuff && (
-                <div>
+                <>
                     <p>Buff:</p>
                     {entity.buffs.map((buff, index) => (
                         buff.duration > 0 && (
@@ -43,7 +43,7 @@ const DetailScreen = ({ entity }: CharacterDetailProps) => {
                             </div>
                         )
                     ))}
-                </div>
+                </>
             )}
             {entity.resistances.length > 0 && <p>Resistances: <span style={{ color: 'red'}}>{entity.resistances.map(res => res.type).join(', ')}</span> </p>}
             {entity.vulnerabilities.length > 0 && <p>Vulnerabilities: <span style={{ color: 'red'}}>{entity.vulnerabilities.map(vuln => vuln.type).join(', ')}</span> </p>}

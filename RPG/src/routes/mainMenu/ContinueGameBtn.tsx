@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router";
-import Btn from "../../components/Btn";
+import Btn from "../../components/ui/Btn";
 import { useAtom } from "jotai";
 import { GameLevelAtom } from "../../atom/GameLevelAtom";
 export const ContinueGameBtn = () => {

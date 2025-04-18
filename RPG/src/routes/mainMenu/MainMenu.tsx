@@ -3,7 +3,7 @@ import UserNameInput from './UserNameInput';
 import { NewGameBtn } from './NewGameBtn';
 import { ContinueGameBtn } from './ContinueGameBtn';
 import { useEffect, useState } from 'react';
-import NavigateBtn from '../../components/NavigateBtn';
+import NavigateBtn from '../../components/ui/NavigateBtn';
 
 const MainMenu = () => {
     const [isInProgress, setIsInProgress] = useState(false);

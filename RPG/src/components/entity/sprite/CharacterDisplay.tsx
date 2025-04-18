@@ -1,8 +1,8 @@
-import HealthBar from './bars/HealthBar';
-import ManaBar from './bars/ManaBar';
+import HealthBar from '../bars/HealthBar';
+import ManaBar from '../bars/ManaBar';
 import { CharacterType } from '../../../atom/CharacterAtom';
-import BaseEntityDisplay from './animation/BaseEntityDisplay';
-import CurrentTurnArrow from './CurrentTurnArrow';
+import BaseEntityDisplay from './BaseEntityDisplay';
+import CurrentTurnArrow from '../CurrentTurnArrow';
 import { AttackAnimationAtom } from '../../../atom/effects/AttackAnimationAtom';
 import { useAtom } from 'jotai';
 

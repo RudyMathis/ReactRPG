@@ -1,4 +1,4 @@
-import TickingNumber from '../../../../components/TickingNumber';
+import TickingNumber from '../../../components/TickingNumber';
 import './Bar.css';
 
 type ManaBarProps = {

@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router";
-import Btn from "../../components/Btn";
+import Btn from "../../components/ui/Btn";
 import characterAtom, { CharacterType } from "../../atom/CharacterAtom";
 import CharacterData  from "../../gameData/characters/CharacterData.json";
 import { useAtom, useSetAtom } from "jotai";

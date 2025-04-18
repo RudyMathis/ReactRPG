@@ -1,17 +1,17 @@
 .action-menu-container {
     position: absolute;
     top: 0;
-    z-index: 3;
+    z-index: 4;
     width: max-content;
     line-height: 1.1rem;
     padding: 1rem;
     font-size: 1.25rem;
     image-rendering: pixelated;
-    border-image-slice: 10 10 10 10;
-    border-image-width: 80px 80px 80px 80px;
-    border-image-source: url("/assets/Button_Border.png");
-    border-image-repeat: stretch stretch;
-    color: #cecece;
+    border-image-slice: var(--border-image-slice);
+    border-image-width: var(--border-image-width);
+    border-image-source: var(--border-image-source);
+    border-image-repeat: var(--border-image-repeat);
+    color: var(--font);
 }
 .action-menu-container.character {
     left: 120%;
@@ -27,9 +27,9 @@
 
 .action-menu-button {
     padding: 5px 10px;
-    background-color: #101042;
-    color: #cecece;
-    border: 1px solid #101042;
+    background-color: var(--background-secondary);
+    color: var(--font);
+    border: 1px solid var(--background-secondary);
 }
 .action-menu-button:disabled, .action-menu-button:disabled:hover {
     cursor: not-allowed;

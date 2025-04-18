@@ -20,7 +20,7 @@ export const CharacterAttack = (enemy: EnemyType, character: CharacterType, _tar
     }, 2000);
 
     if (attacks[spell]) {
-        return attacks[spell](enemy, character, enemy, spellCost);
+        return attacks[spell].func(enemy, character, enemy, spellCost);
     } else {
         console.warn(`Unknown spell: ${spell}`);
         return enemy.health - Math.max(5, (character.attack + AdditionalBlessingDamage(character)) - enemy.defense);

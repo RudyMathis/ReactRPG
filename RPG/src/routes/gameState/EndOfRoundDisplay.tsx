@@ -1,6 +1,6 @@
 import { GameLevelAtom, startNewRound } from "../../atom/GameLevelAtom";
 import { storeAtom } from "../../atom/storeAtom";
-import Btn from "../../components/Btn";
+import Btn from "../../components/ui/Btn";
 import { GainExperience } from "../../gameMechanics/GainExperince";
 import { FullRestore } from "../../gameMechanics/FullRestore";
 import CharacterAtom from "../../atom/CharacterAtom";
@@ -45,7 +45,7 @@ const EndofRoundDisplay = () => {
 
         currentGameLevel.isRoundOver = true
 
-        startNewRound(); // Start the next round
+        startNewRound();d
     };
 
     return (
@@ -55,7 +55,7 @@ const EndofRoundDisplay = () => {
             left: '50%',
             transform: 'translate(-50%, -50%)',
         }}>
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '.5rem' }}>
                 <Btn onClick={() => handleNavigation()} text="Next Round" />
                 {storeAtom.get(blessingAtom) !== true && <Btn onClick={() => handleNavigation(false, false, true)} text="Blessing & Next Round" />}
                 <Btn onClick={() => handleNavigation(true, false, false)} text="Additional Experience & Next Round" />

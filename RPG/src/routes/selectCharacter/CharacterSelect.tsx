@@ -1,10 +1,10 @@
 import CharacterSheets from "./CharacterSheets";
-import NavigateBtn from "../../components/NavigateBtn";
+import NavigateBtn from "../../components/ui/NavigateBtn";
 import "./CharacterSelect.css";
 import CharacterAtom from "../../atom/CharacterAtom";
 import { useAtom } from "jotai";
 import { useNavigate } from "react-router";
-import Btn from "../../components/Btn";
+import Btn from "../../components/ui/Btn";
 import { GameLevelAtom } from "../../atom/GameLevelAtom";
 import { SaveData } from "../../gameMechanics/SaveData";
 

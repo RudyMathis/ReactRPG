@@ -16,13 +16,13 @@
     z-index: 4;
     line-height: 1.75rem;
     image-rendering: pixelated;
-    border-image-slice: 12 12 12 12;
-    border-image-width: 60px 60px 60px 60px;
-    border-image-source: url("/assets/Button_Border.png");
-    border-image-repeat: stretch stretch;
+    border-image-slice: var(--border-image-slice);
+    border-image-width: var(--border-image-width);
+    border-image-source: var(--border-image-source);
+    border-image-repeat: var(--border-image-repeat);
 }
 
 .popup p, .popup h2 {
-    color: #cecece;
-    background-color: #101042;
+    color: var(--font);
+    background-color: var(--background-secondary);
 }

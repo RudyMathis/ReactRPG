@@ -33,8 +33,8 @@ export const EnemyAttack = (character: CharacterType, enemy: EnemyType, target: 
 
             console.log(`Enemy ${enemy.name} is using spell: ${chosenSpell} with cost ${spellCost}`);
 
-            if (typeof attacks[chosenSpell] === 'function') {
-                return attacks[chosenSpell](enemy, character, target, spellCost);
+            if (typeof attacks[chosenSpell]?.func === 'function') {
+                return attacks[chosenSpell].func(enemy, character, target, spellCost);
             } else {
                 console.warn(`Spell effect for '${chosenSpell}' not found in attacks.`);
             }

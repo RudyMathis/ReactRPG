@@ -1,9 +1,27 @@
 :root {
+	/* variables */
+	--background: hsl(226, 38%, 43%);
+	--background-secondary: hsl(240, 61%, 16%);
+	--font: hsl(0, 0%, 81%);
+	--shadow: hsl(0, 0%, 12%);
+	--white: hsl(0, 100%, 100%);
+
+	--fire: hsl(14, 94%, 52%);
+	--ice: hsl(180, 100%, 50%);
+	--dark: hsl(273, 64%, 43%);
+	--lightning: hsl(48, 100%, 67%);
+	--holy: hsl(48, 64%, 85%);
+    
+	--border-image-slice: 10 10 10 10;
+	--border-image-width: 80px 80px 80px 80px;
+	--border-image-source: url("/assets/Button_Border.png");
+	--border-image-repeat: stretch stretch;
+
 	font-family: "Press Start 2P", system-ui;
 	font-weight: 400;
 	font-style: normal;
-	color: #cecece;
-	font-size: 12px;
+	color: var(--font);
+	font-size: 14px;
 }
 
 html, body, div, span, applet, object, iframe,
@@ -26,6 +44,7 @@ time, mark, audio, video {
 	/* font: inherit; */
 	vertical-align: baseline;
 }
+
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure, 
 footer, header, hgroup, menu, nav, section {
@@ -41,24 +60,28 @@ footer, header, hgroup, menu, nav, section {
 	flex-direction: column;
 	padding: 2em;
 }
+
 body {
 	line-height: 1;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	background-color: #455998;
+	background-color: var(--background);
 }
 ol, ul {
 	list-style: none;
 }
+
 blockquote, q {
 	quotes: none;
 }
+
 blockquote:before, blockquote:after,
 q:before, q:after {
 	content: '';
 	content: none;
 }
+
 table {
 	border-collapse: collapse;
 	border-spacing: 0;
@@ -67,16 +90,18 @@ table {
 h1 {
 	font-size: 2em;
 	text-shadow:
-    3px 3px 0 #000,
-    -3px 3px 0 #000,
-    -3px -3px 0 #000,
-    3px -3px 0 #000;
+    3px 3px 0 var(--shadow),
+    -3px 3px 0 var(--shadow),
+    -3px -3px 0 var(--shadow),
+    3px -3px 0 var(--shadow);
 }
 
 button {
 	font-family: "Press Start 2P", system-ui;
 	padding: .5em 1em;
+	border: none;
 	cursor: pointer;
+	text-shadow: 2px 2px 0 var(--background);
 }
 
 .character-sprite.dead {
@@ -128,23 +153,55 @@ button {
 	background-color: transparent;
 	padding: 1rem;
 	image-rendering: pixelated;
-	border-image-slice: 8 8 8 8;
-	border-image-width: 20px 20px 20px 20px;
-	border-image-repeat: stretch stretch;
-	border-image-source: url("/assets/Button_Border.png");
+	border-image-slice: var(--border-image-slice);
+	border-image-width: var(--border-image-width);
+	border-image-source: var(--border-image-source);
+	border-image-repeat: var(--border-image-repeat);
 	border-style: solid;
-	color: #cecece;
+	color: var(--font);
 }
 
 .user-name-input-container input {
-	background-color: #101042;
-	color: #cecece;
-	border: 1px solid #101042;
+	background-color: var(--background-secondary);
+	color: var(--font);
+	border: 1px solid var(--background-secondary);
 	
 }
 
 .user-name-input-container input::placeholder {
 	font-weight: bold;
 	opacity: 0.5;
-	color: #cecece;
+	color: var(--font);
+}
+
+.npc, .player {
+	color: var(--white);
+}
+
+.Fire, .action-menu-button.element-fire {
+	color: var(--fire);
+}
+
+.Water, .action-menu-button.element-water {
+	color: var(--water);
+}
+
+.Ice, .action-menu-button.element-ice {
+	color: var(--ice);
+}
+
+.Earth, .action-menu-button.element-earth {
+	color: var(--earth);
+}
+
+.Lightning, .action-menu-button.element-lightning {
+	color: var(--lightning);
+}
+
+.Dark, .action-menu-button.element-dark {
+	color: var(--dark);
+}
+
+.holy, .action-menu-button.element-holy {
+	color: var(--light);
 }

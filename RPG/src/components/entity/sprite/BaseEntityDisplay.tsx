@@ -1,11 +1,11 @@
-import type { CharacterType } from "../../../../atom/CharacterAtom";
-import type { EnemyType } from "../../../../atom/BaseEnemyAtom";
-import { AttackAnimationAtom } from "../../../../atom/effects/AttackAnimationAtom";
-import { FlashAnimationAtom } from "../../../../atom/effects/FlashAnimationAtom";
+import type { CharacterType } from "../../../atom/CharacterAtom";
+import type { EnemyType } from "../../../atom/BaseEnemyAtom";
+import { AttackAnimationAtom } from "../../../atom/effects/AttackAnimationAtom";
+import { FlashAnimationAtom } from "../../../atom/effects/FlashAnimationAtom";
 import "./BaseEntityDisplay.css"; 
 import { useAtom } from "jotai";
-import { DamageEffectAtom } from "../../../../atom/effects/DamageEffectAtom";
-import { EntityImages } from "../../../../components/EntityImages";
+import { DamageEffectAtom } from "../../../atom/effects/DamageEffectAtom";
+import { EntityImages } from "./EntityImages";
 
 type EnityDetailProps = {
     entity: CharacterType | EnemyType;

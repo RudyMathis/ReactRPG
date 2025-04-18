@@ -1,7 +1,7 @@
 import { useTurnOrder } from "./useTurnOrder";
 import './TurnOrderDisplay.css';
 import { EnemyType } from "../../atom/BaseEnemyAtom";
-import { EntityImages } from "../../components/EntityImages";
+import { EntityImages } from "../../components/entity/sprite/EntityImages";
 
 
 const TurnOrderDisplay = () => {
