@@ -45,7 +45,7 @@ const EndofRoundDisplay = () => {
 
         currentGameLevel.isRoundOver = true
 
-        startNewRound();d
+        startNewRound();
     };
 
     return (
