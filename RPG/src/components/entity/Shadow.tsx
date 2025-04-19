@@ -1,6 +1,7 @@
 
 import { EnemyType } from "../../atom/BaseEnemyAtom";
 import { CharacterType } from "../../atom/CharacterAtom";
+import './Entity.css';
 
 type Entity = CharacterType | EnemyType;
 

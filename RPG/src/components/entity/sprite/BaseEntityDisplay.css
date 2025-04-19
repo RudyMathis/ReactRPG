@@ -46,19 +46,19 @@
 }
 
 
-[data-entity-modified="Fire"] img {
+.sprite-container [data-entity-modified="Fire"] img {
     filter: drop-shadow(1px 1px red) drop-shadow(1px -1px red)
     drop-shadow(-1px 1px red) drop-shadow(-1px -1px red)
     drop-shadow(10px 1px 4px rgba(0, 0, 0, 0.75));
 }
 
-[data-entity-modified="Ice"] img {
+.sprite-container [data-entity-modified="Ice"] img {
     filter: drop-shadow(1px 1px dodgerblue) drop-shadow(1px -1px dodgerblue)
     drop-shadow(-1px 1px dodgerblue) drop-shadow(-1px -1px dodgerblue)
     drop-shadow(10px 1px 4px rgba(0, 0, 0, 0.75));
 }
 
-[data-entity-modified="Dark"] img {
+.sprite-container [data-entity-modified="Dark"] img {
     filter: drop-shadow(1px 1px purple) drop-shadow(1px -1px purple)
     drop-shadow(-1px 1px purple) drop-shadow(-1px -1px purple)
     drop-shadow(10px 1px 4px rgba(0, 0, 0, 0.75));
@@ -66,19 +66,21 @@
 
 .damage-effect {
     animation: damageAnimation 0.9s ease-out forwards;
-    top: 0;
-    z-index: 4;
+    bottom: 0;
+    z-index: var(--high-layer);
     position: absolute;
+    text-shadow: 2px 2px 2px var(--shadow);
 }
 
 @keyframes damageAnimation {
-    0%   { top: -40px; opacity: 0; }
-    30%  { top: 82px; opacity: 1; }
-    50%  { top: 96px; }
-    70%  { top: 70px; }
-    85%  { top: 90px; }
-    93%  { top: 78px; }
-    100% { top: 82px; }
+    0%   { transform: translateY(-100px); opacity: 0; }
+    30%  { transform: translateY(0px); opacity: 1; }
+    50%  { transform: translateY(-40px); }
+    70%  { transform: translateY(0px); }
+    85%  { transform: translateY(-20px); }
+    93%  { transform: translateY(0px); }
+    97%  { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
 }
 
 .damage-effect.player {
@@ -90,59 +92,39 @@
 }
 
 .damage-effect[data-damage-type="Fire"] {
-    color: #fff;
+    color: var(--white);
     text-shadow:
-        3px 3px 0 red,
-        -3px 3px 0 red,
-        -3px -3px 0 red,
-        3px -3px 0 red;
+        3px 3px 0 var(--fire),
+        -3px 3px 0 var(--fire),
+        -3px -3px 0 var(--fire),
+        3px -3px 0 var(--fire);
 }
 
 [data-damage-type="Ice"] {
-    color: #fff;
+    color: var(--white);
     text-shadow:
-        3px 3px 0 blue,
-        -3px 3px 0 blue,
-        -3px -3px 0 blue,
-        3px -3px 0 blue;
+        3px 3px 0 var(--ice),
+        -3px 3px 0 var(--ice),
+        -3px -3px 0 var(--ice),
+        3px -3px 0 var(--ice);
 }
 
 [data-damage-type="Lightning"] {
-    color: #000;
+    color: var(--shadow);
     text-shadow:
-        3px 3px 0 yellow,
-        -3px 3px 0 yellow,
-        -3px -3px 0 yellow,
-        3px -3px 0 yellow;
+        3px 3px 0 var(--lightning),
+        -3px 3px 0 var(--lightning),
+        -3px -3px 0 var(--lightning),
+        3px -3px 0 var(--lightning);
 }
 
 .damage-effect[data-damage-type="Physical"] {
-    color: #000;
+    color: var(--shadow);
     text-shadow:
-        3px 3px 0 white,
-        -3px 3px 0 white,
-        -3px -3px 0 white,
-        3px -3px 0 white;
-}
-
-@keyframes attackMoveAnimation {
-    0% { transform: translateX(0); }
-    50% { transform: translateX(200px); }
-    100% { transform: translateX(0); } 
-}
-
-.attack-move.player {
-    animation: attackMoveAnimation .9s linear 1; 
-}
-
-@keyframes attackNPCMoveAnimation {
-    0% { transform: translateX(0); }
-    50% { transform: translateX(-200px); }
-    100% { transform: translateX(0); } 
-}
-
-.attack-move.npc {
-    animation: attackNPCMoveAnimation .9s linear 1 reverse; 
+        3px 3px 0 var(--white),
+        -3px 3px 0 var(--white),
+        -3px -3px 0 var(--white),
+        3px -3px 0 var(--white);
 }
 
 @keyframes attackAnimation {
@@ -160,7 +142,7 @@
     image-rendering: pixelated;
     position: absolute;
     width: 203px; 
-    filter: drop-shadow(-2px 2px 2px black);
+    filter: drop-shadow(-2px 2px 2px var(--shadow));
 }
 
 .death-effect.player {

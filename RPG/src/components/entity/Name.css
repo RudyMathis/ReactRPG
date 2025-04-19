@@ -1,9 +1,0 @@
-.sprite-name {
-    position: absolute;
-    top: -65%;
-    left: 0;
-    font-size: .75rem;
-    width: 200px;
-    z-index: 3;
-    text-shadow: 1px 1px 0 var(--shadow);
-}

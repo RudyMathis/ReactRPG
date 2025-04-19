@@ -6,6 +6,7 @@
     position: relative;
     overflow: hidden;
     margin-bottom: .05rem;
+    z-index: var(--mid-layer);
 }
 
 .bar-fill {

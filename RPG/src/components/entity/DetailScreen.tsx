@@ -1,6 +1,6 @@
-import type { CharacterType } from "../../../atom/CharacterAtom";
-import type { EnemyType } from"../../../atom/BaseEnemyAtom";
-import './DetailScreen.css'
+import type { CharacterType } from "../../atom/CharacterAtom";
+import type { EnemyType } from"../../atom/BaseEnemyAtom";
+import './Entity.css'
 
 type CharacterDetailProps = {
     entity: CharacterType | EnemyType;

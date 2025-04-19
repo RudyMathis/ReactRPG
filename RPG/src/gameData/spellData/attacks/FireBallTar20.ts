@@ -12,7 +12,8 @@ const FireBallTar20 = (enemy: EnemyType, character: CharacterType, target: Chara
     if(targetCharacter) {
         character.debuffs.push({
             type: Debuffs.Burn.type, duration: 3,
-            name: Debuffs.Burn.name
+            name: Debuffs.Burn.name,
+            icon: Debuffs.Burn.icon
         });
         spellCost = 20;
         enemy.mana -= spellCost;
@@ -36,7 +37,8 @@ const FireBallTar20 = (enemy: EnemyType, character: CharacterType, target: Chara
     } else {
         enemy.debuffs.push({
             type: Debuffs.Burn.type, duration: 3,
-            name: Debuffs.Burn.name
+            name: Debuffs.Burn.name,
+            icon: Debuffs.Burn.icon
         });
         const spellCost = 20;
         character.mana -= spellCost;

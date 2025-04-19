@@ -7,7 +7,7 @@ import { useTurnOrder }  from '../../gameMechanics/turnOrder/useTurnOrder';
 import { playerTargetAtom } from '../../atom/PlayerTargetAtom';
 import { runTurnLogic } from '../../gameMechanics/turnOrder/TurnLogic';
 import ActionMenu from '../../components/entity/ActionMenu';
-import DetailScreen from '../../components/entity/entityDetail/DetailScreen';
+import DetailScreen from '../../components/entity/DetailScreen';
 import Btn from '../../components/ui/Btn';
 import './Grid.css';
 import { GameLevelAtom } from '../../atom/GameLevelAtom';

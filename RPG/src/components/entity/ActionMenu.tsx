@@ -2,7 +2,7 @@ import { useAtom } from 'jotai';
 import CharacterAtom from "../../atom/CharacterAtom";
 import { selectedSpellAtom } from "../../atom/SelectedSpellAtom";
 import attacks from "../../gameData/spellData/attacks/Attacks"; // adjust path if needed
-import './ActionMenu.css'
+import './Entity.css'
 
 type ActionMenuProps = {
     isVisible: boolean;

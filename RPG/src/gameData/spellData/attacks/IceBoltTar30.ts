@@ -12,7 +12,8 @@ const IceBoltTar20 = (enemy: EnemyType, character: CharacterType, target: Charac
     if(targetCharacter) {
         character.debuffs.push({
             type: Debuffs.Frozen.type, duration: 3,
-            name: Debuffs.Frozen.name
+            name: Debuffs.Frozen.name,
+            icon: Debuffs.Frozen.icon
         });
         character.speed = 0;
         spellCost = 30;
@@ -36,7 +37,8 @@ const IceBoltTar20 = (enemy: EnemyType, character: CharacterType, target: Charac
     } else {
         enemy.debuffs.push({
             type: Debuffs.Frozen.type, duration: 3,
-            name: Debuffs.Frozen.name
+            name: Debuffs.Frozen.name,
+            icon: Debuffs.Frozen.icon
         });
         enemy.speed = 0;
         spellCost = 30;

@@ -22,6 +22,7 @@ type debuffEffect = {
     type: string;
     duration: number;
     damage?: number;
+    icon?: string;
 };
 
 export type CharacterType = {

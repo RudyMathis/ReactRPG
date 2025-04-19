@@ -23,6 +23,7 @@ type DebuffEffect = {
     type: string;
     duration: number;
     damage?: number;
+    icon?: string
 };
 
 export type EnemyType = {

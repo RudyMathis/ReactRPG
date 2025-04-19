@@ -1,6 +1,6 @@
 .trigger {
     position: absolute;
-    z-index: 2;
+    z-index: var(--mid-layer);
     width: 2em;
     height: 2em;
     background-color: transparent;
@@ -13,7 +13,7 @@
     transform: translateX(-50%);
     padding: 30px;
     width: max-content;
-    z-index: 4;
+    z-index: var(--high-layer);
     line-height: 1.75rem;
     image-rendering: pixelated;
     border-image-slice: var(--border-image-slice);

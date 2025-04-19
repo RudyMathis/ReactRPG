@@ -1,4 +1,4 @@
-import "./CurrentTurnArrow.css";
+import "./Entity.css";
 
 const CurrentTurnArrow = () => {
     return (

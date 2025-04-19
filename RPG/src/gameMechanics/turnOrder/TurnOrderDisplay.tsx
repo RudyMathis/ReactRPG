@@ -22,7 +22,13 @@ const TurnOrderDisplay = () => {
                         >
                             <img src={imageSrc} className={`turn-order-sprite ${entity.type} ${entity.name}`} alt={entity.name.replace('_', ' ')} />
                         </div>
-                        {/* <p>{entity.name.replace('_', ' ')}</p> */}
+                        {entity.debuffs.length > 0 && (
+                            <div className="debuffs">
+                                {entity.debuffs.map((debuff, index) => (
+                                    <img key={index} className="debuff-icon" src={debuff.icon} />
+                                ))}
+                            </div>
+                            )}
                     </div>
                 );
             })}

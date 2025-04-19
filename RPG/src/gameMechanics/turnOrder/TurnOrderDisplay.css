@@ -6,7 +6,7 @@
     display: flex;
     justify-content: center;
     gap: 2em;
-    z-index: 3;
+    z-index: var(--mid-layer);
 }
 
 .turn-order-portrait {
@@ -15,13 +15,6 @@
     align-items: center;
     width: 50px;
 }
-
-/* .turn-order-portrait p{
-    margin-top: 10px;
-    text-align: center;
-    font-size: .75rem;
-    width: 12em;
-} */
 
 .turn-order-sprite {
     image-rendering: pixelated;
@@ -62,7 +55,8 @@
 }
 
 .turn-order-item {
-    border: 1px solid white;
+    background-color: var(--white-soft);
+    border: 1px solid var(--white);
     padding: .5rem;
 }
 
@@ -71,17 +65,35 @@
 }
 
 .turn-order-item[data-entity-modified="Dark"] {
-    border: 1px solid purple;
+    background-color: var(--dark-soft);
+    border: 1px solid var(--dark);
 }
 
 .turn-order-item[data-entity-modified="Ice"] {
-    border: 1px solid dodgerblue;
+    background-color: var(--ice-soft);
+    border: 1px solid var(--ice);
 }
 
 .turn-order-item[data-entity-modified="Fire"] {
-    border: 1px solid red;
+    background-color: var(--fire-soft);
+    border: 1px solid var(--fire);
 }
 
 .turn-order-item[data-entity-modified="Lightning"] {
-    border: 1px solid yellow;
+    background-color: var(--lightning-soft);
+    border: 1px solid var(--lightning);
+}
+
+.debuffs {
+    display: flex;
+    width: 66px;
+    margin-top: 2px;
+    flex-wrap: wrap;
+}
+
+.debuff-icon {
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+    image-rendering: pixelated;
 }

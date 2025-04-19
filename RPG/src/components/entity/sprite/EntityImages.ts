@@ -5,7 +5,7 @@ const enemyPath = '/assets/enemies/';
 const characterTypes = ['Archer', 'Cleric', 'Knight', 'Mage', 'Monk', 'Rogue', 'Shaman', 'Warrior'] as const;
 const enemyTypes = ['Death_Knight', 'Ent', 'Ettin', 'Goblin', 'Ghoul', 'Manticore', 'Rat', 'Skeleton', 'Zombie'] as const;
 
-export const EntityImages = {
+export const EntityImages: { [key: string]: string } = {
     ...characterTypes.reduce((acc, type) => ({
         ...acc,
         [type]: `${characterPath}${type}_Attack.png`,

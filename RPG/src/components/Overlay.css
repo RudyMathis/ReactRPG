@@ -3,7 +3,7 @@
     left: 0;
     width: 100%;
     height: 10%;
-    z-index: 2;
+    z-index: var(--low-layer);
     -webkit-mask-image: radial-gradient(
         ellipse at center,
         rgba(0, 0, 0, 1) 20%,
@@ -24,7 +24,7 @@
     width: 100%;
     height: 100%;
     box-shadow: 0 0 200px 50px rgba(0,0,0,0.5) inset;
-    z-index: 2;
+    z-index: var(--low-layer);
     pointer-events: none;
 }
 
@@ -35,7 +35,7 @@
     width: 50%;
     height: 50%;
     transform: translate(-50%, 50%);
-    z-index: 2;
+    z-index: var(--low-layer);
     border-radius: 50%;
     -webkit-mask-image: radial-gradient(
         ellipse at center,
