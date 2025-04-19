@@ -1,23 +1,27 @@
 /* NAME */
 
 .sprite-name {
-    z-index: var(--mid-layer);
+    z-index: var(--high-layer);
     text-shadow: 1px 1px 0 var(--shadow);
 }
 
 /* SHADOW */
 
-.shadow.player {
+.shadow {
     position: absolute;
+    mix-blend-mode: multiply;
+    filter: blur(8px);
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.75);
+    z-index: var(--lowest-layer);
+}
+
+.shadow.player {
     bottom: 7px;
     left: -100px;
     width: 150px;
     height: 40px;
-	border-radius: 30%;
-    background-color: rgba(0, 0, 0, 0.75);
-	filter: blur(8px);
 	transform: rotate3d(1, 1, 1, 15deg);
-    z-index: var(--lowest-layer);
 }
 
 .shadow.follow.player {
@@ -25,20 +29,15 @@
 }
 
 @keyframes followPlayerAnimation {
-    50% { bottom: 0px; left: -40px; width: 75px; filter: blur(4px); }
+    50% { left: -10%; width: 75px; filter: blur(4px); }
 }
 
 .shadow.npc {
-    position: absolute;
     bottom: 7px;
     left: 40px;
     width: 150px;
     height: 40px;
-	border-radius: 30%;
-    background-color: rgba(0, 0, 0, 0.75);
-	filter: blur(8px);
 	transform: rotate3d(1, 1, 1, -20deg);
-    z-index: var(--lowest-layer);
 }
 
 .shadow.follow.npc {
@@ -46,8 +45,105 @@
 }
 
 @keyframes followNPCAnimation {
-    50% { bottom: 0px; left: 40px; width: 75px; filter: blur(4px); }
+    50% { left: 15%; width: 75px; filter: blur(4px); }
 }
+
+.shadow.player[data-light='Cave'] {
+    bottom: -15px;
+    left: -60px;
+    width: 150px;
+    height: 40px;
+    transform: rotate3d(1, 1, 1, -15deg);
+}
+
+.shadow.npc[data-light='Cave'] {
+    bottom: -5px;
+    left: 60px;
+    width: 150px;
+    height: 40px;
+	transform: rotate3d(1, 1, 1, 10deg);
+}
+
+.shadow.player[data-light='Forest'] {
+    bottom: -20px;
+    left: -40px;
+    width: 125px;
+    height: 40px;
+    transform: rotate3d(1, 1, 1, -35deg);
+}
+
+.shadow.npc[data-light='Forest'] {
+    bottom: -20px;
+    left: 35px;
+    width: 125px;
+    height: 40px;
+	transform: rotate3d(1, 1, 1, 30deg);
+}
+
+.shadow.player[data-light='Field'] {
+    bottom: -20px;
+    left: -35px;
+    width: 100px;
+    height: 50px;
+    transform: rotate3d(1, 1, 1, -40deg);
+}
+
+.shadow.npc[data-light='Field'] {
+    bottom: -20px;
+    left: 45px;
+    width: 100px;
+    height: 50px;
+	transform: rotate3d(1, 1, 1, 40deg);
+}
+
+.shadow.player[data-light='Desert'] {
+    bottom: -20px;
+    left: -10px;
+    width: 100px;
+    height: 50px;
+    transform: rotate3d(1, 1, 1, -85deg);
+}
+
+.shadow.npc[data-light='Desert'] {
+    bottom: -5px;
+    left: 20px;
+    width: 125px;
+    height: 50px;
+	transform: rotate3d(1, 1, 1, -85deg);
+}
+
+.shadow.player[data-light='City'] {
+    bottom: -30px;
+    left: -70px;
+    width: 150px;
+    height: 50px;
+    transform: rotate3d(1, 1, 1, -50deg);
+}
+
+.shadow.npc[data-light='City'] {
+    bottom: -5px;
+    left: 35px;
+    width: 150px;
+    height: 50px;
+	transform: rotate3d(1, 1, 1, 5deg);
+}
+
+.shadow.player[data-light='Snow'] {
+    bottom: -25px;
+    left: -50px;
+    width: 150px;
+    height: 50px;
+    transform: rotate3d(1, 1, 1, -90deg);
+}
+
+.shadow.npc[data-light='Snow'] {
+    bottom: -30px;
+    left: 25px;
+    width: 100px;
+    height: 50px;
+    transform: rotate3d(1, 1, 1, 30deg);
+}
+
 
 /* ARROW */
 
@@ -144,4 +240,13 @@
 .popup p, .popup h2 {
     color: var(--font);
     background-color: var(--background-secondary);
+}
+
+.detail-status {
+    color: var(--fire);
+    background-color: var(--background-secondary);
+}
+
+.detail-value {
+    color: var(--fire);
 }

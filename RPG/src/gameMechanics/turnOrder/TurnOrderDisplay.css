@@ -20,6 +20,10 @@
     image-rendering: pixelated;
 }
 
+.turn-order-sprite.player {
+    background-color: var(--white-soft)
+}
+
 .turn-order-container .character-sprite {
     width: 50px;
     height: 50px;

@@ -1,5 +1,8 @@
+import { useAtom } from 'jotai';
+import { backgroundAtom } from '../atom/BackgroundAtom';
 import './Overlay.css';
 const Overlay = () => {
+    const [background] = useAtom(backgroundAtom);
 
     return (
         <>
@@ -10,7 +13,7 @@ const Overlay = () => {
             <div className="blur blur-overlay-bottom"></div>
             <div className="blur blur-overlay-left"></div>
             <div className="blur blur-overlay-right"></div>
-            <div className="glow-center"></div>
+            <div className="lighting" data-light={background}></div>
         </>
     );
 }

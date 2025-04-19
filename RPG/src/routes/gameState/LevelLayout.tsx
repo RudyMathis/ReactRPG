@@ -5,7 +5,7 @@ import Grid from "./Grid";
 import TurnOrderDisplay from "../../gameMechanics/turnOrder/TurnOrderDisplay";
 import CurrentLevelDisplay from "../../components/ui/CurrentLevelDisplay";
 import EndofRoundDisplay from "./EndOfRoundDisplay";
-import './LevelLayout.css';
+import './GameState.css';
 
 const LevelLayout = () => {
     const [currentGameLevel] = useAtom(GameLevelAtom);

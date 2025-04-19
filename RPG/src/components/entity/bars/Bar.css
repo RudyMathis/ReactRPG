@@ -6,7 +6,7 @@
     position: relative;
     overflow: hidden;
     margin-bottom: .05rem;
-    z-index: var(--mid-layer);
+    z-index: var(--high-layer);
 }
 
 .bar-fill {
@@ -20,4 +20,5 @@
     left: 50%;
     transform: translate(-50%, -50%);
     color: black;
+    z-index: var(--high-layer);
 }

@@ -9,7 +9,7 @@ import { runTurnLogic } from '../../gameMechanics/turnOrder/TurnLogic';
 import ActionMenu from '../../components/entity/ActionMenu';
 import DetailScreen from '../../components/entity/DetailScreen';
 import Btn from '../../components/ui/Btn';
-import './Grid.css';
+import './GameState.css';
 import { GameLevelAtom } from '../../atom/GameLevelAtom';
 import { AttackAnimationAtom } from '../../atom/effects/AttackAnimationAtom';
 import Overlay from '../../components/Overlay';

@@ -9,6 +9,7 @@ import { blessingAtom } from "../../atom/BlessingsAtom";
 import { BlessingsData } from "../../gameData/characters/BlessingsData";
 import { useAtom } from "jotai";
 import { turnCountAtom } from "../../atom/UseTurnCountAtom";
+import './GameState.css'
 
 const EndofRoundDisplay = () => {
     const AdditionalExperience = 10;
@@ -49,13 +50,8 @@ const EndofRoundDisplay = () => {
     };
 
     return (
-        <div style={{
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-        }}>
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '.5rem' }}>
+        <div className="end-of-round-container">
+            <div className="end-of-round">
                 <Btn onClick={() => handleNavigation()} text="Next Round" />
                 {storeAtom.get(blessingAtom) !== true && <Btn onClick={() => handleNavigation(false, false, true)} text="Blessing & Next Round" />}
                 <Btn onClick={() => handleNavigation(true, false, false)} text="Additional Experience & Next Round" />

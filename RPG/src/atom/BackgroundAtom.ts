@@ -2,11 +2,12 @@ import { atom } from 'jotai';
 
 export const generateNewBackground = () => {
     const backgrounds = [
-        'Forest',
-        'Desert',
-        'Snow',
+        'Cave',
         'City',
-        'Field'
+        'Desert',
+        'Field',
+        'Forest',
+        'Snow',
     ];
     return backgrounds[Math.floor(Math.random() * backgrounds.length)];
 };
