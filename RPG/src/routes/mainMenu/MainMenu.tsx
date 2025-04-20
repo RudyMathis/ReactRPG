@@ -5,6 +5,7 @@ import { ContinueGameBtn } from './ContinueGameBtn';
 import { useEffect, useState } from 'react';
 import NavigateBtn from '../../components/ui/NavigateBtn';
 import Background from '../../components/ui/Background';
+import HighScoreDisplay from './HighScoreDisplay';
 
 const MainMenu = () => {
     const [isInProgress, setIsInProgress] = useState(false);
@@ -20,6 +21,7 @@ const MainMenu = () => {
         <>
             <div className="main-menu">
                 <h1>React RPG</h1>
+                <HighScoreDisplay />
                 <UserNameInput />
                 <NewGameBtn />
                 {isInProgress && <ContinueGameBtn />}

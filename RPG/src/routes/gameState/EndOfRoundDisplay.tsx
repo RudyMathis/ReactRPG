@@ -10,6 +10,7 @@ import { BlessingsData } from "../../gameData/characters/BlessingsData";
 import { useAtom } from "jotai";
 import { turnCountAtom } from "../../atom/UseTurnCountAtom";
 import './GameState.css'
+import { calculateScore } from "../../gameMechanics/CalculateScore";
 
 const EndofRoundDisplay = () => {
     const AdditionalExperience = 10;
@@ -42,6 +43,7 @@ const EndofRoundDisplay = () => {
         localStorage.setItem('turnCount', JSON.stringify(turnCountAtom));
         localStorage.setItem('characters', JSON.stringify(storeAtom.get(CharacterAtom)));
         localStorage.setItem('currentEntityTurn', "0");
+        localStorage.setItem('Score', `${calculateScore()}`);
         console.log("END OF ROUND")
 
         currentGameLevel.isRoundOver = true

@@ -24,3 +24,11 @@
     pointer-events: none;
     border-radius: 5%;
 }
+
+/* LEVEL */
+
+.current-level-text,.score-container span {
+    font-size: 1.2rem;
+    color: var(--white);
+    text-shadow: 2px 2px 1px var(--shadow);
+}

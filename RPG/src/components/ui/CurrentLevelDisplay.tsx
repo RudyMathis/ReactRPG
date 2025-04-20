@@ -1,11 +1,16 @@
 import { useAtom } from "jotai";
 import { GameLevelAtom } from "../../atom/GameLevelAtom";
+import ScoreDisplay from "./ScoreDisplay";
+import './UI.css'
 
 const CurrentLevelDisplay = () => {
     const [currentGameLevel] = useAtom(GameLevelAtom);
 
     return (
-        <h1>Current {currentGameLevel.level} - {currentGameLevel.round}</h1>
+        <div className="current-display-container">
+            <ScoreDisplay/>
+            <h2 className="current-level-text">Current {currentGameLevel.level} - {currentGameLevel.round}</h2>
+        </div>
     );
 }
 
