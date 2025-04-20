@@ -6,7 +6,9 @@ import Vulnerabilites from "../../Vulnerabilities";
 import { AdditionalBlessingDamage } from "../AdditionalBlessingDamage";
 
 const FrostbiteTar20 = (enemy: EnemyType, character: CharacterType, target: CharacterType | EnemyType, spellCost: number) =>{ 
-    if(target === character) {
+    const targetCharacter = 'id' in target && target.id === character.id && target.type === character.type
+
+    if(targetCharacter) {
         character.speed -= 10;
         spellCost = 20;
         enemy.mana -= spellCost;

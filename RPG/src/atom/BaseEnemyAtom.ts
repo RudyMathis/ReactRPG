@@ -23,6 +23,7 @@ type DebuffEffect = {
     type: string;
     duration: number;
     damage?: number;
+    icon?: string
 };
 
 export type EnemyType = {
@@ -54,13 +55,15 @@ export type EnemyType = {
 
 // Predefined enemy groups
 const enemyGroups: Record<string, string> = {
-    "Skeleton": "humanoide",
-    "Ghoul": "humanoide",
-    "Zombie": "humanoide",
-    "Goblin": "humanoide",
-    "Rat": "beast",
-    "Wolf": "beast",
+    "Death_Knight": "elemental",
     "Ent": "elemental",
+    "Ettin": "humanoide",
+    "Ghoul": "humanoide",
+    "Goblin": "humanoide",
+    "Manticore": "humanoide",
+    "Rat": "beast",
+    "Skeleton": "humanoide",
+    "Zombie": "humanoide",
 };
 
 // Function to determine enemy group

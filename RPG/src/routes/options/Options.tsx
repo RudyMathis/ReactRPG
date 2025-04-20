@@ -1,4 +1,4 @@
-import NavigateBtn from "../../components/NavigateBtn";
+import NavigateBtn from "../../components/ui/NavigateBtn";
 const Options = () => {
     return (
         <div className="options">

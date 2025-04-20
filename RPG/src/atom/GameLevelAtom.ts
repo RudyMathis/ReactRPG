@@ -5,11 +5,13 @@ import EnemyAtom from './BaseEnemyAtom';
 import { turnCountAtom } from './UseTurnCountAtom';
 import { getRandomEnemyType, getRandomElement, getRandomClass, determineEnemyGroup } from './BaseEnemyAtom';
 import EnemyFactory from '../gameData/enemies/EnemyFactory';
+import { generateNewBackground } from './BackgroundAtom'; 
 
 // Function to get initial GameLevelAtom state from localStorage
 const getInitialGameLevel = () => {
     const savedLevel = localStorage.getItem('Level');
     const savedRound = localStorage.getItem('Round');
+    const savedBackground = localStorage.getItem('background');
 
     if (savedLevel && savedRound) {
         return {
@@ -17,6 +19,7 @@ const getInitialGameLevel = () => {
             level: parseInt(savedLevel, 10),
             isRoundOver: false,
             isLevelOver: false,
+            background: savedBackground || generateNewBackground(),
         };
     }
 
@@ -25,7 +28,9 @@ const getInitialGameLevel = () => {
         level: 1,
         isRoundOver: false,
         isLevelOver: false,
+        background: savedBackground || generateNewBackground(),
     };
+    
 };
 
 export const GameLevelAtom = atom(getInitialGameLevel());
@@ -87,31 +92,40 @@ const generateNewEnemies = (round: number, level: number): Record<number, EnemyT
 };
 
 
+
 export const startNewRound = () => {
-    storeAtom.set(GameLevelAtom, prev => {
+    storeAtom.set(GameLevelAtom, (prev) => {
         const newRound = prev.round + 1;
         let newLevel = prev.level;
 
         if (newRound > 3) {
             newLevel++;
-            return { ...prev, round: 1, isRoundOver: false, level: newLevel };
         }
 
-        return { ...prev, round: newRound, isRoundOver: false };
+        const updatedRound = newRound > 3 ? 1 : newRound;
+        const newBackground = generateNewBackground();
+
+        localStorage.setItem('Level', JSON.stringify(newLevel));
+        localStorage.setItem('Round', JSON.stringify(updatedRound));
+        localStorage.setItem('background', newBackground);
+
+        return {
+            ...prev,
+            round: updatedRound,
+            level: newLevel,
+            isRoundOver: false,
+            isLevelOver: false,
+            background: newBackground,
+        };
     });
 
+    // Update enemies and turn count as before
     const { level, round } = storeAtom.get(GameLevelAtom);
-
-    localStorage.setItem('Level', JSON.stringify(level));
-    localStorage.setItem('Round', JSON.stringify(round));
-
-    // Clear existing enemies from local storage and generate new ones
-    localStorage.removeItem('enemies');
     const newEnemies = generateNewEnemies(round, level);
     storeAtom.set(EnemyAtom, newEnemies);
     localStorage.setItem('enemies', JSON.stringify(newEnemies));
-
     storeAtom.set(turnCountAtom, 1);
     localStorage.setItem('turnCount', '1');
+
     console.log("Round:", round, "Level:", level);
 };

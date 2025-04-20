@@ -5,7 +5,9 @@ import Debuffs from "../../Debuffs";
 import { AdditionalBlessingDamage } from "../AdditionalBlessingDamage";
 
 const GarroteTar40 = (enemy: EnemyType, character: CharacterType, target: CharacterType | EnemyType, spellCost: number) =>{ 
-    if(target === character) {
+    const targetCharacter = 'id' in target && target.id === character.id && target.type === character.type
+
+    if(targetCharacter) {
         spellCost = 40;
         enemy.mana -= spellCost;
         const bleedDamage = Math.max(5, Math.round(enemy.attack - character.defense));

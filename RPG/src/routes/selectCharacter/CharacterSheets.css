@@ -1,10 +1,16 @@
 .character-sheet-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: var(--mid-layer);
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
     gap: 2em;
-    margin: 2em 0
+    margin: 2em 0;
+    width: 1400px;
 }
 
 .character-sheet {
@@ -12,10 +18,29 @@
     flex-direction: column;
     gap: 1rem;
     padding: 1rem;
-    border: 1px solid white;
+    image-rendering: pixelated;
+    border-image-slice: var(--border-image-slice);
+    border-image-width: var(--border-image-width);
+    border-image-source: var(--border-image-source);
+    border-image-repeat: var(--border-image-repeat);
     cursor: pointer;
-}  
+}
 
 .character-sheet.isSelected {
-    border-color: yellow;
+    filter: brightness(1.25);
+}
+
+.character-sheet button {
+    background-color: var(--background-secondary);
+    color: var(--font);
+    padding: 1rem;
+}
+
+.character-sheet h2 {
+    margin-bottom: 1rem;
+}
+
+.character-sheet p {
+    padding: .25rem;
+    line-height: 1.1rem;
 }

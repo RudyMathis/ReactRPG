@@ -1,6 +1,6 @@
 import { GameLevelAtom, startNewRound } from "../../atom/GameLevelAtom";
 import { storeAtom } from "../../atom/storeAtom";
-import Btn from "../../components/Btn";
+import Btn from "../../components/ui/Btn";
 import { GainExperience } from "../../gameMechanics/GainExperince";
 import { FullRestore } from "../../gameMechanics/FullRestore";
 import CharacterAtom from "../../atom/CharacterAtom";
@@ -9,6 +9,8 @@ import { blessingAtom } from "../../atom/BlessingsAtom";
 import { BlessingsData } from "../../gameData/characters/BlessingsData";
 import { useAtom } from "jotai";
 import { turnCountAtom } from "../../atom/UseTurnCountAtom";
+import './GameState.css'
+import { calculateScore } from "../../gameMechanics/CalculateScore";
 
 const EndofRoundDisplay = () => {
     const AdditionalExperience = 10;
@@ -41,21 +43,17 @@ const EndofRoundDisplay = () => {
         localStorage.setItem('turnCount', JSON.stringify(turnCountAtom));
         localStorage.setItem('characters', JSON.stringify(storeAtom.get(CharacterAtom)));
         localStorage.setItem('currentEntityTurn', "0");
+        localStorage.setItem('Score', `${calculateScore()}`);
         console.log("END OF ROUND")
 
         currentGameLevel.isRoundOver = true
 
-        startNewRound(); // Start the next round
+        startNewRound();
     };
 
     return (
-        <div style={{
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-        }}>
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+        <div className="end-of-round-container">
+            <div className="end-of-round">
                 <Btn onClick={() => handleNavigation()} text="Next Round" />
                 {storeAtom.get(blessingAtom) !== true && <Btn onClick={() => handleNavigation(false, false, true)} text="Blessing & Next Round" />}
                 <Btn onClick={() => handleNavigation(true, false, false)} text="Additional Experience & Next Round" />

@@ -1,0 +1,148 @@
+.blur {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 10%;
+    z-index: var(--mid-layer);
+    -webkit-mask-image: radial-gradient(
+        ellipse at center,
+        rgba(0, 0, 0, 1) 20%,
+        rgba(0, 0, 0, 0) 100%
+    );
+    mask-image: radial-gradient(
+        ellipse at center,
+        rgba(0, 0, 0, 1) 20%,
+        rgba(0, 0, 0, 0) 100%
+    );
+    pointer-events: none;
+}
+
+.lighting {
+    pointer-events: none;
+    position: absolute;
+    z-index: var(--mid-layer);
+    border-radius: 5%;
+}
+
+.lighting[data-light='Forest'] {
+    left: 50%;
+    top: 0;
+    width: 60%;
+    height: 100%;
+    transform: translateX(-50%);
+    clip-path: polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%);
+    background-color: rgba(255, 255, 255, .1);
+    filter: blur(500px);
+}
+
+.lighting[data-light='Desert'] {
+    left: 0;
+    top: 20%;
+    width: 100%;
+    height: 80%;
+    background-color: hsla(59, 87%, 78%, 0.2);
+}
+
+.lighting[data-light='Snow'] {
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    clip-path: polygon(0 0, 50% 0, 100% 100%, 0 100%);
+    background-color: hsla(0, 0%, 100%, 0.2);
+    filter: blur(100px);
+}
+
+.lighting[data-light='City'] {
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, 
+        hsla(50, 87%, 85%, 0.35) 0%,
+        hsla(0, 0%, 0%, .8) 80%,
+        hsla(0, 0%, 0%, 1) 100%);
+    mix-blend-mode: hard-light;
+}
+
+.lighting[data-light='Field'] {
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    filter: saturate(1.25);
+}
+
+.lighting[data-light='Cave'] {
+    left: 25%;
+    top: 0;
+    width: 50%;
+    height: 80%;
+    background: radial-gradient(circle at top 0 left 50%, 
+        hsla(110, 62%, 62%, 1) 0%,
+        hsla(0, 0%, 0%, .5) 100%);
+    mix-blend-mode: color;
+    filter:blur(200px)
+}
+
+.blur-overlay-top {
+    top: -20px;
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+}
+
+.blur-overlay-top-bottom {
+    top: calc(10% - 40px);
+    backdrop-filter: blur(1px);
+    -webkit-backdrop-filter: blur(1px);
+}
+
+.blur-overlay-bottom-top {
+    bottom: calc(10% - 40px);
+    backdrop-filter: blur(1px);
+    -webkit-backdrop-filter: blur(1px);
+}
+
+.blur-overlay-bottom {
+    bottom: -20px;
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+}
+
+.blur.blur-overlay-left {
+    top: 0;
+    left: -10px;
+    width: 15%;
+    height: 100%;
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    -webkit-mask-image: radial-gradient(
+        ellipse at center,
+        rgba(0, 0, 0, 1) 20%,
+        rgba(0, 0, 0, 0) 100%
+    );
+    mask-image: radial-gradient(
+        ellipse at center,
+        rgba(0, 0, 0, 1) 20%,
+        rgba(0, 0, 0, 0) 100%
+    );
+}
+
+.blur.blur-overlay-right {
+    top: 0;
+    left: 85%;
+    width: 15%;
+    height: 100%;
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    -webkit-mask-image: radial-gradient(
+        ellipse at center,
+        rgba(0, 0, 0, 1) 20%,
+        rgba(0, 0, 0, 0) 100%
+    );
+    mask-image: radial-gradient(
+        ellipse at center,
+        rgba(0, 0, 0, 1) 20%,
+        rgba(0, 0, 0, 0) 100%
+    );
+}

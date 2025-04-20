@@ -7,10 +7,13 @@ import Vulnerabilites from "../../Vulnerabilities";
 import { AdditionalBlessingDamage } from "../AdditionalBlessingDamage";
 
 const FireBallTar20 = (enemy: EnemyType, character: CharacterType, target: CharacterType | EnemyType, spellCost: number) =>{ 
-    if(target === character) {
+    const targetCharacter = 'id' in target && target.id === character.id && target.type === character.type
+
+    if(targetCharacter) {
         character.debuffs.push({
             type: Debuffs.Burn.type, duration: 3,
-            name: Debuffs.Burn.name
+            name: Debuffs.Burn.name,
+            icon: Debuffs.Burn.icon
         });
         spellCost = 20;
         enemy.mana -= spellCost;
@@ -19,7 +22,8 @@ const FireBallTar20 = (enemy: EnemyType, character: CharacterType, target: Chara
         const fireVulnerability = character.vulnerabilities.find(vul => vul.type === Vulnerabilites.Fire.type);
         const damageResistance = Math.max(1, Math.round(enemy.attack - Resistances.Fire.value))
         const damageVulnerability = Math.round(enemy.attack + Vulnerabilites.Fire.value)
-        
+        const damage = Math.max(5, Math.round(enemy.attack))
+
         if (fireResistance) {
             HandleDamageEffect(damageResistance, "Fire", "player", character.id);
             return character.health - damageResistance;
@@ -28,12 +32,13 @@ const FireBallTar20 = (enemy: EnemyType, character: CharacterType, target: Chara
             return character.health - damageVulnerability;
         } else {
             HandleDamageEffect(enemy.attack, "Fire", "player", character.id);
-            return character.health - enemy.attack;
+            return character.health - damage;
         }
     } else {
         enemy.debuffs.push({
             type: Debuffs.Burn.type, duration: 3,
-            name: Debuffs.Burn.name
+            name: Debuffs.Burn.name,
+            icon: Debuffs.Burn.icon
         });
         const spellCost = 20;
         character.mana -= spellCost;

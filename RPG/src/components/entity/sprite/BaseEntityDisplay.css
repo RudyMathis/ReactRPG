@@ -1,0 +1,175 @@
+
+.sprite-container {
+    width: 65px;
+    height: 96px;
+    display: flex;
+    justify-content: center;
+    justify-content: flex-start; 
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.sprite-glow {
+    position: absolute;
+    bottom: 33%;
+    left: 50%;
+    transform: translate(-50%, 50%);
+    width: 64px;
+    height: 96px;
+    z-index: var(--low-layer);
+    background-color: transparent;
+    transition: background-color 0.2s ease, filter 0.2s ease;
+}
+
+.sprite-glow:hover {
+    background-color: var(--white-soft);
+    filter: blur(20px) drop-shadow(0px 0px 2px rgba(255, 255, 255, 0.05));
+}
+
+.sprite {
+    height: 96px;
+    object-fit: initial; 
+    image-rendering: pixelated;
+    position: absolute;
+}
+
+.sprite.player {
+    width: 200px; 
+    left: -136px;
+}
+
+.sprite.npc {
+    position: relative;
+    width: 96px; 
+}
+
+.sprite.npc.Rat, .sprite.npc.Goblin {
+    height: 64px;
+}
+
+.sprite-container:has(.Ent), .sprite-container:has(.Ettin), .sprite-container:has(.Manticore) {
+    width: 96px;
+    height: 96px;
+}
+
+@keyframes flash-damage {
+    0%, 100% { filter: invert(1) }
+    50% { filter: none }
+}
+
+.flash-damage {
+    animation: flash-damage .6s linear 2;
+}
+
+
+.sprite-container [data-entity-modified="Fire"] img {
+    filter: drop-shadow(1px 1px red) drop-shadow(1px -1px red)
+    drop-shadow(-1px 1px red) drop-shadow(-1px -1px red)
+    drop-shadow(10px 1px 4px rgba(0, 0, 0, 0.75));
+}
+
+.sprite-container [data-entity-modified="Ice"] img {
+    filter: drop-shadow(1px 1px dodgerblue) drop-shadow(1px -1px dodgerblue)
+    drop-shadow(-1px 1px dodgerblue) drop-shadow(-1px -1px dodgerblue)
+    drop-shadow(10px 1px 4px rgba(0, 0, 0, 0.75));
+}
+
+.sprite-container [data-entity-modified="Dark"] img {
+    filter: drop-shadow(1px 1px purple) drop-shadow(1px -1px purple)
+    drop-shadow(-1px 1px purple) drop-shadow(-1px -1px purple)
+    drop-shadow(10px 1px 4px rgba(0, 0, 0, 0.75));
+}
+
+.damage-effect {
+    animation: damageAnimation 0.9s ease-out forwards;
+    bottom: 0;
+    z-index: var(--high-layer);
+    position: absolute;
+    text-shadow: 2px 2px 2px var(--shadow);
+}
+
+@keyframes damageAnimation {
+    0%   { transform: translateY(-100px); opacity: 0; }
+    30%  { transform: translateY(0px); opacity: 1; }
+    50%  { transform: translateY(-40px); }
+    70%  { transform: translateY(0px); }
+    85%  { transform: translateY(-20px); }
+    93%  { transform: translateY(0px); }
+    97%  { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+}
+
+.damage-effect.player {
+    right: 100px;
+}
+
+.damage-effect.npc {
+    left: 100px;
+}
+
+.damage-effect[data-damage-type="Fire"] {
+    color: var(--white);
+    text-shadow:
+        3px 3px 0 var(--fire),
+        -3px 3px 0 var(--fire),
+        -3px -3px 0 var(--fire),
+        3px -3px 0 var(--fire);
+}
+
+[data-damage-type="Ice"] {
+    color: var(--white);
+    text-shadow:
+        3px 3px 0 var(--ice),
+        -3px 3px 0 var(--ice),
+        -3px -3px 0 var(--ice),
+        3px -3px 0 var(--ice);
+}
+
+[data-damage-type="Lightning"] {
+    color: var(--shadow);
+    text-shadow:
+        3px 3px 0 var(--lightning),
+        -3px 3px 0 var(--lightning),
+        -3px -3px 0 var(--lightning),
+        3px -3px 0 var(--lightning);
+}
+
+.damage-effect[data-damage-type="Physical"] {
+    color: var(--shadow);
+    text-shadow:
+        3px 3px 0 var(--white),
+        -3px 3px 0 var(--white),
+        -3px -3px 0 var(--white),
+        3px -3px 0 var(--white);
+}
+
+@keyframes attackAnimation {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(200px); } 
+}
+
+.attack.player {
+    animation: attackAnimation .3s steps(3) 3; 
+}
+
+.sprite_death {
+    height: 96px;
+    object-fit: initial; 
+    image-rendering: pixelated;
+    position: absolute;
+    width: 203px; 
+    filter: drop-shadow(-2px 2px 2px var(--shadow));
+}
+
+.death-effect.player {
+    animation: deathPlayerAnimation .6s steps(1) 1;
+    animation-delay: 1s;
+}
+
+@keyframes deathPlayerAnimation {
+    0% { transform: translateX(-217px); width: 280px; }
+    33% { transform: translateX(-154px);  width: 280px;}
+    66% { transform: translateX(-90px); width: 280px; }
+    100% { transform: translateX(0); } 
+}

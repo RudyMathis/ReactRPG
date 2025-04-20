@@ -1,8 +1,40 @@
 :root {
+	/* variables */
+	--background: hsl(226, 38%, 43%);
+	--background-secondary: hsl(240, 61%, 16%);
+	--font: hsl(0, 0%, 81%);
+	--shadow: hsl(0, 0%, 12%);
+	--white: hsl(0, 100%, 100%);
+
+	--fire: hsl(14, 94%, 52%);
+	--ice: hsl(180, 100%, 50%);
+	--dark: hsl(273, 64%, 43%);
+	--lightning: hsl(48, 100%, 67%);
+	--holy: hsl(48, 64%, 85%);
+
+	--white-soft: hsla(0, 100%, 100%, 0.25);
+	--fire-soft: hsla(14, 94%, 52%, 0.25);
+	--ice-soft: hsla(180, 100%, 50%, 0.25);
+	--dark-soft: hsla(273, 64%, 43%, 0.25);
+	--lightning-soft: hsla(48, 100%, 67%, 0.25);
+	--holy-soft: hsla(48, 64%, 85%, 0.25);
+    
+	--border-image-slice: 10 10 10 10;
+	--border-image-width: 80px 80px 80px 80px;
+	--border-image-source: url("/assets/Button_Border.png");
+	--border-image-repeat: stretch stretch;
+
+	--lowest-layer: 0;
+	--low-layer: 2;
+	--mid-layer: 3;
+	--high-layer: 4;
+	--highest-layer: 5;
+
 	font-family: "Press Start 2P", system-ui;
 	font-weight: 400;
 	font-style: normal;
-	color: white;
+	color: var(--font);
+	font-size: 14px;
 }
 
 html, body, div, span, applet, object, iframe,
@@ -25,6 +57,7 @@ time, mark, audio, video {
 	/* font: inherit; */
 	vertical-align: baseline;
 }
+
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure, 
 footer, header, hgroup, menu, nav, section {
@@ -32,6 +65,7 @@ footer, header, hgroup, menu, nav, section {
 }
 
 #root {
+	position: relative;
 	width: 100vw;
 	height: 90vh;
 	display: flex;
@@ -40,24 +74,28 @@ footer, header, hgroup, menu, nav, section {
 	flex-direction: column;
 	padding: 2em;
 }
+
 body {
 	line-height: 1;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	background-color: black;
+	background-color: var(--shadow);
 }
 ol, ul {
 	list-style: none;
 }
+
 blockquote, q {
 	quotes: none;
 }
+
 blockquote:before, blockquote:after,
 q:before, q:after {
 	content: '';
 	content: none;
 }
+
 table {
 	border-collapse: collapse;
 	border-spacing: 0;
@@ -65,33 +103,134 @@ table {
 
 h1 {
 	font-size: 2em;
+	text-shadow:
+    3px 3px 0 var(--shadow),
+    -3px 3px 0 var(--shadow),
+    -3px -3px 0 var(--shadow),
+    3px -3px 0 var(--shadow);
 }
 
 button {
 	font-family: "Press Start 2P", system-ui;
 	padding: .5em 1em;
+	border: none;
 	cursor: pointer;
-}
-
-/* temp */
-
-.character-sprite.Bard {
-    background-color: orange;
-}
-
-.character-sprite.Monk {
-    background-color: pink;
+	text-shadow: 2px 2px 0 var(--background);
 }
 
 .character-sprite.dead {
-	background-color: darkgray;
 	cursor: not-allowed;
 }
 
-.entity-bar-container {
-	position: absolute;
-	bottom: 175%;
-	left: 0;
-	width: 100%;
-	z-index: 3;
+.npc.dead {
+    animation: deathNPCAnimation .9s linear forwards;
+    animation-delay: 1s;
+}
+
+@keyframes deathNPCAnimation {
+    0% { filter: blur(0) grayscale(0); opacity: 1;}
+    33% { filter: blur(3px) grayscale(.3); opacity: 1;}
+    66% { filter: blur(6px) grayscale(.6); opacity: 1;}
+    99% { filter: blur(10px) grayscale(1); opacity: 0} 
+	100% {visibility: hidden;}
+}
+
+.user-name-input-container {
+	background-color: transparent;
+	padding: 1rem;
+	image-rendering: pixelated;
+	border-image-slice: var(--border-image-slice);
+	border-image-width: var(--border-image-width);
+	border-image-source: var(--border-image-source);
+	border-image-repeat: var(--border-image-repeat);
+	border-style: solid;
+	color: var(--font);
+}
+
+.user-name-input-container input {
+	background-color: var(--background-secondary);
+	color: var(--font);
+	border: 1px solid var(--background-secondary);
+	
+}
+
+.user-name-input-container input::placeholder {
+	font-weight: bold;
+	opacity: 0.5;
+	color: var(--font);
+}
+
+.npc, .player {
+	color: var(--white);
+}
+
+.Fire, .action-menu-button.element-fire {
+	color: var(--fire);
+}
+
+.Water, .action-menu-button.element-water {
+	color: var(--water);
+}
+
+.Ice, .action-menu-button.element-ice {
+	color: var(--ice);
+}
+
+.Earth, .action-menu-button.element-earth {
+	color: var(--earth);
+}
+
+.Lightning, .action-menu-button.element-lightning {
+	color: var(--lightning);
+}
+
+.Dark, .action-menu-button.element-dark {
+	color: var(--dark);
+}
+
+.holy, .action-menu-button.element-holy {
+	color: var(--light);
+}
+
+/* GLOW */
+
+.glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width:  1416px;
+    height: 690px;
+    transform: translate(-50%, -50%);
+    border-radius: 5%;
+    background-size: cover;
+    pointer-events: none;
+    filter: blur(100px) saturate(.6) brightness(1.2) opacity(.5);
+    animation: glow 5s ease-in-out infinite;
+	background-color: var(--background);
+}
+
+.glow[data-glow='Field'] {
+    background-image: url('/assets/backgrounds/Field.png');
+}
+.glow[data-glow='Forest'] {
+    background-image: url('/assets/backgrounds/Forest.png');
+}
+.glow[data-glow='Desert'] {
+    background-image: url('/assets/backgrounds/Desert.png');
+}
+.glow[data-glow='Cave'] {
+    background-image: url('/assets/backgrounds/Cave.png');
+}
+.glow[data-glow='City'] {
+    background-image: url('/assets/backgrounds/City.png');
+}
+.glow[data-glow='Snow'] {
+    background-image: url('/assets/backgrounds/Snow.png');
+}
+
+@keyframes glow {
+    0%, 100% {     
+        filter: blur(100px) saturate(.6) brightness(1.2) opacity(.5); }
+    50% {     
+        filter: blur(90px) saturate(.6) brightness(1.2) opacity(.5); }
 }

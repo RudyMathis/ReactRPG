@@ -1,26 +1,25 @@
 import { useNavigate } from "react-router";
-import Btn from "../../components/Btn";
+import Btn from "../../components/ui/Btn";
 import characterAtom, { CharacterType } from "../../atom/CharacterAtom";
 import CharacterData  from "../../gameData/characters/CharacterData.json";
-import { useAtom } from "jotai";
+import { useAtom, useSetAtom } from "jotai";
 import { GameLevelAtom } from "../../atom/GameLevelAtom";
 import EnemyAtom from "../../atom/BaseEnemyAtom";
 import { generateInitialEnemies } from "../../gameData/enemies/EnemyFactory";
+import { RemoveData } from "../../gameMechanics/RemoveData";
+import { backgroundAtom, generateNewBackground } from "../../atom/BackgroundAtom";
+
 export const NewGameBtn = () => {
     const navigate = useNavigate();
     const [, setCharacters] = useAtom(characterAtom);
     const [, setEnemies] = useAtom(EnemyAtom);
     const [currentGameLevel] = useAtom(GameLevelAtom);
-    
+    const setBackground = useSetAtom(backgroundAtom);
     const handleStart = () => {
-        localStorage.removeItem("currentTurn");
-        localStorage.removeItem("characters");
-        localStorage.removeItem("enemies");
-        localStorage.removeItem("turnCount");
-        localStorage.removeItem("Level");
-        localStorage.removeItem("Round");
-        localStorage.removeItem('selectedParty');
-        localStorage.removeItem('currentEntityTurn');
+        RemoveData();
+        const newBackground = generateNewBackground();
+        localStorage.setItem("background", newBackground);
+        setBackground(newBackground);
         
         setCharacters(() => {
             const resetCharacters: { [id: number]: CharacterType } = {};
@@ -39,12 +38,13 @@ export const NewGameBtn = () => {
         });
     
         setEnemies(() => generateInitialEnemies());
-    
+        
         localStorage.setItem('inProgressGame', 'false');
         currentGameLevel.isRoundOver = false;
         currentGameLevel.isLevelOver = false;
         currentGameLevel.level = 1;
         currentGameLevel.round = 1;
+        currentGameLevel.background = newBackground;
         navigate('/select-character');
     };
     

@@ -1,6 +1,19 @@
 .main-container {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -5%);
+    z-index: var(--mid-layer);
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 100%;
+    width: calc(1416px - 5%);
+}
+
+.start-game-btn {
+    position: absolute;
+    top: 75%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: var(--mid-layer);
 }

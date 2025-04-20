@@ -1,25 +1,29 @@
 import { useAtom } from "jotai";
 import { GameLevelAtom } from "../../atom/GameLevelAtom";
-import NavigateBtn from "../../components/NavigateBtn";
+import NavigateBtn from "../../components/ui/NavigateBtn";
 import Grid from "./Grid";
 import TurnOrderDisplay from "../../gameMechanics/turnOrder/TurnOrderDisplay";
-import CurrentLevelDisplay from "./CurrentLevelDisplay";
+import CurrentLevelDisplay from "../../components/ui/CurrentLevelDisplay";
 import EndofRoundDisplay from "./EndOfRoundDisplay";
-import './LevelLayout.css';
+import { backgroundAtom } from "../../atom/BackgroundAtom";
+import './GameState.css';
 
 const LevelLayout = () => {
     const [currentGameLevel] = useAtom(GameLevelAtom);
     const isRoundOver = currentGameLevel.isRoundOver;
     localStorage.setItem('inProgressGame', 'true')
+    const [background] = useAtom(backgroundAtom);
 
     return (
         <div className="level-layout">
             <div className="top-bar">
                 <NavigateBtn locationValue="/" location="Start Menu" />
+                <TurnOrderDisplay />
                 <CurrentLevelDisplay />
             </div>
+            <img src={`/assets/backgrounds/${background}.png`} className="glow" data-glow={background} />
+            <div className="crt"></div>
             <Grid />
-            <TurnOrderDisplay />
             {isRoundOver && <EndofRoundDisplay />}
         </div>
     );

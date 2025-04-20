@@ -1,21 +1,21 @@
 import { EnemyType } from "../../atom/BaseEnemyAtom";
 import { CharacterType } from "../../atom/CharacterAtom";
-import { BaseDamageFlashAtom } from "../../atom/effects/BaseDamageFlashAtom";
-import { ShakeAtom } from "../../atom/effects/ShakeAtom";
+import { FlashAnimationAtom } from "../../atom/effects/FlashAnimationAtom";
+import { AttackAnimationAtom } from "../../atom/effects/AttackAnimationAtom";
 import { storeAtom } from "../../atom/storeAtom";
 import attacks from "./attacks/Attacks";
 
 export const EnemyAttack = (character: CharacterType, enemy: EnemyType, target: CharacterType) => {
     setTimeout(() => {
-        storeAtom.set(ShakeAtom, (prev) => ({ ...prev, [enemy.id]: false }));
-        storeAtom.set(BaseDamageFlashAtom, (prev) => ({ ...prev, [character.id]: false }));
-    }, 300);
+        storeAtom.set(AttackAnimationAtom, (prev) => ({ ...prev, [enemy.id]: false }));
+        storeAtom.set(FlashAnimationAtom, (prev) => ({ ...prev, [character.id]: false }));
+    }, 1000);
 
-    storeAtom.set(ShakeAtom, (prev) => ({ ...prev, [enemy.id]: true }));
-    storeAtom.set(BaseDamageFlashAtom, (prev) => ({ ...prev, [character.id]: true }));
+    storeAtom.set(AttackAnimationAtom, (prev) => ({ ...prev, [enemy.id]: true }));
+    storeAtom.set(FlashAnimationAtom, (prev) => ({ ...prev, [character.id]: true }));
 
     setTimeout(() => {
-    }, 300);
+    }, 2000);
 
     if (enemy.spells && enemy.spells.length > 0) {
         // Filter spells the enemy can afford
@@ -33,8 +33,8 @@ export const EnemyAttack = (character: CharacterType, enemy: EnemyType, target: 
 
             console.log(`Enemy ${enemy.name} is using spell: ${chosenSpell} with cost ${spellCost}`);
 
-            if (typeof attacks[chosenSpell] === 'function') {
-                return attacks[chosenSpell](enemy, character, target, spellCost);
+            if (typeof attacks[chosenSpell]?.func === 'function') {
+                return attacks[chosenSpell].func(enemy, character, target, spellCost);
             } else {
                 console.warn(`Spell effect for '${chosenSpell}' not found in attacks.`);
             }

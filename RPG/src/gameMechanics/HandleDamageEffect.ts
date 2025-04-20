@@ -8,28 +8,33 @@ export const HandleDamageEffect = (
     entityId: number
 ) => {
     storeAtom.set(DamageEffectAtom, (prev) => {
-        // If already showing damage for same entity, append
-        if (prev.isDisplay && prev.entityId === entityId) {
-            return {
-                ...prev,
-                effects: [...prev.effects, { damage, type }],
-            };
-        }
-
-        setTimeout(() => {
-            storeAtom.set(DamageEffectAtom, (prev) => ({
-                ...prev,
-                effects: [],
-                isDisplay: false,
-            }));
-          }, 1000); // hide after 1 second
-
-        // Otherwise, create a new damage entry
-        return {
-            effects: [{ damage, type }],
+        const current = prev[entityId] || {
+            effects: [],
             target,
-            entityId,
-            isDisplay: true,
+            isDisplay: false,
         };
+
+        const newEffects = {
+            ...prev,
+            [entityId]: {
+                effects: [...current.effects, { damage, type }],
+                target,
+                isDisplay: true,
+            }
+        };
+
+        // Schedule cleanup for this entity only
+        setTimeout(() => {
+            storeAtom.set(DamageEffectAtom, (finalPrev) => ({
+                ...finalPrev,
+                [entityId]: {
+                    ...finalPrev[entityId],
+                    effects: [],
+                    isDisplay: false,
+                }
+            }));
+        }, 1000);
+        
+        return newEffects;
     });
 };

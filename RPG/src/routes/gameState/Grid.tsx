@@ -6,13 +6,16 @@ import EnemyAtom, { EnemyType } from '../../atom/BaseEnemyAtom';
 import { useTurnOrder }  from '../../gameMechanics/turnOrder/useTurnOrder';
 import { playerTargetAtom } from '../../atom/PlayerTargetAtom';
 import { runTurnLogic } from '../../gameMechanics/turnOrder/TurnLogic';
-import ActionMenu from './ActionMenu';
-import CharacterDisplay from './entityDetail/CharacterDisplay';
-import EnemyDisplay from './entityDetail/EnemyDisplay';
-import DetailScreen from './entityDetail/DetailScreen';
-import Btn from '../../components/Btn';
-import './Grid.css';
+import ActionMenu from '../../components/entity/ActionMenu';
+import DetailScreen from '../../components/entity/DetailScreen';
+import Btn from '../../components/ui/Btn';
+import './GameState.css';
 import { GameLevelAtom } from '../../atom/GameLevelAtom';
+import { AttackAnimationAtom } from '../../atom/effects/AttackAnimationAtom';
+import Overlay from '../../components/Overlay';
+import Shadow from '../../components/entity/Shadow';
+import EntityContainer from '../../components/entity/sprite/EntityContainer';
+import EntityDisplayWrapper from '../../components/entity/sprite/EntityDisplayWrapper';
 
 const Grid = () => {
   const [characters] = useAtom(CharacterAtom);
@@ -26,7 +29,16 @@ const Grid = () => {
   const [gameLevel] = useAtom(GameLevelAtom);
   const [activeDetailScreen, setActiveDetailScreen] = useState<CharacterType | EnemyType | null>(null);
   const [currentGameLevel] = useAtom(GameLevelAtom);
+  const [attackingEntities] = useAtom(AttackAnimationAtom);
+  const background = localStorage.getItem('background');
 
+  const checkTurnOrderAndRunLogic = () => {
+    if (turnOrder.length > 0) {
+      runTurnLogic(turnOrder, waitForInput);
+    }
+    currentGameLevel.isRoundOver = true
+  };
+  
   useEffect(() => {
     if (!gameLevel.isRoundOver) {
       // When a new round starts (isRoundOver becomes false),
@@ -48,6 +60,7 @@ const Grid = () => {
       inputPromiseResolverRef.current = resolve;
     });
   }, []);
+
   const handleNextTurnClick = () => {
     setWaitingForInput(false);
     setActiveMenu({ id: null, type: null }); // Hide menu
@@ -55,13 +68,6 @@ const Grid = () => {
       inputPromiseResolverRef.current();
       inputPromiseResolverRef.current = null;
     }
-  };
-
-  const checkTurnOrderAndRunLogic = () => {
-    if (turnOrder.length > 0) {
-      runTurnLogic(turnOrder, waitForInput);
-    }
-    currentGameLevel.isRoundOver = true
   };
 
   const handlePlayerTargeted = (entity: EnemyType | CharacterType) => {
@@ -87,23 +93,23 @@ const Grid = () => {
   };
 
   return (
-    <div className="board">
+    <div className="board" style={{ backgroundImage: `url(/assets/backgrounds/${background}.png)`}}>
+      <Overlay />
       {/* Render selected characters */}
       {selectedCharacters.map((char, index) => (
         <React.Fragment key={char.id}>
-          <div
-            key={char.id}
-            className='entity-container'
-            onClick={() => toggleMenuVisibility(char.id, 'character')}
-            style={{
-              position: 'relative',
-              gridColumn: (index % 2) === 0 ? 2 : 3,
-              gridRow: ((index + 1)* 2) + 1
-            }}
-          >
-            <div onClick={() => handlePlayerTargeted(char)}>
-              <CharacterDisplay character={char} />
-            </div>
+            <EntityContainer
+              entity={char}
+              type="character"
+              index={index}
+              onClick={() => toggleMenuVisibility(char.id, 'character')}
+            >
+            <Shadow entity={char} attackingEntities={attackingEntities} />
+            <EntityDisplayWrapper
+              entity={char}
+              type="character"
+              onTarget={handlePlayerTargeted}
+            />
             {waitingForInput && playerTarget && (
               <ActionMenu 
                 isVisible={activeMenu.id === char.id && activeMenu.type === 'character'}
@@ -112,37 +118,37 @@ const Grid = () => {
                 detailScreen={() => displayDetailScreen(char)}
               />
             )}
-          </div>
+            </EntityContainer>
         </React.Fragment>
       ))}
       
       {/* Render enemies */}
       {Object.values(enemies)
-      .sort((a, b) => a.order - b.order) // Sort by the shuffled order
-      .map((enemy, index) => (
-        <React.Fragment key={enemy.id}>
-          <div
-            className='entity-container'
-            onClick={() => toggleMenuVisibility(enemy.id, 'enemy')}
-            style={{
-              position: 'relative',
-              gridColumn: index % 2 === 0 ? 8 : 9,
-              gridRow: ((index + 1)* 2) + 1
-            }}
-          >
-            <div onClick={() => handlePlayerTargeted(enemy)}>
-              <EnemyDisplay enemy={enemy} />
-            </div>
-            {waitingForInput && playerTarget && (
-              <ActionMenu 
-                isVisible={activeMenu.id === enemy.id && activeMenu.type === 'enemy'}
-                type='enemy'
-                onSpell={handleNextTurnClick}
-                detailScreen={() => displayDetailScreen(enemy)}
+        .sort((a, b) => a.order - b.order)
+        .map((enemy, index) => (
+          <React.Fragment key={enemy.id}>
+            <EntityContainer
+              entity={enemy}
+              type="enemy"
+              index={index}
+              onClick={() => toggleMenuVisibility(enemy.id, 'enemy')}
+            >
+              <Shadow entity={enemy} attackingEntities={attackingEntities} />
+              <EntityDisplayWrapper
+                entity={enemy}
+                type="enemy"
+                onTarget={handlePlayerTargeted}
               />
-            )}
-          </div>
-        </React.Fragment>
+              {waitingForInput && playerTarget && (
+                <ActionMenu 
+                  isVisible={activeMenu.id === enemy.id && activeMenu.type === 'enemy'}
+                  type="enemy"
+                  onSpell={handleNextTurnClick}
+                  detailScreen={() => displayDetailScreen(enemy)}
+                />
+              )}
+            </EntityContainer>
+          </React.Fragment>
       ))}
       {/* Detail Screen */}
       {activeDetailScreen && (

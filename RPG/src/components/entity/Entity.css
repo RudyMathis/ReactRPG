@@ -1,0 +1,243 @@
+/* NAME */
+
+.sprite-name {
+    z-index: var(--high-layer);
+}
+
+.sprite-name[data-type='player'] {
+    text-shadow: -2px 2px 1px var(--shadow);
+}
+
+.sprite-name[data-type='npc'] {
+    text-shadow: 2px 2px 1px var(--shadow);
+}
+
+/* SHADOW */
+
+.shadow {
+    position: absolute;
+    mix-blend-mode: multiply;
+    filter: blur(8px);
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.75);
+    z-index: var(--lowest-layer);
+}
+
+.shadow.follow.player {
+	animation: followPlayerAnimation .9s linear 1 forwards;
+}
+
+@keyframes followPlayerAnimation {
+    50% { left: -10%; width: 75px; filter: blur(4px); }
+}
+
+.shadow.follow.npc {
+	animation: followNPCAnimation .9s linear 1 reverse;
+}
+
+@keyframes followNPCAnimation {
+    50% { left: 15%; width: 75px; filter: blur(4px); }
+}
+
+.shadow.player[data-light='Cave'] {
+    bottom: -15px;
+    left: -60px;
+    width: 150px;
+    height: 40px;
+    transform: rotate3d(1, 1, 1, -15deg);
+}
+
+.shadow.npc[data-light='Cave'] {
+    bottom: -5px;
+    left: 60px;
+    width: 150px;
+    height: 40px;
+	transform: rotate3d(1, 1, 1, 10deg);
+}
+
+.shadow.player[data-light='Forest'] {
+    bottom: -20px;
+    left: -40px;
+    width: 125px;
+    height: 40px;
+    transform: rotate3d(1, 1, 1, -35deg);
+}
+
+.shadow.npc[data-light='Forest'] {
+    bottom: -20px;
+    left: 35px;
+    width: 125px;
+    height: 40px;
+	transform: rotate3d(1, 1, 1, 30deg);
+}
+
+.shadow.player[data-light='Field'] {
+    bottom: -20px;
+    left: -35px;
+    width: 100px;
+    height: 50px;
+    transform: rotate3d(1, 1, 1, -40deg);
+}
+
+.shadow.npc[data-light='Field'] {
+    bottom: -20px;
+    left: 45px;
+    width: 100px;
+    height: 50px;
+	transform: rotate3d(1, 1, 1, 40deg);
+}
+
+.shadow.player[data-light='Desert'] {
+    bottom: -20px;
+    left: -10px;
+    width: 100px;
+    height: 50px;
+    transform: rotate3d(1, 1, 1, -85deg);
+}
+
+.shadow.npc[data-light='Desert'] {
+    bottom: -5px;
+    left: 20px;
+    width: 125px;
+    height: 50px;
+	transform: rotate3d(1, 1, 1, -85deg);
+}
+
+.shadow.player[data-light='City'] {
+    bottom: -30px;
+    left: -70px;
+    width: 150px;
+    height: 50px;
+    transform: rotate3d(1, 1, 1, -50deg);
+}
+
+.shadow.npc[data-light='City'] {
+    bottom: -5px;
+    left: 35px;
+    width: 150px;
+    height: 50px;
+	transform: rotate3d(1, 1, 1, 5deg);
+}
+
+.shadow.player[data-light='Snow'] {
+    bottom: -20px;
+    left: 35px;
+    width: 80px;
+    height: 50px;
+    transform: rotate3d(1, 1, 1, -710deg);
+}
+
+.shadow.npc[data-light='Snow'] {
+    bottom: -30px;
+    left: 25px;
+    width: 100px;
+    height: 50px;
+    transform: rotate3d(1, 1, 1, 30deg);
+}
+
+
+/* ARROW */
+
+.current-turn-arrow img{
+    position: absolute;
+    top: 65%;
+    left: -50%;
+    width: 32px;
+    height: 26px;
+    animation: floatArrow 1s infinite ease-in-out;
+    image-rendering: pixelated;
+    z-index: var(--mid-layer);
+}
+
+@keyframes floatArrow {
+    0%, 100% { transform: translateX(-50%); }
+    50% { transform: translateX(0); }
+}
+
+/* MENU */
+
+.action-menu-container {
+    position: absolute;
+    top: 0;
+    z-index: var(--high-layer);
+    width: max-content;
+    line-height: 1.1rem;
+    padding: 1rem;
+    font-size: 1.25rem;
+    image-rendering: pixelated;
+    border-image-slice: var(--border-image-slice);
+    border-image-width: var(--border-image-width);
+    border-image-source: var(--border-image-source);
+    border-image-repeat: var(--border-image-repeat);
+    color: var(--font);
+}
+
+.action-menu-container.character {
+    left: 120%;
+}
+
+.action-menu-container.enemy {
+    right: 120%;;
+}
+
+.action-menu-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.action-menu-button {
+    padding: 5px 10px;
+    background-color: var(--background-secondary);
+    color: var(--font);
+    border: 1px solid var(--background-secondary);
+}
+
+.action-menu-button:disabled, .action-menu-button:disabled:hover {
+    cursor: not-allowed;
+    filter: brightness(0.5);
+}
+
+.action-menu-button:hover {
+    cursor: pointer;
+    filter: brightness(1.2);
+}
+
+/* DETAIL SCREEN */
+
+.trigger {
+    position: absolute;
+    z-index: var(--mid-layer);
+    width: 2em;
+    height: 2em;
+    background-color: transparent;
+}
+
+.popup {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 30px;
+    width: max-content;
+    z-index: var(--high-layer);
+    line-height: 1.75rem;
+    image-rendering: pixelated;
+    border-image-slice: var(--border-image-slice);
+    border-image-width: var(--border-image-width);
+    border-image-source: var(--border-image-source);
+    border-image-repeat: var(--border-image-repeat);
+}
+
+.popup p, .popup h2 {
+    color: var(--font);
+    background-color: var(--background-secondary);
+}
+
+.detail-status {
+    color: var(--fire);
+    background-color: var(--background-secondary);
+}
+
+.detail-value {
+    color: var(--fire);
+}
