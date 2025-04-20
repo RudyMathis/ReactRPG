@@ -1,12 +1,12 @@
 import { useAtom } from 'jotai';
 import { backgroundAtom } from '../atom/BackgroundAtom';
 import './Overlay.css';
+
 const Overlay = () => {
     const [background] = useAtom(backgroundAtom);
 
     return (
         <>
-            <div className="vignette"></div>
             <div className="blur blur-overlay-top"></div>
             <div className="blur blur-overlay-top-bottom"></div>
             <div className="blur blur-overlay-bottom-top"></div>

@@ -65,6 +65,7 @@ footer, header, hgroup, menu, nav, section {
 }
 
 #root {
+	position: relative;
 	width: 100vw;
 	height: 90vh;
 	display: flex;
@@ -79,7 +80,7 @@ body {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	background-color: var(--background);
+	background-color: var(--shadow);
 }
 ol, ul {
 	list-style: none;
@@ -119,11 +120,6 @@ button {
 
 .character-sprite.dead {
 	cursor: not-allowed;
-}
-
-.entity-bar-container {
-	width: 100px;
-	z-index: var(--mid-layer);
 }
 
 .npc.dead {
@@ -194,4 +190,47 @@ button {
 
 .holy, .action-menu-button.element-holy {
 	color: var(--light);
+}
+
+/* GLOW */
+
+.glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width:  1416px;
+    height: 690px;
+    transform: translate(-50%, -50%);
+    border-radius: 5%;
+    background-size: cover;
+    pointer-events: none;
+    filter: blur(100px) saturate(.6) brightness(1.2) opacity(.5);
+    animation: glow 5s ease-in-out infinite;
+	background-color: var(--background);
+}
+
+.glow[data-glow='Field'] {
+    background-image: url('/assets/backgrounds/Field.png');
+}
+.glow[data-glow='Forest'] {
+    background-image: url('/assets/backgrounds/Forest.png');
+}
+.glow[data-glow='Desert'] {
+    background-image: url('/assets/backgrounds/Desert.png');
+}
+.glow[data-glow='Cave'] {
+    background-image: url('/assets/backgrounds/Cave.png');
+}
+.glow[data-glow='City'] {
+    background-image: url('/assets/backgrounds/City.png');
+}
+.glow[data-glow='Snow'] {
+    background-image: url('/assets/backgrounds/Snow.png');
+}
+
+@keyframes glow {
+    0%, 100% {     
+        filter: blur(100px) saturate(.6) brightness(1.2) opacity(.5); }
+    50% {     
+        filter: blur(90px) saturate(.6) brightness(1.2) opacity(.5); }
 }

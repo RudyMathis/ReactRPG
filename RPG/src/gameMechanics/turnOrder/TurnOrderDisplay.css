@@ -60,7 +60,7 @@
 
 .turn-order-item {
     background-color: var(--white-soft);
-    border: 1px solid var(--white);
+    box-shadow: 1px 1px 0px var(--white);
     padding: .5rem;
 }
 
@@ -70,22 +70,22 @@
 
 .turn-order-item[data-entity-modified="Dark"] {
     background-color: var(--dark-soft);
-    border: 1px solid var(--dark);
+    box-shadow: 1px 1px 0px var(--dark);
 }
 
 .turn-order-item[data-entity-modified="Ice"] {
     background-color: var(--ice-soft);
-    border: 1px solid var(--ice);
+    box-shadow: 1px 1px 0px var(--ice);
 }
 
 .turn-order-item[data-entity-modified="Fire"] {
     background-color: var(--fire-soft);
-    border: 1px solid var(--fire);
+    box-shadow: 1px 1px 0px var(--fire);
 }
 
 .turn-order-item[data-entity-modified="Lightning"] {
     background-color: var(--lightning-soft);
-    border: 1px solid var(--lightning);
+    box-shadow: 1px 1px 0px var(--lightning);
 }
 
 .debuffs {

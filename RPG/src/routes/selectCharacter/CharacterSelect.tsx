@@ -7,6 +7,7 @@ import { useNavigate } from "react-router";
 import Btn from "../../components/ui/Btn";
 import { GameLevelAtom } from "../../atom/GameLevelAtom";
 import { SaveData } from "../../gameMechanics/SaveData";
+import Background from "../../components/ui/Background";
 
 const CharacterSelect = () => {
 
@@ -41,12 +42,14 @@ const CharacterSelect = () => {
                 <NavigateBtn locationValue="/" location="Main Menu" />
             </div>
             <CharacterSheets />
-        {selectedCharacters.length === 3 &&
-            <Btn 
-                className="start-game-btn"
-                onClick={handleBeginAdventure}
-                text="Begin Adventure"
-            />}
+            {selectedCharacters.length === 3 &&
+                <Btn 
+                    className="start-game-btn"
+                    onClick={handleBeginAdventure}
+                    text="Begin Adventure"
+                />
+            }
+            <Background />
         </>
     );
 };

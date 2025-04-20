@@ -1,16 +1,27 @@
+.entity-bar-container {
+    display: flex;
+    flex-direction: column;
+	width: 100px;
+	z-index: var(--mid-layer);
+    gap: 1px;
+}
+
 .bar {
     width: 100%;
     height: 16px;
-    border: 1px solid black;
-    background-color: lightgray;
+    background-color:  hsla(0, 0%, 43%, 0.5);
+    backdrop-filter: blur(1px);
     position: relative;
     overflow: hidden;
     margin-bottom: .05rem;
     z-index: var(--high-layer);
+    border-radius: 2px;
+    box-shadow: 1px 1px 0px rgba(0, 0, 0, 0.75);
 }
 
 .bar-fill {
     height: 100%;
+    opacity: .5;
     transition: width 0.3s ease-in-out;
 }
 
@@ -19,6 +30,6 @@
     top: 57%;
     left: 50%;
     transform: translate(-50%, -50%);
-    color: black;
+    color: var(--white);
     z-index: var(--high-layer);
 }

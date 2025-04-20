@@ -1,10 +1,16 @@
 .character-sheet-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: var(--mid-layer);
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
     gap: 2em;
-    margin: 2em 0
+    margin: 2em 0;
+    width: 1400px;
 }
 
 .character-sheet {
@@ -33,6 +39,7 @@
 .character-sheet h2 {
     margin-bottom: 1rem;
 }
+
 .character-sheet p {
     padding: .25rem;
     line-height: 1.1rem;

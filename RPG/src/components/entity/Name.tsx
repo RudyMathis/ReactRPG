@@ -23,7 +23,7 @@ const Name: React.FC<NameProps> = ({ entity }) => {
     const displayName = shortenName(entity.name);
 
     return (
-        <div className={`sprite-name ${entity.name}`}>{displayName}</div>
+        <div className={`sprite-name ${entity.name}`} data-type={entity.type}>{displayName}</div>
     );
 };
 

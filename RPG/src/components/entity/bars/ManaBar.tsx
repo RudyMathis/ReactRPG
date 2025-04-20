@@ -29,13 +29,13 @@ const ManaBar: React.FC<ManaBarProps> = ({ mana, maxMana, resourceType }) => {
 
     return (
         <div className="bar">
+                <span className={`bar-text ${resourceColor}`}>
+                    <TickingNumber value={mana} duration={100} />
+                </span>
             <div 
                 className="bar-fill"
                 style={{ width: `${manaPercent}%`, backgroundColor: manaPercent > 0 ? resourceColor : 'lightgray' }}
             >
-                <span className={`bar-text ${resourceColor}`}>
-                    <TickingNumber value={mana} duration={100} />
-                </span>
             </div>
         </div>
     );

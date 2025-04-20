@@ -28,6 +28,7 @@
     width: 1416px;
     height: 690px;
     image-rendering: pixelated;
+    border-radius: 5%;
 }
 
 .square {
@@ -86,7 +87,7 @@
     50% { transform: translate(-50%, -5%); }
 }
 
-/* Level Layour */
+/* Level Layout */
 
 .level-layout {
     display: flex;
@@ -100,7 +101,7 @@
     align-items: center;
     position: absolute;
     width: 1416px;
-    top: 10%;
+    top: 15%;
     left: 50%;
     transform: translateX(-50%);
     z-index: var(--highest-layer);
