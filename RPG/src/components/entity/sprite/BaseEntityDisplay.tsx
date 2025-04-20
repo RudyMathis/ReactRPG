@@ -2,10 +2,10 @@ import type { CharacterType } from "../../../atom/CharacterAtom";
 import type { EnemyType } from "../../../atom/BaseEnemyAtom";
 import { AttackAnimationAtom } from "../../../atom/effects/AttackAnimationAtom";
 import { FlashAnimationAtom } from "../../../atom/effects/FlashAnimationAtom";
-import "./BaseEntityDisplay.css"; 
 import { useAtom } from "jotai";
 import { DamageEffectAtom } from "../../../atom/effects/DamageEffectAtom";
 import { EntityImages } from "./EntityImages";
+import "./BaseEntityDisplay.css"; 
 
 type EnityDetailProps = {
     entity: CharacterType | EnemyType;
@@ -45,9 +45,10 @@ function BaseEntityDisplay({ entity }: EnityDetailProps) {
                     ))}
                 </div>
             )}
-    
+            <div className="sprite-glow"></div> 
             <div className="sprite-container">
                 {entity.health > 0 ? (
+                    <>
                     <img 
                         key={key}
                         src={imageSrc}
@@ -59,6 +60,7 @@ function BaseEntityDisplay({ entity }: EnityDetailProps) {
                                 : ""}`}
                         alt={entity.name.replace('_', ' ')}
                     />
+                    </>
                 ) : entity.type === "npc" ? (
                     <img
                         key={key}

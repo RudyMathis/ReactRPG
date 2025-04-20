@@ -1,13 +1,13 @@
 .main-container {
     position: absolute;
-    top: 15%;
+    top: 20%;
     left: 50%;
     transform: translate(-50%, -5%);
     z-index: var(--mid-layer);
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 1416px;
+    width: calc(1416px - 5%);
 }
 
 .start-game-btn {

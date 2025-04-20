@@ -100,8 +100,8 @@
     justify-content: space-between;
     align-items: center;
     position: absolute;
-    width: 1416px;
-    top: 15%;
+    width: calc(1416px - 5%);
+    top: 5%;
     left: 50%;
     transform: translateX(-50%);
     z-index: var(--highest-layer);

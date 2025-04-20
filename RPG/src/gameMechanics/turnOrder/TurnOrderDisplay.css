@@ -1,8 +1,4 @@
 .turn-order-container {
-    position: absolute;
-    top: 5%;
-    left: 50%;
-    transform: translateX(-50%);
     display: flex;
     justify-content: center;
     gap: 2em;
