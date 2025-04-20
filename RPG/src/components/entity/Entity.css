@@ -16,28 +16,12 @@
     z-index: var(--lowest-layer);
 }
 
-.shadow.player {
-    bottom: 7px;
-    left: -100px;
-    width: 150px;
-    height: 40px;
-	transform: rotate3d(1, 1, 1, 15deg);
-}
-
 .shadow.follow.player {
 	animation: followPlayerAnimation .9s linear 1 forwards;
 }
 
 @keyframes followPlayerAnimation {
     50% { left: -10%; width: 75px; filter: blur(4px); }
-}
-
-.shadow.npc {
-    bottom: 7px;
-    left: 40px;
-    width: 150px;
-    height: 40px;
-	transform: rotate3d(1, 1, 1, -20deg);
 }
 
 .shadow.follow.npc {
@@ -129,11 +113,11 @@
 }
 
 .shadow.player[data-light='Snow'] {
-    bottom: -25px;
-    left: -50px;
-    width: 150px;
+    bottom: -20px;
+    left: 35px;
+    width: 80px;
     height: 50px;
-    transform: rotate3d(1, 1, 1, -90deg);
+    transform: rotate3d(1, 1, 1, -710deg);
 }
 
 .shadow.npc[data-light='Snow'] {
