@@ -3,8 +3,8 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width:  1416px;
-    height: 690px;
+    width:  var(--width);
+    height: var(--height);
     background-color: var(--background);
     z-index: var(--lowest-layer);
     border-radius: 5%;
@@ -15,8 +15,8 @@
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    width: 1416px;
-    height: 690px;
+    width: var(--width);
+    height: var(--height);
     background: linear-gradient(to top, hsla(0, 0%, 0%, 0.20), hsla(0, 0%, 0%, 0.20), hsla(0, 0%, 20%, 0.20), hsla(0, 0%, 20%, 0.20));
     background-size: cover;
     background-size: 100% 8px;

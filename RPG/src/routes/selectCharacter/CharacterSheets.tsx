@@ -23,7 +23,7 @@ const CharacterSheets = () => {
                 };
             }
 
-            if (selectedCount >= 3) {
+            if (selectedCount >= 4) {
                 return prev;
             }
 

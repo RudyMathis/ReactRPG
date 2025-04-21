@@ -133,7 +133,7 @@ class EnemyFactory {
 
 export const generateInitialEnemies = (): Record<number, EnemyType> => {
     const initialEnemies: Record<number, EnemyType> = {};
-    const enemyCount = Math.floor(Math.random() * 1) + 2; // 3 to 6 enemies
+    const enemyCount = Math.floor(Math.random() * 3) + 3;
 
     for (let i = 0; i < enemyCount; i++) {
         const enemyType = getRandomEnemyType();

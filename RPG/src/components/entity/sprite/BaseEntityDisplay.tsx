@@ -63,14 +63,6 @@ function BaseEntityDisplay({ entity }: EnityDetailProps) {
                             <div
                                 key={`${entity.id}-animation-${activeAnimation}`}
                                 className={`spell-animation spell-${activeAnimation}`}
-                                style={{
-                                    position: 'absolute',
-                                    top: '0',
-                                    left: '0',
-                                    width: '147px',
-                                    height: '131px',
-                                    pointerEvents: 'none',
-                                }}
                             />
                         )}
                     </>

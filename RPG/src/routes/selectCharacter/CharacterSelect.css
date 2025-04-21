@@ -7,13 +7,14 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: calc(1416px - 5%);
+    width: calc(var(--width) - 5%);
 }
 
 .start-game-btn {
     position: absolute;
-    top: 75%;
+    top: 80%;
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: var(--mid-layer);
+    font-size: 1.5rem;
 }

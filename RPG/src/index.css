@@ -30,6 +30,9 @@
 	--high-layer: 4;
 	--highest-layer: 5;
 
+	--width: 1200px;
+	--height: 900px;
+
 	font-family: "Press Start 2P", system-ui;
 	font-weight: 400;
 	font-style: normal;
@@ -198,7 +201,7 @@ button {
     position: absolute;
     top: 50%;
     left: 50%;
-    width:  1416px;
+    width:  var(--width);
     height: 690px;
     transform: translate(-50%, -50%);
     border-radius: 5%;

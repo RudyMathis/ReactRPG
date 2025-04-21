@@ -1,15 +1,27 @@
 /* NAME */
 
 .sprite-name {
+    font-size: .9rem;
     z-index: var(--high-layer);
+    margin-bottom: .25rem;
+    text-shadow: 1px 0 10px var(--white) ;
 }
 
-.sprite-name[data-type='player'] {
-    text-shadow: -2px 2px 1px var(--shadow);
-}
 
-.sprite-name[data-type='npc'] {
-    text-shadow: 2px 2px 1px var(--shadow);
+.sprite-name[data-type='npc'].Fire {
+    text-shadow: 1px 0 10px var(--fire);
+}
+.sprite-name[data-type='npc'].Ice {
+    text-shadow: 1px 0 10px var(--ice) ;
+}
+.sprite-name[data-type='npc'].Dark {
+    text-shadow: 1px 0 10px  var(--dark);
+}
+.sprite-name[data-type='npc'].Lightning {
+    text-shadow: 1px 0 10px  var(--lightning);
+}
+.sprite-name[data-type='npc'].Holy {
+    text-shadow: 1px 0 10px  var(--holy);
 }
 
 /* SHADOW */
@@ -140,7 +152,7 @@
 
 .current-turn-arrow img{
     position: absolute;
-    top: 65%;
+    top: 37%;
     left: -50%;
     width: 32px;
     height: 26px;

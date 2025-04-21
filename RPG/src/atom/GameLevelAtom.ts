@@ -37,7 +37,7 @@ export const GameLevelAtom = atom(getInitialGameLevel());
 
 const generateNewEnemies = (round: number, level: number): Record<number, EnemyType> => {
     const newEnemies: Record<number, EnemyType> = {};
-    const enemyCount = Math.floor(Math.random() * 1) + 2;
+    const enemyCount = Math.floor(Math.random() * 3) + 3;
 
     // Prevent values < 1
     const levelMultiplier = Math.max(1, level * 0.5);

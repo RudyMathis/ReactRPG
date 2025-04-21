@@ -14,13 +14,13 @@ const Name: React.FC<NameProps> = ({ entity }) => {
         const parts = name.split(' ');
 
         if (elements.includes(parts[0])) {
-            parts[0] = parts[0][0] + '.';
+            parts[0] = '';
         }
 
         return parts.join(' ');
     };
 
-    const displayName = shortenName(entity.name);
+    const displayName = shortenName(entity.name).replace('_', ' ');
 
     return (
         <div className={`sprite-name ${entity.name}`} data-type={entity.type}>{displayName}</div>

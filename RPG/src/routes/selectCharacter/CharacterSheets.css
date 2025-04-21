@@ -10,7 +10,7 @@
     align-items: center;
     gap: 2em;
     margin: 2em 0;
-    width: 1400px;
+    width: calc(var(--width) - 5%);
 }
 
 .character-sheet {

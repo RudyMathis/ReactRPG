@@ -93,7 +93,7 @@ const Grid = () => {
   };
 
   return (
-    <div className="board" style={{ backgroundImage: `url(/assets/backgrounds/${background}.png)`}}>
+    <div className="board" data-background={background}>
       <Overlay />
       {/* Render selected characters */}
       {selectedCharacters.map((char, index) => (

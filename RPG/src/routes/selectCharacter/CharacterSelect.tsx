@@ -26,7 +26,7 @@ const CharacterSelect = () => {
     const selectedCharacters = Object.values(characters).filter(char => char.isSelected);
 
     const handleBeginAdventure = () => {
-        if (selectedCharacters.length !== 3) return;
+        if (selectedCharacters.length !== 4) return;
 
         localStorage.setItem("selectedParty", "true");
         SaveData();
@@ -42,7 +42,7 @@ const CharacterSelect = () => {
                 <NavigateBtn locationValue="/" location="Main Menu" />
             </div>
             <CharacterSheets />
-            {selectedCharacters.length === 3 &&
+            {selectedCharacters.length === 4 &&
                 <Btn 
                     className="start-game-btn"
                     onClick={handleBeginAdventure}

@@ -43,15 +43,16 @@ const EntityContainer: React.FC<EntityContainerProps> = ({
             className={className}
             onClick={onClick}
             style={{
-                position: 'relative',
                 gridColumn,
                 gridRow,
             }}
         >
-            <Name entity={entity} />
-            <div className='entity-bar-container'>
-                <HealthBar health={entity.health <= 0 ? 0 : entity.health} maxHealth={entity.maxHealth} />
-                {entity.maxMana > 0 && <ManaBar mana={entity.mana} maxMana={entity.maxMana} resourceType={entity.resource_type} />}
+            <div className="entity-info-container">
+                <Name entity={entity} />
+                <div className='entity-bar-container'>
+                    <HealthBar health={entity.health <= 0 ? 0 : entity.health} maxHealth={entity.maxHealth} />
+                    {entity.maxMana > 0 && <ManaBar mana={entity.mana} maxMana={entity.maxMana} resourceType={entity.resource_type} />}
+                </div>
             </div>
             {weapon && <img src={`/assets/weapons/${weapon}.png`} className="entity-weapon" data-weapon={weapon} />}
             {children}

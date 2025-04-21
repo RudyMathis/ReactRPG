@@ -10,6 +10,7 @@ import IceBoltTar30 from "./IceBoltTar30";
 import LightningBoltTar40 from "./LightningBoltTar40";
 import MultiShotTar0 from "./MultiShotTar0";
 import ShadowStrikeTar0 from "./ShadowStrikeTar0";
+import QuickAttackTar10 from "./QuickAttackTar10";
 
 const attacks: Record<string, AttackMeta> = {
     Fire_Ball_Tar$20: {
@@ -37,6 +38,13 @@ const attacks: Record<string, AttackMeta> = {
         element: ElementTypes.Physical,
         cost: -20,
         func: HeroicStrikeTar20,
+        animation: 'sword',
+    },
+    Quick_Attack_Tar$10: {
+        element: ElementTypes.Physical,
+        cost: 10,
+        func: QuickAttackTar10,
+        animation: 'quickAttack',
     },
     Garrote__Tar$40: {
         element: ElementTypes.Physical,

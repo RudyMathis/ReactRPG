@@ -178,23 +178,64 @@
 
 .spell-animation {
     position: absolute;
+    top: 0;
+    left: 0;
     background-repeat: no-repeat;
     background-position: left center;
-    background-size: 441px 131px; /* 49px * 3 frames wide */
-    animation: spellPop 0.9s steps(3) forwards;
     image-rendering: pixelated;
-    z-index: 10;
+    z-index: var(--high-layer);
+    pointer-events: none;
 }
 
-@keyframes spellPop {
+.spell-animation.spell-lightning {
+    background-size: 393px 147px; 
+    width: 393px;
+    height: 147px;
+    background-image: url("/assets/vfx/spell_lightning.png");
+    animation: spellLightning 0.9s steps(3) forwards;
+}
+
+@keyframes spellLightning {
     from {
         background-position-x: 0;
     }
     to {
-        background-position-x: -441px;
+        background-position-x: -393px;
     }
 }
 
-.spell-lightning {
-    background-image: url("/assets/vfx/spell_lightning.png");
+.spell-animation.spell-sword {
+    background-size: 219px 111px;
+    width: 219px;
+    height: 111px;
+    background-image: url("/assets/vfx/spell_sword.png");
+    animation: spellSword 0.9s steps(2) forwards;
+}
+
+@keyframes spellSword {
+    from {
+        background-position-x: 0;
+    }
+    to {
+        background-position-x: -219px;
+    }
+}
+
+.spell-animation.spell-quickAttack {
+    background-size: 296px 6px;
+    top: 50%;
+    width: 296px;
+    height: 6px;
+    background-image: url("/assets/vfx/spell_quickAttack.png");
+    animation: spellQuickAttack .9s steps(3) forwards;
+}
+
+
+@keyframes spellQuickAttack {
+    from {
+        background-position-x: 0;
+    }
+    to {
+        background-position-x: -296px;
+    }
 }

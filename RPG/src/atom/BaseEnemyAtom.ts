@@ -89,7 +89,7 @@ export const getRandomClass = (group: string): string => {
         return classes[Math.floor(Math.random() * classes.length)];
     } 
     if (group === "elemental") {
-        const classes = ["Old One", ""];
+        const classes = ["Ancient", ""];
         return classes[Math.floor(Math.random() * classes.length)];
     }
     return ""; 
@@ -103,7 +103,7 @@ export const getRandomEnemyType = (): string => {
 
 // Generate up to 7 unique enemies
 const initialEnemies: Record<number, EnemyType> = {};
-const enemyCount = Math.floor(Math.random() * 1) + 2; // Random between 4-7
+const enemyCount = Math.floor(Math.random() * 3) + 3;
 
 for (let i = 0; i < enemyCount; i++) {
     const enemyType = getRandomEnemyType();
