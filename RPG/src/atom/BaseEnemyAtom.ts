@@ -44,6 +44,7 @@ export type EnemyType = {
     order: number;
     spells: string[];
     target: string[];
+    weapon: string;
     buffs: BuffEffect[];
     debuffs: DebuffEffect[];
     isSelected: boolean;

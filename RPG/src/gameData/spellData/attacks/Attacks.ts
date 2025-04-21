@@ -26,6 +26,7 @@ const attacks: Record<string, AttackMeta> = {
         element: ElementTypes.Lightning,
         cost: 40,
         func: LightningBoltTar40,
+        animation: 'lightning',
     },
     Shadow_Strike_Tar$0: {
         element: ElementTypes.Dark,

@@ -40,6 +40,7 @@ export const NewGameBtn = () => {
         setEnemies(() => generateInitialEnemies());
         
         localStorage.setItem('inProgressGame', 'false');
+        localStorage.setItem('Score', '0');
         currentGameLevel.isRoundOver = false;
         currentGameLevel.isLevelOver = false;
         currentGameLevel.level = 1;

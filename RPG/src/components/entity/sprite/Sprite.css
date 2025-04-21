@@ -2,8 +2,10 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: end;
     gap: 0.5em;
+    width: 100px;
+    height: 200px;
 }
 
 @keyframes attackMoveAnimation {
@@ -24,4 +26,52 @@
 
 .entity-container.attack-move.npc {
     animation: attackNPCMoveAnimation .9s linear 1 reverse; 
+}
+
+.entity-weapon {
+    position: absolute;
+    z-index: var(--high-layer);
+    image-rendering: pixelated;
+}
+
+.entity-weapon[data-weapon="axe"] {
+    bottom: 23px;
+    right: -18px;
+    width: 62px;
+    height: 62px;
+}
+
+.entity-weapon[data-weapon="dagger"] {
+    bottom: 28px;
+    right: 0;
+    width: 39px;
+    height: 39px;
+}
+
+.entity-weapon[data-weapon="bow"] {
+    bottom: 20px;
+    right: 14px;
+    width: 12px;
+    height: 48px;
+}
+
+.entity-weapon[data-weapon="staff"] {
+    bottom: 20px;
+    right: 0;
+    width: 39px;
+    height: 39px;
+}
+
+.entity-weapon[data-weapon="sword"] {
+    bottom: 39px;
+    right: -7px;
+    width: 39px;
+    height: 39px;
+}
+
+.entity-weapon[data-weapon="wand"] {
+    bottom: 30px;
+    right: 0;
+    width: 39px;
+    height: 39px;
 }

@@ -23,6 +23,7 @@ function BaseEntityDisplay({ entity }: EnityDetailProps) {
     const isAttacking = attackingEntities[entity.id] ?? false;
     const isFlashing = flashEntities[entity.id] ?? false;
     const key = isAttacking ? `${entity.id}-attacking` : (isFlashing ? `${entity.id}-flashing-attacking` : `${entity.id}`);
+    const activeAnimation = flashEntities[entity.id];
 
     return (
         <>
@@ -49,18 +50,31 @@ function BaseEntityDisplay({ entity }: EnityDetailProps) {
             <div className="sprite-container">
                 {entity.health > 0 ? (
                     <>
-                    <img 
-                        key={key}
-                        src={imageSrc}
-                        data-entity-modified={(entity.name).match(/Fire|Ice|Dark/)}
-                        className={`sprite ${entity.type} 
-                            ${entity.name}${isAttacking ? " attack" : ""} 
-                            ${isFlashing || (effectData?.isDisplay && entity.type === effectData.target)
-                                ? " flash-damage"
-                                : ""}`}
-                        alt={entity.name.replace('_', ' ')}
-                    />
+                        <img 
+                            key={key}
+                            src={imageSrc}
+                            data-entity-modified={(entity.name).match(/Fire|Ice|Dark/)}
+                            className={`sprite ${entity.type} ${entity.name}${isAttacking ? " attack" : ""} ${isFlashing || (effectData?.isDisplay && entity.type === effectData.target)
+                            ? " flash-damage"
+                            : ""}`}
+                            alt={entity.name.replace('_', ' ')}
+                        />
+                        {activeAnimation && (
+                            <div
+                                key={`${entity.id}-animation-${activeAnimation}`}
+                                className={`spell-animation spell-${activeAnimation}`}
+                                style={{
+                                    position: 'absolute',
+                                    top: '0',
+                                    left: '0',
+                                    width: '147px',
+                                    height: '131px',
+                                    pointerEvents: 'none',
+                                }}
+                            />
+                        )}
                     </>
+                    
                 ) : entity.type === "npc" ? (
                     <img
                         key={key}

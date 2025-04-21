@@ -1,7 +1,7 @@
 import { useAtom } from 'jotai';
 import CharacterAtom from "../../atom/CharacterAtom";
 import { selectedSpellAtom } from "../../atom/SelectedSpellAtom";
-import attacks from "../../gameData/spellData/attacks/Attacks"; // adjust path if needed
+import attacks from "../../gameData/spellData/attacks/Attacks";
 import './Entity.css'
 
 type ActionMenuProps = {

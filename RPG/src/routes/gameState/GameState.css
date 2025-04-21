@@ -23,7 +23,6 @@
     position: relative;
     grid-template-columns: repeat(20, 1fr);
     grid-template-rows: repeat(16, 1fr);
-    gap: 0.5em;
     background-size: 1416px 690px;
     width: 1416px;
     height: 690px;

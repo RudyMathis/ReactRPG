@@ -43,6 +43,7 @@ export type CharacterType = {
     exp: number;
     maxExp: number;
     spells: string[];
+    weapon: string;
     buffs: buffEffect[];
     debuffs: debuffEffect[];
     blessings: string[];

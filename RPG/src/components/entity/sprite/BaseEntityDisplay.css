@@ -3,7 +3,6 @@
     width: 65px;
     height: 96px;
     display: flex;
-    justify-content: center;
     justify-content: flex-start; 
     align-items: center;
     position: relative;
@@ -172,4 +171,30 @@
     33% { transform: translateX(-154px);  width: 280px;}
     66% { transform: translateX(-90px); width: 280px; }
     100% { transform: translateX(0); } 
+}
+
+
+/* spell */
+
+.spell-animation {
+    position: absolute;
+    background-repeat: no-repeat;
+    background-position: left center;
+    background-size: 441px 131px; /* 49px * 3 frames wide */
+    animation: spellPop 0.9s steps(3) forwards;
+    image-rendering: pixelated;
+    z-index: 10;
+}
+
+@keyframes spellPop {
+    from {
+        background-position-x: 0;
+    }
+    to {
+        background-position-x: -441px;
+    }
+}
+
+.spell-lightning {
+    background-image: url("/assets/vfx/spell_lightning.png");
 }

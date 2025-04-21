@@ -11,7 +11,7 @@ export type AttackMeta = {
         target: CharacterType | EnemyType,
         spellCost: number
     ) => number;
-    animation?: (casterId: string, targetId: string) => void;
+    animation?: string;
     sound?: () => void;
     description?: string;
 };

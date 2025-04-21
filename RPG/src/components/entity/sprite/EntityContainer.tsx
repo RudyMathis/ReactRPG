@@ -28,6 +28,7 @@ const EntityContainer: React.FC<EntityContainerProps> = ({
     const [attackingEntities] = useAtom(AttackAnimationAtom);
     const isAttacking = attackingEntities[entity.id] ?? false;
     const isDead = type === 'enemy' && 'health' in entity && entity.health <= 0;
+    const weapon = entity.weapon ?? '';
 
     const className = `entity-container ${entity.type}${isAttacking ? ' attack-move' : ''}${isDead ? ' dead' : ''}`;
 
@@ -52,6 +53,7 @@ const EntityContainer: React.FC<EntityContainerProps> = ({
                 <HealthBar health={entity.health <= 0 ? 0 : entity.health} maxHealth={entity.maxHealth} />
                 {entity.maxMana > 0 && <ManaBar mana={entity.mana} maxMana={entity.maxMana} resourceType={entity.resource_type} />}
             </div>
+            {weapon && <img src={`/assets/weapons/${weapon}.png`} className="entity-weapon" data-weapon={weapon} />}
             {children}
         </div>
     );
