@@ -16,6 +16,7 @@ import Overlay from '../../components/Overlay';
 import Shadow from '../../components/entity/Shadow';
 import EntityContainer from '../../components/entity/sprite/EntityContainer';
 import EntityDisplayWrapper from '../../components/entity/sprite/EntityDisplayWrapper';
+import EndGameDisplay from './EndGameDisplay';
 
 const Grid = () => {
   const [characters] = useAtom(CharacterAtom);
@@ -159,6 +160,7 @@ const Grid = () => {
         </div>
       )}
       {currentGameLevel.isRoundOver == false && <Btn onClick={checkTurnOrderAndRunLogic} className="begin" text="Begin" />}
+      {currentGameLevel.isGameOver && <EndGameDisplay />}
     </div>
   );
 };

@@ -31,14 +31,13 @@ export const HandleAllEnemiesDead = () => {
 };
 
 export const HandleAllCharactersDead = () => { 
-
-    // Check if the game should end
-    const allCharactersDead =  Object.values(storeAtom.get(CharacterAtom)).every(e => e.health <= 0);
+    const selectedCharacters = Object.values(storeAtom.get(CharacterAtom)).filter(char => char.isSelected);
+    const allCharactersDead =  Object.values(selectedCharacters).every(e => e.health <= 0);
     
     if (allCharactersDead) {
         storeAtom.set(GameLevelAtom, (prev) => ({
             ...prev,
-            isRoundOver: true
+            isGameOver: true
         }));
         console.log(`Game Over. ${allCharactersDead}. You Lose`);
         return true; // Stop running turns

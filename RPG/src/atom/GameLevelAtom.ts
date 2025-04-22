@@ -7,8 +7,15 @@ import { getRandomEnemyType, getRandomElement, getRandomClass, determineEnemyGro
 import EnemyFactory from '../gameData/enemies/EnemyFactory';
 import { generateNewBackground } from './BackgroundAtom'; 
 
-// Function to get initial GameLevelAtom state from localStorage
-const getInitialGameLevel = () => {
+type GameLevelType = {
+    round: number;
+    level: number;
+    isRoundOver: boolean;
+    isLevelOver: boolean;
+    background: string;
+    isGameOver: boolean;
+}
+const getInitialGameLevel = (): GameLevelType => {
     const savedLevel = localStorage.getItem('Level');
     const savedRound = localStorage.getItem('Round');
     const savedBackground = localStorage.getItem('background');
@@ -20,6 +27,7 @@ const getInitialGameLevel = () => {
             isRoundOver: false,
             isLevelOver: false,
             background: savedBackground || generateNewBackground(),
+            isGameOver: false
         };
     }
 
@@ -29,11 +37,13 @@ const getInitialGameLevel = () => {
         isRoundOver: false,
         isLevelOver: false,
         background: savedBackground || generateNewBackground(),
+        isGameOver: false
     };
-    
 };
 
-export const GameLevelAtom = atom(getInitialGameLevel());
+
+export const GameLevelAtom = atom<GameLevelType>(getInitialGameLevel());
+
 
 const generateNewEnemies = (round: number, level: number): Record<number, EnemyType> => {
     const newEnemies: Record<number, EnemyType> = {};
