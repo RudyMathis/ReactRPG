@@ -4,9 +4,9 @@ import Btn from "../../components/ui/Btn";
 import { GainExperience } from "../../gameMechanics/GainExperince";
 import { FullRestore } from "../../gameMechanics/FullRestore";
 import CharacterAtom from "../../atom/CharacterAtom";
-import { Blessings } from "../../gameData/characters/Blessings";
+import { Blessings } from "../../gameData/characters/blessings/Blessings";
 import { blessingAtom } from "../../atom/BlessingsAtom";
-import { BlessingsData } from "../../gameData/characters/BlessingsData";
+import { BlessingsData } from "../../gameData/characters/blessings/BlessingsData";
 import { useAtom } from "jotai";
 import { turnCountAtom } from "../../atom/UseTurnCountAtom";
 import './GameState.css'
