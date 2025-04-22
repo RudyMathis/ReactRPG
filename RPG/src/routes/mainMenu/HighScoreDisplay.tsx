@@ -1,22 +1,25 @@
-import { ScoreAtom } from '../../atom/persistant/ScoreAtom';
-import { storeAtom } from '../../atom/storeAtom';
 import './MainMenu.css';
 
 const HighScoreDisplay = () => {
-    const highScores = storeAtom.get(ScoreAtom);
+    const highScores = localStorage.getItem('HighScores')
 
-    if (highScores.length === 0) {
+    if (!highScores) return null;
+
+    let parsedScores: [string, number, string][] = [];
+    try {
+        parsedScores = JSON.parse(highScores);
+    } catch (e) {
+        console.error("Failed to parse HighScores from localStorage:", e);
         return null;
     }
 
-    const sortedScores = [...highScores].sort((a, b) => b[1] - a[1]).slice(0, 10);
+    if (parsedScores.length === 0) return null;
 
     return (
         <>
             <h2>High Scores:</h2>
-            <div>
-                <ul className="high-score-container">
-                {sortedScores.map(([user, score, date], index) => (
+            <ul className="high-score-container">
+                {parsedScores.map(([user, score, date], index) => (
                     <li key={index}>
                         <span>#{index + 1}</span>
                         <span>{user}</span>
@@ -24,8 +27,7 @@ const HighScoreDisplay = () => {
                         <span>{date}</span>
                     </li>
                 ))}
-                </ul>
-            </div>
+            </ul>
         </>
     );
 };

@@ -11,6 +11,7 @@ import { useAtom } from "jotai";
 import { turnCountAtom } from "../../atom/UseTurnCountAtom";
 import './GameState.css'
 import { calculateScore } from "../../gameMechanics/CalculateScore";
+import { SubmitHighScore } from "../../gameMechanics/SubmitHighScore";
 
 const EndofRoundDisplay = () => {
     const AdditionalExperience = 10;
@@ -43,11 +44,11 @@ const EndofRoundDisplay = () => {
         localStorage.setItem('turnCount', JSON.stringify(turnCountAtom));
         localStorage.setItem('characters', JSON.stringify(storeAtom.get(CharacterAtom)));
         localStorage.setItem('currentEntityTurn', "0");
-        localStorage.setItem('Score', `${calculateScore()}`);
+        localStorage.setItem('Score', `${JSON.stringify(calculateScore())}`);
         console.log("END OF ROUND")
 
         currentGameLevel.isRoundOver = true
-
+        SubmitHighScore();
         startNewRound();
     };
 

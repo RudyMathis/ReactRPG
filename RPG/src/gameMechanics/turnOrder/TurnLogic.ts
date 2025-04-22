@@ -13,6 +13,8 @@ import { CharacterBuff } from "../../gameData/spellData/CharacterBuff";
 import { EnemyAttack } from "../../gameData/spellData/EnemyAttack";
 import { Statuses } from "../../gameData/spellData/statuses/Statuses";
 import { SaveData } from "../SaveData";
+import { CalculateTurnScore } from "../CalculateTurnScore";
+import { ScoreAtom } from "../../atom/persistant/ScoreAtom";
 
 type CharacterType = (typeof CharacterAtom) extends import('jotai').Atom<Record<number, infer T>> ? T : never;
 type EnemyType = (typeof EnemyAtom) extends import('jotai').Atom<Record<number, infer T>> ? T : never;
@@ -122,15 +124,43 @@ export const runTurnLogic = async (
           console.log(`Using spell: ${spell}`);
 
           if (playerTarget && 'target' in playerTarget) {
-              const updatedEnemyHealth = CharacterAttack(playerTarget, character, playerTarget, spell as string, spellCost);
+            const updatedEnemyHealth = CharacterAttack(playerTarget, character, playerTarget, spell as string, spellCost);
 
-              storeAtom.set(EnemyAtom, (prev) => ({
-                  ...prev,
-                  [playerTarget.id]: {
-                      ...prev[playerTarget.id],
-                      health: updatedEnemyHealth,
-                  },
-              }));
+            storeAtom.set(EnemyAtom, (prev) => ({
+                ...prev,
+                [playerTarget.id]: {
+                    ...prev[playerTarget.id],
+                    health: updatedEnemyHealth,
+                },
+            }));
+
+            const enemies = storeAtom.get(EnemyAtom);
+            const deadEnemies: number[] = [];
+            
+            Object.values(enemies).forEach((enemy) => {
+                if (enemy.health <= 0 && !enemy.hasScored) {
+                    deadEnemies.push(enemy.id);
+            
+                    // Award points
+                    const killedEnemyLevel = enemy.level;
+                    CalculateTurnScore(killedEnemyLevel);
+                    
+                    // Mark as scored
+                    storeAtom.set(EnemyAtom, (prev) => ({
+                      ...prev,
+                      [enemy.id]: {
+                          ...prev[enemy.id],
+                          hasScored: true,
+                        },
+                      }));
+                      console.log('killed enemy level', killedEnemyLevel, "enemy", enemy);
+                    }
+            });
+            
+            if (deadEnemies.length > 0) {
+                localStorage.setItem('Score', JSON.stringify(storeAtom.get(ScoreAtom)));
+            }
+            
 
           if (handleAllCharactersDead() || handleAllEnemiesDead()) return;
 
