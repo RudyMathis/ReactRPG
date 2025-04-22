@@ -6,10 +6,11 @@ import { useEffect, useState } from 'react';
 import NavigateBtn from '../../components/ui/NavigateBtn';
 import Background from '../../components/ui/Background';
 import HighScoreDisplay from './HighScoreDisplay';
+import AudioManager from '../../gameData/AudioManager';
 
 const MainMenu = () => {
     const [isInProgress, setIsInProgress] = useState(false);
-
+    AudioManager.stop();
     useEffect(() => {
         const inProgressGame = localStorage.getItem('inProgressGame');
         if (inProgressGame === 'true') {

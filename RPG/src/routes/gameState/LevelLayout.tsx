@@ -7,6 +7,7 @@ import CurrentLevelDisplay from "../../components/ui/CurrentLevelDisplay";
 import EndofRoundDisplay from "./EndOfRoundDisplay";
 import { backgroundAtom } from "../../atom/BackgroundAtom";
 import './GameState.css';
+import SettingsIcon from "../../components/ui/SettingsIcon";
 
 const LevelLayout = () => {
     const [currentGameLevel] = useAtom(GameLevelAtom);
@@ -17,7 +18,8 @@ const LevelLayout = () => {
     return (
         <div className="level-layout">
             <div className="top-bar">
-                <NavigateBtn locationValue="/" location="Start Menu" />
+                <NavigateBtn locationValue="/" location="Menu" />
+                <SettingsIcon />
                 <TurnOrderDisplay />
                 <CurrentLevelDisplay />
             </div>

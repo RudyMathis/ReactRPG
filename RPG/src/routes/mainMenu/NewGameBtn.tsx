@@ -43,6 +43,7 @@ export const NewGameBtn = () => {
         localStorage.setItem('Score', '0');
         currentGameLevel.isRoundOver = false;
         currentGameLevel.isLevelOver = false;
+        currentGameLevel.isGameOver = false;
         currentGameLevel.level = 1;
         currentGameLevel.round = 1;
         currentGameLevel.background = newBackground;

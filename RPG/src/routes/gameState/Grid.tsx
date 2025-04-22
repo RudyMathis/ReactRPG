@@ -17,6 +17,7 @@ import Shadow from '../../components/entity/Shadow';
 import EntityContainer from '../../components/entity/sprite/EntityContainer';
 import EntityDisplayWrapper from '../../components/entity/sprite/EntityDisplayWrapper';
 import EndGameDisplay from './EndGameDisplay';
+import AudioManager from '../../gameData/AudioManager';
 
 const Grid = () => {
   const [characters] = useAtom(CharacterAtom);
@@ -34,6 +35,7 @@ const Grid = () => {
   const background = localStorage.getItem('background');
 
   const checkTurnOrderAndRunLogic = () => {
+    AudioManager.play();
     if (turnOrder.length > 0) {
       runTurnLogic(turnOrder, waitForInput);
     }
