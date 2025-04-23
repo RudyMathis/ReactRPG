@@ -74,11 +74,20 @@
     height: 2.8em;
 }
 
+.entityWeapon[data-weapon="sword"][data-character='Knight'] {
+    bottom: 1.8em;
+    right: -.8em;
+}
+
 .entityWeapon[data-weapon="wand"] {
     bottom: 2.1em;
     right: 0;
     width: 2.8em;
     height: 2.8em;
+}
+
+.entityWeapon[data-player-dead='true'] {
+    display: none;
 }
 
 .entityInfoContainer {
@@ -89,7 +98,7 @@
     width: 100%;
 }
 
-[data-dead='true'][data-type='player'] {
+.entityContainer[data-is-player-dead='true'] {
     cursor: not-allowed;
 }
 
@@ -97,7 +106,6 @@
     animation: deathNPCAnimation .9s linear forwards;
     animation-delay: 1s;
 }
-
 
 @keyframes deathNPCAnimation {
     0% { filter: blur(0) grayscale(0); opacity: 1;}

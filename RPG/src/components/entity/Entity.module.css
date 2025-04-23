@@ -234,7 +234,7 @@
     top: 40%;
     left: 50%;
     transform: translateX(-50%);
-    padding: 2.15em;
+    padding: 2.5em;
     width: max-content;
     z-index: var(--high-layer);
     line-height: 1.75rem;

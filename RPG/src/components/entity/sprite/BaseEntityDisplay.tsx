@@ -41,7 +41,7 @@ function BaseEntityDisplay({ entity }: EnityDetailProps) {
                                 style={{
                                     animationDelay: `${(i + 1) * 1}s`,
                                     animation: `${styles.damageAnimation} 0.9s ease-out forwards`,
-                                    left: `${Math.random() * 80}px`,
+                                    // left: `${Math.random() * 80}px`,
                                 }}
                             >
                                 {e.damage}

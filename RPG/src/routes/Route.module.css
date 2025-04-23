@@ -15,10 +15,13 @@
     height: var(--menu-height);
 }
 
+.highScoreContainer {
+    width: 30em;
+}
+
 .highScoreContainer li {
     display: grid;
-    grid-template-columns: 1fr 2fr 1fr 2fr;
-    gap: 0.5rem;
+    grid-template-columns: 0.7fr 1.8fr 1fr 2fr;
     align-items: center;
     margin: .5em 0;
 }

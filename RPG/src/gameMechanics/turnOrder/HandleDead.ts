@@ -37,6 +37,7 @@ export const HandleAllCharactersDead = () => {
     if (allCharactersDead) {
         storeAtom.set(GameLevelAtom, (prev) => ({
             ...prev,
+            isRoundOver: false,
             isGameOver: true
         }));
         console.log(`Game Over. ${allCharactersDead}. You Lose`);

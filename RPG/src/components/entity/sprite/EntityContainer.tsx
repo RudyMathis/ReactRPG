@@ -28,6 +28,7 @@ const EntityContainer: React.FC<EntityContainerProps> = ({
     const [attackingEntities] = useAtom(AttackAnimationAtom);
     const isAttacking = attackingEntities[entity.id] ?? false;
     const isDead = type === 'enemy' && 'health' in entity && entity.health <= 0;
+    const isPlayerDead = type === 'character' && 'health' in entity && entity.health <= 0;
     const weapon = entity.weapon ?? '';
 
     const gridColumn = type === 'character'
@@ -41,6 +42,7 @@ const EntityContainer: React.FC<EntityContainerProps> = ({
             className={styles.entityContainer}
             data-type={entity.type}
             onClick={onClick}
+            data-is-player-dead={isPlayerDead || undefined}
             data-move={isAttacking || undefined}
             data-dead={isDead || undefined}
             style={{
@@ -55,7 +57,14 @@ const EntityContainer: React.FC<EntityContainerProps> = ({
                     {entity.maxMana > 0 && <ManaBar mana={entity.mana} maxMana={entity.maxMana} resourceType={entity.resource_type} />}
                 </div>
             </div>
-            {weapon && <img src={`/assets/weapons/${weapon}.png`} className={styles.entityWeapon} data-weapon={weapon} />}
+            {weapon && 
+                <img src={`/assets/weapons/${weapon}.png`} 
+                    className={styles.entityWeapon} 
+                    data-weapon={weapon} 
+                    data-character={entity.name} 
+                    data-player-dead={isPlayerDead || undefined}
+                />
+            }
             {children}
         </div>
     );
