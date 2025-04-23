@@ -9,7 +9,6 @@ import { runTurnLogic } from '../../gameMechanics/turnOrder/TurnLogic';
 import ActionMenu from '../../components/entity/ActionMenu';
 import DetailScreen from '../../components/entity/DetailScreen';
 import Btn from '../../components/ui/Btn';
-import './GameState.css';
 import { GameLevelAtom } from '../../atom/GameLevelAtom';
 import { AttackAnimationAtom } from '../../atom/effects/AttackAnimationAtom';
 import Overlay from '../../components/Overlay';
@@ -18,6 +17,7 @@ import EntityContainer from '../../components/entity/sprite/EntityContainer';
 import EntityDisplayWrapper from '../../components/entity/sprite/EntityDisplayWrapper';
 import EndGameDisplay from './EndGameDisplay';
 import AudioManager from '../../gameData/AudioManager';
+import styles from './GameState.module.css';
 
 const Grid = () => {
   const [characters] = useAtom(CharacterAtom);
@@ -96,7 +96,7 @@ const Grid = () => {
   };
 
   return (
-    <div className="board" data-background={background}>
+    <div className={styles.board} data-background={background}>
       <Overlay />
       {/* Render selected characters */}
       {selectedCharacters.map((char, index) => (
@@ -155,13 +155,13 @@ const Grid = () => {
       ))}
       {/* Detail Screen */}
       {activeDetailScreen && (
-        <div className="detail-screen-overlay" onClick={closeDetailScreen}>
-          <div className="detail-screen-content" onClick={(e) => e.stopPropagation()}>
+        <div className={styles.detailScreenOverlay} onClick={closeDetailScreen}>
+          <div className={styles.detailScreenContent} onClick={(e) => e.stopPropagation()}>
             <DetailScreen entity={activeDetailScreen} />
           </div>
         </div>
       )}
-      {currentGameLevel.isRoundOver == false && <Btn onClick={checkTurnOrderAndRunLogic} className="begin" text="Begin" />}
+      {currentGameLevel.isRoundOver == false && <Btn onClick={checkTurnOrderAndRunLogic} className={styles.begin} text="Begin" />}
       {currentGameLevel.isGameOver && <EndGameDisplay />}
     </div>
   );

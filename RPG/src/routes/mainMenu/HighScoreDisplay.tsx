@@ -1,4 +1,4 @@
-import './MainMenu.css';
+import styles from "../Route.module.css";
 
 const HighScoreDisplay = () => {
     const highScores = localStorage.getItem('HighScores')
@@ -18,7 +18,7 @@ const HighScoreDisplay = () => {
     return (
         <>
             <h2>High Scores:</h2>
-            <ul className="high-score-container">
+            <ul className={styles.highScoreContainer}>
                 {parsedScores.map(([user, score, date], index) => (
                     <li key={index}>
                         <span>#{index + 1}</span>

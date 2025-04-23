@@ -1,15 +1,16 @@
 import { useAtom } from 'jotai';
 import { UserAtom } from '../../atom/persistant/UserAtom';
+import styles from '../Route.module.css';
 
 const UserNameInput = () => {
     const [userNameAtomValue, setUserNameAtomValue] = useAtom(UserAtom);
 
     return (
-        <div className="user-name-input-container">
+        <div className={styles.userNameInputContainer}>
             <input
                 type="text"
                 placeholder="Enter your name"
-                className="user-name-input"
+                className={styles.userNameInput}
                 value={userNameAtomValue}
                 onChange={(e) => setUserNameAtomValue(e.target.value)}
             />

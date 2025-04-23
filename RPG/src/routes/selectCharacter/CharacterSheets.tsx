@@ -1,6 +1,6 @@
 import { useAtom } from 'jotai';
 import characterAtom from "../../atom/CharacterAtom";
-import "./CharacterSheets.css";
+import styles from "../Route.module.css";
 
 const CharacterSheets = () => {
     const [characters, setCharacters] = useAtom(characterAtom);
@@ -38,11 +38,11 @@ const CharacterSheets = () => {
     };
 
     return (
-        <ul className="character-sheet-container">
+        <ul className={styles.characterSheetContainer}>
             {Object.values(characters).map((char) => (
                 <li
                     key={char.id}
-                    className={`character-sheet ${char.isSelected ? 'isSelected' : ''}`}
+                    className={`${styles.characterSheet} ${char.isSelected ? styles.isSelected : ''}`}
                 >
                     <button onClick={() => handleSelect(char.id)} disabled={charactersLockedIn}>
                         <h2>{char.name}</h2>

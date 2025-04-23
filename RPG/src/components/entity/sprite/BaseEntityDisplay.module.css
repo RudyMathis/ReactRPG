@@ -1,7 +1,7 @@
 
-.sprite-container {
-    width: 65px;
-    height: 96px;
+.spriteContainer {
+    width: 4.5em;
+    height: 7em;
     display: flex;
     justify-content: flex-start; 
     align-items: center;
@@ -9,78 +9,79 @@
     overflow: hidden;
 }
 
-.sprite-glow {
+.spriteGlow {
     position: absolute;
     bottom: 33%;
     left: 50%;
     transform: translate(-50%, 50%);
-    width: 64px;
-    height: 96px;
+    width: 4.5em;
+    height: 7em;
     z-index: var(--low-layer);
     background-color: transparent;
     transition: background-color 0.2s ease, filter 0.2s ease;
 }
 
-.sprite-glow:hover {
+.spriteGlow:hover {
     background-color: var(--white-soft);
     filter: blur(20px) drop-shadow(0px 0px 2px rgba(255, 255, 255, 0.05));
 }
 
 .sprite {
-    height: 96px;
+    height: 7em;
     object-fit: initial; 
     image-rendering: pixelated;
     position: absolute;
 }
 
-.sprite.player {
-    width: 200px; 
-    left: -136px;
+.sprite[data-type='player']{
+    width: 14.3em; 
+    left: -9.5em;
 }
 
-.sprite.npc {
+.sprite[data-type='npc'] {
     position: relative;
-    width: 96px; 
+    width: 7em; 
 }
 
-.sprite.npc.Rat, .sprite.npc.Goblin {
-    height: 64px;
+
+.sprite[data-entity-name='Rat'],  .sprite[data-entity-name='Goblin'] {
+    height: 4.5em;
 }
 
-.sprite-container:has(.Ent), .sprite-container:has(.Ettin), .sprite-container:has(.Manticore) {
-    width: 96px;
-    height: 96px;
+.spriteContainer:has(.sprite[data-entity-name='Ent']),
+.spriteContainer:has(.sprite[data-entity-name='Ettin']),
+.spriteContainer:has(.sprite[data-entity-name='Manticore']) {
+    overflow: visible;
 }
 
-@keyframes flash-damage {
+@keyframes flashDamage {
     0%, 100% { filter: invert(1) }
     50% { filter: none }
 }
 
-.flash-damage {
-    animation: flash-damage .6s linear 2;
+.flashDamage {
+    animation: flashDamage .6s linear 2;
 }
 
-
-.sprite-container [data-entity-modified="Fire"] img {
+.spriteContainer [data-entity-modified="Fire"] img {
     filter: drop-shadow(1px 1px red) drop-shadow(1px -1px red)
     drop-shadow(-1px 1px red) drop-shadow(-1px -1px red)
     drop-shadow(10px 1px 4px rgba(0, 0, 0, 0.75));
 }
 
-.sprite-container [data-entity-modified="Ice"] img {
+.spriteContainer [data-entity-modified="Ice"] img {
     filter: drop-shadow(1px 1px dodgerblue) drop-shadow(1px -1px dodgerblue)
     drop-shadow(-1px 1px dodgerblue) drop-shadow(-1px -1px dodgerblue)
     drop-shadow(10px 1px 4px rgba(0, 0, 0, 0.75));
 }
 
-.sprite-container [data-entity-modified="Dark"] img {
+.spriteContainer [data-entity-modified="Dark"] img {
     filter: drop-shadow(1px 1px purple) drop-shadow(1px -1px purple)
     drop-shadow(-1px 1px purple) drop-shadow(-1px -1px purple)
     drop-shadow(10px 1px 4px rgba(0, 0, 0, 0.75));
 }
 
-.damage-effect {
+.damageEffect {
     animation: damageAnimation 0.9s ease-out forwards;
     bottom: 0;
     z-index: var(--high-layer);
@@ -89,7 +90,7 @@
 }
 
 @keyframes damageAnimation {
-    0%   { transform: translateY(-100px); opacity: 0; }
+    0%   { transform: translateY(-7.1em); opacity: 0; }
     30%  { transform: translateY(0px); opacity: 1; }
     50%  { transform: translateY(-40px); }
     70%  { transform: translateY(0px); }
@@ -99,15 +100,15 @@
     100% { transform: translateY(0px); }
 }
 
-.damage-effect.player {
-    right: 100px;
+.damageEffect[data-type='player']{
+    right: 7.1em;
 }
 
-.damage-effect.npc {
-    left: 100px;
+.damageEffect[data-type='npc'] {
+    left: 7.1em;
 }
 
-.damage-effect[data-damage-type="Fire"] {
+.damageEffect[data-damage-type="Fire"] {
     color: var(--white);
     text-shadow:
         3px 3px 0 var(--fire),
@@ -134,7 +135,7 @@
         3px -3px 0 var(--lightning);
 }
 
-.damage-effect[data-damage-type="Physical"] {
+.damageEffect[data-damage-type="Physical"] {
     color: var(--shadow);
     text-shadow:
         3px 3px 0 var(--white),
@@ -143,40 +144,65 @@
         3px -3px 0 var(--white);
 }
 
-@keyframes attackAnimation {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(200px); } 
-}
-
-.attack.player {
-    animation: attackAnimation .3s steps(3) 3; 
-}
-
-.sprite_death {
-    height: 96px;
+.spriteDeath {
+    height: 7em;
     object-fit: initial; 
     image-rendering: pixelated;
     position: absolute;
-    width: 203px; 
+    width: 14.5em; 
     filter: drop-shadow(-2px 2px 2px var(--shadow));
 }
 
-.death-effect.player {
+.deathEffect[data-type='player']{
     animation: deathPlayerAnimation .6s steps(1) 1;
     animation-delay: 1s;
 }
 
 @keyframes deathPlayerAnimation {
-    0% { transform: translateX(-217px); width: 280px; }
-    33% { transform: translateX(-154px);  width: 280px;}
-    66% { transform: translateX(-90px); width: 280px; }
+    0% { transform: translateX(-217px); width: 20em; }
+    33% { transform: translateX(-154px);  width: 20em;}
+    66% { transform: translateX(-90px); width: 20em; }
     100% { transform: translateX(0); } 
 }
+
+/* [data-dead='true'][data-type='player'] {
+    cursor: not-allowed;
+} */
+
+[data-death='true'][data-type='npc'] {
+    animation: deathNPCAnimation .9s linear forwards;
+    animation-delay: 1s;
+}
+
+@keyframes deathNPCAnimation {
+    0% { filter: blur(0) grayscale(0); opacity: 1;}
+    33% { filter: blur(3px) grayscale(.3); opacity: 1;}
+    66% { filter: blur(6px) grayscale(.6); opacity: 1;}
+    99% { filter: blur(10px) grayscale(1); opacity: 0} 
+	100% {visibility: hidden;}
+}
+
+.sprite[data-type='npc'][data-entity-name='Rat'][data-death='true'], .sprite[data-type='npc'][data-entity-name='Goblin'][data-death='true'] {
+    height: 4.5em;
+}
+
+/* Attack */
+
+
+@keyframes attackAnimation {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(200px); } 
+}
+
+.attack[data-type='player'] {
+    animation: attackAnimation .3s steps(3) 3; 
+}
+
 
 
 /* spell */
 
-.spell-animation {
+.spellAnimation {
     position: absolute;
     top: 0;
     left: 0;
@@ -187,10 +213,10 @@
     pointer-events: none;
 }
 
-.spell-animation.spell-lightning {
-    background-size: 393px 147px; 
-    width: 393px;
-    height: 147px;
+.spellAnimation[data-animation='spell-lightning'] {
+    background-size: 28em 10.5em; 
+    width: 28em;
+    height: 10.5em;
     background-image: url("/assets/vfx/spell_lightning.png");
     animation: spellLightning 0.9s steps(3) forwards;
 }
@@ -200,14 +226,14 @@
         background-position-x: 0;
     }
     to {
-        background-position-x: -393px;
+        background-position-x: -28em;
     }
 }
 
-.spell-animation.spell-sword {
-    background-size: 219px 111px;
-    width: 219px;
-    height: 111px;
+.spellAnimation[data-animation='spell-sword'] {
+    background-size: 15.6em 7.9em;
+    width: 15.6em;
+    height: 7.9em;
     background-image: url("/assets/vfx/spell_sword.png");
     animation: spellSword 0.9s steps(2) forwards;
 }
@@ -217,15 +243,15 @@
         background-position-x: 0;
     }
     to {
-        background-position-x: -219px;
+        background-position-x: -15.6em;
     }
 }
 
-.spell-animation.spell-quickAttack {
-    background-size: 296px 6px;
+.spellAnimation[data-animation='spell-quickAttack'] {
+    background-size: 21.1em .5em;
     top: 50%;
-    width: 296px;
-    height: 6px;
+    width: 21.1em;
+    height: .5em;
     background-image: url("/assets/vfx/spell_quickAttack.png");
     animation: spellQuickAttack .9s steps(3) forwards;
 }
@@ -236,6 +262,6 @@
         background-position-x: 0;
     }
     to {
-        background-position-x: -296px;
+        background-position-x: -21.1em;
     }
 }

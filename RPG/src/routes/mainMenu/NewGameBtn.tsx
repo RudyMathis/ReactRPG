@@ -50,6 +50,5 @@ export const NewGameBtn = () => {
         navigate('/select-character');
     };
     
-    
-    return <Btn onClick={handleStart} text="New Game" className="newGameBtn" />
+    return <Btn onClick={handleStart} text="New Game" />
 };

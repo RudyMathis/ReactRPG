@@ -2,11 +2,11 @@
 import { CharacterType } from "../../../atom/CharacterAtom";
 import { EnemyType } from "../../../atom/BaseEnemyAtom";
 import Name from "../Name";
-import './Sprite.css';
 import { useAtom } from "jotai";
 import { AttackAnimationAtom } from "../../../atom/effects/AttackAnimationAtom";
 import HealthBar from "../bars/HealthBar";
 import ManaBar from "../bars/ManaBar";
+import styles from'./Sprite.module.css';
 
 type Entity = CharacterType | EnemyType;
 
@@ -30,8 +30,6 @@ const EntityContainer: React.FC<EntityContainerProps> = ({
     const isDead = type === 'enemy' && 'health' in entity && entity.health <= 0;
     const weapon = entity.weapon ?? '';
 
-    const className = `entity-container ${entity.type}${isAttacking ? ' attack-move' : ''}${isDead ? ' dead' : ''}`;
-
     const gridColumn = type === 'character'
         ? (index % 2 === 0 ? 4 : 5)
         : (index % 2 === 0 ? 16 : 17);
@@ -40,21 +38,24 @@ const EntityContainer: React.FC<EntityContainerProps> = ({
 
     return (
         <div
-            className={className}
+            className={styles.entityContainer}
+            data-type={entity.type}
             onClick={onClick}
+            data-move={isAttacking || undefined}
+            data-dead={isDead || undefined}
             style={{
                 gridColumn,
                 gridRow,
             }}
         >
-            <div className="entity-info-container">
+            <div className={styles.entityInfoContainer}>
                 <Name entity={entity} />
-                <div className='entity-bar-container'>
+                <div className={styles.entityBarContainer}>
                     <HealthBar health={entity.health <= 0 ? 0 : entity.health} maxHealth={entity.maxHealth} />
                     {entity.maxMana > 0 && <ManaBar mana={entity.mana} maxMana={entity.maxMana} resourceType={entity.resource_type} />}
                 </div>
             </div>
-            {weapon && <img src={`/assets/weapons/${weapon}.png`} className="entity-weapon" data-weapon={weapon} />}
+            {weapon && <img src={`/assets/weapons/${weapon}.png`} className={styles.entityWeapon} data-weapon={weapon} />}
             {children}
         </div>
     );

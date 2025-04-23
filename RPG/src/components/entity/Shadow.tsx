@@ -2,7 +2,7 @@
 import { EnemyType } from "../../atom/BaseEnemyAtom";
 import { CharacterType } from "../../atom/CharacterAtom";
 import { backgroundAtom } from "../../atom/BackgroundAtom";
-import './Entity.css';
+import styles from './Entity.module.css';
 import { useAtom } from "jotai";
 
 type Entity = CharacterType | EnemyType;
@@ -15,7 +15,9 @@ type ShadowProps = {
 const Shadow: React.FC<ShadowProps> = ({ entity, attackingEntities }) => {
     const [background] = useAtom(backgroundAtom);
     return (
-        <div className={`shadow ${entity.type}${attackingEntities[entity.id] ? ' follow' : ''}`} data-light={background}></div>
+        <div className={`${styles.shadow} ${attackingEntities[entity.id] ? ` ${styles.follow}` : ''}`} 
+            data-type={entity.type}
+            data-light={background}></div>
     );
 };
 

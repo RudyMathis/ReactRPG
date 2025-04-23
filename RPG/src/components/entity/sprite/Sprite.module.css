@@ -1,0 +1,108 @@
+.entityContainer {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    align-items: center;
+    justify-content: end;
+    gap: 0.5em;
+    width: 7em;
+    height: 7em;
+}
+
+.entityContainer:hover {
+    cursor: pointer;
+}
+
+.entityContainer[data-move='true'][data-type='player'] {
+    animation: attackMoveAnimation .9s linear 1; 
+} 
+
+@keyframes attackMoveAnimation {
+    0% { transform: translateX(0); }
+    50% { transform: translateX(14.3em); }
+    100% { transform: translateX(0); } 
+}
+
+.entityContainer[data-move='true'][data-type='npc'] {
+    animation: attackNPCMoveAnimation .9s linear 1 reverse; 
+}
+
+@keyframes attackNPCMoveAnimation {
+    0% { transform: translateX(0); }
+    50% { transform: translateX(-14.3em); }
+    100% { transform: translateX(0); } 
+}
+
+.entityWeapon {
+    position: absolute;
+    z-index: var(--low-layer);
+    image-rendering: pixelated;
+}
+
+.entityWeapon[data-weapon="axe"] {
+    bottom: 1.6em;
+    right: -1.3em;
+    width: 4.4em;
+    height: 4.4em;
+}
+
+.entityWeapon[data-weapon="dagger"] {
+    bottom: 2em;
+    right: 0;
+    width: 2.8em;
+    height: 2.8em;
+}
+
+.entityWeapon[data-weapon="bow"] {
+    bottom: 1.4em;
+    right: 1em;
+    width: .86em;
+    height: 3.4em;
+}
+
+.entityWeapon[data-weapon="staff"] {
+    bottom: 1.4em;
+    right: 0;
+    width: 2.8em;
+    height: 2.8em;
+}
+
+.entityWeapon[data-weapon="sword"] {
+    bottom: 2.8em;
+    right: -.5em;
+    width: 2.8em;
+    height: 2.8em;
+}
+
+.entityWeapon[data-weapon="wand"] {
+    bottom: 2.1em;
+    right: 0;
+    width: 2.8em;
+    height: 2.8em;
+}
+
+.entityInfoContainer {
+    position: absolute;
+    top: -5em;
+    left: 0;
+    z-index: var(--mid-layer);
+    width: 100%;
+}
+
+[data-dead='true'][data-type='player'] {
+    cursor: not-allowed;
+}
+
+[data-dead='true'][data-type='npc'] {
+    animation: deathNPCAnimation .9s linear forwards;
+    animation-delay: 1s;
+}
+
+
+@keyframes deathNPCAnimation {
+    0% { filter: blur(0) grayscale(0); opacity: 1;}
+    33% { filter: blur(3px) grayscale(.3); opacity: 1;}
+    66% { filter: blur(6px) grayscale(.6); opacity: 1;}
+    99% { filter: blur(10px) grayscale(1); opacity: 0} 
+	100% {visibility: hidden;}
+}

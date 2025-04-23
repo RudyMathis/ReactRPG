@@ -11,5 +11,5 @@ export const ContinueGameBtn = () => {
         navigate('/game');
     };
     
-    return <Btn onClick={handleStart} text="Continue Game" className="ContinueGameBtn" />
+    return <Btn onClick={handleStart} text="Continue Game" />
 };

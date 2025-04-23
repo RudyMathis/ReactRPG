@@ -1,6 +1,6 @@
 import { EnemyType } from "../../atom/BaseEnemyAtom";
 import { CharacterType } from "../../atom/CharacterAtom";
-import './Entity.css';
+import styles from './Entity.module.css';
 
 type Entity = CharacterType | EnemyType;
 
@@ -23,7 +23,13 @@ const Name: React.FC<NameProps> = ({ entity }) => {
     const displayName = shortenName(entity.name).replace('_', ' ');
 
     return (
-        <div className={`sprite-name ${entity.name}`} data-type={entity.type}>{displayName}</div>
+        <div 
+            className={`${styles.spriteName}`}
+            data-entity-name={`${entity.name.match(/Fire|Ice|Dark|Lightning|Holy|Earth/)}`} 
+            data-type={entity.type}
+        >
+            {displayName}
+        </div>
     );
 };
 

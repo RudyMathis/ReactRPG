@@ -1,19 +1,19 @@
 import { useAtom } from 'jotai';
 import { backgroundAtom } from '../atom/BackgroundAtom';
-import './Overlay.css';
+import styles from  './Overlay.module.css';
 
 const Overlay = () => {
     const [background] = useAtom(backgroundAtom);
 
     return (
         <>
-            <div className="blur blur-overlay-top"></div>
-            <div className="blur blur-overlay-top-bottom"></div>
-            <div className="blur blur-overlay-bottom-top"></div>
-            <div className="blur blur-overlay-bottom"></div>
-            <div className="blur blur-overlay-left"></div>
-            <div className="blur blur-overlay-right"></div>
-            <div className="lighting" data-light={background}></div>
+            <div className={`${styles.blur} ${styles.blurOverlayTop}`}></div>
+            <div className={`${styles.blur} ${styles.blurOverlayTopBottom}`}></div>
+            <div className={`${styles.blur} ${styles.blurOverlayBottomTop}`}></div>
+            <div className={`${styles.blur} ${styles.blurOverlayBottom}`}></div>
+            <div className={`${styles.blur} ${styles.blurOverlayLeft}`}></div>
+            <div className={`${styles.blur} ${styles.blurOverlayRight}`}></div>
+            <div className={`${styles.lighting}`} data-light={background}></div>
         </>
     );
 }

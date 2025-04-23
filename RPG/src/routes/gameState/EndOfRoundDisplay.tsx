@@ -9,7 +9,7 @@ import { blessingAtom } from "../../atom/BlessingsAtom";
 import { BlessingsData } from "../../gameData/characters/blessings/BlessingsData";
 import { useAtom } from "jotai";
 import { turnCountAtom } from "../../atom/UseTurnCountAtom";
-import './GameState.css'
+import styles from './GameState.module.css'
 import { calculateScore } from "../../gameMechanics/CalculateScore";
 import { SubmitHighScore } from "../../gameMechanics/SubmitHighScore";
 
@@ -19,7 +19,6 @@ const EndofRoundDisplay = () => {
     const selectedCharacters = Object.values(characters).filter(char => char.isSelected);
     const [currentGameLevel] = useAtom(GameLevelAtom);
     
-
     const handleNavigation = (gainXP = false, fullResotre = false, blessings = false) => {
         if (gainXP) {
             GainExperience(AdditionalExperience, selectedCharacters.length);
@@ -40,6 +39,7 @@ const EndofRoundDisplay = () => {
             Blessings(randomCharacter);
             
         }
+        
         storeAtom.set(turnCountAtom, 1);
         localStorage.setItem('turnCount', JSON.stringify(turnCountAtom));
         localStorage.setItem('characters', JSON.stringify(storeAtom.get(CharacterAtom)));
@@ -53,8 +53,8 @@ const EndofRoundDisplay = () => {
     };
 
     return (
-        <div className="end-of-round-container">
-            <div className="end-of-round">
+        <div className={styles.endOfRoundDisplay}>
+            <div className={styles.endOfRound}>
                 <Btn onClick={() => handleNavigation()} text="Next Round" />
                 {storeAtom.get(blessingAtom) !== true && <Btn onClick={() => handleNavigation(false, false, true)} text="Blessing & Next Round" />}
                 <Btn onClick={() => handleNavigation(true, false, false)} text="Additional Experience & Next Round" />

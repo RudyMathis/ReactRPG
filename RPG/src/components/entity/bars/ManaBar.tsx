@@ -1,5 +1,5 @@
 import TickingNumber from '../../../components/TickingNumber';
-import './Bar.css';
+import styles from './Bar.module.css';
 
 type ManaBarProps = {
     mana: number;
@@ -28,12 +28,12 @@ const ManaBar: React.FC<ManaBarProps> = ({ mana, maxMana, resourceType }) => {
     }
 
     return (
-        <div className="bar">
-                <span className={`bar-text ${resourceColor}`}>
+        <div className={styles.bar}>
+                <span className={`${styles.barText} ${resourceColor}`}>
                     <TickingNumber value={mana} duration={100} />
                 </span>
             <div 
-                className="bar-fill"
+                className={styles.barFill}
                 style={{ width: `${manaPercent}%`, backgroundColor: manaPercent > 0 ? resourceColor : 'lightgray' }}
             >
             </div>

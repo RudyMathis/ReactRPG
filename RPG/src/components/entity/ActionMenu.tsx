@@ -2,7 +2,7 @@ import { useAtom } from 'jotai';
 import CharacterAtom from "../../atom/CharacterAtom";
 import { selectedSpellAtom } from "../../atom/SelectedSpellAtom";
 import attacks from "../../gameData/spellData/attacks/Attacks";
-import './Entity.css'
+import styles from './Entity.module.css';
 
 type ActionMenuProps = {
     isVisible: boolean;
@@ -32,15 +32,16 @@ const ActionMenu = ({ isVisible, type, onSpell, detailScreen }: ActionMenuProps)
 
     return (
         isVisible && (
-            <div className={`action-menu-container ${type}`}>
+            <div className={`${styles.actionMenuContainer}`} data-type={type}>
                 {selectedCharacters.map((char) => (
                     char.currentTurn ? (
-                        <div key={char.id} className="action-menu-item">
+                        <div key={char.id} className={styles.actionMenuItem}>
                             {char.spells.map((spell, index) => {
                                 const element = attacks[spell]?.element || "None";
                 
                                 const buttonProps = {
-                                    className: `action-menu-button element-${element.toLowerCase()}`,
+                                    className: `${styles.actionMenuButton} element-${element.toLowerCase()}`,
+                                    'data-element':`${element}`,
                                     onClick: () => {
                                         onSpell();
                                         handleSpellClick(spell);
@@ -64,7 +65,7 @@ const ActionMenu = ({ isVisible, type, onSpell, detailScreen }: ActionMenuProps)
                 
                                 return null;
                             })}
-                            <button className="action-menu-button" onClick={detailScreen}>Details</button>
+                            <button className={styles.actionMenuButton} onClick={detailScreen}>Details</button>
                         </div>
                     ) : null
                 ))}

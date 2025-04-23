@@ -1,4 +1,10 @@
 :root {
+	font-family: "Press Start 2P", system-ui;
+	font-weight: 400;
+	font-style: normal;
+	color: var(--font);
+	font-size: 14px;
+	
 	/* variables */
 	--background: hsl(226, 38%, 43%);
 	--background-secondary: hsl(240, 61%, 16%);
@@ -20,7 +26,7 @@
 	--holy-soft: hsla(48, 64%, 85%, 0.25);
     
 	--border-image-slice: 10 10 10 10;
-	--border-image-width: 80px 80px 80px 80px;
+	--border-image-width: 5.7em 5.7em 5.7em 5.7em;
 	--border-image-source: url("/assets/Button_Border.png");
 	--border-image-repeat: stretch stretch;
 
@@ -30,14 +36,17 @@
 	--high-layer: 4;
 	--highest-layer: 5;
 
-	--width: 1200px;
-	--height: 900px;
+	--width: 85.7em;
+	--height: 64.3em;
 
-	font-family: "Press Start 2P", system-ui;
-	font-weight: 400;
-	font-style: normal;
-	color: var(--font);
-	font-size: 14px;
+	--menu-width: 57em;
+	--menu-height: 43em;
+
+	--small-font-size: .8rem;
+	--medium-font-size: 1rem;
+	--large-font-size: 1.25rem;
+	--xlarge-font-size: 1.5rem;
+	--xxlarge-font-size: 1.75rem;
 }
 
 html, body, div, span, applet, object, iframe,
@@ -85,6 +94,7 @@ body {
 	align-items: center;
 	background-color: var(--shadow);
 }
+
 ol, ul {
 	list-style: none;
 }
@@ -121,119 +131,31 @@ button {
 	text-shadow: 2px 2px 0 var(--background);
 }
 
-.character-sprite.dead {
-	cursor: not-allowed;
+/* Button */
+.btn {
+    background-color: transparent;
+    width: max-content;
+    padding: 1rem;
+    font-size: 1.25rem;
+    image-rendering: pixelated;
+    border-image-slice: var(--border-image-slice);
+    border-image-width: var(--border-image-width);
+    border-image-source: var(--border-image-source);
+    border-image-repeat: var(--border-image-repeat);
+    color: var(--font);
 }
 
-.npc.dead {
-    animation: deathNPCAnimation .9s linear forwards;
-    animation-delay: 1s;
+.btn:hover {
+    cursor: pointer;
+    filter: brightness(1.2);
 }
 
-@keyframes deathNPCAnimation {
-    0% { filter: blur(0) grayscale(0); opacity: 1;}
-    33% { filter: blur(3px) grayscale(.3); opacity: 1;}
-    66% { filter: blur(6px) grayscale(.6); opacity: 1;}
-    99% { filter: blur(10px) grayscale(1); opacity: 0} 
-	100% {visibility: hidden;}
+/* Media query for laptop width (example: 1024px) */
+@media (max-width: 1024px) {
+    :root {
+		font-size: calc(14px * 0.7);
+        --width: calc(1200px * 0.7);  /* Reduce width by 10% */
+        --height: calc(900px * 0.7);  /* Reduce height by 10% */
+    }
 }
 
-.user-name-input-container {
-	background-color: transparent;
-	padding: 1rem;
-	image-rendering: pixelated;
-	border-image-slice: var(--border-image-slice);
-	border-image-width: var(--border-image-width);
-	border-image-source: var(--border-image-source);
-	border-image-repeat: var(--border-image-repeat);
-	border-style: solid;
-	color: var(--font);
-}
-
-.user-name-input-container input {
-	background-color: var(--background-secondary);
-	color: var(--font);
-	border: 1px solid var(--background-secondary);
-	
-}
-
-.user-name-input-container input::placeholder {
-	font-weight: bold;
-	opacity: 0.5;
-	color: var(--font);
-}
-
-.npc, .player {
-	color: var(--white);
-}
-
-.Fire, .action-menu-button.element-fire {
-	color: var(--fire);
-}
-
-.Water, .action-menu-button.element-water {
-	color: var(--water);
-}
-
-.Ice, .action-menu-button.element-ice {
-	color: var(--ice);
-}
-
-.Earth, .action-menu-button.element-earth {
-	color: var(--earth);
-}
-
-.Lightning, .action-menu-button.element-lightning {
-	color: var(--lightning);
-}
-
-.Dark, .action-menu-button.element-dark {
-	color: var(--dark);
-}
-
-.holy, .action-menu-button.element-holy {
-	color: var(--light);
-}
-
-/* GLOW */
-
-.glow {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width:  var(--width);
-    height: 690px;
-    transform: translate(-50%, -50%);
-    border-radius: 5%;
-    background-size: cover;
-    pointer-events: none;
-    filter: blur(100px) saturate(.6) brightness(1.2) opacity(.5);
-    animation: glow 5s ease-in-out infinite;
-	background-color: var(--background);
-}
-
-.glow[data-glow='Field'] {
-    background-image: url('/assets/backgrounds/Field.png');
-}
-.glow[data-glow='Forest'] {
-    background-image: url('/assets/backgrounds/Forest.png');
-}
-.glow[data-glow='Desert'] {
-    background-image: url('/assets/backgrounds/Desert.png');
-}
-.glow[data-glow='Cave'] {
-    background-image: url('/assets/backgrounds/Cave.png');
-}
-.glow[data-glow='City'] {
-    background-image: url('/assets/backgrounds/City.png');
-}
-.glow[data-glow='Snow'] {
-    background-image: url('/assets/backgrounds/Snow.png');
-}
-
-@keyframes glow {
-    0%, 100% {     
-        filter: blur(100px) saturate(.6) brightness(1.2) opacity(.5); }
-    50% {     
-        filter: blur(90px) saturate(.6) brightness(1.2) opacity(.5); }
-}

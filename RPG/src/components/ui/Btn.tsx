@@ -1,4 +1,3 @@
-import './Btn.css'
 type BtnProps = {
     onClick: () => void;
     text: string

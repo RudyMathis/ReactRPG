@@ -5,7 +5,7 @@ import { FlashAnimationAtom } from "../../../atom/effects/FlashAnimationAtom";
 import { useAtom } from "jotai";
 import { DamageEffectAtom } from "../../../atom/effects/DamageEffectAtom";
 import { EntityImages } from "./EntityImages";
-import "./BaseEntityDisplay.css"; 
+import styles from './BaseEntityDisplay.module.css';
 
 type EnityDetailProps = {
     entity: CharacterType | EnemyType;
@@ -20,8 +20,11 @@ function BaseEntityDisplay({ entity }: EnityDetailProps) {
     const imageSrc = EntityImages[entity.name] || EntityImages[(entity as EnemyType).base] || '/assets/default.png';
     const imageSrcDead = EntityImages[entity.name + '_Death'] || '/assets/default.png';
 
-    const isAttacking = attackingEntities[entity.id] ?? false;
-    const isFlashing = flashEntities[entity.id] ?? false;
+    const isAttacking = !!attackingEntities[entity.id];
+    const isFlashing = !!flashEntities[entity.id];
+    const isTakingDamage = !!(effectData?.isDisplay && entity.type === effectData.target);
+    const shouldFlash = isFlashing || isTakingDamage;
+
     const key = isAttacking ? `${entity.id}-attacking` : (isFlashing ? `${entity.id}-flashing-attacking` : `${entity.id}`);
     const activeAnimation = flashEntities[entity.id];
 
@@ -30,13 +33,14 @@ function BaseEntityDisplay({ entity }: EnityDetailProps) {
             {effectData?.isDisplay && entity.type === effectData.target && (
                 <div>
                     {effectData.effects.map((e, i) => (
-                        <div key={i} className="damage-line">
+                        <div key={i}>
                             <span
-                                className={`damage-effect ${entity.type}`}
+                                className={styles.damageEffect}
+                                data-type={entity.type}
                                 data-damage-type={e.type}
                                 style={{
                                     animationDelay: `${(i + 1) * 1}s`,
-                                    animation: 'damageAnimation 0.9s ease-out forwards',
+                                    animation: `${styles.damageAnimation} 0.9s ease-out forwards`,
                                     left: `${Math.random() * 80}px`,
                                 }}
                             >
@@ -46,46 +50,54 @@ function BaseEntityDisplay({ entity }: EnityDetailProps) {
                     ))}
                 </div>
             )}
-            <div className="sprite-glow"></div> 
-            <div className="sprite-container">
+            <div className={styles.spriteGlow}></div> 
+            <div className={styles.spriteContainer}>
                 {entity.health > 0 ? (
                     <>
-                        <img 
+                        <img
                             key={key}
                             src={imageSrc}
-                            data-entity-modified={(entity.name).match(/Fire|Ice|Dark/)}
-                            className={`sprite ${entity.type} ${entity.name}${isAttacking ? " attack" : ""} ${isFlashing || (effectData?.isDisplay && entity.type === effectData.target)
-                            ? " flash-damage"
-                            : ""}`}
                             alt={entity.name.replace('_', ' ')}
+                            data-entity-modified={(entity.name).match(/Fire|Ice|Dark/)?.[0]}
+                            data-entity-name={(entity.name).match(/Ent|Ettin|Manticore|Goblin|Rat/)?.[0]}
+                            data-type={entity.type}
+                            className={`
+                                ${styles.sprite}
+                                ${shouldFlash ? styles.flashDamage : ""}
+                                ${isAttacking ? styles.attack : ""}
+                            `}
+                            
                         />
                         {activeAnimation && (
                             <div
                                 key={`${entity.id}-animation-${activeAnimation}`}
-                                className={`spell-animation spell-${activeAnimation}`}
+                                className={styles.spellAnimation}
+                                data-animation={`spell-${activeAnimation}`}
                             />
                         )}
                     </>
-                    
                 ) : entity.type === "npc" ? (
                     <img
                         key={key}
                         src={imageSrc}
-                        data-entity-modified={(entity.name).match(/Fire|Ice|Dark/)}
-                        className={`sprite ${entity.type} ${entity.name}`}
+                        data-death={true}
                         alt={`${entity.name.replace('_', ' ')} is dead`}
+                        data-entity-modified={(entity.name).match(/Fire|Ice|Dark/)?.[0]}
+                        data-type={entity.type}
+                        data-entity-name={(entity.name).match(/Ent|Ettin|Manticore|Goblin|Rat/)?.[0]}
+                        className={styles.sprite}
                     />
                 ) : (
                     <img
-                        className={`sprite_death death-effect ${entity.type}`}
                         src={imageSrcDead}
                         alt={`${entity.name.replace('_', ' ')} is dead`}
+                        className={`${styles.spriteDeath} ${styles.deathEffect}`}
+                        data-type={entity.type}
                     />
                 )}
             </div>
         </>
     );
-    
 }
 
 export default BaseEntityDisplay;

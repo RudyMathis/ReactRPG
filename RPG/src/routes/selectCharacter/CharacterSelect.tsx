@@ -1,6 +1,5 @@
 import CharacterSheets from "./CharacterSheets";
 import NavigateBtn from "../../components/ui/NavigateBtn";
-import "./CharacterSelect.css";
 import CharacterAtom from "../../atom/CharacterAtom";
 import { useAtom } from "jotai";
 import { useNavigate } from "react-router";
@@ -8,7 +7,7 @@ import Btn from "../../components/ui/Btn";
 import { GameLevelAtom } from "../../atom/GameLevelAtom";
 import { SaveData } from "../../gameMechanics/SaveData";
 import Background from "../../components/ui/Background";
-
+import styles from "../Route.module.css";
 const CharacterSelect = () => {
 
     // const [currentGameLevel] = useAtom(GameLevelAtom);
@@ -36,19 +35,21 @@ const CharacterSelect = () => {
 
     return (
         <>
-            <div className="main-container">           
+            <div className={styles.mainContainer}>   
+                <div className={styles.topBar}>
                 <h1>Select Your Character</h1>
                 {/* <h2>{message}</h2> */}
                 <NavigateBtn locationValue="/" location="Main Menu" />
+                    </div>        
+                <CharacterSheets />
+                {selectedCharacters.length === 4 &&
+                    <Btn 
+                        className={styles.startGameBtn}
+                        onClick={handleBeginAdventure}
+                        text="Begin Adventure"
+                    />
+                }
             </div>
-            <CharacterSheets />
-            {selectedCharacters.length === 4 &&
-                <Btn 
-                    className="start-game-btn"
-                    onClick={handleBeginAdventure}
-                    text="Begin Adventure"
-                />
-            }
             <Background />
         </>
     );

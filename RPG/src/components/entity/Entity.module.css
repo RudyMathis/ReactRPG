@@ -1,26 +1,31 @@
 /* NAME */
 
-.sprite-name {
+.spriteName {
     font-size: .9rem;
     z-index: var(--high-layer);
     margin-bottom: .25rem;
     text-shadow: 1px 0 10px var(--white) ;
+    color: var(--white)
 }
 
-
-.sprite-name[data-type='npc'].Fire {
+.spriteName[data-type='npc'][data-entity-name='Fire'] {
+    color: var(--fire);
     text-shadow: 1px 0 10px var(--fire);
 }
-.sprite-name[data-type='npc'].Ice {
+.spriteName[data-type='npc'][data-entity-name='Ice'] {
+    color: var(--ice);
     text-shadow: 1px 0 10px var(--ice) ;
 }
-.sprite-name[data-type='npc'].Dark {
+.spriteName[data-type='npc'][data-entity-name='Dark'] {
+    color: var(--dark);
     text-shadow: 1px 0 10px  var(--dark);
 }
-.sprite-name[data-type='npc'].Lightning {
+.spriteName[data-type='npc'][data-entity-name='Lightning'] {
+    color: var(--lightning);
     text-shadow: 1px 0 10px  var(--lightning);
 }
-.sprite-name[data-type='npc'].Holy {
+.spriteName[data-type='npc'][data-entity-name='Holy'] {
+    color: var(--holy);
     text-shadow: 1px 0 10px  var(--holy);
 }
 
@@ -35,127 +40,127 @@
     z-index: var(--lowest-layer);
 }
 
-.shadow.follow.player {
+.shadow.follow[data-type='player'] {
 	animation: followPlayerAnimation .9s linear 1 forwards;
 }
 
 @keyframes followPlayerAnimation {
-    50% { left: -10%; width: 75px; filter: blur(4px); }
+    50% { left: -10%; width: 5.35em; filter: blur(4px); }
 }
 
-.shadow.follow.npc {
+.shadow.follow[data-type='npc'] {
 	animation: followNPCAnimation .9s linear 1 reverse;
 }
 
 @keyframes followNPCAnimation {
-    50% { left: 15%; width: 75px; filter: blur(4px); }
+    50% { left: 15%; width: 5.35em; filter: blur(4px); }
 }
 
-.shadow.player[data-light='Cave'] {
-    bottom: -15px;
-    left: -60px;
-    width: 150px;
-    height: 40px;
+.shadow[data-type='player'][data-light='Cave'] {
+    bottom: -1em;
+    left: -4.3em;
+    width: 10.7em;
+    height: 2.85em;
     transform: rotate3d(1, 1, 1, -15deg);
 }
 
-.shadow.npc[data-light='Cave'] {
+.shadow[data-type='npc'][data-light='Cave'] {
     bottom: -5px;
-    left: 60px;
-    width: 150px;
-    height: 40px;
+    left: 4.3em;
+    width: 10.7em;
+    height: 2.85em;
 	transform: rotate3d(1, 1, 1, 10deg);
 }
 
-.shadow.player[data-light='Forest'] {
-    bottom: -20px;
-    left: -40px;
-    width: 125px;
-    height: 40px;
+.shadow[data-type='player'][data-light='Forest'] {
+    bottom: -1.43em;
+    left: -2.85em;
+    width: 8.9em;
+    height: 2.85em;
     transform: rotate3d(1, 1, 1, -35deg);
 }
 
-.shadow.npc[data-light='Forest'] {
-    bottom: -20px;
-    left: 35px;
-    width: 125px;
-    height: 40px;
+.shadow[data-type='npc'][data-light='Forest'] {
+    bottom: -1.43em;
+    left: 2.5em;
+    width: 8.9em;
+    height: 2.85em;
 	transform: rotate3d(1, 1, 1, 30deg);
 }
 
-.shadow.player[data-light='Field'] {
-    bottom: -20px;
-    left: -35px;
-    width: 100px;
-    height: 50px;
+.shadow[data-type='player'][data-light='Field'] {
+    bottom: -1.43em;
+    left: -2.5em;
+    width: 7.15em;
+    height: 3.6em;
     transform: rotate3d(1, 1, 1, -40deg);
 }
 
-.shadow.npc[data-light='Field'] {
-    bottom: -20px;
-    left: 45px;
-    width: 100px;
-    height: 50px;
+.shadow[data-type='npc'][data-light='Field'] {
+    bottom: -1.43em;
+    left: 3.2em;
+    width: 7.15em;
+    height: 3.6em;
 	transform: rotate3d(1, 1, 1, 40deg);
 }
 
-.shadow.player[data-light='Desert'] {
-    bottom: -20px;
+.shadow[data-type='player'][data-light='Desert'] {
+    bottom: -1.43em;
     left: -10px;
-    width: 100px;
-    height: 50px;
+    width: 7.15em;
+    height: 3.6em;
     transform: rotate3d(1, 1, 1, -85deg);
 }
 
-.shadow.npc[data-light='Desert'] {
+.shadow[data-type='npc'][data-light='Desert'] {
     bottom: -5px;
-    left: 20px;
-    width: 125px;
-    height: 50px;
+    left: 1.43em;
+    width: 8.9em;
+    height: 3.6em;
 	transform: rotate3d(1, 1, 1, -85deg);
 }
 
-.shadow.player[data-light='City'] {
-    bottom: -30px;
-    left: -70px;
-    width: 150px;
-    height: 50px;
+.shadow[data-type='player'][data-light='City'] {
+    bottom: -2.15em;
+    left: -5em;
+    width: 10.7em;
+    height: 3.6em;
     transform: rotate3d(1, 1, 1, -50deg);
 }
 
-.shadow.npc[data-light='City'] {
+.shadow[data-type='npc'][data-light='City'] {
     bottom: -5px;
-    left: 35px;
-    width: 150px;
-    height: 50px;
+    left: 2.5em;
+    width: 10.7em;
+    height: 3.6em;
 	transform: rotate3d(1, 1, 1, 5deg);
 }
 
-.shadow.player[data-light='Snow'] {
-    bottom: -20px;
-    left: 35px;
-    width: 80px;
-    height: 50px;
+.shadow[data-type='player'][data-light='Snow'] {
+    bottom: -1.43em;
+    left: 2.5em;
+    width: 5.7em;
+    height: 3.6em;
     transform: rotate3d(1, 1, 1, -710deg);
 }
 
-.shadow.npc[data-light='Snow'] {
-    bottom: -30px;
-    left: 25px;
-    width: 100px;
-    height: 50px;
+.shadow[data-type='npc'][data-light='Snow'] {
+    bottom: -2.15em;
+    left: 1.8em;
+    width: 7.15em;
+    height: 3.6em;
     transform: rotate3d(1, 1, 1, 30deg);
 }
 
 
 /* ARROW */
 
-.current-turn-arrow img{
+.currentTurnArrow img{
     position: absolute;
     top: 37%;
     left: -50%;
-    width: 32px;
-    height: 26px;
+    width: 2.28em;
+    height: 1.86em;
     animation: floatArrow 1s infinite ease-in-out;
     image-rendering: pixelated;
     z-index: var(--mid-layer);
@@ -168,7 +173,7 @@
 
 /* MENU */
 
-.action-menu-container {
+.actionMenuContainer {
     position: absolute;
     top: 0;
     z-index: var(--high-layer);
@@ -184,32 +189,32 @@
     color: var(--font);
 }
 
-.action-menu-container.character {
+.actionMenuContainer[data-type='character'] {
     left: 120%;
 }
 
-.action-menu-container.enemy {
+.actionMenuContainer[data-type='enemy'] {
     right: 120%;;
 }
 
-.action-menu-item {
+.actionMenuItem {
     display: flex;
     flex-direction: column;
 }
 
-.action-menu-button {
+.actionMenuButton {
     padding: 5px 10px;
     background-color: var(--background-secondary);
     color: var(--font);
     border: 1px solid var(--background-secondary);
 }
 
-.action-menu-button:disabled, .action-menu-button:disabled:hover {
+.actionMenuButton:disabled, .actionMenuButton:disabled:hover {
     cursor: not-allowed;
     filter: brightness(0.5);
 }
 
-.action-menu-button:hover {
+.actionMenuButton:hover {
     cursor: pointer;
     filter: brightness(1.2);
 }
@@ -229,7 +234,7 @@
     top: 40%;
     left: 50%;
     transform: translateX(-50%);
-    padding: 30px;
+    padding: 2.15em;
     width: max-content;
     z-index: var(--high-layer);
     line-height: 1.75rem;
@@ -245,11 +250,39 @@
     background-color: var(--background-secondary);
 }
 
-.detail-status {
+.detailStatus {
     color: var(--fire);
     background-color: var(--background-secondary);
 }
 
-.detail-value {
+.detailValue {
     color: var(--fire);
+}
+
+/* Action Menu */
+.actionMenuButton[data-element='Fire'] {
+	color: var(--fire);
+}
+
+.actionMenuButton[data-element='Water'] {
+	color: var(--water);
+}
+.actionMenuButton[data-element='Ice'] {
+	color: var(--ice);
+}
+
+.actionMenuButton[data-element='Earth'] {
+	color: var(--earth);
+}
+
+.actionMenuButton[data-element='Lightning'] {
+	color: var(--lightning);
+}
+
+.actionMenuButton[data-element='Dark'] {
+	color: var(--dark);
+}
+
+.actionMenuButton[data-element='Holy'] {
+	color: var(--light);
 }

@@ -1,4 +1,4 @@
-import './MainMenu.css';
+import styles from '../Route.module.css';
 import UserNameInput from './UserNameInput';
 import { NewGameBtn } from './NewGameBtn';
 import { ContinueGameBtn } from './ContinueGameBtn';
@@ -20,7 +20,7 @@ const MainMenu = () => {
 
     return (
         <>
-            <div className="main-menu">
+            <div className={styles.mainContainer}>
                 <h1>React RPG</h1>
                 <HighScoreDisplay />
                 <UserNameInput />
@@ -32,6 +32,5 @@ const MainMenu = () => {
         </>
     );
 };
-
 
 export default MainMenu;

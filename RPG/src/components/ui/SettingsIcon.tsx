@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import './UI.css';
+import styles from './UI.module.css';
 import AudioManager from '../../gameData/AudioManager';
 
 const SettingsIcon = () => {
@@ -9,7 +9,6 @@ const SettingsIcon = () => {
     
     const handleOpenSettings = () => {
         setOpen(prev => !prev);
-        console.log("Open settings");
     };
 
     const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -44,22 +43,22 @@ const SettingsIcon = () => {
     }, [open]);
 
     return (
-        <div className='settings-container'>
+        <div className={styles.settingsContainer}>
             <img
                 src="/assets/Settings_Icon.png"
-                className="settings-icon"
+                className={styles.settingsIcon}
                 onClick={handleOpenSettings}
                 alt="Settings"
             />
 
             <div
-                className='settings-overlay'
+                className={styles.settingsOverlay}
                 data-open={open}
             >
-                <div className='settings-menu' data-open={open} ref={menuRef}>
+                <div className={styles.settingsMenu} data-open={open} ref={menuRef}>
                     <h1>Settings</h1>
 
-                    <div className="setting-row">
+                    <div className={styles.settingsRow}>
                         <label htmlFor="volume">Volume: {volume}</label>
                         <input
                             type="range"
@@ -71,8 +70,8 @@ const SettingsIcon = () => {
                         />
                     </div>
 
-                    <div className="setting-row">Gamepedia</div>
-                    <div className="setting-row">Credits</div>
+                    <div className={styles.settingsRow}>Gamepedia</div>
+                    <div className={styles.settingsRow}>Credits</div>
                 </div>
             </div>
         </div>

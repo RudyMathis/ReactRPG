@@ -82,36 +82,36 @@
         hsla(110, 62%, 62%, 1) 0%,
         hsla(0, 0%, 0%, .5) 100%);
     mix-blend-mode: color;
-    filter:blur(200px)
+    filter:blur(14.3em)
 }
 
-.blur-overlay-top {
-    top: -20px;
+.blurOverlayTop {
+    top: -1.4em;
     backdrop-filter: blur(3px);
     -webkit-backdrop-filter: blur(3px);
 }
 
-.blur-overlay-top-bottom {
-    top: calc(10% - 40px);
+.blurOverlayTopBottom {
+    top: calc(10% - 2.8em);
     backdrop-filter: blur(1px);
     -webkit-backdrop-filter: blur(1px);
 }
 
-.blur-overlay-bottom-top {
-    bottom: calc(10% - 40px);
+.blurOverlayBottomTop {
+    bottom: calc(10% - 2.8em);
     backdrop-filter: blur(1px);
     -webkit-backdrop-filter: blur(1px);
 }
 
-.blur-overlay-bottom {
-    bottom: -20px;
+.blurOverlayBottom {
+    bottom: -1.4em;
     backdrop-filter: blur(3px);
     -webkit-backdrop-filter: blur(3px);
 }
 
-.blur.blur-overlay-left {
+.blur.blurOverlayLeft {
     top: 0;
-    left: -10px;
+    left: -.7em;
     width: 15%;
     height: 100%;
     backdrop-filter: blur(2px);
@@ -128,7 +128,7 @@
     );
 }
 
-.blur.blur-overlay-right {
+.blur.blurOverlayRigh {
     top: 0;
     left: 85%;
     width: 15%;

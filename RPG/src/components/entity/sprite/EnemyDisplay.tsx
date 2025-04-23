@@ -1,6 +1,5 @@
 import { EnemyType } from '../../../atom/BaseEnemyAtom';
 import BaseEntityDisplay from './BaseEntityDisplay';
-
 type EnemyDisplay = {
     enemy: EnemyType;
 }

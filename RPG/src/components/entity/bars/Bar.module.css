@@ -1,14 +1,14 @@
-.entity-bar-container {
+.entityBarContainer {
     display: flex;
     flex-direction: column;
-	width: 100px;
+	width: 7em;
 	z-index: var(--mid-layer);
     gap: 1px;
 }
 
 .bar {
     width: 100%;
-    height: 16px;
+    height: 1.2em;
     background-color:  hsla(0, 0%, 43%, 0.5);
     backdrop-filter: blur(1px);
     position: relative;
@@ -19,13 +19,13 @@
     box-shadow: 1px 1px 0px rgba(0, 0, 0, 0.75);
 }
 
-.bar-fill {
+.barFill {
     height: 100%;
     opacity: .5;
     transition: width 0.3s ease-in-out;
 }
 
-.bar-text {
+.barText {
     position: absolute;
     top: 57%;
     left: 50%;

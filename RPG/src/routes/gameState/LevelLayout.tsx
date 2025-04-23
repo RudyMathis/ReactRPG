@@ -6,7 +6,8 @@ import TurnOrderDisplay from "../../gameMechanics/turnOrder/TurnOrderDisplay";
 import CurrentLevelDisplay from "../../components/ui/CurrentLevelDisplay";
 import EndofRoundDisplay from "./EndOfRoundDisplay";
 import { backgroundAtom } from "../../atom/BackgroundAtom";
-import './GameState.css';
+import styles from './GameState.module.css';
+import stylesUI from '../../components/ui/UI.module.css'
 import SettingsIcon from "../../components/ui/SettingsIcon";
 
 const LevelLayout = () => {
@@ -16,15 +17,17 @@ const LevelLayout = () => {
     const [background] = useAtom(backgroundAtom);
 
     return (
-        <div className="level-layout">
-            <div className="top-bar">
-                <NavigateBtn locationValue="/" location="Menu" />
-                <SettingsIcon />
+        <div className={styles.levelLayout}>
+            <div className={styles.topBar}>
+                <div className={stylesUI.leftContainer}>
+                    <NavigateBtn locationValue="/" location="Menu" />
+                    <SettingsIcon />
+                </div>
                 <TurnOrderDisplay />
                 <CurrentLevelDisplay />
             </div>
-            <img src={`/assets/backgrounds/${background}.png`} className="glow" data-glow={background} />
-            <div className="crt"></div>
+            <img src={`/assets/backgrounds/${background}.png`} className={stylesUI.glow} data-glow={background} />
+            <div className={stylesUI.crt}></div>
             <Grid />
             {isRoundOver && <EndofRoundDisplay />}
         </div>

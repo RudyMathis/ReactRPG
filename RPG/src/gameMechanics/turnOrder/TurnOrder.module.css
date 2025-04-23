@@ -1,99 +1,101 @@
-.turn-order-container {
+.turnOrderContainer {
     display: flex;
     justify-content: center;
     gap: 2em;
     z-index: var(--mid-layer);
 }
 
-.turn-order-portrait {
+.turnOrderPortait {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 50px;
+    width: 3.6em;
 }
 
-.turn-order-sprite {
+.turnOrderSprite {
+    height: 175%;
+    object-fit: cover;
     image-rendering: pixelated;
 }
 
-.turn-order-sprite.player {
-    background-color: var(--white-soft)
+.turnOrderSprite[data-entity-type="player"] {
+    background-color: var(--white-soft);
 }
 
-.turn-order-container .character-sprite {
-    width: 50px;
-    height: 50px;
+.turnOrderContainer .characterSprite {
+    width: 3.6em;
+    height: 3.6em;
     overflow: hidden;
     object-fit: cover; 
 }
 
-.turn-order-container .character-sprite .player {
+.turnOrderContainer .characterSprite.player {
     height: 175%;
     object-fit: cover; 
-    object-position: 0 10px;
+    object-position: 0 .7em;
 }
 
-.turn-order-container .character-sprite .npc {
+.turnOrderContainer .characterSprite.npc {
     height: 200%;
-    object-position: 0 25px;
+    object-position: 0 1.8em;
 }
 
-.turn-order-container .npc.Ent {
-    object-position: 25px 25px;
+.turnOrderContainer .npc.Ent {
+    object-position: 1.8em 1.8em;
 }
 
-.turn-order-container .npc.Manticore {
+.turnOrderContainer .npc.Manticore {
     object-position: 0 5px;
 }
 
-.turn-order-container .npc.Goblin {
-    object-position: 15px 25px;
+.turnOrderContainer .npc.Goblin {
+    object-position: 1em 1.8em;
 }
-.turn-order-container .npc.Rat {
+.turnOrderContainer .npc.Rat {
     height: 175%;
-    object-position: 15px 10px;
+    object-position: 1em .7em;
 }
 
-.turn-order-item {
+.turnOrderItem {
     background-color: var(--white-soft);
     box-shadow: 1px 1px 0px var(--white);
     padding: .5rem;
 }
 
-.turn-order-portrait.dead {
+.turnOrderPortait.dead {
     display: none;
 }
 
-.turn-order-item[data-entity-modified="Dark"] {
+.turnOrderItem[data-entity-modified="Dark"] {
     background-color: var(--dark-soft);
     box-shadow: 1px 1px 0px var(--dark);
 }
 
-.turn-order-item[data-entity-modified="Ice"] {
+.turnOrderItem[data-entity-modified="Ice"] {
     background-color: var(--ice-soft);
     box-shadow: 1px 1px 0px var(--ice);
 }
 
-.turn-order-item[data-entity-modified="Fire"] {
+.turnOrderItem[data-entity-modified="Fire"] {
     background-color: var(--fire-soft);
     box-shadow: 1px 1px 0px var(--fire);
 }
 
-.turn-order-item[data-entity-modified="Lightning"] {
+.turnOrderItem[data-entity-modified="Lightning"] {
     background-color: var(--lightning-soft);
     box-shadow: 1px 1px 0px var(--lightning);
 }
 
 .debuffs {
     display: flex;
-    width: 66px;
+    width: 4.4em;
     margin-top: 2px;
     flex-wrap: wrap;
 }
 
-.debuff-icon {
-    width: 16px;
-    height: 16px;
+.debuffIcon {
+    width: 1.2rem;
+    height: 1.2rem;
     object-fit: contain;
     image-rendering: pixelated;
 }
