@@ -14,6 +14,7 @@ import { ScorePoints } from "../ScorePoints";
 import { HandleAllCharactersDead, HandleAllEnemiesDead } from "./HandleDead";
 import { LoadInitialStates } from "../LoadInitialStates";
 import { HandleCharacterHealthUpdate, HandleEnemyHealthUpdate, HandleSetCurrentTurn } from "../../atom/SetAtom";
+import { getCharacterById } from "../../gameData/spellData/buffs/getCharacterById";
 
 type CharacterType = (typeof CharacterAtom) extends import('jotai').Atom<Record<number, infer T>> ? T : never;
 type EnemyType = (typeof EnemyAtom) extends import('jotai').Atom<Record<number, infer T>> ? T : never;
@@ -74,7 +75,7 @@ export const runTurnLogic = async (
             continue;
         }
 
-        const updatedCharacterHealth = EnemyAttack(character, enemy, character) ?? character.health;
+        const updatedCharacterHealth = EnemyAttack(character, enemy, character) as number ?? character.health;
         HandleCharacterHealthUpdate(character, updatedCharacterHealth);
 
         console.log(`Enemy ${enemy.name} attacked ${character.name} for ${enemy.attack} damage.`);
@@ -107,8 +108,20 @@ export const runTurnLogic = async (
           if (HandleAllCharactersDead() || HandleAllEnemiesDead()) return;
 
         } else if (playerTarget) {
-            const updatedTargetHealth = CharacterBuff(character, playerTarget, spell as string, spellCost);
-            HandleCharacterHealthUpdate(playerTarget.id === character.id ? character : playerTarget, updatedTargetHealth);
+          const buffResult = CharacterBuff(character, playerTarget, spell as string, spellCost);
+        
+          if (Array.isArray(buffResult)) {
+            buffResult.forEach(({ id, health }) => {
+              const targetChar = getCharacterById(id);
+              if (targetChar) HandleCharacterHealthUpdate(targetChar, health);
+            });
+            
+          } else {
+            HandleCharacterHealthUpdate(
+              playerTarget.id === character.id ? character : playerTarget,
+              buffResult
+            );
+          }
         }
 
         HandleSetCurrentTurn(character, false);

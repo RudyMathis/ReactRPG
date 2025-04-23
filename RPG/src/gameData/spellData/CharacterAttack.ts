@@ -10,7 +10,6 @@ export const CharacterAttack = (enemy: EnemyType, character: CharacterType, _tar
 
     setTimeout(() => {
         storeAtom.set(AttackAnimationAtom, (prev) => ({ ...prev, [character.id]: false }));
-        // storeAtom.set(FlashAnimationAtom, (prev) => ({ ...prev, [enemy.id]: false, [attacks[spell].animation ?? '']: false }));
     }, 1000);
 
 const spellAnimation = attacks[spell]?.animation;

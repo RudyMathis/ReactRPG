@@ -11,7 +11,7 @@ const Resistances = {
     Lightning: { type: "Lightning", value: 10 },
     Earth: { type: "Earth", value: 10 },
     Dark: { type: "Dark", value: 10 },
-    Light: { type: "Light", value: 10 },
+    Holy: { type: "Holy", value: 10 },
 };
 
 export default Resistances;

@@ -1,15 +1,15 @@
-import { EnemyType } from "../../../atom/BaseEnemyAtom";
-import { CharacterType } from "../../../atom/CharacterAtom";
-import { HandleDamageEffect } from "../../../gameMechanics/HandleDamageEffect";
-import Resistances from "../../Resistances";
-import Vulnerabilites from "../../Vulnerabilities";
-import { AdditionalBlessingDamage } from "../AdditionalBlessingDamage";
+import { EnemyType } from "../../../../atom/BaseEnemyAtom";
+import { CharacterType } from "../../../../atom/CharacterAtom";
+import { HandleDamageEffect } from "../../..//../gameMechanics/HandleDamageEffect";
+import Resistances from "../..//../Resistances";
+import Vulnerabilites from "../..//../Vulnerabilities";
+import { AdditionalBlessingDamage } from "../../AdditionalBlessingDamage";
 
-const ShadowStrikeTar0 = (enemy: EnemyType, character: CharacterType, target: CharacterType | EnemyType, spellCost: number) =>{ 
+const ShadowDaggerTar30 = (enemy: EnemyType, character: CharacterType, target: CharacterType | EnemyType, spellCost: number) =>{ 
     const targetCharacter = 'id' in target && target.id === character.id && target.type === character.type
 
     if(targetCharacter) {
-        spellCost = 0;
+        spellCost = 30;
         enemy.mana -= spellCost;
 
         const darkResistance = character.resistances.find(res => res.type ===  Resistances.Dark.type);
@@ -29,7 +29,7 @@ const ShadowStrikeTar0 = (enemy: EnemyType, character: CharacterType, target: Ch
             return character.health - damage;
         }
     } else {
-        const spellCost = 0;
+        const spellCost = 30;
         character.mana -= spellCost;
 
         const darkResistance = enemy.resistances.find(res => res.type ===  Resistances.Dark.type);
@@ -51,4 +51,4 @@ const ShadowStrikeTar0 = (enemy: EnemyType, character: CharacterType, target: Ch
     }
 }
 
-export default ShadowStrikeTar0
+export default ShadowDaggerTar30

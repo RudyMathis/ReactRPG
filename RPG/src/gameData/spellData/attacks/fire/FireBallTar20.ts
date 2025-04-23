@@ -1,10 +1,10 @@
-import { EnemyType } from "../../../atom/BaseEnemyAtom";
-import { CharacterType } from "../../../atom/CharacterAtom";
-import { HandleDamageEffect } from "../../../gameMechanics/HandleDamageEffect";
-import Debuffs from "../../Debuffs";
-import Resistances from "../../Resistances";
-import Vulnerabilites from "../../Vulnerabilities";
-import { AdditionalBlessingDamage } from "../AdditionalBlessingDamage";
+import { EnemyType } from "../../../../atom/BaseEnemyAtom";
+import { CharacterType } from "../../../../atom/CharacterAtom";
+import { HandleDamageEffect } from "../../../../gameMechanics/HandleDamageEffect";
+import Debuffs from "../../../Debuffs";
+import Resistances from "../../../Resistances";
+import Vulnerabilites from "../../../Vulnerabilities";
+import { AdditionalBlessingDamage } from "../../AdditionalBlessingDamage";
 
 const FireBallTar20 = (enemy: EnemyType, character: CharacterType, target: CharacterType | EnemyType, spellCost: number) =>{ 
     const targetCharacter = 'id' in target && target.id === character.id && target.type === character.type

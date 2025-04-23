@@ -1,15 +1,15 @@
-import { EnemyType } from "../../../atom/BaseEnemyAtom";
-import { CharacterType } from "../../../atom/CharacterAtom";
-import { HandleDamageEffect } from "../../../gameMechanics/HandleDamageEffect";
-import Resistances from "../../Resistances";
-import Vulnerabilites from "../../Vulnerabilities";
-import { AdditionalBlessingDamage } from "../AdditionalBlessingDamage";
+import { EnemyType } from "../../../../atom/BaseEnemyAtom";
+import { CharacterType } from "../../../../atom/CharacterAtom";
+import { HandleDamageEffect } from "../../../../gameMechanics/HandleDamageEffect";
+import Resistances from "../../../Resistances";
+import Vulnerabilites from "../../../Vulnerabilities";
+import { AdditionalBlessingDamage } from "../../AdditionalBlessingDamage";
 
 const LightningBoltTar40 = (enemy: EnemyType, character: CharacterType, target: CharacterType | EnemyType, spellCost: number) =>{ 
     const targetCharacter = 'id' in target && target.id === character.id && target.type === character.type
+    spellCost = 40;
 
     if(targetCharacter) {
-        spellCost = 40;
         enemy.mana -= spellCost;
 
         const lightningResistance = character.resistances.find(res => res.type ===  Resistances.Lightning.type);
@@ -29,7 +29,6 @@ const LightningBoltTar40 = (enemy: EnemyType, character: CharacterType, target: 
             return character.health - damage;
         }
     } else {
-        const spellCost = 40;
         character.mana -= spellCost;
 
         const lightningResistance = enemy.resistances.find(res => res.type ===  Resistances.Lightning.type);

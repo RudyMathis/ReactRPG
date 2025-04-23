@@ -1,7 +1,7 @@
-import { EnemyType } from "../../../atom/BaseEnemyAtom";
-import { CharacterType } from "../../../atom/CharacterAtom";
-import Debuffs from "../../Debuffs";
-import { AdditionalBlessingDamage } from "../AdditionalBlessingDamage";
+import { EnemyType } from "../../../../atom/BaseEnemyAtom";
+import { CharacterType } from "../../../../atom/CharacterAtom";
+import Debuffs from "../../../Debuffs";
+import { AdditionalBlessingDamage } from "../../AdditionalBlessingDamage";
 
 const DevastateTar60 = (enemy: EnemyType, character: CharacterType, target: CharacterType | EnemyType, spellCost: number) =>{ 
     const targetCharacter = 'id' in target && target.id === character.id && target.type === character.type

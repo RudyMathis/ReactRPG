@@ -1,16 +1,16 @@
-import EnemyAtom, { EnemyType } from "../../../atom/BaseEnemyAtom";
-import CharacterAtom, { CharacterType } from "../../../atom/CharacterAtom";
-import { storeAtom } from "../../../atom/storeAtom";
-import { AdditionalBlessingDamage } from "../AdditionalBlessingDamage";
-import { HandleDamageEffect } from "../../../gameMechanics/HandleDamageEffect";
+import EnemyAtom, { EnemyType } from "../../../../atom/BaseEnemyAtom";
+import CharacterAtom, { CharacterType } from "../../../../atom/CharacterAtom";
+import { storeAtom } from "../../../../atom/storeAtom";
+import { AdditionalBlessingDamage } from "../../AdditionalBlessingDamage";
+import { HandleDamageEffect } from "../../../../gameMechanics/HandleDamageEffect";
 
-const MultiShotTar0 = (
+const CleaveTar30 = (
     enemy: EnemyType,
     character: CharacterType,
     target: CharacterType | EnemyType,
     spellCost: number
 ) => {
-    spellCost = 0;
+    spellCost = 30;
     const targetCharacter = 'id' in target && target.id === character.id && target.type === character.type
 
     if(targetCharacter) {
@@ -26,15 +26,8 @@ const MultiShotTar0 = (
             return character.health;
         }
 
-        const damage = Math.max(5, Math.round(enemy.attack) - character.defense);
-
-        const prevCharacter = characterIndex > 0 ? sortedCharacters[characterIndex - 1] : null;
+        const damage = Math.max(10, Math.round(enemy.attack) - character.defense);
         const nextCharacter = characterIndex < sortedCharacters.length - 1 ? sortedCharacters[characterIndex + 1] : null;
-
-        if (prevCharacter) {
-            prevCharacter.health -= damage;
-            HandleDamageEffect(damage, "Physical", "player", prevCharacter.id);
-        }
 
         if (nextCharacter) {
             nextCharacter.health -= damage;
@@ -55,15 +48,8 @@ const MultiShotTar0 = (
             return enemy.health;
         }
 
-        const damage = Math.max(5, Math.round(character.attack + AdditionalBlessingDamage(character)) - enemy.defense);
-
-        const prevEnemy = enemyIndex > 0 ? sortedEnemies[enemyIndex - 1] : null;
+        const damage = Math.max(10, Math.round(character.attack + AdditionalBlessingDamage(character)) - enemy.defense);
         const nextEnemy = enemyIndex < sortedEnemies.length - 1 ? sortedEnemies[enemyIndex + 1] : null;
-
-        if (prevEnemy) {
-            prevEnemy.health -= damage;
-            HandleDamageEffect(damage, "Physical", "npc", prevEnemy.id);
-        }
 
         if (nextEnemy) {
             nextEnemy.health -= damage;
@@ -75,4 +61,4 @@ const MultiShotTar0 = (
     }
 };
 
-export default MultiShotTar0;
+export default CleaveTar30;
