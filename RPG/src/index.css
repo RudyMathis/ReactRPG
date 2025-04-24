@@ -78,8 +78,8 @@ footer, header, hgroup, menu, nav, section {
 
 #root {
 	position: relative;
-	width: 100vw;
-	height: 90vh;
+	/* width: 100vw;
+	height: 90vh; */
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -132,6 +132,7 @@ button {
 }
 
 /* Button */
+
 .btn {
     background-color: transparent;
     width: max-content;
@@ -150,12 +151,16 @@ button {
     filter: brightness(1.2);
 }
 
-/* Media query for laptop width (example: 1024px) */
 @media (max-width: 1024px) {
-    :root {
-		font-size: calc(14px * 0.7);
-        --width: calc(1200px * 0.7);  /* Reduce width by 10% */
-        --height: calc(900px * 0.7);  /* Reduce height by 10% */
-    }
+	#root {
+		zoom: .7;
+	}
 }
 
+@media (max-width: 420px) {
+	#root {
+		zoom: .425;
+		transform: rotate(90deg);
+		margin-top: 70vh;
+	}
+}
