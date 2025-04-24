@@ -31,3 +31,13 @@ export const HandleSetCurrentTurn = (character: CharacterType, isTurn: boolean) 
         [character.id]: { ...character, currentTurn: isTurn }
     }));
 }
+
+export const HandleCharacterManaUpdate = (playerTarget: CharacterType, updatedMana: number) => { 
+    storeAtom.set(CharacterAtom, (prev) => ({
+        ...prev,
+        [playerTarget.id]: {
+            ...prev[playerTarget.id],
+            mana: updatedMana,
+        },
+    }));
+};

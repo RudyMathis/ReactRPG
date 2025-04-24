@@ -27,7 +27,6 @@ export const Sundered = (entity: CharacterType | EnemyType, sunderedStatus: { ty
         }
         return false;
     } else {
-        // Decrement duration and update the debuff array
         if (entity.type === "player") {
             storeAtom.set(CharacterAtom, (prev) => ({
                 ...prev,

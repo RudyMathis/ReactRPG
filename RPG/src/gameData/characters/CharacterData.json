@@ -124,7 +124,7 @@
         "maxMana": 100,
         "exp": 0,
         "maxExp": 100,
-        "spells": ["Protect_Party_Char$20", "Meditation_Char$-20", "Quick_Attack_Tar$0", "Holy_Explosion_Tar$50"],
+        "spells": ["Protect_Party_Char$20", "Meditate_Char$-30", "Quick_Attack_Tar$0", "Holy_Explosion_Tar$50"],
         "weapon": "",
         "buffs": [],
         "debuffs": [],
@@ -178,7 +178,7 @@
         "maxMana": 200,
         "exp": 0,
         "maxExp": 100,
-        "spells": ["Heal_All_Char$40", "Vengefull_Spirits_Tar$60", "Meditation_Char$-20", "Damage_Totem_Char$30"],
+        "spells": ["Heal_All_Char$40", "Burning_Spirits_Tar$60", "Meditate_Char$-30", "Damage_Totem_Char$30"],
         "weapon": "",
         "buffs": [],
         "debuffs": [],
@@ -215,5 +215,4 @@
         "type": "player",
         "resource_type": "rage"
     }
-
 }

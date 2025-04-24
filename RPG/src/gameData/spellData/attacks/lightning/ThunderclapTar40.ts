@@ -61,4 +61,3 @@ const ThunderclapTar40 = (
 };
 
 export default ThunderclapTar40;
-

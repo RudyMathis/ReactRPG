@@ -13,7 +13,7 @@ import { SaveData } from "../SaveData";
 import { ScorePoints } from "../ScorePoints";
 import { HandleAllCharactersDead, HandleAllEnemiesDead } from "./HandleDead";
 import { LoadInitialStates } from "../LoadInitialStates";
-import { HandleCharacterHealthUpdate, HandleEnemyHealthUpdate, HandleSetCurrentTurn } from "../../atom/SetAtom";
+import { HandleCharacterHealthUpdate, HandleCharacterManaUpdate, HandleEnemyHealthUpdate, HandleSetCurrentTurn } from "../../atom/SetAtom";
 import { getCharacterById } from "../../gameData/spellData/buffs/getCharacterById";
 
 type CharacterType = (typeof CharacterAtom) extends import('jotai').Atom<Record<number, infer T>> ? T : never;
@@ -115,14 +115,21 @@ export const runTurnLogic = async (
               const targetChar = getCharacterById(id);
               if (targetChar) HandleCharacterHealthUpdate(targetChar, health);
             });
-            
-          } else {
+          } else if (
+            typeof buffResult === "object" &&
+            buffResult !== null &&
+            "mana" in buffResult
+          ) {
+            const targetChar = getCharacterById(buffResult.id);
+            if (targetChar) HandleCharacterManaUpdate(targetChar, buffResult.mana);
+          } else if (typeof buffResult === "number") {
             HandleCharacterHealthUpdate(
               playerTarget.id === character.id ? character : playerTarget,
               buffResult
             );
           }
         }
+        
 
         HandleSetCurrentTurn(character, false);
 

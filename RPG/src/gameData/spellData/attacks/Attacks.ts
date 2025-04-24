@@ -14,12 +14,14 @@ import QuickAttackTar0 from "./physical/QuickAttackTar0";
 import ShootTar0 from "./physical/ShootTar0";
 import AimShotTar50 from "./physical/AimShotTar50";
 import VolleyTar20 from "./physical/VolleyTar20";
-import ThunderclapTar40 from "./lightning/Thunderclap__Tar40";
+import ThunderclapTar40 from "./lightning/ThunderclapTar40";
 import LeechTar10 from "./dark/LeechTar10";
 import BackstabTar60 from "./physical/BackstabTar60";
 import ShadowDaggerTar30 from "./dark/ShadowDaggerTar30";
 import CleaveTar30 from "./physical/CleaveTar30";
 import HolyExplosionTar50 from "./holy/HolyExplosionTar50";
+import HolyStrikeTar40 from "./holy/HolyStrikeTar40";
+import BurningSpiritsTar60 from "./fire/BurningSpiritsTar60";
 
 
 const attacks: Record<string, AttackMeta> = {
@@ -27,6 +29,11 @@ const attacks: Record<string, AttackMeta> = {
         element: ElementTypes.Fire,
         cost: 20,
         func: FireBallTar20,
+    },
+    Burning_Spirits_Tar$60: {
+        element: ElementTypes.Fire,
+        cost: 60,
+        func: BurningSpiritsTar60,
     },
     Ice_Bolt_Tar$30: {
         element: ElementTypes.Ice,
@@ -121,6 +128,11 @@ const attacks: Record<string, AttackMeta> = {
         element: ElementTypes.Holy,
         cost: 50,
         func: HolyExplosionTar50,
+    },
+    Holy_Strike_Tar$40: {
+        element: ElementTypes.Holy,
+        cost: 40,
+        func: HolyStrikeTar40,
     },
 };
 
