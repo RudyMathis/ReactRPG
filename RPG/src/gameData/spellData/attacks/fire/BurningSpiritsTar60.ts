@@ -22,7 +22,9 @@ const BurningSpritsTar60 = (
 
         selectedCharacters.forEach(targetChar => {
             targetChar.debuffs.push({
-                type: Debuffs.Burn.type, duration: 3,
+                type: Debuffs.Burn.type, 
+                duration: 3,
+                damage: 5,
                 name: Debuffs.Burn.name,
                 icon: Debuffs.Burn.icon
             });

@@ -7,9 +7,9 @@ import { AdditionalBlessingDamage } from "../../AdditionalBlessingDamage";
 
 const LeechTar10 = (enemy: EnemyType, character: CharacterType, target: CharacterType | EnemyType, spellCost: number) =>{ 
     const targetCharacter = 'id' in target && target.id === character.id && target.type === character.type
+    spellCost = 10;
 
     if(targetCharacter) {
-        spellCost = 10;
         enemy.mana += spellCost;
         const darkResistance = character.resistances.find(res => res.type ===  Resistances.Dark.type);
         const darkVulnerability = character.vulnerabilities.find(vul => vul.type === Vulnerabilites.Dark.type);
@@ -28,7 +28,6 @@ const LeechTar10 = (enemy: EnemyType, character: CharacterType, target: Characte
             return character.health - damage;
         }
     } else {
-        spellCost = 10;
         character.mana += spellCost;
         
         const darkResistance = enemy.resistances.find(res => res.type ===  Resistances.Dark.type);

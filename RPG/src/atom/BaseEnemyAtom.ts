@@ -33,6 +33,7 @@ export type EnemyType = {
     health: number;
     maxHealth: number;
     attack: number;
+    attackDefault: number;
     defense: number;
     defenseDefault: number;
     resistances: Resistance[];

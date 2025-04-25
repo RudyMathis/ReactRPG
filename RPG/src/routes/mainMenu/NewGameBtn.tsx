@@ -41,6 +41,7 @@ export const NewGameBtn = () => {
         
         localStorage.setItem('inProgressGame', 'false');
         localStorage.setItem('Score', '0');
+        localStorage.setItem('turnCount', '0');
         currentGameLevel.isRoundOver = false;
         currentGameLevel.isLevelOver = false;
         currentGameLevel.isGameOver = false;

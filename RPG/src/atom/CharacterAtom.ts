@@ -16,12 +16,13 @@ type buffEffect = {
     type: string;
     duration: number;
     damage?: number;
+    attack?: number;
 };
 type debuffEffect = {
     name: string;
     type: string;
     duration: number;
-    damage?: number;
+    damage: number;
     icon?: string;
 };
 
@@ -32,6 +33,7 @@ export type CharacterType = {
     health: number;
     maxHealth: number;
     attack: number;
+    attackDefault: number;
     defense: number;
     defenseDefault: number;
     resistances: Resistance[];

@@ -1,4 +1,3 @@
-// utils/getCharacterById.ts
 import { storeAtom } from "../../../atom/storeAtom";
 import CharacterAtom from "../../../atom/CharacterAtom";
 

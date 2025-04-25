@@ -10,7 +10,9 @@ const baseEnemyDataRecord: BaseEnemyDataRecord = BaseEnemyData;
 const elementEffects: Record<string, Partial<EnemyType>> = {
     "Ice": {
         attack: 5,
+        attackDefault: 5,
         defense: 5,
+        defenseDefault: 5,
         mana: 30,
         maxMana: 30,
         spells: ["Frostbite__Tar$20"],
@@ -21,6 +23,7 @@ const elementEffects: Record<string, Partial<EnemyType>> = {
         health: 30,
         maxHealth: 30,
         attack: 15,
+        attackDefault: 15,
         mana: 30,
         maxMana: 30,
         spells: ["Fire_Ball_Tar$20"],
@@ -31,7 +34,9 @@ const elementEffects: Record<string, Partial<EnemyType>> = {
         health: 30,
         maxHealth: 30,
         attack: 5,
+        attackDefault: 5,
         defense: 5,
+        defenseDefault: 5,
         spells: ["Shadow_Strike_Tar$0"],
         resistances: [Resistances.Dark],
         vulnerabilities: [Vulnerabilites.Dark],
@@ -41,12 +46,16 @@ const elementEffects: Record<string, Partial<EnemyType>> = {
 const classEffects: Record<string, Partial<EnemyType>> = {
     "Knight": {
         attack: 15,
+        attackDefault: 15,
         defense: 10,
+        defenseDefault: 10,
         spells: ["Heroic_Strike_Tar$-20"],
     },
     "Rabid": {
         attack: 10,
+        attackDefault: 10,
         speed: 15,
+        speedDefault: 15,
         spells: ["Multi_Shot_Tar$0"],
     }
 };
@@ -91,8 +100,11 @@ class EnemyFactory {
                     health: modifiedEnemy.health + (effects.health ?? 0),
                     maxHealth: modifiedEnemy.maxHealth + (effects.maxHealth ?? 0),
                     attack: modifiedEnemy.attack + (effects.attack ?? 0),
+                    attackDefault: modifiedEnemy.attackDefault + (effects.attackDefault ?? 0),
                     defense: modifiedEnemy.defense + (effects.defense ?? 0),
+                    defenseDefault: modifiedEnemy.defenseDefault + (effects.defenseDefault ?? 0),
                     speed: modifiedEnemy.speed + (effects.speed ?? 0),
+                    speedDefault: modifiedEnemy.speedDefault + (effects.speedDefault ?? 0),
                     spells: [...modifiedEnemy.spells, ...(effects.spells ?? [])],
                     resistances: [...modifiedEnemy.resistances, ...(effects.resistances ?? [])],
                     vulnerabilities: [...modifiedEnemy.vulnerabilities, ...(effects.vulnerabilities ?? [])]
@@ -110,8 +122,11 @@ class EnemyFactory {
                     health: modifiedEnemy.health + (effects.health ?? 0),
                     maxHealth: modifiedEnemy.maxHealth + (effects.maxHealth ?? 0),
                     attack: modifiedEnemy.attack + (effects.attack ?? 0),
+                    attackDefault: modifiedEnemy.attackDefault + (effects.attackDefault ?? 0),
                     defense: modifiedEnemy.defense + (effects.defense ?? 0),
+                    defenseDefault: modifiedEnemy.defenseDefault + (effects.defenseDefault ?? 0),
                     speed: modifiedEnemy.speed + (effects.speed ?? 0),
+                    speedDefault: modifiedEnemy.speedDefault + (effects.speedDefault ?? 0), 
                     spells: [...modifiedEnemy.spells, ...(effects.spells ?? [])],
                     resistances: [...modifiedEnemy.resistances, ...(effects.resistances ?? [])],
                     vulnerabilities: [...modifiedEnemy.vulnerabilities, ...(effects.vulnerabilities ?? [])]

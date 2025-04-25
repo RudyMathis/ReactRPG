@@ -17,7 +17,9 @@ const GarroteTar40 = (enemy: EnemyType, character: CharacterType, target: Charac
             return character.health - bleedDamage;
         } else {
             character.debuffs.push({
-                type: Debuffs.Bleed.type, duration: 3,
+                type: Debuffs.Bleed.type,
+                duration: 3,
+                damage: 10,
                 name: Debuffs.Bleed.name
             });
             HandleDamageEffect(bleedDamage, "Physical", "player", character.id);

@@ -7,9 +7,9 @@ import { AdditionalBlessingDamage } from "../../AdditionalBlessingDamage";
 
 const ShadowDaggerTar30 = (enemy: EnemyType, character: CharacterType, target: CharacterType | EnemyType, spellCost: number) =>{ 
     const targetCharacter = 'id' in target && target.id === character.id && target.type === character.type
+    spellCost = 30;
 
     if(targetCharacter) {
-        spellCost = 30;
         enemy.mana -= spellCost;
 
         const darkResistance = character.resistances.find(res => res.type ===  Resistances.Dark.type);
@@ -29,7 +29,6 @@ const ShadowDaggerTar30 = (enemy: EnemyType, character: CharacterType, target: C
             return character.health - damage;
         }
     } else {
-        const spellCost = 30;
         character.mana -= spellCost;
 
         const darkResistance = enemy.resistances.find(res => res.type ===  Resistances.Dark.type);

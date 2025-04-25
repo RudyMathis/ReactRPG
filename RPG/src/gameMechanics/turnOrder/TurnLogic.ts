@@ -14,7 +14,7 @@ import { ScorePoints } from "../ScorePoints";
 import { HandleAllCharactersDead, HandleAllEnemiesDead } from "./HandleDead";
 import { LoadInitialStates } from "../LoadInitialStates";
 import { HandleCharacterHealthUpdate, HandleCharacterManaUpdate, HandleEnemyHealthUpdate, HandleSetCurrentTurn } from "../../atom/SetAtom";
-import { getCharacterById } from "../../gameData/spellData/buffs/getCharacterById";
+import { getCharacterById } from "../../gameData/spellData/defense/getCharacterById";
 
 type CharacterType = (typeof CharacterAtom) extends import('jotai').Atom<Record<number, infer T>> ? T : never;
 type EnemyType = (typeof EnemyAtom) extends import('jotai').Atom<Record<number, infer T>> ? T : never;
@@ -108,29 +108,35 @@ export const runTurnLogic = async (
           if (HandleAllCharactersDead() || HandleAllEnemiesDead()) return;
 
         } else if (playerTarget) {
+
           const buffResult = CharacterBuff(character, playerTarget, spell as string, spellCost);
+          console.log("BUFF RESULTS", buffResult);
         
           if (Array.isArray(buffResult)) {
             buffResult.forEach(({ id, health }) => {
               const targetChar = getCharacterById(id);
               if (targetChar) HandleCharacterHealthUpdate(targetChar, health);
+              console.log("HEALTH")
             });
-          } else if (
+          } 
+          
+          else if (
             typeof buffResult === "object" &&
             buffResult !== null &&
             "mana" in buffResult
           ) {
             const targetChar = getCharacterById(buffResult.id);
             if (targetChar) HandleCharacterManaUpdate(targetChar, buffResult.mana);
+            console.log("MANA")
           } else if (typeof buffResult === "number") {
             HandleCharacterHealthUpdate(
               playerTarget.id === character.id ? character : playerTarget,
               buffResult
             );
+            console.log("NUMBER")
           }
         }
         
-
         HandleSetCurrentTurn(character, false);
 
         if (HandleAllCharactersDead() || HandleAllEnemiesDead()) return;

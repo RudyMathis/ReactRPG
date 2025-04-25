@@ -6,12 +6,16 @@ import Resistances from "../../../Resistances";
 import Vulnerabilites from "../../../Vulnerabilities";
 import { AdditionalBlessingDamage } from "../../AdditionalBlessingDamage";
 
-const IceBoltTar20 = (enemy: EnemyType, character: CharacterType, target: CharacterType | EnemyType, spellCost: number) =>{ 
+const IceBoltTar30 = (enemy: EnemyType, character: CharacterType, target: CharacterType | EnemyType, spellCost: number) =>{ 
     const targetCharacter = 'id' in target && target.id === character.id && target.type === character.type
+
+    // UPDATE TO ONLY BE FROZEN ONCE WHILE NOT FROZEN
 
     if(targetCharacter) {
         character.debuffs.push({
-            type: Debuffs.Frozen.type, duration: 3,
+            type: Debuffs.Frozen.type, 
+            duration: 3,
+            damage: 0,
             name: Debuffs.Frozen.name,
             icon: Debuffs.Frozen.icon
         });
@@ -36,7 +40,8 @@ const IceBoltTar20 = (enemy: EnemyType, character: CharacterType, target: Charac
         }
     } else {
         enemy.debuffs.push({
-            type: Debuffs.Frozen.type, duration: 3,
+            type: Debuffs.Frozen.type, 
+            duration: 3,
             name: Debuffs.Frozen.name,
             icon: Debuffs.Frozen.icon
         });
@@ -63,4 +68,4 @@ const IceBoltTar20 = (enemy: EnemyType, character: CharacterType, target: Charac
     }
 }
 
-export default IceBoltTar20
+export default IceBoltTar30

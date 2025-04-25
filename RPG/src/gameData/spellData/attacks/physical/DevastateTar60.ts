@@ -9,33 +9,36 @@ const DevastateTar60 = (enemy: EnemyType, character: CharacterType, target: Char
     if (targetCharacter) {
         spellCost = 60;
         enemy.mana -= spellCost;
-        character.defense = 0;
-
         if (character.debuffs.find(d => d.type === Debuffs.Sundered.type)) {
             return character.health - Math.max(5, enemy.attack - character.defense);
         } else {
             character.debuffs.push({
-                type: Debuffs.Sundered.type, duration: 3,
+                type: Debuffs.Sundered.type, 
+                duration: 3,
+                damage: 0,
                 name: Debuffs.Sundered.name
             });
+
+            character.defense = 0;
             return character.health - Math.max(5, character.attack - character.defense);
         }
     } else {
 
         spellCost = 60;
         character.mana -= spellCost;
-        enemy.defense = 0;
 
         if(enemy.debuffs.find(d => d.type === Debuffs.Sundered.type)) {
             return enemy.health - Math.max(5, (character.attack + AdditionalBlessingDamage(character)) - enemy.defense);
         } else {
             enemy.debuffs.push({
-                type: Debuffs.Sundered.type, duration: 3,
+                type: Debuffs.Sundered.type, 
+                duration: 3,
                 name: Debuffs.Sundered.name
             });
+            
+            enemy.defense = 0;
             return enemy.health - Math.max(5, (character.attack + AdditionalBlessingDamage(character)) - enemy.defense);
         }
-        
     }
 }
 
