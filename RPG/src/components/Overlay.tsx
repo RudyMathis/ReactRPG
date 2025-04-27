@@ -7,12 +7,12 @@ const Overlay = () => {
 
     return (
         <>
-            <div className={`${styles.blur} ${styles.blurOverlayTop}`}></div>
+            {/* <div className={`${styles.blur} ${styles.blurOverlayTop}`}></div>
             <div className={`${styles.blur} ${styles.blurOverlayTopBottom}`}></div>
             <div className={`${styles.blur} ${styles.blurOverlayBottomTop}`}></div>
             <div className={`${styles.blur} ${styles.blurOverlayBottom}`}></div>
             <div className={`${styles.blur} ${styles.blurOverlayLeft}`}></div>
-            <div className={`${styles.blur} ${styles.blurOverlayRight}`}></div>
+            <div className={`${styles.blur} ${styles.blurOverlayRight}`}></div> */}
             <div className={`${styles.lighting}`} data-light={background}></div>
         </>
     );

@@ -1,4 +1,4 @@
-import { ElementType } from "../ElementTypes"; // make sure path is correct
+import { ElementType } from "../ElementTypes";
 import { EnemyType } from "../../../atom/BaseEnemyAtom";
 import { CharacterType } from "../../../atom/CharacterAtom";
 

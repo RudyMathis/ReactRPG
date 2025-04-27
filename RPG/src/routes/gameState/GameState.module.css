@@ -25,27 +25,27 @@
     background-size: var(--width) var(--height);
     width: var(--width);
     height: var(--height);
-    image-rendering: pixelated;
+    /* image-rendering: pixelated; */
     border-radius: 5%;
 }
 
 .board[data-background="Cave"] {
-    background-image: url('/assets/backgrounds/Cave.png');
+    background-image: url('/assets/backgrounds/Cave.jpg');
 }
 .board[data-background="City"] {
-    background-image: url('/assets/backgrounds/City.png');
+    background-image: url('/assets/backgrounds/City.jpg');
 }
 .board[data-background="Desert"] {
-    background-image: url('/assets/backgrounds/Desert.png');
+    background-image: url('/assets/backgrounds/Desert.jpg');
 }
 .board[data-background="Field"] {
-    background-image: url('/assets/backgrounds/Field.png');
+    background-image: url('/assets/backgrounds/Field.jpg');
 }
 .board[data-background="Forest"] {
-    background-image: url('/assets/backgrounds/Forest.png');
+    background-image: url('/assets/backgrounds/Forest.jpg');
 }
 .board[data-background="Snow"] {
-    background-image: url('/assets/backgrounds/Snow.png');
+    background-image: url('/assets/backgrounds/Snow.jpg');
 }
 
 .square {

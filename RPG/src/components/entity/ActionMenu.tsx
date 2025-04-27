@@ -3,10 +3,13 @@ import CharacterAtom from "../../atom/CharacterAtom";
 import { selectedSpellAtom } from "../../atom/SelectedSpellAtom";
 import attacks from "../../gameData/spellData/attacks/Attacks";
 import styles from './Entity.module.css';
-
+import buffs from '../../gameData/spellData/defense/BuffsFactory';
+import { EnemyType } from '../../atom/BaseEnemyAtom';
+import { CharacterType } from '../../atom/CharacterAtom';
 type ActionMenuProps = {
     isVisible: boolean;
     type: 'character' | 'enemy';
+    isCurrentTurn: CharacterType | EnemyType; // 🆕 passed from Grid
     onSpell: () => void;
     detailScreen: () => void;
 };
@@ -15,13 +18,13 @@ const spellAudio: Record<string, string> = {
     Quick_Attack: '/assets/sfx/Quick_Attack.mp3',
 };
 
-const ActionMenu = ({ isVisible, type, onSpell, detailScreen }: ActionMenuProps) => {
+const ActionMenu = ({ isVisible, type, onSpell, detailScreen, isCurrentTurn }: ActionMenuProps) => {
     const [characters] = useAtom(CharacterAtom);
     const selectedCharacters = Object.values(characters).filter(char => char.currentTurn && char.isSelected);
     const [, setSelectedSpell] = useAtom(selectedSpellAtom);
 
     const handleSpellClick = (spell: string) => {
-        setSelectedSpell(spell); // Store the selected spell
+        setSelectedSpell(spell);
         
         const audioSrc = spellAudio[spell];
         if (audioSrc) {
@@ -37,8 +40,13 @@ const ActionMenu = ({ isVisible, type, onSpell, detailScreen }: ActionMenuProps)
                     char.currentTurn ? (
                         <div key={char.id} className={styles.actionMenuItem}>
                             {char.spells.map((spell, index) => {
-                                const element = attacks[spell]?.element || "None";
-                
+                                const element = attacks[spell]?.element || buffs[spell]?.element || '';
+                                const isSelf = buffs[spell]?.isSelfBuff;
+
+                                if (isCurrentTurn.id !== char.id && isSelf) {
+                                    return null; 
+                                }
+
                                 const buttonProps = {
                                     className: `${styles.actionMenuButton} element-${element.toLowerCase()}`,
                                     'data-element':`${element}`,
@@ -56,7 +64,12 @@ const ActionMenu = ({ isVisible, type, onSpell, detailScreen }: ActionMenuProps)
                                     .trim();
                 
                                 if (spell.includes('_Char') && type === 'character') {
-                                    return <button key={`${char.id}-${index}`} {...buttonProps}>{label}</button>;
+                                    
+                                    if (isSelf && !char.id) { 
+                                        return null; // 🚫 Skip rendering this button
+                                    } else {
+                                        return <button key={`${char.id}-${index}`} {...buttonProps}>{label}</button>;
+                                    }
                                 }
                 
                                 if (spell.includes('_Tar') && type === 'enemy') {

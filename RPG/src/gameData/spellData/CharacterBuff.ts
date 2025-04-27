@@ -20,7 +20,7 @@ export const CharacterBuff = (
         return target.health;
     }
 
-    const result = buffFn(character, target, spellCost);
+    const result = buffFn.func(character, target, spellCost);
     
     if (result === undefined) {
         console.warn(`Buff "${spell}" returned undefined.`);

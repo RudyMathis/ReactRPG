@@ -26,7 +26,7 @@ const LevelLayout = () => {
                 <TurnOrderDisplay />
                 <CurrentLevelDisplay />
             </div>
-            <img src={`/assets/backgrounds/${background}.png`} className={stylesUI.glow} data-glow={background} />
+            <img src={`/assets/backgrounds/${background}.jpg`} className={stylesUI.glow} data-glow={background} />
             <div className={stylesUI.crt}></div>
             <Grid />
             {isRoundOver && <EndofRoundDisplay />}

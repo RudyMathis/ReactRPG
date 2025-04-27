@@ -119,6 +119,7 @@ const Grid = () => {
                 type='character'
                 onSpell={handleNextTurnClick}
                 detailScreen={() => displayDetailScreen(char)}
+                isCurrentTurn={char}
               />
             )}
             </EntityContainer>
@@ -148,6 +149,7 @@ const Grid = () => {
                   type="enemy"
                   onSpell={handleNextTurnClick}
                   detailScreen={() => displayDetailScreen(enemy)}
+                  isCurrentTurn={enemy}
                 />
               )}
             </EntityContainer>

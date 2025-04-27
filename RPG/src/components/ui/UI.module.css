@@ -50,22 +50,22 @@
 }
 
 .glow[data-glow='Field'] {
-    background-image: url('/assets/backgrounds/Field.png');
+    background-image: url('/assets/backgrounds/Field.jpg');
 }
 .glow[data-glow='Forest'] {
-    background-image: url('/assets/backgrounds/Forest.png');
+    background-image: url('/assets/backgrounds/Forest.jpg');
 }
 .glow[data-glow='Desert'] {
-    background-image: url('/assets/backgrounds/Desert.png');
+    background-image: url('/assets/backgrounds/Desert.jpg');
 }
 .glow[data-glow='Cave'] {
-    background-image: url('/assets/backgrounds/Cave.png');
+    background-image: url('/assets/backgrounds/Cave.jpg');
 }
 .glow[data-glow='City'] {
-    background-image: url('/assets/backgrounds/City.png');
+    background-image: url('/assets/backgrounds/City.jpg');
 }
 .glow[data-glow='Snow'] {
-    background-image: url('/assets/backgrounds/Snow.png');
+    background-image: url('/assets/backgrounds/Snow.jpg');
 }
 
 /* LEVEL */
