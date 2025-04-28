@@ -1,5 +1,5 @@
 import { CharacterType } from "../../atom/CharacterAtom";
-import { Buff } from "../Buffs";
+import CharacterBuffResult from "../characters/CharacterBuffResultType";
 import buffs from "./defense/BuffsFactory";
 
 export const CharacterBuff = (
@@ -7,11 +7,7 @@ export const CharacterBuff = (
     target: CharacterType,
     spell: string,
     spellCost: number
-):  number 
-| { id: string; health: number }[] 
-| { id: string; mana: number } 
-| { id: string; buff: Buff } 
-| undefined => {
+):  CharacterBuffResult  => {
     const buffFn = buffs[spell];
     
 

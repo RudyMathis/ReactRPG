@@ -12,7 +12,7 @@ const GarroteTar40 = (enemy: EnemyType, character: CharacterType, target: Charac
         enemy.mana -= spellCost;
         const bleedDamage = Math.max(5, Math.round(enemy.attack - character.defense));
 
-        if (character.debuffs.find(d => d.type === Debuffs.Bleed.type)) {
+        if (character.debuffs.find(d => d.name === Debuffs.Bleed.name)) {
             HandleDamageEffect(bleedDamage, "Physical", "player", character.id);
             return character.health - bleedDamage;
         } else {

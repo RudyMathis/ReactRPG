@@ -16,6 +16,10 @@ type BuffEffect = {
     type: string;
     duration: number;
     damage?: number;
+    attack?: number;
+    defense?: number;
+    health?: number;
+    icon?: string;
 };
 
 type DebuffEffect = {

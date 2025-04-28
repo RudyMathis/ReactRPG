@@ -4,7 +4,7 @@ const HealChar20 = (
     character: CharacterType,
     target: CharacterType,
     spellCost: number
-): { id: string; health: number }[] => {
+): { id: number; health: number }[] => {
     const heal = 20;
     spellCost = 20;
     character.mana -= spellCost;
@@ -13,7 +13,7 @@ const HealChar20 = (
 
     targetChar.health = Math.min(targetChar.health + heal, targetChar.maxHealth);
 
-    return [{ id: targetChar.id.toString(), health: targetChar.health }];
+    return [{ id: targetChar.id, health: targetChar.health }];
 };
 
 export default HealChar20;

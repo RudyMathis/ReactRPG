@@ -113,12 +113,14 @@ export const runTurnLogic = async (
           console.log("BUFF RESULTS", buffResult);
         
           if (Array.isArray(buffResult)) {
-            buffResult.forEach(({ id, health }) => {
-              const targetChar = getCharacterById(id);
-              if (targetChar) HandleCharacterHealthUpdate(targetChar, health);
-              console.log("HEALTH")
+            buffResult.forEach((result) => {
+              if ("health" in result) {
+                const targetChar = getCharacterById(result.id);
+                if (targetChar) HandleCharacterHealthUpdate(targetChar, result.health);
+                console.log("HEALTH", targetChar?.name, targetChar?.health)
+              }
             });
-          } 
+          }
           
           else if (
             typeof buffResult === "object" &&
@@ -128,7 +130,9 @@ export const runTurnLogic = async (
             const targetChar = getCharacterById(buffResult.id);
             if (targetChar) HandleCharacterManaUpdate(targetChar, buffResult.mana);
             console.log("MANA")
-          } else if (typeof buffResult === "number") {
+          } 
+          
+          else if (typeof buffResult === "number") {
             HandleCharacterHealthUpdate(
               playerTarget.id === character.id ? character : playerTarget,
               buffResult

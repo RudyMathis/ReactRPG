@@ -5,13 +5,13 @@ const BerserkChar50 = (
     character: CharacterType,
     _target: CharacterType,
     spellCost: number
-): { id: string; buff: Buff } => {
+): { id: number; buff: Buff } => {
 
     spellCost = 50;
     character.mana -= spellCost;
 
-    if (character.buffs.find(d => d.type === Buffs.Berserk.type)) {
-        return { id: character.id.toString(), buff: Buffs.Berserk };
+    if (character.buffs.find(d => d.name === Buffs.Berserk.name)) {
+        return { id: character.id, buff: Buffs.Berserk };
     } else {
         character.buffs.push({
             type: Buffs.Berserk.type, 
@@ -20,8 +20,8 @@ const BerserkChar50 = (
             name: Buffs.Berserk.name
         });
         character.attack = character.attack + Buffs.Berserk.attack;
-        character.speed = character.speed + Buffs.Berserk.attack;
-        return { id: character.id.toString(), buff: Buffs.Berserk };
+        character.speed = character.speed + Buffs.Berserk.speed;
+        return { id: character.id, buff: Buffs.Berserk };
     }
 
 };
