@@ -29,6 +29,7 @@ const LevelLayout = () => {
             <img src={`/assets/backgrounds/${background}.jpg`} className={stylesUI.glow} data-glow={background} />
             <div className={stylesUI.crt}></div>
             <Grid />
+            <img className={stylesUI.backgroundBorder} src="/assets/backgrounds/crt_frame.png" />
             {isRoundOver && <EndofRoundDisplay />}
         </div>
     );

@@ -10,9 +10,9 @@ import ActionMenu from '../../components/entity/ActionMenu';
 import DetailScreen from '../../components/entity/DetailScreen';
 import Btn from '../../components/ui/Btn';
 import { GameLevelAtom } from '../../atom/GameLevelAtom';
-import { AttackAnimationAtom } from '../../atom/effects/AttackAnimationAtom';
+// import { AttackAnimationAtom } from '../../atom/effects/AttackAnimationAtom';
 import Overlay from '../../components/Overlay';
-import Shadow from '../../components/entity/Shadow';
+// import Shadow from '../../components/entity/Shadow';
 import EntityContainer from '../../components/entity/sprite/EntityContainer';
 import EntityDisplayWrapper from '../../components/entity/sprite/EntityDisplayWrapper';
 import EndGameDisplay from './EndGameDisplay';
@@ -31,7 +31,7 @@ const Grid = () => {
   const [gameLevel] = useAtom(GameLevelAtom);
   const [activeDetailScreen, setActiveDetailScreen] = useState<CharacterType | EnemyType | null>(null);
   const [currentGameLevel] = useAtom(GameLevelAtom);
-  const [attackingEntities] = useAtom(AttackAnimationAtom);
+  // const [attackingEntities] = useAtom(AttackAnimationAtom);
   const background = localStorage.getItem('background');
 
   const checkTurnOrderAndRunLogic = () => {
@@ -107,7 +107,7 @@ const Grid = () => {
               index={index}
               onClick={() => toggleMenuVisibility(char.id, 'character')}
             >
-            <Shadow entity={char} attackingEntities={attackingEntities} />
+            {/* <Shadow entity={char} attackingEntities={attackingEntities} /> */}
             <EntityDisplayWrapper
               entity={char}
               type="character"
@@ -137,7 +137,7 @@ const Grid = () => {
               index={index}
               onClick={() => toggleMenuVisibility(enemy.id, 'enemy')}
             >
-              <Shadow entity={enemy} attackingEntities={attackingEntities} />
+              {/* <Shadow entity={enemy} attackingEntities={attackingEntities} /> */}
               <EntityDisplayWrapper
                 entity={enemy}
                 type="enemy"

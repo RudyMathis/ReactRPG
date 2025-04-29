@@ -61,5 +61,5 @@ export const EnemyAttack = (
     }
 
     // Fallback: basic attack
-    return character.health - Math.max(1, enemy.attack - character.defense);
+    return character.health - Math.max(5, enemy.attack - character.defense);
 };

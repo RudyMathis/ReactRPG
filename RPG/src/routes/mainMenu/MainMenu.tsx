@@ -21,7 +21,7 @@ const MainMenu = () => {
     return (
         <>
             <div className={styles.mainContainer}>
-                <h1>React RPG</h1>
+                <h1>Sacred Loop</h1>
                 <HighScoreDisplay />
                 <UserNameInput />
                 <NewGameBtn />

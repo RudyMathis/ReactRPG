@@ -38,6 +38,7 @@
 
 	--width: 85.7em;
 	--height: 64.3em;
+	--radius: 3% / 5%;
 
 	--menu-width: 57em;
 	--menu-height: 43em;
@@ -91,6 +92,7 @@ body {
 	align-items: center;
 	background-color: var(--shadow);
 	height: 100vh;
+	background-image: url('/assets/backgrounds/background_texture.png');
 }
 
 ol, ul {

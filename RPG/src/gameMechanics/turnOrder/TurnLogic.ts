@@ -47,6 +47,8 @@ export const runTurnLogic = async (
       Statuses(entity);
 
       if ('target' in entity) {
+        await new Promise(resolve => setTimeout(resolve, 500));
+
         const enemy = storeAtom.get(EnemyAtom)[entity.id];
 
         if (!enemy) {
@@ -57,11 +59,10 @@ export const runTurnLogic = async (
 
         if (enemy.health <= 0) {
             console.log(`${enemy.name} died from debuff effects.`);
+            if(HandleAllCharactersDead() || HandleAllEnemiesDead()) return;
             i++;
             continue;
         }
-
-        await new Promise(resolve => setTimeout(resolve, 2000));
 
         const allCharacters = Object.values(storeAtom.get(CharacterAtom));
         const alivePlayers = allCharacters.filter(c => c.type === 'player' && c.health > 0 && c.isSelected) as CharacterType[];
@@ -81,6 +82,7 @@ export const runTurnLogic = async (
         console.log(`Enemy ${enemy.name} attacked ${character.name} for ${enemy.attack} damage.`);
         if (HandleAllCharactersDead() || HandleAllEnemiesDead()) return;
         i++;
+        await new Promise(resolve => setTimeout(resolve, 1500));
       } else {
         const character = entity as CharacterType;
         
@@ -145,6 +147,7 @@ export const runTurnLogic = async (
 
         if (HandleAllCharactersDead() || HandleAllEnemiesDead()) return;
         i++;
+        await new Promise(resolve => setTimeout(resolve, 1500));
       }
   }
 

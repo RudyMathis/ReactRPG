@@ -26,14 +26,18 @@ export const GainExperience = (enemyAmount: number, charactersAmount: number) =>
                     exp: totalExp,
                     level: level,
                     maxExp: maxExp,
-                    health: char.health + levelUpBonus,
+                    health: char.maxHealth + levelUpBonus,
                     maxHealth: char.maxHealth + levelUpBonus,
-                    attack: char.attack + levelUpBonus,
-                    defense: char.defense + levelUpBonus,
-                    speed: char.speed + levelUpBonus,
+                    attack: char.attackDefault + levelUpBonus,
+                    attackDefault: char.attackDefault + levelUpBonus,
+                    defense: char.defenseDefault + levelUpBonus,
+                    defenseDefault: char.defenseDefault + levelUpBonus,
+                    speed: char.speedDefault + levelUpBonus,
                     speedDefault: char.speedDefault + levelUpBonus,
-                    mana: char.maxMana > 0 ? char.mana + levelUpBonus : 0,
+                    mana: char.maxMana > 0 ? char.maxMana + levelUpBonus : 0,
                     maxMana: char.maxMana > 0 ? char.maxMana + levelUpBonus : 0,
+                    buffs: [],
+                    debuffs: [],
                 };
             }
             return char;

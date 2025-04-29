@@ -31,7 +31,7 @@
 
 /* SHADOW */
 
-.shadow {
+/* .shadow {
     position: absolute;
     mix-blend-mode: multiply;
     filter: blur(8px);
@@ -41,7 +41,7 @@
 }
 
 .shadow.follow[data-type='player'] {
-	animation: followPlayerAnimation .9s linear 1 forwards;
+	animation: followPlayerAnimation 900ms linear 1 forwards;
 }
 
 @keyframes followPlayerAnimation {
@@ -49,7 +49,7 @@
 }
 
 .shadow.follow[data-type='npc'] {
-	animation: followNPCAnimation .9s linear 1 reverse;
+	animation: followNPCAnimation 900ms linear 1 reverse;
 }
 
 @keyframes followNPCAnimation {
@@ -150,7 +150,7 @@
     width: 7.15em;
     height: 3.6em;
     transform: rotate3d(1, 1, 1, 30deg);
-}
+} */
 
 
 /* ARROW */
@@ -161,7 +161,7 @@
     left: -50%;
     width: 2.28em;
     height: 1.86em;
-    animation: floatArrow 1s infinite ease-in-out;
+    animation: floatArrow 1000ms infinite ease-in-out;
     image-rendering: pixelated;
     z-index: var(--mid-layer);
 }

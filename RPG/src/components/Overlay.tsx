@@ -1,9 +1,9 @@
-import { useAtom } from 'jotai';
-import { backgroundAtom } from '../atom/BackgroundAtom';
-import styles from  './Overlay.module.css';
+// import { useAtom } from 'jotai';
+// import { backgroundAtom } from '../atom/BackgroundAtom';
+// import styles from  './Overlay.module.css';
 
 const Overlay = () => {
-    const [background] = useAtom(backgroundAtom);
+    // const background = localStorage.getItem('background');
 
     return (
         <>
@@ -13,7 +13,7 @@ const Overlay = () => {
             <div className={`${styles.blur} ${styles.blurOverlayBottom}`}></div>
             <div className={`${styles.blur} ${styles.blurOverlayLeft}`}></div>
             <div className={`${styles.blur} ${styles.blurOverlayRight}`}></div> */}
-            <div className={`${styles.lighting}`} data-light={background}></div>
+            {/* <div className={`${styles.lighting}`} data-light={background}></div> */}
         </>
     );
 }

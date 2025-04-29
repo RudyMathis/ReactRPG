@@ -18,6 +18,13 @@ export const ApplyBlessing = (
                 ? [...updatedChar.resistances, ...updates.resistances]
                 : updatedChar.resistances,
             blessings: [...updatedChar.blessings, blessingName],
+            buffs: [],
+            debuffs: [],
+            health: updatedChar.maxHealth,
+            mana: updatedChar.maxMana,
+            speed: updatedChar.speedDefault,
+            attack: updatedChar.attackDefault,
+            defense: updatedChar.defenseDefault
         };
 
         return {

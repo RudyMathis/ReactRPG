@@ -11,6 +11,10 @@ export const FullRestore = () => {
                     health: char.maxHealth,
                     mana: char.maxMana,
                     debuffs: [],
+                    buffs: [],
+                    speed: char.speedDefault,
+                    attack: char.attackDefault,
+                    defense: char.defenseDefault
                 };
             }
             return char;

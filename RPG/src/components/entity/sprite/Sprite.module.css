@@ -14,7 +14,7 @@
 }
 
 .entityContainer[data-move='true'][data-type='player'] {
-    animation: attackMoveAnimation .9s linear 1; 
+    animation: attackMoveAnimation 900ms linear 1; 
 } 
 
 @keyframes attackMoveAnimation {
@@ -24,7 +24,7 @@
 }
 
 .entityContainer[data-move='true'][data-type='npc'] {
-    animation: attackNPCMoveAnimation .9s linear 1 reverse; 
+    animation: attackNPCMoveAnimation 900ms linear 1 reverse; 
 }
 
 @keyframes attackNPCMoveAnimation {
@@ -103,8 +103,8 @@
 }
 
 [data-dead='true'][data-type='npc'] {
-    animation: deathNPCAnimation .9s linear forwards;
-    animation-delay: 1s;
+    animation: deathNPCAnimation 900ms linear forwards;
+    animation-delay: 1000ms;
 }
 
 @keyframes deathNPCAnimation {

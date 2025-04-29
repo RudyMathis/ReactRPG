@@ -16,13 +16,26 @@ export const HandleEnemyHealthUpdate = (playerTarget: EnemyType, character: Char
 }
 
 export const HandleCharacterHealthUpdate = (playerTarget: CharacterType, updatedHealth: number) => { 
-    storeAtom.set(CharacterAtom, (prev) => ({
-        ...prev,
-        [playerTarget.id]: {
-            ...prev[playerTarget.id],
-            health: updatedHealth
-        },
-    }));
+    if(updatedHealth <= 0) {
+        storeAtom.set(CharacterAtom, (prev) => ({
+            ...prev,
+            [playerTarget.id]: {
+                ...prev[playerTarget.id],
+                health: updatedHealth,
+                buffs: [],
+                debuffs: [],
+                blessings: [],
+            },
+        }));
+    } else {
+        storeAtom.set(CharacterAtom, (prev) => ({
+            ...prev,
+            [playerTarget.id]: {
+                ...prev[playerTarget.id],
+                health: updatedHealth
+            },
+        }));
+    }
 }
 
 export const HandleSetCurrentTurn = (character: CharacterType, isTurn: boolean) => { 

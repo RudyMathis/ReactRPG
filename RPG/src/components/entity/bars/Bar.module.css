@@ -22,7 +22,7 @@
 .barFill {
     height: 100%;
     opacity: .5;
-    transition: width 0.3s ease-in-out;
+    transition: width 0300ms ease-in-out;
 }
 
 .barText {

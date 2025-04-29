@@ -1,52 +1,67 @@
 .background {
-    position: absolute;
+    position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width:  var(--width);
-    height: var(--height);
+    width: calc(var(--width) - .8%);
+    height: calc(var(--height) - 4%);
+    border-radius: var(--radius);
     background-color: var(--background);
     z-index: var(--lowest-layer);
-    border-radius: 5%;
+}
+
+.backgroundBorder {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: calc(var(--width) + 1.5%);
+    height: calc(var(--height) + 1.5%);
+    z-index: var(--lowest-layer);
+    pointer-events: none;
 }
 
 .crt {
-    position: absolute;
+    position: fixed;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    width: var(--width);
-    height: var(--height);
+    width: calc(var(--width) - .8%);
+    height: calc(var(--height) - 4%);
     background: linear-gradient(to top, hsla(0, 0%, 0%, 0.20), hsla(0, 0%, 0%, 0.20), hsla(0, 0%, 20%, 0.20), hsla(0, 0%, 20%, 0.20));
     background-size: cover;
     background-size: 100% 8px;
     z-index: var(--highest-layer);
     pointer-events: none;
-    border-radius: 5%;
+    border-radius: var(--radius);
 }
 
 /* GLOW */
 
 .glow {
-    position: absolute;
+    position: fixed;
     top: 50%;
     left: 50%;
-    width:  var(--width);
+    width: var(--width);
     height: var(--height);
+    width: calc(var(--width) - .8%);
+    height: calc(var(--height) - 4%);
     transform: translate(-50%, -50%);
-    border-radius: 5%;
+    background-color: var(--background);
+    border-radius: var(--radius);
     background-size: cover;
     pointer-events: none;
-    filter: blur(100px) saturate(.6) brightness(1.2) opacity(.5);
+    filter: blur(10px) saturate(.9) brightness(1.1) opacity(.5);
     animation: glow 5s ease-in-out infinite;
-	background-color: var(--background);
+    z-index: var(--low-layer);
 }
+
 
 @keyframes glow {
     0%, 100% {     
-        filter: blur(100px) saturate(.6) brightness(1.2) opacity(.5); }
+        filter: blur(12px) saturate(.9) brightness(1.1) opacity(.25); }
     50% {     
-        filter: blur(90px) saturate(.6) brightness(1.2) opacity(.5); }
+        filter: blur(4px) saturate(.9) brightness(.9) opacity(.25); }
 }
 
 .glow[data-glow='Field'] {
@@ -114,7 +129,7 @@
     align-items: center;
     z-index: var(--high-layer); 
     cursor: pointer;
-    border-radius: 5%;
+    border-radius: var(--radius);
 }
 
 .settingsMenu[data-open="false"] {

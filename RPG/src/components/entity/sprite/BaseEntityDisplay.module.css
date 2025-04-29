@@ -60,7 +60,7 @@
 }
 
 .flashDamage {
-    animation: flashDamage .6s linear 2;
+    animation: flashDamage 600ms linear 2;
 }
 
 .spriteContainer [data-entity-modified="Fire"] img {
@@ -82,7 +82,8 @@
 }
 
 .damageEffect {
-    animation: damageAnimation 0.9s ease-out forwards;
+    animation: 900ms;;
+    animation: damageAnimation 900ms ease-out forwards;
     bottom: 0;
     z-index: var(--high-layer);
     position: absolute;
@@ -155,7 +156,7 @@
 
 .deathEffect[data-type='player']{
     animation: deathPlayerAnimation .6s steps(1) 1;
-    animation-delay: 1s;
+    animation-delay: 1000ms;
 }
 
 @keyframes deathPlayerAnimation {
@@ -170,8 +171,8 @@
 }
 
 [data-death='true'][data-type='npc'] {
-    animation: deathNPCAnimation .9s linear forwards;
-    animation-delay: 1s;
+    animation: deathNPCAnimation 900ms linear forwards;
+    animation-delay: 1000ms;
 }
 
 @keyframes deathNPCAnimation {
@@ -194,7 +195,7 @@
 }
 
 .attack[data-type='player'] {
-    animation: attackAnimation .3s steps(3) 3; 
+    animation: attackAnimation 300ms steps(3) 3; 
 }
 
 /* spell */
@@ -215,7 +216,7 @@
     width: 28em;
     height: 10.5em;
     background-image: url("/assets/vfx/spell_lightning.png");
-    animation: spellLightning 0.9s steps(3) forwards;
+    animation: spellLightning 900ms steps(3) forwards;
 }
 
 @keyframes spellLightning {
@@ -232,7 +233,7 @@
     width: 15.6em;
     height: 7.9em;
     background-image: url("/assets/vfx/spell_sword.png");
-    animation: spellSword 0.9s steps(2) forwards;
+    animation: spellSword 900ms steps(2) forwards;
 }
 
 @keyframes spellSword {
@@ -250,7 +251,7 @@
     width: 21.1em;
     height: .5em;
     background-image: url("/assets/vfx/spell_quickAttack.png");
-    animation: spellQuickAttack .9s steps(3) forwards;
+    animation: spellQuickAttack 900ms steps(3) forwards;
 }
 
 
