@@ -39,10 +39,22 @@ export const HandleCharacterHealthUpdate = (playerTarget: CharacterType, updated
 }
 
 export const HandleSetCurrentTurn = (character: CharacterType, isTurn: boolean) => { 
-    storeAtom.set(CharacterAtom, prev => ({
-        ...prev,
-        [character.id]: { ...character, currentTurn: isTurn }
-    }));
+    if(character.health <= 0) {
+        storeAtom.set(CharacterAtom, (prev) => ({
+            ...prev,
+            [character.id]: {
+                ...prev[character.id],
+                buffs: [],
+                debuffs: [],
+                blessings: [],
+            },
+        }));
+    } else {
+        storeAtom.set(CharacterAtom, prev => ({
+            ...prev,
+            [character.id]: { ...character, currentTurn: isTurn }
+        }));
+    }
 }
 
 export const HandleCharacterManaUpdate = (playerTarget: CharacterType, updatedMana: number) => { 

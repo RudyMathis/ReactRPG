@@ -8,7 +8,7 @@ type BtnProps = {
 const Btn = ({ onClick, text, className }: BtnProps) => {
 
     return (
-        <button onClick={onClick} className={className ? `btn ${className}`: 'btn'}>{text}</button>
+        <div onClick={onClick} className={className ? `btn ${className}`: 'btn'}>{text}</div>
     );
 }
 

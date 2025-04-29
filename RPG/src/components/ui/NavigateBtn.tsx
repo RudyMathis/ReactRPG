@@ -13,7 +13,7 @@ const NavigateBtn = ({ locationValue, location}: NavigateBtnProps) => {
     };
 
     return (
-        <button onClick={handleNavigation} className="btn">{location}</button>
+        <div onClick={handleNavigation} className="btn">{location}</div>
     );
 }
 

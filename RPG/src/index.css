@@ -31,6 +31,7 @@
 	--border-image-repeat: stretch stretch;
 
 	--lowest-layer: 0;
+	--lower-layer: 1;
 	--low-layer: 2;
 	--mid-layer: 3;
 	--high-layer: 4;
@@ -93,6 +94,7 @@ body {
 	background-color: var(--shadow);
 	height: 100vh;
 	background-image: url('/assets/backgrounds/background_texture.png');
+	background-repeat: round;
 }
 
 ol, ul {
@@ -139,11 +141,11 @@ button {
     padding: 1rem;
     font-size: 1.25rem;
     image-rendering: pixelated;
+    color: var(--font);
     border-image-slice: var(--border-image-slice);
     border-image-width: var(--border-image-width);
     border-image-source: var(--border-image-source);
     border-image-repeat: var(--border-image-repeat);
-    color: var(--font);
 }
 
 .btn:hover {

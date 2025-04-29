@@ -3,9 +3,9 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: calc(var(--width) - .8%);
-    height: calc(var(--height) - 4%);
-    border-radius: var(--radius);
+    width: calc(var(--width) - .1%);
+    height: calc(var(--height) - 2%);
+    /* border-radius: var(--radius); */
     background-color: var(--background);
     z-index: var(--lowest-layer);
 }
@@ -15,10 +15,11 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: calc(var(--width) + 1.5%);
+    width: calc(var(--width) + 1.75%);
     height: calc(var(--height) + 1.5%);
     z-index: var(--lowest-layer);
     pointer-events: none;
+    border-radius: var(--radius);
 }
 
 .crt {
@@ -26,8 +27,8 @@
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    width: calc(var(--width) - .8%);
-    height: calc(var(--height) - 4%);
+    width: calc(var(--width) - .3%);
+    height: calc(var(--height) - 2%);
     background: linear-gradient(to top, hsla(0, 0%, 0%, 0.20), hsla(0, 0%, 0%, 0.20), hsla(0, 0%, 20%, 0.20), hsla(0, 0%, 20%, 0.20));
     background-size: cover;
     background-size: 100% 8px;
@@ -42,10 +43,8 @@
     position: fixed;
     top: 50%;
     left: 50%;
-    width: var(--width);
-    height: var(--height);
-    width: calc(var(--width) - .8%);
-    height: calc(var(--height) - 4%);
+    width: calc(var(--width) - .5%);
+    height: calc(var(--height) - 1.5%);
     transform: translate(-50%, -50%);
     background-color: var(--background);
     border-radius: var(--radius);
@@ -53,7 +52,7 @@
     pointer-events: none;
     filter: blur(10px) saturate(.9) brightness(1.1) opacity(.5);
     animation: glow 5s ease-in-out infinite;
-    z-index: var(--low-layer);
+    z-index: var(--lower-layer);
 }
 
 

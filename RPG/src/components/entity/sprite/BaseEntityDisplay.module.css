@@ -7,6 +7,7 @@
     align-items: center;
     position: relative;
     overflow: hidden;
+    z-index: var(--lower-layer);
 }
 
 .spriteGlow {
@@ -31,6 +32,7 @@
     object-fit: initial; 
     image-rendering: pixelated;
     position: absolute;
+    z-index: var(--lower-layer);
 }
 
 .sprite[data-type='player']{
@@ -40,11 +42,23 @@
 
 .sprite[data-type='npc'] {
     position: relative;
-    width: 7em; 
+    width: 7em;
+    filter: drop-shadow(0px 3px 1px var(--shadow));
+}
+
+.shadow {
+    position: absolute;
+    bottom: -1.5em;
+    left: 1em;
+    width: 6em;
+    height: 2em;
+    z-index: var(--lowest-layer);
+    filter: blur(8px);
+    mix-blend-mode: luminosity;
 }
 
 
-.sprite[data-entity-name='Rat'],  .sprite[data-entity-name='Goblin'] {
+.sprite[data-entity-name='Rat'], .sprite[data-entity-name='Goblin'] {
     height: 4.5em;
 }
 
@@ -82,7 +96,7 @@
 }
 
 .damageEffect {
-    animation: 900ms;;
+    animation: delay;
     animation: damageAnimation 900ms ease-out forwards;
     bottom: 0;
     z-index: var(--high-layer);

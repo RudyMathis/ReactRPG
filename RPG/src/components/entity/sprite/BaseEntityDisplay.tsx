@@ -40,7 +40,7 @@ function BaseEntityDisplay({ entity }: EnityDetailProps) {
                                 data-damage-type={e.type}
                                 style={{
                                     animationDelay: `${(i + 1) * 1}s`,
-                                    animation: `${styles.damageAnimation} 900ms ease-out forwards`,
+                                    animation: `${styles.damageAnimation} 0.9s ease-out forwards`,
                                     // left: `${Math.random() * 80}px`,
                                 }}
                             >
@@ -51,7 +51,7 @@ function BaseEntityDisplay({ entity }: EnityDetailProps) {
                 </div>
             )}
             <div className={styles.spriteGlow}></div> 
-            <div className={styles.spriteContainer}>
+            <div className={styles.spriteContainer} data-type={entity.type}>
                 {entity.health > 0 ? (
                     <>
                         <img
@@ -96,6 +96,7 @@ function BaseEntityDisplay({ entity }: EnityDetailProps) {
                     />
                 )}
             </div>
+            <img src="/assets/shadow.png" className={styles.shadow} />
         </>
     );
 }
