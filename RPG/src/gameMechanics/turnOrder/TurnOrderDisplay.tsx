@@ -2,10 +2,18 @@ import { useTurnOrder } from "./useTurnOrder";
 import styles from './TurnOrder.module.css';
 import { EnemyType } from "../../atom/BaseEnemyAtom";
 import { EntityImages } from "../../components/entity/sprite/EntityImages";
-
+import { turnCountAtom } from "../../atom/UseTurnCountAtom";
+import { useAtom } from "jotai";
+import { useEffect, useState } from "react";
 
 const TurnOrderDisplay = () => {
-    const turnOrder = useTurnOrder();
+    const fullTurnOrder = useTurnOrder();
+    const [currentTurn] = useAtom(turnCountAtom);
+    const [turnOrder, setTurnOrder] = useState(fullTurnOrder);
+
+    useEffect(() => {
+        setTurnOrder(fullTurnOrder);
+    }, [currentTurn]);
 
     return (
         <div className={styles.turnOrderContainer}>
@@ -34,7 +42,7 @@ const TurnOrderDisplay = () => {
                                     <img key={index} className={styles.debuffIcon} src={debuff.icon} />
                                 ))}
                             </div>
-                            )}
+                        )}
                     </div>
                 );
             })}

@@ -16,10 +16,7 @@
     height: 175%;
     object-fit: cover;
     image-rendering: pixelated;
-}
-
-.turnOrderSprite[data-entity-type="player"] {
-    background-color: var(--white-soft);
+    transform: translateX(-3px);
 }
 
 .turnOrderContainer .characterSprite {
@@ -58,7 +55,7 @@
 
 .turnOrderItem {
     background-color: var(--white-soft);
-    box-shadow: 1px 1px 0px var(--white);
+    border: 2px solid var(--white);
     padding: .5rem;
 }
 
@@ -68,22 +65,22 @@
 
 .turnOrderItem[data-entity-modified="Dark"] {
     background-color: var(--dark-soft);
-    box-shadow: 1px 1px 0px var(--dark);
+    border: 2px solid var(--dark);
 }
 
 .turnOrderItem[data-entity-modified="Ice"] {
     background-color: var(--ice-soft);
-    box-shadow: 1px 1px 0px var(--ice);
+    border: 2px solid var(--ice);
 }
 
 .turnOrderItem[data-entity-modified="Fire"] {
     background-color: var(--fire-soft);
-    box-shadow: 1px 1px 0px var(--fire);
+    border: 2px solid var(--fire);
 }
 
 .turnOrderItem[data-entity-modified="Lightning"] {
     background-color: var(--lightning-soft);
-    box-shadow: 1px 1px 0px var(--lightning);
+    border: 2px solid var(--lightning);
 }
 
 .debuffs {

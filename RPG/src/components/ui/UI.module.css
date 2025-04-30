@@ -3,9 +3,9 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: calc(var(--width) - .1%);
-    height: calc(var(--height) - 2%);
-    /* border-radius: var(--radius); */
+    width: calc(var(--width) - 1.5em);
+    height: calc(var(--height) - 2em);
+    border-radius: var(--big-radius);
     background-color: var(--background);
     z-index: var(--lowest-layer);
 }
@@ -15,11 +15,11 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: calc(var(--width) + 1.75%);
-    height: calc(var(--height) + 1.5%);
+    width: var(--width);
+    height: var(--height);
     z-index: var(--lowest-layer);
     pointer-events: none;
-    border-radius: var(--radius);
+    border-radius: var(--big-radius);
 }
 
 .crt {
@@ -27,14 +27,14 @@
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    width: calc(var(--width) - .3%);
-    height: calc(var(--height) - 2%);
+    width: calc(var(--width) - 3.75em);
+    height: calc(var(--height) - 3.4em);
     background: linear-gradient(to top, hsla(0, 0%, 0%, 0.20), hsla(0, 0%, 0%, 0.20), hsla(0, 0%, 20%, 0.20), hsla(0, 0%, 20%, 0.20));
     background-size: cover;
     background-size: 100% 8px;
     z-index: var(--highest-layer);
     pointer-events: none;
-    border-radius: var(--radius);
+    border-radius: var(--big-radius);
 }
 
 /* GLOW */
@@ -43,14 +43,14 @@
     position: fixed;
     top: 50%;
     left: 50%;
-    width: calc(var(--width) - .5%);
-    height: calc(var(--height) - 1.5%);
+    width: calc(var(--width) - 3.75em);
+    height: calc(var(--height) - 3.4em);
     transform: translate(-50%, -50%);
     background-color: var(--background);
-    border-radius: var(--radius);
+    border-radius: var(--big-radius);
     background-size: cover;
     pointer-events: none;
-    filter: blur(10px) saturate(.9) brightness(1.1) opacity(.5);
+    filter: blur(1em) saturate(.9) brightness(1.1) opacity(.5);
     animation: glow 5s ease-in-out infinite;
     z-index: var(--lower-layer);
 }
@@ -58,9 +58,9 @@
 
 @keyframes glow {
     0%, 100% {     
-        filter: blur(12px) saturate(.9) brightness(1.1) opacity(.25); }
+        filter: blur(1em) saturate(.9) brightness(1.1) opacity(.25); }
     50% {     
-        filter: blur(4px) saturate(.9) brightness(.9) opacity(.25); }
+        filter: blur(.5em) saturate(.9) brightness(.9) opacity(.25); }
 }
 
 .glow[data-glow='Field'] {
@@ -128,7 +128,7 @@
     align-items: center;
     z-index: var(--high-layer); 
     cursor: pointer;
-    border-radius: var(--radius);
+    border-radius: var(--big-radius);
 }
 
 .settingsMenu[data-open="false"] {

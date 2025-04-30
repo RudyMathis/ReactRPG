@@ -23,10 +23,10 @@
     position: relative;
     grid-template-columns: repeat(20, 1fr);
     background-size: var(--width) var(--height);
-    width: var(--width);
-    height: var(--height);
+    width: calc(var(--width) - 1.5em);
+    height: calc(var(--height) - 2em);
     /* image-rendering: pixelated; */
-    border-radius: var(--radius);
+    border-radius: var(--big-radius);
 }
 
 .board[data-background="Cave"] {

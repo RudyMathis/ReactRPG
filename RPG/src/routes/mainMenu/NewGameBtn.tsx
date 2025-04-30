@@ -7,12 +7,14 @@ import { GameLevelAtom } from "../../atom/GameLevelAtom";
 import EnemyAtom from "../../atom/BaseEnemyAtom";
 import { generateInitialEnemies } from "../../gameData/enemies/EnemyFactory";
 import { RemoveData } from "../../gameMechanics/RemoveData";
+import { turnCountAtom } from "../../atom/UseTurnCountAtom";
 
 export const NewGameBtn = () => {
     const navigate = useNavigate();
     const [, setCharacters] = useAtom(characterAtom);
     const [, setEnemies] = useAtom(EnemyAtom);
     const [currentGameLevel] = useAtom(GameLevelAtom);
+    const [, setCurrentTurn] = useAtom(turnCountAtom);
 
     const handleStart = () => {
         RemoveData();
@@ -38,6 +40,7 @@ export const NewGameBtn = () => {
         localStorage.setItem('inProgressGame', 'false');
         localStorage.setItem('Score', '0');
         localStorage.setItem('turnCount', '0');
+        setCurrentTurn(0);
         currentGameLevel.isRoundOver = false;
         currentGameLevel.isLevelOver = false;
         currentGameLevel.isGameOver = false;

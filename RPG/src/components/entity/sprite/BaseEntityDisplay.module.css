@@ -133,7 +133,7 @@
 }
 
 [data-damage-type="Ice"] {
-    color: var(--white);
+    color: var(--shadow);
     text-shadow:
         3px 3px 0 var(--ice),
         -3px 3px 0 var(--ice),

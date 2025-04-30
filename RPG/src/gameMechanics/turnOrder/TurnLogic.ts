@@ -31,7 +31,9 @@ export const runTurnLogic = async (
   if (HandleAllCharactersDead()) return;
   if (HandleAllEnemiesDead()) return;
 
+  turnOrder = updatedTurnOder();
   console.log("Turn Order:", turnOrder);
+  
   while (i < turnOrder.length) {
       SaveData(i); // Save the current turn before processing
 
@@ -45,7 +47,7 @@ export const runTurnLogic = async (
 
       entity = entity.type === "player" ? storeAtom.get(CharacterAtom)[entity.id] : storeAtom.get(EnemyAtom)[entity.id];
       Statuses(entity);
-
+      
       if ('target' in entity) {
         await new Promise(resolve => setTimeout(resolve, 500));
 
@@ -158,3 +160,14 @@ export const runTurnLogic = async (
   console.log(`Turn ${currentTurn} ended.`);
   setTimeout(() => runTurnLogic(turnOrder, waitForInput), 1000);
 };
+
+const updatedTurnOder = () => {
+  const characters = storeAtom.get(CharacterAtom);
+  const enemies = storeAtom.get(EnemyAtom);
+  const selectedCharacters = Object.values(characters).filter(char => char.isSelected);
+  const allEntities = [...selectedCharacters, ...Object.values(enemies)];
+
+  // Sort entities by speed in descending order (highest to lowest)
+  const turnOrder = allEntities.sort((a, b) => b.speed - a.speed);
+  return turnOrder;
+}

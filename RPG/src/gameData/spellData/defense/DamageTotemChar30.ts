@@ -10,29 +10,23 @@ const DamageTotemChar30 = (
 
     spellCost = 30;
     character.mana -= spellCost;
-    const updatedCharacters: { id: number; buff: Buff }[] = [];
 
     const characters = Object.values(storeAtom.get(CharacterAtom));
     const selectedCharacters = characters.filter(
         char => char.isSelected && char.health > 0
     );
 
-    selectedCharacters.forEach(targetChar => {
+    selectedCharacters.map(targetChar => {
         if (!targetChar.buffs.find(d => d.name === Buffs.DamageTotem.name)) {
-            // Only add if they don't already have it
-            targetChar.buffs.push({
-                type: Buffs.DamageTotem.type, 
-                duration: 3,
-                attack: Buffs.DamageTotem.attack,
-                name: Buffs.DamageTotem.name
-            });
-            targetChar.attack += Buffs.DamageTotem.attack;
+            targetChar.attack = targetChar.attack + Buffs.DamageTotem.attack;
         }
-        console.log("targetChar", targetChar, targetChar.buffs, "updatedCharacters", updatedCharacters);
-        updatedCharacters.push({ id: targetChar.id, buff: Buffs.DamageTotem });
     });
 
-    return updatedCharacters;
+    if(!character.buffs.find(d => d.name === Buffs.DamageTotem.name)) {
+        character.attack = character.attack + Buffs.DamageTotem.attack;
+    }
+
+    return selectedCharacters.map(char => ({ id: char.id, buff: Buffs.DamageTotem }));
 };
 
 export default DamageTotemChar30;
