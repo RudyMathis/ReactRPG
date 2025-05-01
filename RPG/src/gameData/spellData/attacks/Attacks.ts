@@ -4,11 +4,11 @@ import { ElementTypes } from "../ElementTypes";
 import DevastateTar60 from "./physical/DevastateTar60";
 import FireBallTar20 from "./fire/FireBallTar20";
 import FrostbiteTar20 from "./ice/FrostbiteTar20";
-import GarroteTar40 from "./physical/Garrote40";
-import HeroicStrikeTar20 from "./physical/HeroicStrikeTat20";
+import GarroteTar40 from "./physical/GarroteTar40";
+import HeroicStrikeTar20 from "./physical/HeroicStrikeTar20";
 import IceBoltTar30 from "./ice/IceBoltTar30";
 import LightningBoltTar40 from "./lightning/LightningBoltTar40";
-import MultiShotTar0 from "./physical/MultiShotTar0";
+import MultiShotTar$40 from "./physical/MultiShotTar40";
 import ShadowStrikeTar0 from "./dark/ShadowStrikeTar0";
 import QuickAttackTar0 from "./physical/QuickAttackTar0";
 import ShootTar0 from "./physical/ShootTar0";
@@ -69,7 +69,7 @@ const attacks: Record<string, AttackMeta> = {
     },
     Quick_Attack_Tar$0: {
         element: ElementTypes.Physical,
-        cost: 10,
+        cost: 0,
         func: QuickAttackTar0,
         animation: 'quickAttack',
     },
@@ -88,10 +88,10 @@ const attacks: Record<string, AttackMeta> = {
         cost: 60,
         func: DevastateTar60,
     },
-    Multi_Shot_Tar$0: {
+    Multi_Shot_Tar$40: {
         element: ElementTypes.Physical,
-        cost: 0,
-        func: MultiShotTar0,
+        cost: 40,
+        func: MultiShotTar$40,
     },
     Cleave__Tar$30: {
         element: ElementTypes.Physical,
@@ -105,12 +105,12 @@ const attacks: Record<string, AttackMeta> = {
     },
     Aim_Shot_Tar$50: {
         element: ElementTypes.Physical,
-        cost: 0,
+        cost: 50,
         func: AimShotTar50,
     },
     Volley__Tar$20: {
         element: ElementTypes.Physical,
-        cost: 0,
+        cost: 20,
         func: VolleyTar20,
     },
     Thunderclap__Tar$40: {

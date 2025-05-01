@@ -1,6 +1,6 @@
 import HealChar20 from "./HealChar20";
 import CureChar10 from "./CureChar10";
-import HealAllChar40 from "./Heal_All_Char40";
+import HealAllChar40 from "./HealAllChar40";
 import { CharacterType } from "../../../atom/CharacterAtom";
 import MeditateChar30 from "./MeditateChar30";
 import BerserkChar50 from "./BerserkChar50";

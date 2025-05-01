@@ -4,13 +4,13 @@ import { storeAtom } from "../../../../atom/storeAtom";
 import { AdditionalBlessingDamage } from "../../AdditionalBlessingDamage";
 import { HandleDamageEffect } from "../../../../gameMechanics/HandleDamageEffect";
 
-const MultiShotTar0 = (
+const MultiShotTar$40 = (
     enemy: EnemyType,
     character: CharacterType,
     target: CharacterType | EnemyType,
     spellCost: number
 ) => {
-    spellCost = 0;
+    spellCost = 40;
     const targetCharacter = 'id' in target && target.id === character.id && target.type === character.type
 
     if(targetCharacter) {
@@ -75,4 +75,4 @@ const MultiShotTar0 = (
     }
 };
 
-export default MultiShotTar0;
+export default MultiShotTar$40;

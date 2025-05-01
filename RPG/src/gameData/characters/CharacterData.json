@@ -17,7 +17,7 @@
         "maxMana": 100,
         "exp": 0,
         "maxExp": 100,
-        "spells": ["Multi_Shot_Tar$0", "Shoot__Tar$0", "Aim_Shot_Tar$50", "Volley__Tar$20"],
+        "spells": ["Multi_Shot_Tar$40", "Shoot__Tar$0", "Aim_Shot_Tar$50", "Volley__Tar$20"],
         "weapon": "bow",
         "buffs": [],
         "debuffs": [],

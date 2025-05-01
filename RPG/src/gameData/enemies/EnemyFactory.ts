@@ -56,7 +56,7 @@ const classEffects: Record<string, Partial<EnemyType>> = {
         attackDefault: 10,
         speed: 15,
         speedDefault: 15,
-        spells: ["Multi_Shot_Tar$0"],
+        spells: ["Multi_Shot_Tar$40"],
     }
 };
 

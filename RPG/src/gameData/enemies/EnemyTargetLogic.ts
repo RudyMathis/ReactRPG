@@ -6,7 +6,7 @@ export const getEnemyTarget = (
     aliveCharacters: CharacterType[]
 ): CharacterType | null => {
     if (aliveCharacters.length === 0) return null;
-    
+
     const taunter = aliveCharacters.find(char =>
         char.buffs.some(buff => buff.name === "Taunter")
     );
@@ -16,30 +16,34 @@ export const getEnemyTarget = (
     }
 
     const targetType = enemy.target;
+    const randomIndex = Math.floor(Math.random() * aliveCharacters.length);
+    console.log("target type", targetType);
 
-    if (targetType.includes("TargetSpeedLow")) {
-        return aliveCharacters.reduce((lowest, current) =>
-            current.speedDefault < lowest.speedDefault ? current : lowest
-        );
+    switch (true) {
+        case targetType.includes("TargetSpeedLow"):
+            return aliveCharacters.reduce((lowest, current) =>
+                current.speedDefault < lowest.speedDefault ? current : lowest
+            );
+
+        case targetType.includes("TargetHealthLow"):
+            return aliveCharacters.reduce((lowest, current) =>
+                current.maxHealth < lowest.maxHealth ? current : lowest
+            );
+
+        case targetType.includes("TargetDefenseLow"):
+            return aliveCharacters.reduce((lowest, current) =>
+                current.defenseDefault < lowest.defenseDefault ? current : lowest
+            );
+        case targetType.includes("TargetManaHigh"):
+            console.log("targetType mana", targetType);
+            return aliveCharacters.reduce((highest, current) =>
+                current.maxMana > highest.maxMana ? current : highest
+            );
+
+        case targetType.includes("TargetRandom"):
+            return aliveCharacters[randomIndex];
+
+        default:
+            return aliveCharacters[0];
     }
-
-    if (targetType.includes("TargetHealthLow")) {
-        return aliveCharacters.reduce((lowest, current) =>
-            current.health < lowest.health ? current : lowest
-        );
-    }
-
-    if (targetType.includes("TargetDefenseLow")) {
-        return aliveCharacters.reduce((lowest, current) =>
-            current.defense < lowest.defense ? current : lowest
-        );
-    }
-
-    if (targetType.includes("TargetRandom")) {
-        const randomIndex = Math.floor(Math.random() * aliveCharacters.length);
-        return aliveCharacters[randomIndex];
-    }
-
-    // 3. Fallback: just pick the first one
-    return aliveCharacters[0];
 };
