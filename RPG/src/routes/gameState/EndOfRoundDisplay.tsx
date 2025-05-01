@@ -32,7 +32,7 @@ const EndofRoundDisplay = () => {
             const characters = storeAtom.get(CharacterAtom);
             const selectedCharacters = Object.values(characters).filter(char => char.isSelected);
             const blessableCharacters = selectedCharacters.filter(c =>
-                c.blessings.length < BlessingsData.length
+                c.blessings.length < Object.keys(BlessingsData).length
             );
         
             const randomCharacter = blessableCharacters[Math.floor(Math.random() * blessableCharacters.length)];

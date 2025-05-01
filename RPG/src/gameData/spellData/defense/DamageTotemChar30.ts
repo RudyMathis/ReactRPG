@@ -16,15 +16,30 @@ const DamageTotemChar30 = (
         char => char.isSelected && char.health > 0
     );
 
+    if(!character.buffs.find(d => d.name === Buffs.DamageTotem.buffName)) {
+        character.attack = character.attack + Buffs.DamageTotem.attack;
+        character.buffs.push(
+            {
+                name: Buffs.DamageTotem.buffName,
+                type: Buffs.DamageTotem.type,
+                duration: 3,
+            }
+        );
+    }
+
     selectedCharacters.map(targetChar => {
-        if (!targetChar.buffs.find(d => d.name === Buffs.DamageTotem.name)) {
+        if (!targetChar.buffs.find(d => d.name === Buffs.DamageTotem.buffName)) {
             targetChar.attack = targetChar.attack + Buffs.DamageTotem.attack;
+            targetChar.buffs.push(
+                {
+                    name: Buffs.DamageTotem.buffName,
+                    type: Buffs.DamageTotem.type,
+                    duration: 3,
+                }
+            );
         }
     });
 
-    if(!character.buffs.find(d => d.name === Buffs.DamageTotem.name)) {
-        character.attack = character.attack + Buffs.DamageTotem.attack;
-    }
 
     return selectedCharacters.map(char => ({ id: char.id, buff: Buffs.DamageTotem }));
 };

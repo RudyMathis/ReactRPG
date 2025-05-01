@@ -1,13 +1,16 @@
 import CharacterAtom, { CharacterType } from "../../../atom/CharacterAtom";
 import { storeAtom } from "../../../atom/storeAtom";
+import { BlessingsData } from "./BlessingsData";
 
 type PartialCharacterUpdate = Partial<Pick<CharacterType, 'attack' | 'resistances'>>;
 
 export const ApplyBlessing = (
     character: CharacterType,
-    blessingName: string,
+    blessingKey: keyof typeof BlessingsData,
     updates: PartialCharacterUpdate = {}
 ) => {
+    const blessingData = BlessingsData[blessingKey];
+
     storeAtom.set(CharacterAtom, (prev) => {
         const updatedChar = prev[character.id];
 
@@ -17,15 +20,10 @@ export const ApplyBlessing = (
             resistances: updates.resistances
                 ? [...updatedChar.resistances, ...updates.resistances]
                 : updatedChar.resistances,
-            blessings: [...updatedChar.blessings, blessingName],
-            buffs: [],
-            debuffs: [],
-            health: updatedChar.maxHealth,
-            mana: updatedChar.maxMana,
-            speed: updatedChar.speedDefault,
-            attack: updatedChar.attackDefault,
-            defense: updatedChar.defenseDefault
+            blessings: [...updatedChar.blessings, blessingData],
         };
+
+        console.log("updated", updated);
 
         return {
             ...prev,

@@ -16,15 +16,29 @@ const ProtectPartyChar50 = (
         char => char.isSelected && char.health > 0
     );
 
+    if (!character.buffs.find(d => d.name === Buffs.Protected.buffName)) {
+        character.defense = character.defense + Buffs.Protected.defense;
+        character.buffs.push(
+            {
+                name: Buffs.Protected.buffName,
+                type: Buffs.Protected.type,
+                duration: 3,
+            }
+        );
+    }
+
     selectedCharacters.forEach(targetChar => {
-        if (!targetChar.buffs.find(d => d.name === Buffs.Protected.name)) {
+        if (!targetChar.buffs.find(d => d.name === Buffs.Protected.buffName)) {
             targetChar.defense = targetChar.defense + Buffs.Protected.defense;
+            targetChar.buffs.push(
+                {
+                    name: Buffs.Protected.buffName,
+                    type: Buffs.Protected.type,
+                    duration: 3,
+                }
+            );
         }
     });
-
-    if (!character.buffs.find(d => d.name === Buffs.Protected.name)) {
-        character.defense = character.defense + Buffs.Protected.defense;
-    }
 
     return selectedCharacters.map(char => ({ id: char.id, buff: Buffs.Protected }));
 };

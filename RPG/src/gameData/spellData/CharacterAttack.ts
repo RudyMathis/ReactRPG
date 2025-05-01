@@ -3,7 +3,6 @@ import { CharacterType } from "../../atom/CharacterAtom";
 import { FlashAnimationAtom } from "../../atom/effects/FlashAnimationAtom";
 import { AttackAnimationAtom } from "../../atom/effects/AttackAnimationAtom";
 import { storeAtom } from "../../atom/storeAtom";
-import { AdditionalBlessingDamage } from "./AdditionalBlessingDamage";
 import attacks from "./attacks/Attacks";
 import { actionsTextAtom } from "../../atom/ActionsTextAtom";
 
@@ -68,7 +67,7 @@ const spellAnimation = attacks[spell]?.animation;
             isDefense: false,
             isAoe: false,
         });
-        return enemy.health - Math.max(5, (character.attack + AdditionalBlessingDamage(character)) - enemy.defense);
+        return enemy.health - Math.max(5, character.attack - enemy.defense);
     }
 
 };

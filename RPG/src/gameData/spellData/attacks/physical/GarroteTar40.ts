@@ -2,7 +2,7 @@ import { EnemyType } from "../../../../atom/BaseEnemyAtom";
 import { CharacterType } from "../../../../atom/CharacterAtom";
 import { HandleDamageEffect } from "../../../../gameMechanics/HandleDamageEffect";
 import Debuffs from "../../../Debuffs";
-import { AdditionalBlessingDamage } from "../../AdditionalBlessingDamage";
+import { BlessingOfBurnBonus, BlessingOfHolyDamageBonus } from "../../AdditionalBlessingDamage";
 
 const GarroteTar40 = (enemy: EnemyType, character: CharacterType, target: CharacterType | EnemyType, spellCost: number) =>{ 
     const targetCharacter = 'id' in target && target.id === character.id && target.type === character.type
@@ -28,10 +28,12 @@ const GarroteTar40 = (enemy: EnemyType, character: CharacterType, target: Charac
     } else {
         spellCost = 40;
         character.mana -= spellCost;
-        const bleedDamage = Math.max(5, Math.round(character.attack - enemy.defense) + AdditionalBlessingDamage(character));
+        const bleedDamage = Math.max(5, Math.round(character.attack - enemy.defense));
 
         if(enemy.debuffs.find(d => d.type === Debuffs.Bleed.type)) {
             HandleDamageEffect(bleedDamage, "Physical", "npc", enemy.id);
+            BlessingOfBurnBonus(character, enemy);
+            BlessingOfHolyDamageBonus(character, enemy);
             return enemy.health - bleedDamage;
         } else {
             enemy.debuffs.push({
@@ -39,6 +41,8 @@ const GarroteTar40 = (enemy: EnemyType, character: CharacterType, target: Charac
                 name: Debuffs.Bleed.name
             });
             HandleDamageEffect(bleedDamage, "Physical", "npc", enemy.id);
+            BlessingOfBurnBonus(character, enemy);
+            BlessingOfHolyDamageBonus(character, enemy);
             return enemy.health - bleedDamage;
         }
     }

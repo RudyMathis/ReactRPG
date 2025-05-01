@@ -1,7 +1,7 @@
 import EnemyAtom, { EnemyType } from "../../../../atom/BaseEnemyAtom";
 import CharacterAtom, { CharacterType } from "../../../../atom/CharacterAtom";
 import { storeAtom } from "../../../../atom/storeAtom";
-import { AdditionalBlessingDamage } from "../../AdditionalBlessingDamage";
+import { BlessingOfBurnBonus, BlessingOfHolyDamageBonus } from "../../AdditionalBlessingDamage";
 import { HandleDamageEffect } from "../../../../gameMechanics/HandleDamageEffect";
 
 const HolyExplosionTar50 = (
@@ -44,16 +44,19 @@ const HolyExplosionTar50 = (
             const resistance = targetEnemy.resistances.find(res => res.type === "Holy")?.value || 0;
             const vulnerability = targetEnemy.vulnerabilities.find(vul => vul.type === "Holy")?.value || 0;
 
-            let damage = Math.round(character.attack * 0.9) + AdditionalBlessingDamage(character);
+            let damage = Math.round(character.attack * 0.9);
 
             if (resistance > 0) {
-                damage = Math.max(10, Math.round(character.attack - resistance)) + AdditionalBlessingDamage(character);
+                damage = Math.max(10, Math.round(character.attack - resistance));
             } else if (vulnerability > 0) {
-                damage = Math.round(character.attack + vulnerability) + AdditionalBlessingDamage(character);
+                damage = Math.round(character.attack + vulnerability);
             }
 
             targetEnemy.health -= damage;
             HandleDamageEffect(damage, "Holy", "npc", targetEnemy.id);
+            BlessingOfBurnBonus(character, targetEnemy);
+            BlessingOfHolyDamageBonus(character, targetEnemy);
+            
         });
 
         return enemy.health;

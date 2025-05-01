@@ -17,6 +17,7 @@ type BuffFunction = (
 
 type BuffMeta = {
     name: string;
+    buffName?: string;
     func: BuffFunction;
     element: string;
     isSelfBuff: boolean;
@@ -51,6 +52,7 @@ const buffs: Record<string, BuffMeta> = {
     },
     Damage_Totem_Char$30: { 
         name: 'Damage Totem',
+        buffName: 'Damage Totem',
         func: DamageTotemChar30, 
         element: ElementTypes.Physical, 
         isSelfBuff: false,
@@ -59,6 +61,7 @@ const buffs: Record<string, BuffMeta> = {
     },
     Protect_Party_Char$50: { 
         name: 'Protect Party',
+        buffName: 'Protected',
         func: ProtectPartyChar50, 
         element: ElementTypes.Physical, 
         isSelfBuff: false,
@@ -67,6 +70,7 @@ const buffs: Record<string, BuffMeta> = {
     },
     Berserk__Char$50: { 
         name: 'Berserk',
+        buffName: 'Berserk',
         func: BerserkChar50, 
         element: ElementTypes.Fire, 
         isSelfBuff: true,
@@ -75,6 +79,7 @@ const buffs: Record<string, BuffMeta> = {
     },
     Taunt__Char$30: { 
         name: 'Taunt',
+        buffName: 'Taunter',
         func: TauntChar30, 
         element: ElementTypes.Physical, 
         isSelfBuff: true,

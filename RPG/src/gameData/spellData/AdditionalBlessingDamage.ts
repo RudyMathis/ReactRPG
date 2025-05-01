@@ -1,19 +1,29 @@
+import { EnemyType } from "../../atom/BaseEnemyAtom";
 import { CharacterType } from "../../atom/CharacterAtom";
+import { BlessingsData } from "../characters/blessings/BlessingsData";
+import Debuffs from "../Debuffs";
 
-export const AdditionalBlessingDamage = (character: CharacterType) => {
-    let bonusDamage = 0;
+export const BlessingOfBurnBonus = (character: CharacterType, targetEnemy: EnemyType) => {
+    if(character.blessings.find(b => b.name === BlessingsData.BlessingOfBurn.name)) {
+        targetEnemy.debuffs.push({
+            type: Debuffs.Burn.type, 
+            duration: 3,
+            damage: Debuffs.Burn.damage,
+            name: Debuffs.Burn.name,
+            icon: Debuffs.Burn.icon
+        });
+    }
+};
 
-    character.blessings.forEach((blessing) => {
-        switch (blessing) {
-            case "Blessing of Holy Damage":
-                bonusDamage += Math.round(Math.max(10, character.attack * 1.25));
-            break;
-            case "Blessing of Fire Damage":
-                bonusDamage += Math.round(Math.max(10, character.attack * 1.25));
-            break;
-            // Add more blessing types here
-        }
-    });
-
-    return bonusDamage;
+export const BlessingOfHolyDamageBonus = (character: CharacterType, targetEnemy: EnemyType) => {
+    if(character.blessings.find(b => b.name === BlessingsData.BlessingOfHolyDamage.name)) {
+        targetEnemy.debuffs.push({
+            type: Debuffs.Burn.type, 
+            duration: 3,
+            damage: Debuffs.Burn.damage,
+            name: Debuffs.Burn.name,
+            icon: Debuffs.Burn.icon
+        });
+        //  UPDATE TO DO HOLY DEBUFF
+    }
 };

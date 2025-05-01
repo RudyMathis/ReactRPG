@@ -1,7 +1,7 @@
 import EnemyAtom, { EnemyType } from "../../../../atom/BaseEnemyAtom";
 import CharacterAtom, { CharacterType } from "../../../../atom/CharacterAtom";
 import { storeAtom } from "../../../../atom/storeAtom";
-import { AdditionalBlessingDamage } from "../../AdditionalBlessingDamage";
+import { BlessingOfBurnBonus, BlessingOfHolyDamageBonus } from "../../AdditionalBlessingDamage";
 import { HandleDamageEffect } from "../../../../gameMechanics/HandleDamageEffect";
 
 const VolleyTar20 = (
@@ -32,12 +32,11 @@ const VolleyTar20 = (
         const enemies = Object.values(storeAtom.get(EnemyAtom));
     
         enemies.forEach(targetEnemy => {
-            const damage = Math.max(
-                5,
-                Math.round(character.attack + AdditionalBlessingDamage(character)) - targetEnemy.defense
-            );
+            const damage = Math.max(5, Math.round(character.attack - targetEnemy.defense));
             targetEnemy.health -= damage;
             HandleDamageEffect(damage, "Physical", "npc", targetEnemy.id);
+            BlessingOfBurnBonus(character, targetEnemy);
+            BlessingOfHolyDamageBonus(character, targetEnemy);
         });
 
         return enemy.health;

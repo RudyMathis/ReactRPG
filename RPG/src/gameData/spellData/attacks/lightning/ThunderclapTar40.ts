@@ -1,7 +1,7 @@
 import EnemyAtom, { EnemyType } from "../../../../atom/BaseEnemyAtom";
 import CharacterAtom, { CharacterType } from "../../../../atom/CharacterAtom";
 import { storeAtom } from "../../../../atom/storeAtom";
-import { AdditionalBlessingDamage } from "../../AdditionalBlessingDamage";
+import { BlessingOfBurnBonus, BlessingOfHolyDamageBonus } from "../../AdditionalBlessingDamage";
 import { HandleDamageEffect } from "../../../../gameMechanics/HandleDamageEffect";
 import { FlashAnimationAtom } from "../../../../atom/effects/FlashAnimationAtom"; 
 
@@ -62,16 +62,18 @@ const ThunderclapTar40 = (
             const resistance = targetEnemy.resistances.find(res => res.type === "Lightning")?.value || 0;
             const vulnerability = targetEnemy.vulnerabilities.find(vul => vul.type === "Lightning")?.value || 0;
 
-            let damage = Math.round(character.attack * 0.9) + AdditionalBlessingDamage(character);
+            let damage = Math.round(character.attack * 0.9);
 
             if (resistance > 0) {
-                damage = Math.max(5, Math.round(character.attack - resistance)) + AdditionalBlessingDamage(character);
+                damage = Math.max(5, Math.round(character.attack - resistance));
             } else if (vulnerability > 0) {
-                damage = Math.round(character.attack + vulnerability) + AdditionalBlessingDamage(character);
+                damage = Math.round(character.attack + vulnerability);
             }
 
-            targetEnemy.health -= damage;
             HandleDamageEffect(damage, "Lightning", "npc", targetEnemy.id);
+            BlessingOfBurnBonus(character, targetEnemy);
+            BlessingOfHolyDamageBonus(character, targetEnemy);
+            targetEnemy.health -= damage;
         });
         storeAtom.set(FlashAnimationAtom, (prev) => ({ ...prev, ...flashUpdate }));
         setTimeout(() => {

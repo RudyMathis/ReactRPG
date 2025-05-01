@@ -3,7 +3,7 @@ import { CharacterType } from "../../../../atom/CharacterAtom";
 import { HandleDamageEffect } from "../../../../gameMechanics/HandleDamageEffect";
 import Resistances from "../../../Resistances";
 import Vulnerabilites from "../../../Vulnerabilities";
-import { AdditionalBlessingDamage } from "../../AdditionalBlessingDamage";
+import { BlessingOfBurnBonus, BlessingOfHolyDamageBonus } from "../../AdditionalBlessingDamage";
 
 const FrostbiteTar20 = (enemy: EnemyType, character: CharacterType, target: CharacterType | EnemyType, spellCost: number) =>{ 
     const targetCharacter = 'id' in target && target.id === character.id && target.type === character.type
@@ -36,9 +36,12 @@ const FrostbiteTar20 = (enemy: EnemyType, character: CharacterType, target: Char
     
         const iceResistance = enemy.resistances.find(resistance => resistance.type === Resistances.Ice.type);
         const iceVulnerability = enemy.vulnerabilities.find(vulnerability => vulnerability.type === Vulnerabilites.Ice.type);
-        const damageResistance = Math.max(1, Math.round(character.attack - Resistances.Ice.value) + AdditionalBlessingDamage(character))
-        const damageVulnerability = Math.round(character.attack + Vulnerabilites.Ice.value) + AdditionalBlessingDamage(character)
-        const damage = Math.round(character.attack * 1.1) + AdditionalBlessingDamage(character)
+        const damageResistance = Math.max(1, Math.round(character.attack - Resistances.Ice.value))
+        const damageVulnerability = Math.round(character.attack + Vulnerabilites.Ice.value)
+        const damage = Math.round(character.attack * 1.1)
+
+        BlessingOfBurnBonus(character, enemy);
+        BlessingOfHolyDamageBonus(character, enemy);
         
         if(iceResistance) {
             HandleDamageEffect(damageResistance, "Ice", "npc", enemy.id);

@@ -1,7 +1,7 @@
 import EnemyAtom, { EnemyType } from "../../../../atom/BaseEnemyAtom";
 import CharacterAtom, { CharacterType } from "../../../../atom/CharacterAtom";
 import { storeAtom } from "../../../../atom/storeAtom";
-import { AdditionalBlessingDamage } from "../../AdditionalBlessingDamage";
+import { BlessingOfBurnBonus, BlessingOfHolyDamageBonus } from "../../AdditionalBlessingDamage";
 import { HandleDamageEffect } from "../../../../gameMechanics/HandleDamageEffect";
 
 const CleaveTar30 = (
@@ -48,15 +48,19 @@ const CleaveTar30 = (
             return enemy.health;
         }
 
-        const damage = Math.max(10, Math.round(character.attack + AdditionalBlessingDamage(character)) - enemy.defense);
+        const damage = Math.max(10, Math.round(character.attack - enemy.defense));
         const nextEnemy = enemyIndex < sortedEnemies.length - 1 ? sortedEnemies[enemyIndex + 1] : null;
 
         if (nextEnemy) {
-            nextEnemy.health -= damage;
             HandleDamageEffect(damage, "Physical", "npc", nextEnemy.id);
+            BlessingOfBurnBonus(character, nextEnemy);
+            BlessingOfHolyDamageBonus(character, nextEnemy);
+            nextEnemy.health -= damage;
         }
 
         HandleDamageEffect(damage, "Physical", "npc", enemy.id);
+        BlessingOfBurnBonus(character, enemy);
+        BlessingOfHolyDamageBonus(character, enemy);
         return enemy.health -= damage;
     }
 };

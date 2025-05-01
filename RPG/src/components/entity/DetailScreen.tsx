@@ -47,7 +47,15 @@ const DetailScreen = ({ entity }: CharacterDetailProps) => {
             )}
             {entity.resistances.length > 0 && <p>Resistances: <span className={styles.detailValue}>{entity.resistances.map(res => res.type).join(', ')}</span> </p>}
             {entity.vulnerabilities.length > 0 && <p>Vulnerabilities: <span className={styles.detailValue}>{entity.vulnerabilities.map(vuln => vuln.type).join(', ')}</span> </p>}
-            {entity && 'blessings' in entity && entity.blessings.length > 0 && <p>Blessings: <span className={styles.detailValue}>{entity.blessings.length > 1 ? entity.blessings.join(', ') : entity.blessings}</span> </p>}
+            {entity && 'blessings' in entity && entity.blessings.length > 0 && (
+                <p>
+                    Blessings:{" "}
+                    <span className={styles.detailValue}>
+                    {entity.blessings.map(blessing => blessing.name).join(", ")}
+                    </span>
+                </p>
+            )}
+            {/* {entity && 'blessings' in entity && entity.blessings.length > 0 && <p>Blessings: <span className={styles.detailValue}>{entity.blessings.length > 1 ? entity.blessings.join(', ') : entity.blessings}</span> </p>} */}
             {entity && 'exp' in entity && <p>Experience: <span className={styles.detailValue}>{entity.exp}</span> </p>}
             {entity && 'maxExp' in entity && <p>Max Experience: <span className={styles.detailValue}>{entity.maxExp}</span> </p>}
         </div>

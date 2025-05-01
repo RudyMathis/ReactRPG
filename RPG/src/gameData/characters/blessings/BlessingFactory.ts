@@ -2,20 +2,23 @@ import { ApplyBlessing } from "./ApplyBlessings";
 import { CharacterType } from "../../../atom/CharacterAtom";
 import Resistances from "../../Resistances";
 
-export const BlessingOfHolyDamage = (character: CharacterType) => ApplyBlessing(character, "Blessing of Holy Damage");
+export const BlessingOfHolyDamage = (character: CharacterType) =>
+    ApplyBlessing(character, "BlessingOfHolyDamage", {
+        attack: character.attack * 1.1,
+    });
 
-export const BlessingOfFireDamage = (character: CharacterType) => ApplyBlessing(character, "Blessing of Fire Damage");
+export const BlessingOfBurn = (character: CharacterType) =>
+    ApplyBlessing(character, "BlessingOfBurn" );
 
-export const BlessingOfManaRegen = (character: CharacterType) => ApplyBlessing(character, "Blessing of Mana Regen");
+export const BlessingOfManaRegen = (character: CharacterType) =>
+    ApplyBlessing(character, "BlessingOfManaRegen");
 
 export const BlessingOfDamage = (character: CharacterType) =>
-    ApplyBlessing(character, "Blessing of Damage", {
+    ApplyBlessing(character, "BlessingOfDamage", {
         attack: character.attack * 1.25,
-    }
-);
+    });
 
 export const BlessingOfLight = (character: CharacterType) =>
-    ApplyBlessing(character, "Blessing of Light", {
+    ApplyBlessing(character, "BlessingOfLight", {
         resistances: [Resistances.Dark],
-    }
-);
+    });

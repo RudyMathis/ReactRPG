@@ -1,7 +1,7 @@
 import EnemyAtom, { EnemyType } from "../../../../atom/BaseEnemyAtom";
 import CharacterAtom, { CharacterType } from "../../../../atom/CharacterAtom";
 import { storeAtom } from "../../../../atom/storeAtom";
-import { AdditionalBlessingDamage } from "../../AdditionalBlessingDamage";
+import { BlessingOfBurnBonus, BlessingOfHolyDamageBonus } from "../../AdditionalBlessingDamage";
 import { HandleDamageEffect } from "../../../../gameMechanics/HandleDamageEffect";
 
 const MultiShotTar$40 = (
@@ -55,21 +55,26 @@ const MultiShotTar$40 = (
             return enemy.health;
         }
 
-        const damage = Math.max(5, Math.round(character.attack + AdditionalBlessingDamage(character)) - enemy.defense);
+        const damage = Math.max(5, Math.round(character.attack - enemy.defense));
 
         const prevEnemy = enemyIndex > 0 ? sortedEnemies[enemyIndex - 1] : null;
         const nextEnemy = enemyIndex < sortedEnemies.length - 1 ? sortedEnemies[enemyIndex + 1] : null;
 
         if (prevEnemy) {
             prevEnemy.health -= damage;
+            BlessingOfBurnBonus(character, prevEnemy);
+            BlessingOfHolyDamageBonus(character, prevEnemy);
             HandleDamageEffect(damage, "Physical", "npc", prevEnemy.id);
         }
 
         if (nextEnemy) {
             nextEnemy.health -= damage;
+            BlessingOfBurnBonus(character, nextEnemy);
+            BlessingOfHolyDamageBonus(character, nextEnemy);
             HandleDamageEffect(damage, "Physical", "npc", nextEnemy.id);
         }
-
+        BlessingOfBurnBonus(character, enemy);
+        BlessingOfHolyDamageBonus(character, enemy);
         HandleDamageEffect(damage, "Physical", "npc", enemy.id);
         return enemy.health -= damage;
     }

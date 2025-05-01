@@ -1,5 +1,5 @@
 export type Buff = {
-    name: string;
+    buffName: string;
     type: string;
     damage?: number;
     attack?: number;
@@ -10,10 +10,10 @@ export type Buff = {
 };
 
 const Buffs = {
-    Taunter: { name: "Taunter", type: "Physical", defense: 2, health: 2},
-    Protected: { name: "Protected", type: "Physical", defense: 25},
-    DamageTotem: { name: "Damage Totem", type: "Physical", attack: 25},
-    Berserk: { name: "Berserk", type: "Physical", attack: 25, speed: 25},
+    Taunter: { buffName: "Taunter", type: "Physical", defense: 2, health: 2},
+    Protected: { buffName: "Protected", type: "Physical", defense: 25},
+    DamageTotem: { buffName: "Damage Totem", type: "Physical", attack: 25},
+    Berserk: { buffName: "Berserk", type: "Physical", attack: 25, speed: 25},
 };
 
 export default Buffs;

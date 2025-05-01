@@ -3,7 +3,7 @@ import { CharacterType } from "../../../../atom/CharacterAtom";
 import { HandleDamageEffect } from "../../../../gameMechanics/HandleDamageEffect";
 import Resistances from "../../../Resistances";
 import Vulnerabilites from "../../../Vulnerabilities";
-import { AdditionalBlessingDamage } from "../../AdditionalBlessingDamage";
+import { BlessingOfBurnBonus, BlessingOfHolyDamageBonus } from "../../AdditionalBlessingDamage";
 
 const LeechTar10 = (enemy: EnemyType, character: CharacterType, target: CharacterType | EnemyType, spellCost: number) =>{ 
     const targetCharacter = 'id' in target && target.id === character.id && target.type === character.type
@@ -32,10 +32,13 @@ const LeechTar10 = (enemy: EnemyType, character: CharacterType, target: Characte
         
         const darkResistance = enemy.resistances.find(res => res.type ===  Resistances.Dark.type);
         const darkVulnerability = enemy.vulnerabilities.find(vul => vul.type === Vulnerabilites.Dark.type);
-        const damageResistance = Math.max(5, Math.round(character.attack - Resistances.Dark.value) + AdditionalBlessingDamage(character))
-        const damageVulnerability = Math.round(character.attack + Vulnerabilites.Dark.value) + AdditionalBlessingDamage(character)
-        const damage = Math.max(Math.round(character.attack * .9) + AdditionalBlessingDamage(character));
+        const damageResistance = Math.max(5, Math.round(character.attack - Resistances.Dark.value))
+        const damageVulnerability = Math.round(character.attack + Vulnerabilites.Dark.value)
+        const damage = Math.max(Math.round(character.attack * .9));
 
+        BlessingOfBurnBonus(character, enemy);
+        BlessingOfHolyDamageBonus(character, enemy);
+        
         if (darkResistance) {
             HandleDamageEffect(damageResistance, "Dark", "npc", enemy.id);
             return enemy.health - damageResistance;

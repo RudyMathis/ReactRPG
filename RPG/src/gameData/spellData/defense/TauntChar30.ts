@@ -10,7 +10,7 @@ const TauntChar30 = (
     spellCost = 30;
     character.mana -= spellCost;
 
-    if (character.buffs.find(d => d.name === Buffs.Taunter.name)) {
+    if (character.buffs.find(d => d.name === Buffs.Taunter.buffName)) {
         return { id: character.id, buff: Buffs.Taunter };
     } else {
         character.buffs.push({
@@ -18,7 +18,7 @@ const TauntChar30 = (
             duration: 3,
             defense: Buffs.Taunter.defense,
             health: Buffs.Taunter.health,
-            name: Buffs.Taunter.name
+            name: Buffs.Taunter.buffName
         });
         character.defense = character.defense * Buffs.Taunter.defense;
         character.health = character.health * Buffs.Taunter.health;

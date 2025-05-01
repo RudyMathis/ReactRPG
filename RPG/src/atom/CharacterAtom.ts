@@ -29,6 +29,13 @@ type debuffEffect = {
     icon?: string;
 };
 
+export type blessing = {
+    name: string;
+    type?: string;
+    element?: string;
+    icon?: string;
+};
+
 export type CharacterType = {
     id: number;
     name: string;
@@ -51,7 +58,7 @@ export type CharacterType = {
     weapon: string;
     buffs: buffEffect[];
     debuffs: debuffEffect[];
-    blessings: string[];
+    blessings: blessing[];
     currentTurn: boolean;
     isSelected: boolean;
     type: string;

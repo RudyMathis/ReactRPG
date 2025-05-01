@@ -1,11 +1,16 @@
 import { CharacterType } from "../../../atom/CharacterAtom";
+import { BlessingsData } from "../../characters/blessings/BlessingsData";
 
 const MeditateChar30 = (
     character: CharacterType,
     target: CharacterType,
     spellCost: number
 ): { id: number; mana: number } => {
-    const manaRestore = 30;
+    let manaRestore = 30;
+    if(character.blessings.some(d => d.name === BlessingsData.BlessingOfManaRegen.name)) {
+        manaRestore *= 2;
+    }
+    
     spellCost = 0;
     character.mana += spellCost;
 

@@ -4,7 +4,6 @@ import { HandleDamageEffect } from "../../../../gameMechanics/HandleDamageEffect
 import Debuffs from "../../../Debuffs";
 import Resistances from "../../../Resistances";
 import Vulnerabilites from "../../../Vulnerabilities";
-import { AdditionalBlessingDamage } from "../../AdditionalBlessingDamage";
 
 const FireBallTar20 = (enemy: EnemyType, character: CharacterType, target: CharacterType | EnemyType, spellCost: number) =>{ 
     const targetCharacter = 'id' in target && target.id === character.id && target.type === character.type
@@ -51,9 +50,9 @@ const FireBallTar20 = (enemy: EnemyType, character: CharacterType, target: Chara
         
         const fireResistance = enemy.resistances.find(res => res.type ===  Resistances.Fire.type);
         const fireVulnerability = enemy.vulnerabilities.find(vul => vul.type === Vulnerabilites.Fire.type);
-        const damageResistance = Math.max(1, Math.round(character.attack - Resistances.Fire.value) + AdditionalBlessingDamage(character))
-        const damageVulnerability = Math.round(character.attack + Vulnerabilites.Fire.value) + AdditionalBlessingDamage(character)
-        const damage = character.attack + AdditionalBlessingDamage(character);
+        const damageResistance = Math.max(1, Math.round(character.attack - Resistances.Fire.value))
+        const damageVulnerability = Math.round(character.attack + Vulnerabilites.Fire.value)
+        const damage = Math.max(5, Math.round(character.attack))
 
         if (fireResistance) {
             HandleDamageEffect(damageResistance, "Fire", "npc", enemy.id);
