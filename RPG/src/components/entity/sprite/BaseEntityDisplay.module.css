@@ -96,7 +96,7 @@
 }
 
 .damageEffect {
-    animation: delay;
+    animation: 300ms;
     animation: damageAnimation 900ms ease-out forwards;
     bottom: 0;
     z-index: var(--high-layer);

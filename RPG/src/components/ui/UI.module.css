@@ -186,3 +186,33 @@ input[type="range"]::-webkit-slider-thumb {
 input[type="range"]::-webkit-slider-thumb:hover {
     background: #eee;
 }
+
+/* Action Text */
+
+.actionTextContainer {
+    position: absolute;
+    top: 9em;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: var(--high-layer);
+    width: max-content;
+    padding: 1rem;
+    image-rendering: pixelated;
+    border-image-slice: var(--border-image-slice);
+    border-image-width: var(--border-image-width);
+    border-image-source: var(--border-image-source);
+    border-image-repeat: var(--border-image-repeat);
+    opacity: 1;
+    animation: actionText 300ms ease-in; /* short fade-in */
+}
+
+.actionText {
+    color: var(--font);
+    background-color: var(--background-secondary);
+}
+
+@keyframes actionText {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+

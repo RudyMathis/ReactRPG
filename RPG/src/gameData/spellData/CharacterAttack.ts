@@ -5,6 +5,7 @@ import { AttackAnimationAtom } from "../../atom/effects/AttackAnimationAtom";
 import { storeAtom } from "../../atom/storeAtom";
 import { AdditionalBlessingDamage } from "./AdditionalBlessingDamage";
 import attacks from "./attacks/Attacks";
+import { actionsTextAtom } from "../../atom/ActionsTextAtom";
 
 export const CharacterAttack = (enemy: EnemyType, character: CharacterType, _target: EnemyType | CharacterType, spell: string, spellCost: number) => {
 
@@ -46,9 +47,27 @@ const spellAnimation = attacks[spell]?.animation;
     }, 2000);
 
     if (attacks[spell]) {
+        storeAtom.set(actionsTextAtom, { 
+            entity: character, 
+            action: attacks[spell].name,
+            value: `${character.attack}`,
+            target: enemy,
+            isAttack: true,
+            isDefense: false,
+            isAoe: attacks[spell].aoe,
+        });
         return attacks[spell].func(enemy, character, enemy, spellCost);
     } else {
         console.warn(`Unknown spell: ${spell}`);
+        storeAtom.set(actionsTextAtom, {
+            entity: character,
+            action: 'Attack',
+            value: `${character.attack}`,
+            target: enemy,
+            isAttack: true,
+            isDefense: false,
+            isAoe: false,
+        });
         return enemy.health - Math.max(5, (character.attack + AdditionalBlessingDamage(character)) - enemy.defense);
     }
 

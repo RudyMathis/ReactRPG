@@ -16,20 +16,79 @@ type BuffFunction = (
 ) => CharacterBuffResult;
 
 type BuffMeta = {
+    name: string;
     func: BuffFunction;
     element: string;
     isSelfBuff: boolean;
+    isAoe: boolean;
+    isBuff: boolean;
 };
 
 const buffs: Record<string, BuffMeta> = {
-    Heal__Char$20: { func: HealChar20, element: ElementTypes.Holy, isSelfBuff: false },
-    Cure__Char$10: { func: CureChar10, element: ElementTypes.Holy, isSelfBuff: false },
-    Heal_All_Char$40: { func: HealAllChar40, element: ElementTypes.Holy, isSelfBuff: false },
-    Damage_Totem_Char$30: { func: DamageTotemChar30, element: ElementTypes.Physical, isSelfBuff: false },
-    Protect_Party_Char$50: { func: ProtectPartyChar50, element: ElementTypes.Physical, isSelfBuff: false },
-    Berserk__Char$50: { func: BerserkChar50, element: ElementTypes.Fire, isSelfBuff: true },
-    Taunt__Char$30: { func: TauntChar30, element: ElementTypes.Physical, isSelfBuff: true },
-    'Meditate__Char$-30': { func: MeditateChar30, element: ElementTypes.Holy, isSelfBuff: true },
+    Heal__Char$20: { 
+        name: 'Heal',
+        func: HealChar20, 
+        element: ElementTypes.Holy, 
+        isSelfBuff: false, 
+        isAoe: false,
+        isBuff: false,
+    },
+    Cure__Char$10: { 
+        name: 'Cure',
+        func: CureChar10, 
+        element: ElementTypes.Holy, 
+        isSelfBuff: false,
+        isAoe: false,
+        isBuff: false,
+    },
+    Heal_All_Char$40: { 
+        name: 'Heal All',
+        func: HealAllChar40, 
+        element: ElementTypes.Holy, 
+        isSelfBuff: false,
+        isAoe: true,
+        isBuff: false,
+    },
+    Damage_Totem_Char$30: { 
+        name: 'Damage Totem',
+        func: DamageTotemChar30, 
+        element: ElementTypes.Physical, 
+        isSelfBuff: false,
+        isAoe: true,
+        isBuff: true,
+    },
+    Protect_Party_Char$50: { 
+        name: 'Protect Party',
+        func: ProtectPartyChar50, 
+        element: ElementTypes.Physical, 
+        isSelfBuff: false,
+        isAoe: true,
+        isBuff: true,
+    },
+    Berserk__Char$50: { 
+        name: 'Berserk',
+        func: BerserkChar50, 
+        element: ElementTypes.Fire, 
+        isSelfBuff: true,
+        isAoe: false,
+        isBuff: true,
+    },
+    Taunt__Char$30: { 
+        name: 'Taunt',
+        func: TauntChar30, 
+        element: ElementTypes.Physical, 
+        isSelfBuff: true,
+        isAoe: false,
+        isBuff: true,
+    },
+    'Meditate__Char$-30': { 
+        name: 'Meditate',
+        func: MeditateChar30, 
+        element: ElementTypes.Holy, 
+        isSelfBuff: true,
+        isAoe: false,
+        isBuff: false,
+    },
 };
 
 export default buffs;

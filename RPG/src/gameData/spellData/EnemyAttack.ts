@@ -4,6 +4,7 @@ import { FlashAnimationAtom } from "../../atom/effects/FlashAnimationAtom";
 import { AttackAnimationAtom } from "../../atom/effects/AttackAnimationAtom";
 import { storeAtom } from "../../atom/storeAtom";
 import attacks from "./attacks/Attacks";
+import { actionsTextAtom } from "../../atom/ActionsTextAtom";
 
 export const EnemyAttack = (
     character: CharacterType,
@@ -19,11 +20,11 @@ export const EnemyAttack = (
 
         if (usableSpells.length > 0) {
             const chosenSpell = usableSpells[Math.floor(Math.random() * usableSpells.length)];
-            const match = chosenSpell.match(/\$(-?\d+)$/);
-            const spellCost = match ? parseInt(match[1], 10) : 0;
+            const spellCost = attacks[chosenSpell].cost ?? 0;
             const spellAnimation = attacks[chosenSpell]?.animation ?? null;
+            const spellName = attacks[chosenSpell].name;
 
-            console.log(`Enemy ${enemy.name} is using spell: ${chosenSpell} with cost ${spellCost}`);
+            console.log(`Enemy ${enemy.name} is using spell: ${spellName} with cost ${spellCost}`);
 
             // Start animation
             storeAtom.set(AttackAnimationAtom, prev => ({
@@ -49,9 +50,18 @@ export const EnemyAttack = (
 
             // Execute attack logic
             if (typeof attacks[chosenSpell]?.func === 'function') {
+                storeAtom.set(actionsTextAtom, {
+                    entity: enemy,
+                    action: `${spellName}`,
+                    value: `${enemy.attack}`,
+                    target: target,
+                    isAttack: true,
+                    isDefense: false,
+                    isAoe: attacks[chosenSpell].aoe,
+                });
                 return attacks[chosenSpell].func(enemy, character, target, spellCost);
             } else {
-                console.warn(`Spell effect for '${chosenSpell}' not found in attacks.`);
+                console.warn(`Spell effect for '${spellName}' not found in attacks.`);
             }
         } else {
             console.warn(`Enemy ${enemy.name} has no usable spells with ${enemy.mana} mana.`);
@@ -61,5 +71,15 @@ export const EnemyAttack = (
     }
 
     // Fallback: basic attack
+    storeAtom.set(actionsTextAtom, { 
+        entity: enemy,
+        action: `Attack`,
+        value: `${enemy.attack}`,
+        target: target,
+        isAttack: true,
+        isDefense: false,
+        isAoe: false,
+    });
+
     return character.health - Math.max(5, enemy.attack - character.defense);
 };

@@ -82,6 +82,7 @@ export const runTurnLogic = async (
         HandleCharacterHealthUpdate(character, updatedCharacterHealth);
 
         console.log(`Enemy ${enemy.name} attacked ${character.name} for ${enemy.attack} damage.`);
+
         if (HandleAllCharactersDead() || HandleAllEnemiesDead()) return;
         i++;
         await new Promise(resolve => setTimeout(resolve, 1500));
@@ -114,7 +115,6 @@ export const runTurnLogic = async (
         } else if (playerTarget) {
 
           const buffResult = CharacterBuff(character, playerTarget, spell as string, spellCost);
-          console.log("BUFF RESULTS", buffResult);
         
           if (Array.isArray(buffResult)) {
             buffResult.forEach((result) => {
