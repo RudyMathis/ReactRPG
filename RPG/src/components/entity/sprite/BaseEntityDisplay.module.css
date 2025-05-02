@@ -1,13 +1,17 @@
 
 .spriteContainer {
     width: 4.5em;
-    height: 7em;
+    height: 9em;
     display: flex;
     justify-content: flex-start; 
     align-items: center;
     position: relative;
     overflow: hidden;
     z-index: var(--lower-layer);
+}
+.spriteContainer[data-type='npc'] {
+    width: 7em;
+    height: 13.5em;
 }
 
 .spriteGlow {
@@ -16,7 +20,7 @@
     left: 50%;
     transform: translate(-50%, 50%);
     width: 4.5em;
-    height: 7em;
+    height: 9em;
     z-index: var(--low-layer);
     background-color: transparent;
     transition: background-color 0.2s ease, filter 0.2s ease;
@@ -28,7 +32,7 @@
 }
 
 .sprite {
-    height: 7em;
+    height: 9em;
     object-fit: initial; 
     image-rendering: pixelated;
     position: absolute;
@@ -44,6 +48,7 @@
     position: relative;
     width: 7em;
     filter: drop-shadow(0px 3px 1px var(--shadow));
+    height: 13.5em;
 }
 
 .shadow {
@@ -55,17 +60,17 @@
     z-index: var(--lowest-layer);
     filter: blur(8px);
     mix-blend-mode: luminosity;
+    display: none;
 }
-
-
-.sprite[data-entity-name='Rat'], .sprite[data-entity-name='Goblin'] {
-    height: 4.5em;
-}
-
-.spriteContainer:has(.sprite[data-entity-name='Ent']),
-.spriteContainer:has(.sprite[data-entity-name='Ettin']),
-.spriteContainer:has(.sprite[data-entity-name='Manticore']) {
+.spriteContainer:has(.sprite[data-entity-size='small']),
+.sprite[data-entity-size='small']  {
     width: 7em;
+    height: 9.5em;
+}
+
+.spriteContainer:has(.sprite[data-entity-size='large']),
+.sprite[data-entity-size='large']  {
+    width: 10.3em;
 }
 
 @keyframes flashDamage {

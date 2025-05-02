@@ -26,6 +26,7 @@
         "hasScored": false,
         "resource_type": "mana",
         "base": "Death_Knight",
+        "size": "medium",
         "group": "humanoide"
     },
     "Ent": {
@@ -55,6 +56,7 @@
         "hasScored": false,
         "resource_type": "mana",
         "base": "Ent",
+        "size": "large",
         "group": "elemental"
     },
     "Ettin": {
@@ -84,6 +86,7 @@
         "hasScored": false,
         "resource_type": "mana",
         "base": "Ettin",
+        "size": "large",
         "group": "humanoide"
     },
     "Ghoul": {
@@ -113,6 +116,7 @@
         "hasScored": false,
         "resource_type": "mana",
         "base": "Ghoul",
+        "size": "small",
         "group": "humanoide"
     },
     "Goblin": {
@@ -142,6 +146,7 @@
         "hasScored": false,
         "resource_type": "mana",
         "base": "Goblin",
+        "size": "small",
         "group": "humanoide"
     },
     "Manticore": {
@@ -171,6 +176,7 @@
         "hasScored": false,
         "resource_type": "mana",
         "base": "Manticore",
+        "size": "large",
         "group": "beast"
     },
     "Rat": {
@@ -200,6 +206,7 @@
         "hasScored": false,
         "resource_type": "mana",
         "base": "Rat",
+        "size": "small",
         "group": "beast"
     },
     "Skeleton": {
@@ -229,6 +236,7 @@
         "hasScored": false,
         "resource_type": "mana",
         "base": "Skeleton",
+        "size": "medium",
         "group": "humanoide"
     },
     "Zombie": {
@@ -258,6 +266,7 @@
         "hasScored": false,
         "resource_type": "mana",
         "base": "Zombie",
+        "size": "medium",
         "group": "humanoide"
     }
 }

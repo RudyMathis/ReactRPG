@@ -6,7 +6,7 @@
     justify-content: end;
     gap: 0.5em;
     width: 7em;
-    height: 7em;
+    height: 9em;
 }
 
 .entityContainer:hover {
@@ -96,6 +96,16 @@
     left: 0;
     z-index: var(--mid-layer);
     width: 100%;
+}
+
+.entityInfoContainer[data-size='small'] {
+    top: -5em;
+}
+.entityInfoContainer[data-size='medium'] {
+    top: -8.5em;
+}
+.entityInfoContainer[data-size='large'] {
+    top: -9em;
 }
 
 .entityContainer[data-is-player-dead='true'] {

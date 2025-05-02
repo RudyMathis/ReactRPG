@@ -36,13 +36,6 @@ const TurnOrderDisplay = () => {
                                 alt={entity.name.replace('_', ' ')}
                             />
                         </div>
-                        {entity.debuffs.length > 0 && (
-                            <div className={styles.debuffs}>
-                                {entity.debuffs.map((debuff, index) => (
-                                    <img key={index} className={styles.debuffIcon} src={debuff.icon} />
-                                ))}
-                            </div>
-                        )}
                     </div>
                 );
             })}

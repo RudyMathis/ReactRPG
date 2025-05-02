@@ -9,18 +9,20 @@ type NameProps = {
 };
 
 const Name: React.FC<NameProps> = ({ entity }) => {
-    const shortenName = (name: string): string => {
-        const elements = ['Fire', 'Water', 'Ice', 'Dark', 'Lightning', 'Holy', 'Earth'];
-        const parts = name.split(' ');
 
-        if (elements.includes(parts[0])) {
-            parts[0] = '';
-        }
-
-        return parts.join(' ');
-    };
-
-    const displayName = shortenName(entity.name).replace('_', ' ');
+    const displayName = entity.name
+        .replace('_', ' ')
+        .replace('Ice', '')
+        .replace('Fire', '')
+        .replace('Dark', '')
+        .replace('Rabid', '')
+        .replace('King', '')
+        .replace('Assassin', '')
+        .replace('Knight', '')
+        .replace('Warlock', '')
+        .replace('Ancient', '')
+        .replace('Paladin', '')
+        .replace('Alpha', '');
 
     return (
         <div 
@@ -28,7 +30,7 @@ const Name: React.FC<NameProps> = ({ entity }) => {
             data-entity-name={`${entity.name.match(/Fire|Ice|Dark|Lightning|Holy|Earth/)}`} 
             data-type={entity.type}
         >
-            {displayName}
+            {entity.type === 'player' ? entity.name : displayName}
         </div>
     );
 };

@@ -58,7 +58,7 @@ function BaseEntityDisplay({ entity }: EnityDetailProps) {
                             src={imageSrc}
                             alt={entity.name.replace('_', ' ')}
                             data-entity-modified={(entity.name).match(/Fire|Ice|Dark/)?.[0]}
-                            data-entity-name={(entity.name).match(/Ent|Ettin|Manticore|Goblin|Rat/)?.[0]}
+                            data-entity-size={('size' in entity) ? entity.size : ''}
                             data-type={entity.type}
                             className={`
                                 ${styles.sprite}
@@ -83,7 +83,7 @@ function BaseEntityDisplay({ entity }: EnityDetailProps) {
                         alt={`${entity.name.replace('_', ' ')} is dead`}
                         data-entity-modified={(entity.name).match(/Fire|Ice|Dark/)?.[0]}
                         data-type={entity.type}
-                        data-entity-name={(entity.name).match(/Ent|Ettin|Manticore|Goblin|Rat/)?.[0]}
+                        data-entity-size={('size' in entity) ? entity.size : ''}
                         className={styles.sprite}
                     />
                 ) : (

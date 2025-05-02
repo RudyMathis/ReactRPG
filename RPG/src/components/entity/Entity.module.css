@@ -4,29 +4,40 @@
     font-size: .9rem;
     z-index: var(--high-layer);
     margin-bottom: .25rem;
-    text-shadow: 1px 0 10px var(--white) ;
-    color: var(--white)
+    color: var(--white);
+    text-shadow: 
+        2px 2px 0px var(--white-soft),
+        2px 2px 0px var(--shadow);
 }
 
 .spriteName[data-type='npc'][data-entity-name='Fire'] {
     color: var(--fire);
-    text-shadow: 1px 0 10px var(--fire);
+    text-shadow:
+        2px 2px 0px var(--fire-soft),
+        2px 2px 0px var(--shadow);
 }
 .spriteName[data-type='npc'][data-entity-name='Ice'] {
     color: var(--ice);
-    text-shadow: 1px 0 10px var(--ice) ;
+    text-shadow:
+        2px 2px 0px var(--ice-soft) ;
 }
 .spriteName[data-type='npc'][data-entity-name='Dark'] {
     color: var(--dark);
-    text-shadow: 1px 0 10px  var(--dark);
+    text-shadow:
+        2px 2px 0px  var(--dark-soft),
+        2px 2px 0px var(--shadow);
 }
 .spriteName[data-type='npc'][data-entity-name='Lightning'] {
     color: var(--lightning);
-    text-shadow: 1px 0 10px  var(--lightning);
+    text-shadow:
+        2px 2px 0px  var(--lightning-soft),
+        2px 2px 0px var(--shadow);
 }
 .spriteName[data-type='npc'][data-entity-name='Holy'] {
     color: var(--holy);
-    text-shadow: 1px 0 10px  var(--holy);
+    text-shadow:
+        2px 2px 0px  var(--holy-soft),
+        2px 2px 0px var(--shadow);
 }
 
 /* SHADOW */

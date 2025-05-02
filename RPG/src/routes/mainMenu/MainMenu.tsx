@@ -21,7 +21,7 @@ const MainMenu = () => {
     return (
         <>
             <div className={styles.mainContainer}>
-                <h1>Sacred Loop</h1>
+                <h1 className={styles.title}>Sacred Loop</h1>
                 <HighScoreDisplay />
                 <UserNameInput />
                 <NewGameBtn />

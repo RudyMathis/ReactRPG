@@ -58,6 +58,7 @@ export type EnemyType = {
     hasScored: boolean;
     resource_type: string;
     base: string;
+    size: string;
     group: string;
 };
 
