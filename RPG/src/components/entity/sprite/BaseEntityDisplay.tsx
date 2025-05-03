@@ -6,6 +6,7 @@ import { useAtom } from "jotai";
 import { DamageEffectAtom } from "../../../atom/effects/DamageEffectAtom";
 import { EntityImages } from "./EntityImages";
 import styles from './BaseEntityDisplay.module.css';
+import attacks from "../../../gameData/spellData/attacks/Attacks";
 
 type EnityDetailProps = {
     entity: CharacterType | EnemyType;
@@ -26,10 +27,38 @@ function BaseEntityDisplay({ entity }: EnityDetailProps) {
     const shouldFlash = isFlashing || isTakingDamage;
 
     const key = isAttacking ? `${entity.id}-attacking` : (isFlashing ? `${entity.id}-flashing-attacking` : `${entity.id}`);
+    
     const activeAnimation = flashEntities[entity.id];
+
+    const attackEntry = Object.values(attacks).find(
+        (attack) => attack.animation?.name === activeAnimation
+    );
+    
+    const name = attackEntry?.animation?.name;
+    const duration = attackEntry?.animation?.duration;
+    const steps = attackEntry?.animation?.steps;
+    const width = attackEntry?.animation?.width;
+    const height = attackEntry?.animation?.height;
+    const image = attackEntry?.animation?.image;
+    const rotation = attackEntry?.animation?.rotation;
+    const brightness = attackEntry?.animation?.brightness;
 
     return (
         <>
+            {activeAnimation && attackEntry?.animation && (
+                <div
+                    key={`${entity.id}-animation-${activeAnimation}`}
+                    className={styles.spellAnimation}
+                    style={{
+                        backgroundSize: `${width}em ${height}em`,
+                        width: `calc(${width}em / ${steps})`,
+                        height: `${height}em`,
+                        backgroundImage: `url(${image})`,
+                        animation: `${styles[name || '']} ${duration}ms steps(${steps}) forwards`,
+                        filter: `hue-rotate(${rotation}deg) brightness(${brightness})`,
+                    }}
+                />
+            )}
             {effectData?.isDisplay && entity.type === effectData.target && (
                 <div>
                     {effectData.effects.map((e, i) => (
@@ -67,13 +96,27 @@ function BaseEntityDisplay({ entity }: EnityDetailProps) {
                             `}
                             
                         />
-                        {activeAnimation && (
-                            <div
-                                key={`${entity.id}-animation-${activeAnimation}`}
-                                className={styles.spellAnimation}
-                                data-animation={`spell-${activeAnimation}`}
-                            />
-                        )}
+                {/* {activeAnimation && attackEntry?.animation && (
+                    <div
+                        key={`${entity.id}-animation-${activeAnimation}`}
+                        className={styles.spellAnimation}
+                        style={{
+                            backgroundSize: `${width}em ${height}em`,
+                            width: `calc(${width}em / ${steps})`,
+                            height: `${height}em`,
+                            backgroundImage: `url(${image})`,
+                            animation: `${styles[name || '']} ${duration}ms steps(${steps}) forwards`,
+                            [`@keyframes ${name}`]: { // Dynamically create the keyframe name
+                                from: {
+                                    backgroundPositionX: '0',
+                                },
+                                to: {
+                                    backgroundPositionX: `-${width || 0}em / ${steps}}em`, // Calculate the position of the last frame
+                                },
+                            },
+                        }}
+                    />
+                )} */}
                     </>
                 ) : entity.type === "npc" ? (
                     <img
@@ -95,7 +138,7 @@ function BaseEntityDisplay({ entity }: EnityDetailProps) {
                     />
                 )}
             </div>
-            <img src="/assets/shadow.png" className={styles.shadow} />
+            {/* <img src="/assets/shadow.png" className={styles.shadow} /> */}
         </>
     );
 }

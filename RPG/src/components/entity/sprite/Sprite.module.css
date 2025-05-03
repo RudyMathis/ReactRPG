@@ -94,7 +94,7 @@
     position: absolute;
     top: -5em;
     left: 0;
-    z-index: var(--mid-layer);
+    z-index: var(--high-layer);
     width: 100%;
 }
 

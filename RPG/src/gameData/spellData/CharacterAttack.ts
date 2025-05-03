@@ -16,7 +16,12 @@ const spellAnimation = attacks[spell]?.animation;
     if (spellAnimation) {
         storeAtom.set(FlashAnimationAtom, (prev) => ({
             ...prev,
-            [enemy.id]: spellAnimation,
+            [enemy.id]: spellAnimation.name,
+            duration: spellAnimation.duration,
+            width: spellAnimation.width,
+            height: spellAnimation.height,
+            steps: spellAnimation.steps,
+            image: spellAnimation.image,
         }));
     } else {
         storeAtom.set(FlashAnimationAtom, (prev) => ({
@@ -30,7 +35,12 @@ const spellAnimation = attacks[spell]?.animation;
     if (spellAnimation) {
         storeAtom.set(FlashAnimationAtom, (prev) => ({
             ...prev,
-            [enemy.id]: spellAnimation,
+            [enemy.id]: spellAnimation.name,
+            duration: spellAnimation.duration,
+            width: spellAnimation.width,
+            height: spellAnimation.height,
+            steps: spellAnimation.steps,
+            image: spellAnimation.image,
         }));
     
         setTimeout(() => {

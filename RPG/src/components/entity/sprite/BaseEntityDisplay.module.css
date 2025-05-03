@@ -202,10 +202,6 @@
 	100% {visibility: hidden;}
 }
 
-.sprite[data-type='npc'][data-entity-name='Rat'][data-death='true'], .sprite[data-type='npc'][data-entity-name='Goblin'][data-death='true'] {
-    height: 4.5em;
-}
-
 /* Attack */
 
 @keyframes attackAnimation {
@@ -226,59 +222,116 @@
     background-repeat: no-repeat;
     background-position: left center;
     image-rendering: pixelated;
-    z-index: var(--high-layer);
+    z-index: var(--mid-layer);
     pointer-events: none;
 }
 
-.spellAnimation[data-animation='spell-lightning'] {
-    background-size: 28em 10.5em; 
-    width: 28em;
-    height: 10.5em;
-    background-image: url("/assets/vfx/spell_lightning.png");
-    animation: spellLightning 900ms steps(3) forwards;
-}
 
-@keyframes spellLightning {
+@keyframes lightning {
     from {
         background-position-x: 0;
     }
     to {
-        background-position-x: -28em;
+        background-position-x: -36em;
     }
 }
 
-.spellAnimation[data-animation='spell-sword'] {
-    background-size: 15.6em 7.9em;
-    width: 15.6em;
-    height: 7.9em;
-    background-image: url("/assets/vfx/spell_sword.png");
-    animation: spellSword 900ms steps(2) forwards;
-}
-
-@keyframes spellSword {
+@keyframes sword {
     from {
         background-position-x: 0;
     }
     to {
-        background-position-x: -15.6em;
+        background-position-x: -18em;
     }
 }
 
-.spellAnimation[data-animation='spell-quickAttack'] {
-    background-size: 21.1em .5em;
-    top: 50%;
-    width: 21.1em;
-    height: .5em;
-    background-image: url("/assets/vfx/spell_quickAttack.png");
-    animation: spellQuickAttack 900ms steps(3) forwards;
-}
 
-
-@keyframes spellQuickAttack {
+@keyframes quickAttack {
     from {
         background-position-x: 0;
     }
     to {
-        background-position-x: -21.1em;
+        background-position-x: -36em;
+    }
+}
+
+@keyframes leech {
+    from {
+        background-position-x: 0;
+    }
+    to {
+        background-position-x: -36em;
+    }
+}
+
+@keyframes burning {
+    from {
+        background-position-x: 0;
+    }
+    to {
+        background-position-x: -12em;
+    }
+}
+
+@keyframes shadowDagger {
+    from {
+        background-position-x: 0;
+    }
+    to {
+        background-position-x: -12em;
+    }
+}
+
+@keyframes ice {
+    from {
+        background-position-x: 0;
+    }
+    to {
+        background-position-x: -24em;
+    }
+}
+
+@keyframes fire {
+    from {
+        background-position-x: 0;
+    }
+    to {
+        background-position-x: -21em;
+    }
+}
+
+@keyframes holyExplosion {
+    from {
+        background-position-x: 0;
+    }
+    to {
+        background-position-x: -21em;
+    }
+}
+
+@keyframes holyStrike {
+    from {
+        background-position-x: 0;
+    }
+    to {
+        background-position-x: -15em;
+    }
+}
+
+@keyframes devastate {
+    from {
+        background-position-x: 0;
+    }
+    to {
+        background-position-x: -30em;
+    }
+}
+
+@keyframes cleave {
+    from {
+        background-position-x: 0;
+    }
+    to {
+        background-position-x: -30em;
     }
 }

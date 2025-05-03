@@ -33,7 +33,12 @@ export const EnemyAttack = (
             }));
             storeAtom.set(FlashAnimationAtom, prev => ({
                 ...prev,
-                [character.id]: spellAnimation,
+                [character.id]: spellAnimation?.name ?? null,
+                duration: spellAnimation?.duration,
+                width: spellAnimation?.width,
+                height: spellAnimation?.height,
+                steps: spellAnimation?.steps,
+                image: spellAnimation?.image,
             }));
 
             // Stop animation after duration
