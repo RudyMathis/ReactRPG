@@ -23,6 +23,16 @@ type BuffMeta = {
     isSelfBuff: boolean;
     isAoe: boolean;
     isBuff: boolean;
+    animation?: {
+        name: string;
+        duration: number;
+        width: number;
+        height: number;
+        steps: number;
+        image: string;
+        rotation?: number;
+        brightness?: number;
+    }
 };
 
 const buffs: Record<string, BuffMeta> = {
@@ -33,6 +43,16 @@ const buffs: Record<string, BuffMeta> = {
         isSelfBuff: false, 
         isAoe: false,
         isBuff: false,
+        animation: {
+            name: 'heal',
+            duration: 900,
+            width: 36,
+            height: 10.28,
+            steps: 3,
+            image: '/assets/vfx/spell_heal.png',
+            rotation: -90,
+            brightness: 1.5,
+        },
     },
     Cure__Char$10: { 
         name: 'Cure',
@@ -41,6 +61,14 @@ const buffs: Record<string, BuffMeta> = {
         isSelfBuff: false,
         isAoe: false,
         isBuff: false,
+        animation: {
+            name: 'cure',
+            duration: 900,
+            width: 15,
+            height: 6.85,
+            steps: 4,
+            image: '/assets/vfx/spell_cure.png',
+        },
     },
     Heal_All_Char$40: { 
         name: 'Heal All',
@@ -49,6 +77,16 @@ const buffs: Record<string, BuffMeta> = {
         isSelfBuff: false,
         isAoe: true,
         isBuff: false,
+        animation: {
+            name: 'healAll',
+            duration: 900,
+            width: 36,
+            height: 10.28,
+            steps: 3,
+            image: '/assets/vfx/spell_heal.png',
+            rotation: -90,
+            brightness: 1.5,
+        },
     },
     Damage_Totem_Char$30: { 
         name: 'Damage Totem',

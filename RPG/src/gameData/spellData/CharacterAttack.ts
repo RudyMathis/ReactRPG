@@ -12,7 +12,8 @@ export const CharacterAttack = (enemy: EnemyType, character: CharacterType, _tar
         storeAtom.set(AttackAnimationAtom, (prev) => ({ ...prev, [character.id]: false }));
     }, 1000);
 
-const spellAnimation = attacks[spell]?.animation;
+    const spellAnimation = attacks[spell]?.animation;
+
     if (spellAnimation) {
         storeAtom.set(FlashAnimationAtom, (prev) => ({
             ...prev,
@@ -29,7 +30,6 @@ const spellAnimation = attacks[spell]?.animation;
             [enemy.id]: null,
         }));
     }
-
 
     storeAtom.set(AttackAnimationAtom, (prev) => ({ ...prev, [character.id]: true }));
     if (spellAnimation) {
@@ -51,7 +51,6 @@ const spellAnimation = attacks[spell]?.animation;
         }, 900); // match animation length
     }
     
-
     setTimeout(() => {
     }, 2000);
 

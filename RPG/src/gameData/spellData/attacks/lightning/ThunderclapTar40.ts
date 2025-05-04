@@ -39,6 +39,7 @@ const ThunderclapTar40 = (
             targetChar.health -= damage;
             HandleDamageEffect(damage, "Lightning", "player", targetChar.id);
         });
+
         storeAtom.set(FlashAnimationAtom, (prev) => ({ ...prev, ...flashUpdate }));
         setTimeout(() => {
             storeAtom.set(FlashAnimationAtom, (prev) => {
@@ -75,6 +76,7 @@ const ThunderclapTar40 = (
             BlessingOfHolyDamageBonus(character, targetEnemy);
             targetEnemy.health -= damage;
         });
+        
         storeAtom.set(FlashAnimationAtom, (prev) => ({ ...prev, ...flashUpdate }));
         setTimeout(() => {
             storeAtom.set(FlashAnimationAtom, (prev) => {

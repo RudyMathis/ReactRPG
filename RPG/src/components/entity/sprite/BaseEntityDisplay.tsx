@@ -7,6 +7,7 @@ import { DamageEffectAtom } from "../../../atom/effects/DamageEffectAtom";
 import { EntityImages } from "./EntityImages";
 import styles from './BaseEntityDisplay.module.css';
 import attacks from "../../../gameData/spellData/attacks/Attacks";
+import buffs from "../../../gameData/spellData/defense/BuffsFactory";
 
 type EnityDetailProps = {
     entity: CharacterType | EnemyType;
@@ -34,14 +35,27 @@ function BaseEntityDisplay({ entity }: EnityDetailProps) {
         (attack) => attack.animation?.name === activeAnimation
     );
     
-    const name = attackEntry?.animation?.name;
-    const duration = attackEntry?.animation?.duration;
-    const steps = attackEntry?.animation?.steps;
-    const width = attackEntry?.animation?.width;
-    const height = attackEntry?.animation?.height;
-    const image = attackEntry?.animation?.image;
-    const rotation = attackEntry?.animation?.rotation;
-    const brightness = attackEntry?.animation?.brightness;
+    const attackName = attackEntry?.animation?.name;
+    const attackDuration = attackEntry?.animation?.duration;
+    const attackSteps = attackEntry?.animation?.steps;
+    const attackWidth = attackEntry?.animation?.width;
+    const attackHeight = attackEntry?.animation?.height;
+    const attackImage = attackEntry?.animation?.image;
+    const attackRotation = attackEntry?.animation?.rotation;
+    const attackBrightness = attackEntry?.animation?.brightness;
+    
+    const denfenseEntry = Object.values(buffs).find(
+        (buff) => buff.animation?.name === activeAnimation
+    );
+
+    const defenseName = denfenseEntry?.animation?.name;
+    const defenseDuration = denfenseEntry?.animation?.duration;
+    const defenseSteps = denfenseEntry?.animation?.steps;
+    const defenseWidth = denfenseEntry?.animation?.width;
+    const defenseHeight = denfenseEntry?.animation?.height;
+    const defenseImage = denfenseEntry?.animation?.image;
+    const defenseRotation = denfenseEntry?.animation?.rotation;
+    const defenseBrightness = denfenseEntry?.animation?.brightness;
 
     return (
         <>
@@ -50,12 +64,26 @@ function BaseEntityDisplay({ entity }: EnityDetailProps) {
                     key={`${entity.id}-animation-${activeAnimation}`}
                     className={styles.spellAnimation}
                     style={{
-                        backgroundSize: `${width}em ${height}em`,
-                        width: `calc(${width}em / ${steps})`,
-                        height: `${height}em`,
-                        backgroundImage: `url(${image})`,
-                        animation: `${styles[name || '']} ${duration}ms steps(${steps}) forwards`,
-                        filter: `hue-rotate(${rotation}deg) brightness(${brightness})`,
+                        backgroundSize: `${attackWidth}em ${attackHeight}em`,
+                        width: `calc(${attackWidth}em / ${attackSteps})`,
+                        height: `${attackHeight}em`,
+                        backgroundImage: `url(${attackImage})`,
+                        animation:`${styles[attackName || '']} ${attackDuration}ms steps(${attackSteps}) forwards`,
+                        filter: `hue-rotate(${attackRotation}deg) brightness(${attackBrightness})`,
+                    }}
+                />
+            )}
+            {activeAnimation && denfenseEntry?.animation && (
+                <div
+                    key={`${entity.id}-animation-${activeAnimation}`}
+                    className={styles.spellAnimation}
+                    style={{
+                        backgroundSize: `${defenseWidth}em ${defenseHeight}em`,
+                        width: `calc(${defenseWidth}em / ${defenseSteps})`,
+                        height: `${defenseHeight}em`,
+                        backgroundImage: `url(${defenseImage})`,
+                        animation: `${styles[defenseName || '']} ${defenseDuration}ms steps(${defenseSteps}) forwards`,
+                        filter: `hue-rotate(${defenseRotation}deg) brightness(${defenseBrightness})`,
                     }}
                 />
             )}
@@ -96,27 +124,6 @@ function BaseEntityDisplay({ entity }: EnityDetailProps) {
                             `}
                             
                         />
-                {/* {activeAnimation && attackEntry?.animation && (
-                    <div
-                        key={`${entity.id}-animation-${activeAnimation}`}
-                        className={styles.spellAnimation}
-                        style={{
-                            backgroundSize: `${width}em ${height}em`,
-                            width: `calc(${width}em / ${steps})`,
-                            height: `${height}em`,
-                            backgroundImage: `url(${image})`,
-                            animation: `${styles[name || '']} ${duration}ms steps(${steps}) forwards`,
-                            [`@keyframes ${name}`]: { // Dynamically create the keyframe name
-                                from: {
-                                    backgroundPositionX: '0',
-                                },
-                                to: {
-                                    backgroundPositionX: `-${width || 0}em / ${steps}}em`, // Calculate the position of the last frame
-                                },
-                            },
-                        }}
-                    />
-                )} */}
                     </>
                 ) : entity.type === "npc" ? (
                     <img
@@ -138,7 +145,6 @@ function BaseEntityDisplay({ entity }: EnityDetailProps) {
                     />
                 )}
             </div>
-            {/* <img src="/assets/shadow.png" className={styles.shadow} /> */}
         </>
     );
 }

@@ -1,5 +1,6 @@
 import CharacterAtom, { CharacterType } from "../../../atom/CharacterAtom";
 import { storeAtom } from "../../../atom/storeAtom";
+import { FlashAnimationAtom } from "../../../atom/effects/FlashAnimationAtom";
 
 const HealAllChar40 = (
     character: CharacterType,
@@ -15,7 +16,13 @@ const HealAllChar40 = (
         char => char.isSelected && char.health > 0
     );
 
+    const spellAnimation = 'heal';
+    const flashUpdate: Record<number, string | null> = {};
+
+
     selectedCharacters.forEach(targetChar => {
+        flashUpdate[targetChar.id] = spellAnimation;
+
         if(targetChar.health > targetChar.maxHealth) {
             console.log("taunted char", targetChar.name)
         } else if(targetChar.health + heal > targetChar.maxHealth) {
@@ -25,6 +32,7 @@ const HealAllChar40 = (
         }
     });
 
+    flashUpdate[character.id] = spellAnimation;
     if(character.health > character.maxHealth) {
         console.log("taunted char", character.name)
     } else if(character.health + heal > character.maxHealth) {
@@ -32,6 +40,17 @@ const HealAllChar40 = (
     } else {
         character.health = character.health + heal;
     }
+
+    storeAtom.set(FlashAnimationAtom, (prev) => ({ ...prev, ...flashUpdate }));
+    setTimeout(() => {
+        storeAtom.set(FlashAnimationAtom, (prev) => {
+            const next = { ...prev };
+            selectedCharacters.forEach(char => {
+                next[char.id] = null;
+            });
+            return next;
+        });
+    }, 900);
 
     return selectedCharacters;
 };
