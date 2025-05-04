@@ -1,5 +1,4 @@
 import styles from '../Route.module.css';
-import UserNameInput from './UserNameInput';
 import { NewGameBtn } from './NewGameBtn';
 import { ContinueGameBtn } from './ContinueGameBtn';
 import { useEffect, useState } from 'react';
@@ -21,9 +20,19 @@ const MainMenu = () => {
     return (
         <>
             <div className={styles.mainContainer}>
-                <h1 className={styles.title}>Sacred Loop</h1>
+                <div className={styles.titleContainer}>
+                    <h1 className={`${styles.s} ${styles.title}` }>S</h1>
+                    <h1 className={`${styles.a} ${styles.title}`}>a</h1>
+                    <h1 className={`${styles.c} ${styles.title}`}>c</h1>
+                    <h1 className={`${styles.r} ${styles.title}`}>r</h1>
+                    <h1 className={`${styles.e} ${styles.title}`}>e</h1>
+                    <h1 className={`${styles.d} ${styles.title}`}>d</h1>
+                    <h1 className={`${styles.l} ${styles.title}`}>L</h1>
+                    <h1 className={`${styles.o} ${styles.title}`}>o</h1>
+                    <h1 className={`${styles.o2} ${styles.title}`}>o</h1>
+                    <h1 className={`${styles.p} ${styles.title}`}>p</h1>
+                </div>
                 <HighScoreDisplay />
-                <UserNameInput />
                 <NewGameBtn />
                 {isInProgress && <ContinueGameBtn />}
                 <NavigateBtn locationValue="/options" location="Options" />

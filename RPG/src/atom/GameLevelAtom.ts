@@ -6,7 +6,7 @@ import { turnCountAtom } from './UseTurnCountAtom';
 import { getRandomEnemyType, getRandomElement, getRandomClass, determineEnemyGroup } from './BaseEnemyAtom';
 import EnemyFactory from '../gameData/enemies/EnemyFactory';
 import { generateNewBackground } from './BackgroundAtom'; 
-import { enemyCount } from '../gameData/enemies/EnemyCount';
+import { getEnemyCount } from '../gameData/enemies/EnemyCount';
 
 type GameLevelType = {
     round: number;
@@ -53,6 +53,8 @@ const generateNewEnemies = (round: number, level: number): Record<number, EnemyT
     const levelMultiplier = Math.max(1, level * 0.5);
     const roundMultiplier = Math.max(1, round * 0.5);
     const scale = levelMultiplier * roundMultiplier;
+    const enemyCount = getEnemyCount();
+
 
     for (let i = 0; i < enemyCount; i++) {
         const enemyType = getRandomEnemyType();

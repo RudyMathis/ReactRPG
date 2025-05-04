@@ -7,13 +7,14 @@
     gap: 0.5em;
     width: 7em;
     height: 9em;
+    z-index: var(--mid-layer);
 }
 
 .entityContainer:hover {
     cursor: pointer;
 }
 
-.entityContainer[data-move='true'][data-type='player'] {
+.entityContainer[data-attacking='true'][data-type='player'] {
     animation: attackMoveAnimation 900ms linear 1; 
 } 
 
@@ -23,71 +24,29 @@
     100% { transform: translateX(0); } 
 }
 
-.entityContainer[data-move='true'][data-type='npc'] {
+.entityContainer[data-defending='true'][data-type='player'] {
+    animation: defendMoveAnimation 900ms linear 1; 
+} 
+
+@keyframes defendMoveAnimation {
+    0% { transform: translateX(0); }
+    50% { transform: translateX(7.3em); }
+    100% { transform: translateX(0); } 
+}
+
+.entityContainer[data-attacking='true'][data-type='npc'] {
     animation: attackNPCMoveAnimation 900ms linear 1 reverse; 
 }
 
 @keyframes attackNPCMoveAnimation {
-    0% { transform: translateX(0); }
+    /* 0% { transform: translateX(0); }
     50% { transform: translateX(-14.3em); }
+    100% { transform: translateX(0); }  */
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-2em); }
+    50% { transform: translateX(.5em); }
+    75% { transform: translateX(-1em); }
     100% { transform: translateX(0); } 
-}
-
-.entityWeapon {
-    position: absolute;
-    z-index: var(--low-layer);
-    image-rendering: pixelated;
-}
-
-.entityWeapon[data-weapon="axe"] {
-    bottom: 1.6em;
-    right: -1.3em;
-    width: 4.4em;
-    height: 4.4em;
-}
-
-.entityWeapon[data-weapon="dagger"] {
-    bottom: 2em;
-    right: 0;
-    width: 2.8em;
-    height: 2.8em;
-}
-
-.entityWeapon[data-weapon="bow"] {
-    bottom: 1.4em;
-    right: 1em;
-    width: .86em;
-    height: 3.4em;
-}
-
-.entityWeapon[data-weapon="staff"] {
-    bottom: 1.4em;
-    right: 0;
-    width: 2.8em;
-    height: 2.8em;
-}
-
-.entityWeapon[data-weapon="sword"] {
-    bottom: 2.8em;
-    right: -.5em;
-    width: 2.8em;
-    height: 2.8em;
-}
-
-.entityWeapon[data-weapon="sword"][data-character='Knight'] {
-    bottom: 1.8em;
-    right: -.8em;
-}
-
-.entityWeapon[data-weapon="wand"] {
-    bottom: 2.1em;
-    right: 0;
-    width: 2.8em;
-    height: 2.8em;
-}
-
-.entityWeapon[data-player-dead='true'] {
-    display: none;
 }
 
 .entityInfoContainer {

@@ -122,6 +122,12 @@
     z-index: var(--highest-layer);
 }
 
+@media screen and (max-width: 600px) {
+    .topBar {
+        top: 10%;
+    }
+}
+
 .currentDisplayContainer {
     display: flex;
     flex-direction: column;

@@ -1,6 +1,6 @@
 import { atom } from 'jotai';
 import EnemyFactory from '../gameData/enemies/EnemyFactory';
-import { enemyCount } from '../gameData/enemies/EnemyCount';
+import { getEnemyCount  } from '../gameData/enemies/EnemyCount';
 
 type Resistance = {
     type: string;
@@ -50,7 +50,6 @@ export type EnemyType = {
     order: number;
     spells: string[];
     target: string[];
-    weapon: string;
     buffs: BuffEffect[];
     debuffs: DebuffEffect[];
     isSelected: boolean;
@@ -111,6 +110,7 @@ export const getRandomEnemyType = (): string => {
 
 // Generate up to 7 unique enemies
 const initialEnemies: Record<number, EnemyType> = {};
+const enemyCount = getEnemyCount();
 
 for (let i = 0; i < enemyCount; i++) {
     const enemyType = getRandomEnemyType();

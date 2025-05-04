@@ -20,6 +20,8 @@
     z-index: var(--lowest-layer);
     pointer-events: none;
     border-radius: var(--big-radius);
+    box-shadow: 0 0 4em hsla(0, 0%, 0%, 0.9) inset;
+
 }
 
 .crt {
@@ -30,7 +32,6 @@
     width: calc(var(--width) - 3.75em);
     height: calc(var(--height) - 3.4em);
     background: linear-gradient(to top, hsla(0, 0%, 0%, 0.20), hsla(0, 0%, 0%, 0.20), hsla(0, 0%, 20%, 0.20), hsla(0, 0%, 20%, 0.20));
-    background-size: cover;
     background-size: 100% 8px;
     z-index: var(--highest-layer);
     pointer-events: none;
@@ -204,6 +205,12 @@ input[type="range"]::-webkit-slider-thumb:hover {
     border-image-repeat: var(--border-image-repeat);
     opacity: 1;
     animation: actionText 300ms ease-in; /* short fade-in */
+}
+
+@media screen and (max-width: 600px) {
+    .actionTextContainer {
+        top: 14em;
+    }
 }
 
 .actionText {

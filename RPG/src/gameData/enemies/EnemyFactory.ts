@@ -2,7 +2,7 @@ import { determineEnemyGroup, EnemyType, getRandomClass, getRandomElement, getRa
 import BaseEnemyData from "./BaseEnemyData.json";
 import Resistances from "../Resistances";
 import Vulnerabilites from "../Vulnerabilities";
-import { enemyCount } from "./EnemyCount";
+import { getEnemyCount } from "./EnemyCount";
 
 type BaseEnemyDataRecord = Record<string, EnemyType>;
 
@@ -149,6 +149,8 @@ class EnemyFactory {
 
 export const generateInitialEnemies = (): Record<number, EnemyType> => {
     const initialEnemies: Record<number, EnemyType> = {};
+    const enemyCount = getEnemyCount();
+
 
     for (let i = 0; i < enemyCount; i++) {
         const enemyType = getRandomEnemyType();

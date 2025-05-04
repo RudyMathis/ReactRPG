@@ -1,1 +1,1 @@
-export const enemyCount = Math.floor(Math.random() * 1) + 2;
+export const getEnemyCount = () => Math.floor(Math.random() * 3) + 2;

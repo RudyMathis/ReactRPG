@@ -8,6 +8,7 @@ import { EntityImages } from "./EntityImages";
 import styles from './BaseEntityDisplay.module.css';
 import attacks from "../../../gameData/spellData/attacks/Attacks";
 import buffs from "../../../gameData/spellData/defense/BuffsFactory";
+import { DefenseAnimationAtom } from "../../../atom/effects/DefenseAnimationAtom";
 
 type EnityDetailProps = {
     entity: CharacterType | EnemyType;
@@ -15,6 +16,7 @@ type EnityDetailProps = {
 
 function BaseEntityDisplay({ entity }: EnityDetailProps) {
     const [attackingEntities] = useAtom(AttackAnimationAtom);
+    const [defendEntities] = useAtom(DefenseAnimationAtom);
     const [flashEntities] = useAtom(FlashAnimationAtom);
     const [damageEffectMap] = useAtom(DamageEffectAtom);
     const effectData = damageEffectMap[entity.id];
@@ -23,11 +25,12 @@ function BaseEntityDisplay({ entity }: EnityDetailProps) {
     const imageSrcDead = EntityImages[entity.name + '_Death'] || '/assets/default.png';
 
     const isAttacking = !!attackingEntities[entity.id];
+    const isDefending = !!defendEntities[entity.id];
     const isFlashing = !!flashEntities[entity.id];
     const isTakingDamage = !!(effectData?.isDisplay && entity.type === effectData.target);
     const shouldFlash = isFlashing || isTakingDamage;
 
-    const key = isAttacking ? `${entity.id}-attacking` : (isFlashing ? `${entity.id}-flashing-attacking` : `${entity.id}`);
+    const key = isAttacking ? `${entity.id}-attacking` : isDefending ? `${entity.id}-defending` : (isFlashing ? `${entity.id}-flashing-attacking` : `${entity.id}`);
     
     const activeAnimation = flashEntities[entity.id];
 
@@ -44,18 +47,18 @@ function BaseEntityDisplay({ entity }: EnityDetailProps) {
     const attackRotation = attackEntry?.animation?.rotation;
     const attackBrightness = attackEntry?.animation?.brightness;
     
-    const denfenseEntry = Object.values(buffs).find(
+    const defendEntry = Object.values(buffs).find(
         (buff) => buff.animation?.name === activeAnimation
     );
 
-    const defenseName = denfenseEntry?.animation?.name;
-    const defenseDuration = denfenseEntry?.animation?.duration;
-    const defenseSteps = denfenseEntry?.animation?.steps;
-    const defenseWidth = denfenseEntry?.animation?.width;
-    const defenseHeight = denfenseEntry?.animation?.height;
-    const defenseImage = denfenseEntry?.animation?.image;
-    const defenseRotation = denfenseEntry?.animation?.rotation;
-    const defenseBrightness = denfenseEntry?.animation?.brightness;
+    const defendName = defendEntry?.animation?.name;
+    const defendDuration = defendEntry?.animation?.duration;
+    const defendSteps = defendEntry?.animation?.steps;
+    const defendWidth = defendEntry?.animation?.width;
+    const defendHeight = defendEntry?.animation?.height;
+    const defendImage = defendEntry?.animation?.image;
+    const defendRotation = defendEntry?.animation?.rotation;
+    const defendBrightness = defendEntry?.animation?.brightness;
 
     return (
         <>
@@ -73,17 +76,17 @@ function BaseEntityDisplay({ entity }: EnityDetailProps) {
                     }}
                 />
             )}
-            {activeAnimation && denfenseEntry?.animation && (
+            {activeAnimation && defendEntry?.animation && (
                 <div
                     key={`${entity.id}-animation-${activeAnimation}`}
                     className={styles.spellAnimation}
                     style={{
-                        backgroundSize: `${defenseWidth}em ${defenseHeight}em`,
-                        width: `calc(${defenseWidth}em / ${defenseSteps})`,
-                        height: `${defenseHeight}em`,
-                        backgroundImage: `url(${defenseImage})`,
-                        animation: `${styles[defenseName || '']} ${defenseDuration}ms steps(${defenseSteps}) forwards`,
-                        filter: `hue-rotate(${defenseRotation}deg) brightness(${defenseBrightness})`,
+                        backgroundSize: `${defendWidth}em ${defendHeight}em`,
+                        width: `calc(${defendWidth}em / ${defendSteps})`,
+                        height: `${defendHeight}em`,
+                        backgroundImage: `url(${defendImage})`,
+                        animation: `${styles[defendName || '']} ${defendDuration}ms steps(${defendSteps}) forwards`,
+                        filter: `hue-rotate(${defendRotation}deg) brightness(${defendBrightness})`,
                     }}
                 />
             )}
@@ -121,6 +124,7 @@ function BaseEntityDisplay({ entity }: EnityDetailProps) {
                                 ${styles.sprite}
                                 ${shouldFlash ? styles.flashDamage : ""}
                                 ${isAttacking ? styles.attack : ""}
+                                ${isDefending ? styles.defend : ""}
                             `}
                             
                         />

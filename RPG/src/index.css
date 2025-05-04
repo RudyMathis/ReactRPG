@@ -159,7 +159,7 @@ button {
 	}
 }
 
-@media (max-width: 420px) {
+@media (max-width: 600px) {
 	#root {
 		zoom: .425;
 		transform: rotate(90deg);

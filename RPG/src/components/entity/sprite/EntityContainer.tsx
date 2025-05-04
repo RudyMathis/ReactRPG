@@ -7,6 +7,7 @@ import { AttackAnimationAtom } from "../../../atom/effects/AttackAnimationAtom";
 import HealthBar from "../bars/HealthBar";
 import ManaBar from "../bars/ManaBar";
 import styles from'./Sprite.module.css';
+import { DefenseAnimationAtom } from "../../../atom/effects/DefenseAnimationAtom";
 
 type Entity = CharacterType | EnemyType;
 
@@ -27,23 +28,61 @@ const EntityContainer: React.FC<EntityContainerProps> = ({
 }) => {
     const [attackingEntities] = useAtom(AttackAnimationAtom);
     const isAttacking = attackingEntities[entity.id] ?? false;
+    const [defendingEntities] = useAtom(DefenseAnimationAtom);
+    const isDefending = defendingEntities[entity.id] ?? false;
     const isDead = type === 'enemy' && 'health' in entity && entity.health <= 0;
     const isPlayerDead = type === 'character' && 'health' in entity && entity.health <= 0;
-    // const weapon = entity.weapon ?? '';
+    // const enemyCount = Object.keys(entity.enemies as Record<string, EnemyType>).length;
 
-    const gridColumn = type === 'character'
-        ? (index % 2 === 0 ? 4 : 5)
-        : (index % 2 === 0 ? 16 : 17);
+    const characterPositions = [
+        { gridColumn: 6, gridRow: 10 },
+        { gridColumn: 5, gridRow: 11 },
+        { gridColumn: 7, gridRow: 11 },
+        { gridColumn: 6, gridRow: 12 },
+    ];
 
-    const gridRow = ((index + 5) * 2) + 1;
+    const enemyPositionsByCount: Record<number, { gridColumn: number; gridRow: number }[]> = {
+        2: [
+            { gridColumn: 15, gridRow: 10 }, // top
+            { gridColumn: 14, gridRow: 11 }, // left
+        ],
+        3: [
+            { gridColumn: 15, gridRow: 10 }, // top
+            { gridColumn: 14, gridRow: 11 }, // left
+            { gridColumn: 16, gridRow: 11 }, // right
+        ],
+        4: [
+            { gridColumn: 15, gridRow: 10 }, // top
+            { gridColumn: 14, gridRow: 11 }, // left
+            { gridColumn: 16, gridRow: 11 }, // right
+            { gridColumn: 15, gridRow: 12 }, // bottom
+        ]
+    };
+    
+    let gridColumn: number;
+    let gridRow: number;
+    
+    if (type === 'character') {
+        const position = characterPositions[index] || { gridColumn: 5, gridRow: 5 };
+        gridColumn = position.gridColumn;
+        gridRow = position.gridRow;
+    } else {
+        const enemyCount = 'enemies' in entity ? Object.keys(entity.enemies as Record<string, EnemyType>).length : 0;
 
+        const positions = enemyPositionsByCount[enemyCount] || enemyPositionsByCount[4];
+        const position = positions[index] || { gridColumn: 16, gridRow: 4 };
+        gridColumn = position.gridColumn;
+        gridRow = position.gridRow;
+    }
+    
     return (
         <div
             className={styles.entityContainer}
             data-type={entity.type}
             onClick={onClick}
             data-is-player-dead={isPlayerDead || undefined}
-            data-move={isAttacking || undefined}
+            data-attacking={isAttacking || undefined}
+            data-defending={isDefending || undefined}
             data-dead={isDead || undefined}
             style={{
                 gridColumn,
@@ -64,14 +103,6 @@ const EntityContainer: React.FC<EntityContainerProps> = ({
                     </div>
                 )}
             </div>
-            {/* {weapon && 
-                <img src={`/assets/weapons/${weapon}.png`} 
-                    className={styles.entityWeapon} 
-                    data-weapon={weapon} 
-                    data-character={entity.name} 
-                    data-player-dead={isPlayerDead || undefined}
-                />
-            } */}
             {children}
         </div>
     );

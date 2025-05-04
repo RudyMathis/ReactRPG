@@ -9,6 +9,7 @@ import { SaveData } from "../../gameMechanics/SaveData";
 import Background from "../../components/ui/Background";
 import styles from "../Route.module.css";
 import { backgroundAtom, generateNewBackground } from "../../atom/BackgroundAtom";
+import UserNameInput from "../mainMenu/UserNameInput";
 const CharacterSelect = () => {
 
     // const [currentGameLevel] = useAtom(GameLevelAtom);
@@ -49,17 +50,17 @@ const CharacterSelect = () => {
                 <NavigateBtn locationValue="/" location="Main Menu" />
                     </div>        
                 <CharacterSheets />
-                {selectedCharacters.length === 4 &&
-                    <Btn 
-                        className={styles.startGameBtn}
-                        onClick={handleBeginAdventure}
-                        text="Begin Adventure"
-                    />
-                }
+            </div>
+            <div className={`${styles.startContainer} ${selectedCharacters.length !== 4 ? styles.hide : ''}`}>
+                <UserNameInput />
+                <Btn 
+                    className={styles.startGameBtn}
+                    onClick={handleBeginAdventure}
+                    text="Begin Adventure"
+                />
             </div>
             <Background />
         </>
     );
 };
-
 export default CharacterSelect;  

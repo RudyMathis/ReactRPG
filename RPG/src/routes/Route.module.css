@@ -29,14 +29,61 @@
 .title {
     font-size: 4rem;
     text-align: center;
-    text-shadow: .5rem .5rem 0 var(--shadow);
-    animation: floatTitle 1200ms ease-in-out infinite;
+    width: fit-content;
+    display: inline-block;
 }
+
+.titleContainer {
+    margin-bottom: 5em;
+}
+
+.s {
+    text-shadow: .5rem .5rem 0 var(--fire-soft);
+    animation: floatTitle 3000ms ease-in-out 0ms infinite;
+}
+.a {
+    text-shadow: .5rem .5rem 0 var(--ice-soft);
+    animation: floatTitle 3000ms ease-in-out 1000ms infinite;
+}
+.c {
+    text-shadow: .5rem .5rem 0 var(--dark-soft);
+    animation: floatTitle 3000ms ease-in-out 2000ms infinite;
+}
+.r {
+    text-shadow: .5rem .5rem 0 var(--lightning-soft);
+    animation: floatTitle 3000ms ease-in-out 3000ms infinite;
+}
+.e {
+    text-shadow: .5rem .5rem 0 var(--fire-soft);
+    animation: floatTitle 3000ms ease-in-out 4000ms infinite;
+}
+.d {
+    text-shadow: .5rem .5rem 0 var(--ice-soft);
+    animation: floatTitle 3000ms ease-in-out 5000ms infinite;
+}
+.l {
+    text-shadow: .5rem .5rem 0 var(--dark-sof);
+    animation: floatTitle 3000ms ease-in-out 6000ms infinite;
+}
+.o {
+    text-shadow: .5rem .5rem 0 var(--lightning-soft);
+    animation: floatTitle 3000ms ease-in-out 7000ms infinite;
+}
+.o2 {
+    text-shadow: .5rem .5rem 0 var(--fire-soft);
+    animation: floatTitle 3000ms ease-in-out 8000ms infinite;
+}
+.p {
+    text-shadow: .5rem .5rem 0 var(--ice-soft);
+    animation: floatTitle 3000ms ease-in-out 9000ms infinite;
+}
+
+
 
 
 @keyframes floatTitle {
     0%, 100% { transform: translateY(0%); }
-    50% { transform: translateY(-2%); }
+    50% { transform: translateY(-3%); }
 }
 
 /* Character Sheet */
@@ -50,6 +97,15 @@
     margin: 2em 0;
     width: calc(var(--width) - 5%);
     z-index: var(--low-layer);
+}
+
+@media screen and (max-width: 600px) {
+    .characterSheetContainer {
+        gap: 1em;
+        margin: 1em 0;
+        width: calc(var(--width) - 10%);
+    }
+    
 }
 
 .characterSheet {
@@ -91,7 +147,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    width: calc(var(--width) - 5%);
+    width: calc(var(--width) - 10%);
     z-index: var(--low-layer);
     gap: .5em;
 }
@@ -103,6 +159,25 @@
     justify-content: space-between;
     width: 100%;
     margin: 1em 0;
+}
+
+@media screen and (max-width: 600px) {
+    .mainContainer .topBar {
+        justify-content: center;
+        gap: 3em;
+    }
+    
+}
+
+.startContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+    z-index: var(--low-layer);
+}
+.startContainer.hide {
+    visibility: hidden;
 }
 
 /* Input */
