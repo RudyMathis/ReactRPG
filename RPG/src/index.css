@@ -83,7 +83,7 @@ footer, header, hgroup, menu, nav, section {
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
-	padding: 2em;
+	width: 100%;
 }
 
 body {
@@ -92,6 +92,7 @@ body {
 	justify-content: center;
 	align-items: center;
 	background-color: var(--shadow);
+	width: 100vw;
 	height: 100vh;
 	background-image: url('/assets/backgrounds/background_texture.png');
 	background-repeat: round;
@@ -117,7 +118,7 @@ table {
 }
 
 h1 {
-	font-size: 2em;
+	font-size: 2rem;
 	text-shadow:
     3px 3px 0 var(--shadow),
     -3px 3px 0 var(--shadow),
@@ -153,20 +154,26 @@ button {
     filter: brightness(1.2);
 }
 
-@media (max-width: 1024px) {
-	#root {
-		zoom: .7;
+@media (max-width: 1920px) {
+	:root {
+		font-size: 13px;
 	}
 }
 
-@media (max-width: 600px) {
-	#root {
-		zoom: .35;
+@media (max-width: 1080px)  {
+	:root {
+		font-size: 9px;
 	}
 }
 
-@media (max-width: 420px) {
-	#root {
-		zoom: .3;
+@media (max-width: 420px)  {
+	:root {
+		font-size: 9px;
+	}
+    h1 {
+        font-size: 1.25rem;
+    }
+	.btn{
+		font-size: .9rem;
 	}
 }

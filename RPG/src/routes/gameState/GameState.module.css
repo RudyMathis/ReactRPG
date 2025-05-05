@@ -77,7 +77,7 @@
     align-items: center;
     z-index: var(--high-layer); 
     cursor: pointer;
-    border-radius: 5%;
+    border-radius: var(--big-radius);
 }
 
 .detailScreenContent {
@@ -122,12 +122,6 @@
     z-index: var(--highest-layer);
 }
 
-@media screen and (max-width: 600px) {
-    .topBar {
-        width: calc(var(--width) - 18%);
-    }
-}
-
 .currentDisplayContainer {
     display: flex;
     flex-direction: column;
@@ -150,4 +144,23 @@
     align-items: center;
     gap: 1rem;
     z-index: var(--high-layer); 
+}
+
+
+
+@media (max-width: 420px)  {
+
+    .topBar {
+        width: 98%;
+    }
+
+    .board {
+        width: 100%;
+        height: var(--height);
+        border-radius: 0;
+    }
+
+    .detailScreenOverlay {
+        border-radius: 0;
+    }
 }

@@ -50,17 +50,6 @@
     height: 13.5em;
 }
 
-.shadow {
-    position: absolute;
-    bottom: -1.5em;
-    left: 1em;
-    width: 6em;
-    height: 2em;
-    z-index: var(--lowest-layer);
-    filter: blur(8px);
-    mix-blend-mode: luminosity;
-    display: none;
-}
 .spriteContainer:has(.sprite[data-entity-size='small']),
 .sprite[data-entity-size='small']  {
     width: 7em;
@@ -205,7 +194,7 @@
 
 @keyframes attackAnimation {
     0% { transform: translateX(0); }
-    100% { transform: translateX(200px); } 
+    100% { transform: translateX(14.3em); } 
 }
 
 .attack[data-type='player'] {
@@ -217,7 +206,7 @@
 
 @keyframes defendAnimation {
     0% { transform: translateX(0); }
-    100% { transform: translateX(200px); } 
+    100% { transform: translateX(14.3em); } 
 }
 
 .defend[data-type='player'] {

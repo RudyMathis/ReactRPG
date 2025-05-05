@@ -173,3 +173,22 @@
 .actionMenuButton[data-element='Holy'] {
 	color: var(--light);
 }
+
+@media screen and (max-width: 420px) {
+    .currentTurnArrow img{
+        position: absolute;
+        top: -100%;
+        left: 25%;
+        rotate: 90deg;
+    }
+    
+    @keyframes floatArrow {
+        0%, 100% { transform: translateX(-50%); }
+        50% { transform: translateX(0); }
+    }
+    
+    .actionMenuButton {
+        padding: 2px 5px;
+        font-size: 1.25rem;
+    }
+}

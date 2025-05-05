@@ -105,21 +105,20 @@ const Grid = () => {
               index={index}
               onClick={() => toggleMenuVisibility(char.id, 'character')}
             >
-            {/* <Shadow entity={char} attackingEntities={attackingEntities} /> */}
-            <EntityDisplayWrapper
-              entity={char}
-              type="character"
-              onTarget={handlePlayerTargeted}
-            />
-            {waitingForInput && playerTarget && (
-              <ActionMenu 
-                isVisible={activeMenu.id === char.id && activeMenu.type === 'character'}
-                type='character'
-                onSpell={handleNextTurnClick}
-                detailScreen={() => displayDetailScreen(char)}
-                isCurrentTurn={char}
+              <EntityDisplayWrapper
+                entity={char}
+                type="character"
+                onTarget={handlePlayerTargeted}
               />
-            )}
+                {waitingForInput && playerTarget && (
+                  <ActionMenu 
+                    isVisible={activeMenu.id === char.id && activeMenu.type === 'character'}
+                    type='character'
+                    onSpell={handleNextTurnClick}
+                    detailScreen={() => displayDetailScreen(char)}
+                    isCurrentTurn={char}
+                  />
+                )}
             </EntityContainer>
         </React.Fragment>
       ))}
@@ -135,7 +134,6 @@ const Grid = () => {
               index={index}
               onClick={() => toggleMenuVisibility(enemy.id, 'enemy')}
             >
-              {/* <Shadow entity={enemy} attackingEntities={attackingEntities} /> */}
               <EntityDisplayWrapper
                 entity={enemy}
                 type="enemy"

@@ -96,3 +96,18 @@
     object-fit: contain;
     image-rendering: pixelated;
 }
+
+@media screen and (max-width: 420px) {
+    .turnOrderContainer {
+        gap: 1em;
+    }
+    
+    .turnOrderPortait {
+        width: 2em;
+    }
+
+    .turnOrderContainer .characterSprite {
+        width: 2em;
+        height: 2em;
+    }
+}
