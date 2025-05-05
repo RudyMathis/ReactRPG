@@ -217,7 +217,7 @@ input[type="range"]::-webkit-slider-thumb:hover {
     to { opacity: 1; }
 }
 
-@media (max-width: 420px)  {
+@media (max-height: 420px)  {
 	.backgroundBorder {
 		display: none;
 	}
@@ -228,31 +228,16 @@ input[type="range"]::-webkit-slider-thumb:hover {
         border-radius: 0;
     }
 
-    .rightContainer {
-        font-size: .75rem
-    }
-
-    .actionTextContainer {
-        max-width: 90%;
-    }
-    
-    .actionText {
-        font-size: .9rem;
-    }
-
     .settingsOverlay[data-open="true"] {
-        position: absolute;
         top: -50%;
-        left: 0%;
-        width: 100%;
+        left: -1%;
         border-radius: 0;
-        background: transparent
+        width: 100vw;
+        height: 100vh;
     }
 
-    
     .settingsMenu[data-open="true"] {
         gap: .5rem;
-        width: 100%;
     }
     
 }

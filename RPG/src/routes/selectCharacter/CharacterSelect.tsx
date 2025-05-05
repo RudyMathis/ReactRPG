@@ -9,7 +9,9 @@ import { SaveData } from "../../gameMechanics/SaveData";
 import Background from "../../components/ui/Background";
 import styles from "../Route.module.css";
 import { backgroundAtom, generateNewBackground } from "../../atom/BackgroundAtom";
-import UserNameInput from "../mainMenu/UserNameInput";
+import UserNameInput from "./UserNameInput";
+import AudioManager from "../../gameData/AudioManager";
+import { UserAtom } from "../../atom/persistant/UserAtom";
 const CharacterSelect = () => {
 
     // const [currentGameLevel] = useAtom(GameLevelAtom);
@@ -26,6 +28,9 @@ const CharacterSelect = () => {
     const navigate = useNavigate();
     const selectedCharacters = Object.values(characters).filter(char => char.isSelected);
     const setBackground = useSetAtom(backgroundAtom);
+    const [userName] = useAtom(UserAtom); // ← read the username value
+    
+    AudioManager.stop();
     const handleBeginAdventure = () => {
         if (selectedCharacters.length !== 4) return;
 
@@ -45,19 +50,21 @@ const CharacterSelect = () => {
         <>
             <div className={styles.mainContainer}>   
                 <div className={styles.topBar}>
-                <h1>Select Your Character</h1>
-                {/* <h2>{message}</h2> */}
-                <NavigateBtn locationValue="/" location="Main Menu" />
-                    </div>        
+                    <h1>Select Your Character</h1>
+                    {/* <h2>{message}</h2> */}
+                    <NavigateBtn locationValue="/" location="Main Menu" />
+                </div>        
                 <CharacterSheets />
             </div>
             <div className={`${styles.startContainer} ${selectedCharacters.length !== 4 ? styles.hide : ''}`}>
                 <UserNameInput />
-                <Btn 
-                    className={styles.startGameBtn}
-                    onClick={handleBeginAdventure}
-                    text="Begin Adventure"
-                />
+                {userName.trim().length > 0 && (
+                    <Btn 
+                        className={styles.startGameBtn}
+                        onClick={handleBeginAdventure}
+                        text="Begin Adventure"
+                    />
+                )}
             </div>
             <Background />
         </>

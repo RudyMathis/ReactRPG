@@ -25,7 +25,6 @@
     background-size: var(--width) var(--height);
     width: calc(var(--width) - 1.5em);
     height: calc(var(--height) - 2em);
-    /* image-rendering: pixelated; */
     border-radius: var(--big-radius);
 }
 
@@ -149,7 +148,16 @@
 
 
 @media (max-width: 420px)  {
+    .levelLayout {
+        rotate: 90deg;
+    }
+}
 
+@media (max-height: 420px)  {
+
+    .levelLayout {
+        height: 100%;
+    }
     .topBar {
         width: 98%;
     }
@@ -158,6 +166,8 @@
         width: 100%;
         height: var(--height);
         border-radius: 0;
+        background-position: center;
+        background-size: cover;
     }
 
     .detailScreenOverlay {

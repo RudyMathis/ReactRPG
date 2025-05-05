@@ -190,27 +190,8 @@
 	color: var(--font);
 }
 
-@media (max-width: 1024px) and (min-height: 1024px) {
-    /* .mainContainer .topBar{
-        margin: 0;
-    }
 
-    .characterSheetContainer {
-        gap: 1em;
-        margin: 1em 0;
-    }
-
-    .characterSheet button {
-        padding: .5rem;
-    }
-
-    .characterSheet {
-        margin-bottom: .5rem;
-    } */
-}
-
-
-@media (max-width: 420px)  {
+@media (max-height: 420px)  {
     .mainContainer {
         width: 85%;
     }
@@ -218,6 +199,7 @@
     .title {
         font-size: 3rem;
     }
+
     .characterSheetContainer {
         width: 100%;
     }
@@ -225,6 +207,7 @@
     .characterSheet h2 {
         font-size: .95rem;
     }
+    
     .characterSheet p {
         font-size: .9rem;
     }

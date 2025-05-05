@@ -1,12 +1,11 @@
-// utils/AudioManager.ts
 class AudioManager {
     private static instance: HTMLAudioElement;
 
-static getInstance(): HTMLAudioElement {
-    if (!AudioManager.instance) {
-        AudioManager.instance = new Audio('/assets/sfx/battle_music_1.mp3');
-        AudioManager.instance.loop = true;
-        AudioManager.instance.volume = 0.5;
+    static getInstance(): HTMLAudioElement {
+        if (!AudioManager.instance) {
+            AudioManager.instance = new Audio('/assets/sfx/battle_music_1.mp3');
+            AudioManager.instance.loop = true;
+            AudioManager.instance.volume = 0.5;
         }
         return AudioManager.instance;
     }
@@ -14,6 +13,7 @@ static getInstance(): HTMLAudioElement {
     static setVolume(volume: number) {
         const audio = this.getInstance();
         audio.volume = volume / 100;
+        if(audio.volume <= 0) AudioManager.stop();
     }
 
     static play() {

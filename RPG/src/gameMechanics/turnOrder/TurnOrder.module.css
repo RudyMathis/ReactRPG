@@ -97,17 +97,14 @@
     image-rendering: pixelated;
 }
 
-@media screen and (max-width: 420px) {
-    .turnOrderContainer {
-        gap: 1em;
-    }
+@media screen and (max-height: 420px) {
     
     .turnOrderPortait {
-        width: 2em;
+        width: 3em;
     }
 
     .turnOrderContainer .characterSprite {
-        width: 2em;
-        height: 2em;
+        width: 3em;
+        height: 3em;
     }
 }
