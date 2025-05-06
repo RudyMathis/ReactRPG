@@ -235,7 +235,6 @@
     from {background-position-x: 0;} to {background-position-x: -18em;}
 }
 
-
 @keyframes quickAttack {
     from {background-position-x: 0;} to {background-position-x: -36em;}
 }
@@ -276,6 +275,32 @@
     from {background-position-x: 0;} to {background-position-x: -30em;}
 }
 
+@keyframes shadowStrike {
+    from {background-position-x: 0;} to {background-position-x: -18em;}
+}
+
+@keyframes garrote {
+    from {background-position-x: 0;} to {background-position-x: -27em;}
+}
+
+@keyframes shoot {
+    from {background-position-x: 0;} to {background-position-x: -9em;}
+}
+
+@keyframes aimShot {
+    from {background-position-x: 0;} to {background-position-x: -30em;}
+}
+
+@keyframes multiShot {
+    from {background-position-x: 0;} to {background-position-x: -30em;}
+}
+
+@keyframes backstab {
+    from {background-position-x: 0;} to {background-position-x: -30em;}
+}
+
+/* defend */
+
 @keyframes heal {
     from {background-position-x: 0;} to {background-position-x: -36em;}
 }
@@ -285,5 +310,21 @@
 }
 
 @keyframes cure {
+    from {background-position-x: 0;} to {background-position-x: -15em;}
+}
+
+@keyframes protect {
+    from {background-position-x: 0;} to {background-position-x: -15em;}
+}
+
+@keyframes berserk {
+    from {background-position-x: 0;} to {background-position-x: -18em;}
+}
+
+@keyframes taunt {
+    from {background-position-x: 0;} to {background-position-x: -9em;}
+}
+
+@keyframes meditate {
     from {background-position-x: 0;} to {background-position-x: -15em;}
 }

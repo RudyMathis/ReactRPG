@@ -3,6 +3,7 @@ import CharacterAtom, { CharacterType } from "../../../../atom/CharacterAtom";
 import { storeAtom } from "../../../../atom/storeAtom";
 import { BlessingOfBurnBonus, BlessingOfHolyDamageBonus } from "../../AdditionalBlessingDamage";
 import { HandleDamageEffect } from "../../../../gameMechanics/HandleDamageEffect";
+import { FlashAnimationAtom } from "../../../../atom/effects/FlashAnimationAtom";
 
 const MultiShotTar$40 = (
     enemy: EnemyType,
@@ -11,7 +12,8 @@ const MultiShotTar$40 = (
     spellCost: number
 ) => {
     spellCost = 40;
-    const targetCharacter = 'id' in target && target.id === character.id && target.type === character.type
+    const targetCharacter = 'id' in target && target.id === character.id && target.type === character.type;
+    const spellAnimation = 'multiShot';
 
     if(targetCharacter) {
         enemy.mana -= spellCost;
@@ -20,6 +22,7 @@ const MultiShotTar$40 = (
         const selectedCharacters = characters.filter(char => char.isSelected);
         const sortedCharacters = [...selectedCharacters].sort((a, b) => a.id - b.id);
         const characterIndex = sortedCharacters.findIndex(e => e.id === character.id);
+        const flashUpdate: Record<number, string | null> = {};
 
         if (characterIndex === -1) {
             console.warn(`character ${character.id} not found in sorted list.`);
@@ -32,16 +35,54 @@ const MultiShotTar$40 = (
         const nextCharacter = characterIndex < sortedCharacters.length - 1 ? sortedCharacters[characterIndex + 1] : null;
 
         if (prevCharacter) {
-            prevCharacter.health -= damage;
             HandleDamageEffect(damage, "Physical", "player", prevCharacter.id);
+            
+            flashUpdate[prevCharacter.id] = spellAnimation;
+            storeAtom.set(FlashAnimationAtom, (prev) => ({ ...prev, ...flashUpdate }));
+            setTimeout(() => {
+                storeAtom.set(FlashAnimationAtom, (prev) => {
+                    const previous = { ...prev };
+                    selectedCharacters.forEach(prevCharacter => {
+                        previous[prevCharacter.id] = null;
+                    });
+                    return previous;
+                });
+            }, 900);
+
+            prevCharacter.health -= damage;
         }
 
         if (nextCharacter) {
-            nextCharacter.health -= damage;
             HandleDamageEffect(damage, "Physical", "player", nextCharacter.id);
+            
+            flashUpdate[nextCharacter.id] = spellAnimation;
+            storeAtom.set(FlashAnimationAtom, (prev) => ({ ...prev, ...flashUpdate }));
+            setTimeout(() => {
+                storeAtom.set(FlashAnimationAtom, (prev) => {
+                    const next = { ...prev };
+                    selectedCharacters.forEach(nextCharacter => {
+                        next[nextCharacter.id] = null;
+                    });
+                    return next;
+                });
+            }, 900);
+
+            nextCharacter.health -= damage;
         }
 
         HandleDamageEffect(damage, "Physical", "player", character.id);
+
+        flashUpdate[character.id] = spellAnimation;
+        setTimeout(() => {
+            storeAtom.set(FlashAnimationAtom, (prev) => {
+                const next = { ...prev };
+                selectedCharacters.forEach(char => {
+                    next[char.id] = null;
+                });
+                return next;
+            });
+        }, 900);
+
         return character.health -= damage;
     } else {
         character.mana -= spellCost;
@@ -49,6 +90,7 @@ const MultiShotTar$40 = (
         const enemies = Object.values(storeAtom.get(EnemyAtom));
         const sortedEnemies = [...enemies].sort((a, b) => a.order - b.order);
         const enemyIndex = sortedEnemies.findIndex(e => e.id === enemy.id);
+        const flashUpdate: Record<number, string | null> = {};
 
         if (enemyIndex === -1) {
             console.warn(`Enemy ${enemy.id} not found in sorted list.`);
@@ -61,21 +103,63 @@ const MultiShotTar$40 = (
         const nextEnemy = enemyIndex < sortedEnemies.length - 1 ? sortedEnemies[enemyIndex + 1] : null;
 
         if (prevEnemy) {
-            prevEnemy.health -= damage;
+            
             BlessingOfBurnBonus(character, prevEnemy);
             BlessingOfHolyDamageBonus(character, prevEnemy);
             HandleDamageEffect(damage, "Physical", "npc", prevEnemy.id);
+            
+            flashUpdate[prevEnemy.id] = spellAnimation;
+            storeAtom.set(FlashAnimationAtom, (prev) => ({ ...prev, ...flashUpdate }));
+            setTimeout(() => {
+                storeAtom.set(FlashAnimationAtom, (prev) => {
+                    const previous = { ...prev };
+                    enemies.forEach(prevEnemy => {
+                        previous[prevEnemy.id] = null;
+                    });
+                    return previous;
+                });
+            }, 900);
+
+            prevEnemy.health -= damage;
         }
 
         if (nextEnemy) {
-            nextEnemy.health -= damage;
+            
             BlessingOfBurnBonus(character, nextEnemy);
             BlessingOfHolyDamageBonus(character, nextEnemy);
             HandleDamageEffect(damage, "Physical", "npc", nextEnemy.id);
+            
+            flashUpdate[nextEnemy.id] = spellAnimation;
+            storeAtom.set(FlashAnimationAtom, (prev) => ({ ...prev, ...flashUpdate }));
+            setTimeout(() => {
+                storeAtom.set(FlashAnimationAtom, (prev) => {
+                    const next = { ...prev };
+                    enemies.forEach(nextEnemy => {
+                        next[nextEnemy.id] = null;
+                    });
+                    return next;
+                });
+            }, 900);
+
+            nextEnemy.health -= damage;
         }
+
         BlessingOfBurnBonus(character, enemy);
         BlessingOfHolyDamageBonus(character, enemy);
         HandleDamageEffect(damage, "Physical", "npc", enemy.id);
+
+        flashUpdate[enemy.id] = spellAnimation;
+        storeAtom.set(FlashAnimationAtom, (prev) => ({ ...prev, ...flashUpdate }));
+        setTimeout(() => {
+            storeAtom.set(FlashAnimationAtom, (prev) => {
+                const next = { ...prev };
+                enemies.forEach(enemy => {
+                    next[enemy.id] = null;
+                });
+                return next;
+            });
+        }, 900);
+
         return enemy.health -= damage;
     }
 };

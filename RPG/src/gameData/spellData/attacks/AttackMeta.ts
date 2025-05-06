@@ -13,7 +13,7 @@ export type AttackMeta = {
         spellCost: number
     ) => number;
     aoe: boolean;
-    animation?: {
+    animation: {
         name: string;
         duration: number;
         width: number;

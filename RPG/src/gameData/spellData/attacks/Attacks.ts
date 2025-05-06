@@ -91,6 +91,16 @@ const attacks: Record<string, AttackMeta> = {
         cost: 0,
         aoe: false,
         func: ShadowStrikeTar0,
+        animation: {
+            name: 'shadowStrike',
+            duration: 600,
+            width: 18,
+            height: 7.9,
+            steps: 2,
+            image: '/assets/vfx/spell_sword.png',
+            rotation: 270,
+            brightness: .75,
+        },
     },
     Shadow_Dagger_Tar$30: {
         name: 'Shadow Dagger',
@@ -106,6 +116,7 @@ const attacks: Record<string, AttackMeta> = {
             steps: 2,
             image: '/assets/vfx/spell_burning.png',
             rotation: 270,
+            brightness: 1,
         },
     },
     'Heroic_Strike_Tar$-20': {
@@ -159,6 +170,14 @@ const attacks: Record<string, AttackMeta> = {
         cost: 40,
         aoe: false,
         func: GarroteTar40,
+        animation: {
+            name: 'garrote',
+            duration: 900,
+            width: 27,
+            height: 8.14,
+            steps: 4,
+            image: '/assets/vfx/spell_garrote.png',
+        },
     },
     Frostbite__Tar$20: {
         name: 'Frostbite',
@@ -196,6 +215,16 @@ const attacks: Record<string, AttackMeta> = {
         cost: 40,
         aoe: true,
         func: MultiShotTar$40,
+        animation: {
+            name: 'multiShot',
+            duration: 900,
+            width: 30,
+            height: 14.36,
+            steps: 5,
+            image: '/assets/vfx/spell_aimShot.png',
+            rotation: 180,
+            brightness: 1.2,
+        },
     },
     Cleave__Tar$30: {
         name: 'Cleave',
@@ -220,6 +249,14 @@ const attacks: Record<string, AttackMeta> = {
         cost: 0,
         aoe: false,
         func: ShootTar0,
+        animation: {
+            name: 'shoot',
+            duration: 900,
+            width: 9,
+            height: 14.36,
+            steps: 3,
+            image: '/assets/vfx/spell_shoot.png',
+        },
     },
     Aim_Shot_Tar$50: {
         name: 'Aim Shot',
@@ -227,6 +264,14 @@ const attacks: Record<string, AttackMeta> = {
         cost: 50,
         aoe: false,
         func: AimShotTar50,
+        animation: {
+            name: 'aimShot',
+            duration: 900,
+            width: 30,
+            height: 14.36,
+            steps: 5,
+            image: '/assets/vfx/spell_aimShot.png',
+        },
     },
     Volley__Tar$20: {
         name: 'Volley',
@@ -234,6 +279,14 @@ const attacks: Record<string, AttackMeta> = {
         cost: 20,
         aoe: true,
         func: VolleyTar20,
+        animation: {
+            name: 'shoot',
+            duration: 900,
+            width: 9,
+            height: 14.36,
+            steps: 3,
+            image: '/assets/vfx/spell_shoot.png',
+        },
     },
     Thunderclap__Tar$40: {
         name: 'Thunderclap',
@@ -256,6 +309,14 @@ const attacks: Record<string, AttackMeta> = {
         cost: 60,
         aoe: false,
         func: BackstabTar60,
+        animation: {
+            name: 'backstab',
+            duration: 900,
+            width: 30,
+            height: 1,
+            steps: 3,
+            image: '/assets/vfx/spell_backstab.png',
+        },
     },
     Holy_Explosion_Tar$50: {
         name: 'Holy Explosion',

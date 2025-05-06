@@ -23,7 +23,7 @@ type BuffMeta = {
     isSelfBuff: boolean;
     isAoe: boolean;
     isBuff: boolean;
-    animation?: {
+    animation: {
         name: string;
         duration: number;
         width: number;
@@ -34,6 +34,7 @@ type BuffMeta = {
         brightness?: number;
     }
 };
+const imagePath = '/assets/vfx/spell_';
 
 const buffs: Record<string, BuffMeta> = {
     Heal__Char$20: { 
@@ -49,7 +50,7 @@ const buffs: Record<string, BuffMeta> = {
             width: 36,
             height: 10.28,
             steps: 3,
-            image: '/assets/vfx/spell_heal.png',
+            image: `${imagePath}heal.png`,
             rotation: -90,
             brightness: 1.5,
         },
@@ -67,7 +68,7 @@ const buffs: Record<string, BuffMeta> = {
             width: 15,
             height: 6.85,
             steps: 4,
-            image: '/assets/vfx/spell_cure.png',
+            image: `${imagePath}cure.png`,
         },
     },
     Heal_All_Char$40: { 
@@ -83,7 +84,7 @@ const buffs: Record<string, BuffMeta> = {
             width: 36,
             height: 10.28,
             steps: 3,
-            image: '/assets/vfx/spell_heal.png',
+            image: `${imagePath}heal.png`,
             rotation: -90,
             brightness: 1.5,
         },
@@ -96,6 +97,16 @@ const buffs: Record<string, BuffMeta> = {
         isSelfBuff: false,
         isAoe: true,
         isBuff: true,
+        animation: {
+            name: 'meditate',
+            duration: 900,
+            width: 15,
+            height: 3.43,
+            steps: 4,
+            image: `${imagePath}meditate.png`,
+            rotation: -90,
+            brightness: 1.5,
+        },
     },
     Protect_Party_Char$50: { 
         name: 'Protect Party',
@@ -105,6 +116,14 @@ const buffs: Record<string, BuffMeta> = {
         isSelfBuff: false,
         isAoe: true,
         isBuff: true,
+        animation: {
+            name: 'protect',
+            duration: 900,
+            width: 15,
+            height: 3,
+            steps: 4,
+            image: `${imagePath}protect.png`,
+        },
     },
     Berserk__Char$50: { 
         name: 'Berserk',
@@ -114,6 +133,14 @@ const buffs: Record<string, BuffMeta> = {
         isSelfBuff: true,
         isAoe: false,
         isBuff: true,
+        animation: {
+            name: 'berserk',
+            duration: 900,
+            width: 18,
+            height: 6.43,
+            steps: 2,
+            image: `${imagePath}berserk.png`,
+        },
     },
     Taunt__Char$30: { 
         name: 'Taunt',
@@ -123,6 +150,14 @@ const buffs: Record<string, BuffMeta> = {
         isSelfBuff: true,
         isAoe: false,
         isBuff: true,
+        animation: {
+            name: 'taunt',
+            duration: 900,
+            width: 9,
+            height: 6.86,
+            steps: 2,
+            image: `${imagePath}taunt.png`,
+        },
     },
     'Meditate__Char$-30': { 
         name: 'Meditate',
@@ -131,6 +166,14 @@ const buffs: Record<string, BuffMeta> = {
         isSelfBuff: true,
         isAoe: false,
         isBuff: false,
+        animation: {
+            name: 'meditate',
+            duration: 900,
+            width: 15,
+            height: 3.43,
+            steps: 4,
+            image: `${imagePath}meditate.png`,
+        },
     },
 };
 
