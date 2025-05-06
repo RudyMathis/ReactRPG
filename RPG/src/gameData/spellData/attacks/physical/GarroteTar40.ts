@@ -20,7 +20,8 @@ const GarroteTar40 = (enemy: EnemyType, character: CharacterType, target: Charac
                 type: Debuffs.Bleed.type,
                 duration: 3,
                 damage: 10,
-                name: Debuffs.Bleed.name
+                name: Debuffs.Bleed.name,
+                icon: Debuffs.Bleed.icon
             });
             HandleDamageEffect(bleedDamage, "Physical", "player", character.id);
             return character.health - bleedDamage;
@@ -38,7 +39,8 @@ const GarroteTar40 = (enemy: EnemyType, character: CharacterType, target: Charac
         } else {
             enemy.debuffs.push({
                 type: Debuffs.Bleed.type, duration: 3,
-                name: Debuffs.Bleed.name
+                name: Debuffs.Bleed.name,
+                icon: Debuffs.Bleed.icon
             });
             HandleDamageEffect(bleedDamage, "Physical", "npc", enemy.id);
             BlessingOfBurnBonus(character, enemy);

@@ -10,7 +10,7 @@ import Background from "../../components/ui/Background";
 import styles from "../Route.module.css";
 import { backgroundAtom, generateNewBackground } from "../../atom/BackgroundAtom";
 import UserNameInput from "./UserNameInput";
-import AudioManager from "../../gameData/AudioManager";
+import SoundManager from "../../gameData/SoundManager";
 import { UserAtom } from "../../atom/persistant/UserAtom";
 const CharacterSelect = () => {
 
@@ -30,7 +30,7 @@ const CharacterSelect = () => {
     const setBackground = useSetAtom(backgroundAtom);
     const [userName] = useAtom(UserAtom);
     
-    AudioManager.stop();
+    SoundManager.stopMusic();
     const handleBeginAdventure = () => {
         if (selectedCharacters.length !== 4) return;
 

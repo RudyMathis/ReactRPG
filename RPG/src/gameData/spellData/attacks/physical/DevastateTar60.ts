@@ -16,7 +16,8 @@ const DevastateTar60 = (enemy: EnemyType, character: CharacterType, target: Char
                 type: Debuffs.Sundered.type, 
                 duration: 3,
                 damage: 0,
-                name: Debuffs.Sundered.name
+                name: Debuffs.Sundered.name,
+                icon: Debuffs.Sundered.icon
             });
 
             character.defense = 0;
@@ -35,7 +36,8 @@ const DevastateTar60 = (enemy: EnemyType, character: CharacterType, target: Char
             enemy.debuffs.push({
                 type: Debuffs.Sundered.type, 
                 duration: 3,
-                name: Debuffs.Sundered.name
+                name: Debuffs.Sundered.name,
+                icon: Debuffs.Sundered.icon
             });
             
             enemy.defense = 0;

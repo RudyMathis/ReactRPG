@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import styles from './UI.module.css';
-import AudioManager from '../../gameData/AudioManager';
+import SoundManager from '../../gameData/SoundManager';
 
 const SettingsIcon = () => {
     const [open, setOpen] = useState(false);
@@ -14,16 +14,16 @@ const SettingsIcon = () => {
     const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const newVolume = Number(e.target.value);
         setVolume(newVolume);
-        AudioManager.setVolume(newVolume); // ← apply volume to music
+        SoundManager.setMusicVolume(newVolume / 100);
         localStorage.setItem('volume', newVolume.toString());
     };
-
+    
     useEffect(() => {
         const savedVolume = localStorage.getItem('volume');
         if (savedVolume !== null) {
             const parsed = Number(savedVolume);
             setVolume(parsed);
-            AudioManager.setVolume(parsed);
+            SoundManager.setMusicVolume(parsed / 100);
         }
     }, []);
 

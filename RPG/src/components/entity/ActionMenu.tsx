@@ -6,16 +6,13 @@ import styles from './Entity.module.css';
 import buffs from '../../gameData/spellData/defense/BuffsFactory';
 import { EnemyType } from '../../atom/BaseEnemyAtom';
 import { CharacterType } from '../../atom/CharacterAtom';
+import SoundManager from '../../gameData/SoundManager';
 type ActionMenuProps = {
     isVisible: boolean;
     type: 'character' | 'enemy';
     isCurrentTurn: CharacterType | EnemyType; // 🆕 passed from Grid
     onSpell: () => void;
     detailScreen: () => void;
-};
-
-const spellAudio: Record<string, string> = {
-    Quick_Attack: '/assets/sfx/Quick_Attack.mp3',
 };
 
 const ActionMenu = ({ isVisible, type, onSpell, detailScreen, isCurrentTurn }: ActionMenuProps) => {
@@ -25,12 +22,7 @@ const ActionMenu = ({ isVisible, type, onSpell, detailScreen, isCurrentTurn }: A
 
     const handleSpellClick = (spell: string) => {
         setSelectedSpell(spell);
-        
-        const audioSrc = spellAudio[spell];
-        if (audioSrc) {
-            const audio = new Audio(audioSrc);
-            audio.play();
-        }
+        SoundManager.playSfx(spell); 
     };
 
     return (

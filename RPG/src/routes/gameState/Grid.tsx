@@ -14,7 +14,7 @@ import Overlay from '../../components/Overlay';
 import EntityContainer from '../../components/entity/sprite/EntityContainer';
 import EntityDisplayWrapper from '../../components/entity/sprite/EntityDisplayWrapper';
 import EndGameDisplay from './EndGameDisplay';
-import AudioManager from '../../gameData/AudioManager';
+import SoundManager from '../../gameData/SoundManager';
 import styles from './GameState.module.css';
 
 const Grid = () => {
@@ -30,15 +30,19 @@ const Grid = () => {
   const [activeDetailScreen, setActiveDetailScreen] = useState<CharacterType | EnemyType | null>(null);
   const [currentGameLevel] = useAtom(GameLevelAtom);
   const background = localStorage.getItem('background');
+  SoundManager.preloadSfx('Quick_Attack_Tar$0', '/assets/sfx/Quick_Attack.mp3');
 
   const checkTurnOrderAndRunLogic = () => {
-    AudioManager.play();
     if (turnOrder.length > 0) {
-      runTurnLogic(turnOrder, waitForInput);
+        // Ensure music starts only once and doesn't repeat or fail
+        if (!SoundManager.getMusic() || SoundManager.getMusic()?.paused) {
+            SoundManager.playMusic('/assets/sfx/battle_music_1.mp3');
+        }
+        runTurnLogic(turnOrder, waitForInput);
     }
-    currentGameLevel.isRoundOver = true
+    currentGameLevel.isRoundOver = true;
   };
-  
+
   useEffect(() => {
     if (!gameLevel.isRoundOver) {
       // reinitialize enemy ordering.
