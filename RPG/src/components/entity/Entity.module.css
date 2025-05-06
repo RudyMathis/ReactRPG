@@ -175,7 +175,7 @@
 }
 
 @media screen and (max-height: 420px) {
-    .currentTurnArrow img{
+    /* .currentTurnArrow img{
         position: absolute;
         top: -100%;
         left: 25%;
@@ -185,7 +185,7 @@
     @keyframes floatArrow {
         0%, 100% { transform: translateX(-50%); }
         50% { transform: translateX(0); }
-    }
+    } */
     
     .actionMenuButton {
         padding: 2px 5px;

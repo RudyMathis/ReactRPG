@@ -3,11 +3,13 @@ import MainMenu from './routes/mainMenu/MainMenu';
 import CharacterSelect from './routes/selectCharacter/CharacterSelect';
 import Options from './routes/options/Options';
 import LevelLayout from './routes/gameState/LevelLayout';
+import OrientationOverlay from './components/OrientationOverlay';
 
 const App = () => {
 
   return (
     <Router>
+      <OrientationOverlay />
       <Routes>
         <Route path="/" element={<MainMenu />} />
         <Route path="/select-character" element={<CharacterSelect />} />

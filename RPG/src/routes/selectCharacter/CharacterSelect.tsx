@@ -28,7 +28,7 @@ const CharacterSelect = () => {
     const navigate = useNavigate();
     const selectedCharacters = Object.values(characters).filter(char => char.isSelected);
     const setBackground = useSetAtom(backgroundAtom);
-    const [userName] = useAtom(UserAtom); // ← read the username value
+    const [userName] = useAtom(UserAtom);
     
     AudioManager.stop();
     const handleBeginAdventure = () => {

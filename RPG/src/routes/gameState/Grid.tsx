@@ -29,7 +29,6 @@ const Grid = () => {
   const [gameLevel] = useAtom(GameLevelAtom);
   const [activeDetailScreen, setActiveDetailScreen] = useState<CharacterType | EnemyType | null>(null);
   const [currentGameLevel] = useAtom(GameLevelAtom);
-  // const [attackingEntities] = useAtom(AttackAnimationAtom);
   const background = localStorage.getItem('background');
 
   const checkTurnOrderAndRunLogic = () => {
@@ -42,7 +41,6 @@ const Grid = () => {
   
   useEffect(() => {
     if (!gameLevel.isRoundOver) {
-      // When a new round starts (isRoundOver becomes false),
       // reinitialize enemy ordering.
       const enemyArray = Object.values(enemies);
       const shuffled = enemyArray.sort(() => Math.random() - 0.5)
@@ -151,7 +149,6 @@ const Grid = () => {
             </EntityContainer>
           </React.Fragment>
       ))}
-      {/* Detail Screen */}
       {activeDetailScreen && (
         <div className={styles.detailScreenOverlay} onClick={closeDetailScreen}>
           <div className={styles.detailScreenContent} onClick={(e) => e.stopPropagation()}>

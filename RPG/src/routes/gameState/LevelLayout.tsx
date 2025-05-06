@@ -20,15 +20,15 @@ const LevelLayout = () => {
     return (
         <div className={styles.levelLayout}>
             <div className={styles.topBar}>
-                <div className={stylesUI.leftContainer}>
+                {/* <div className={stylesUI.leftContainer}> */}
                     <NavigateBtn locationValue="/" location="Menu" />
-                    <SettingsIcon />
-                </div>
+                {/* </div> */}
                 <TurnOrderDisplay />
                 <CurrentLevelDisplay />
             </div>
             <img src={`/assets/backgrounds/${background}.jpg`} className={stylesUI.glow} data-glow={background} />
             <div className={stylesUI.crt}></div>
+            <SettingsIcon />
             <Grid />
             <img className={stylesUI.backgroundBorder} src="/assets/backgrounds/crt_frame.png" />
             {isRoundOver && <EndofRoundDisplay />}

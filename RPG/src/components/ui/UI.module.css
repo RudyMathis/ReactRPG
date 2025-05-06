@@ -5,6 +5,8 @@
     transform: translate(-50%, -50%);
     width: calc(var(--width) - 1.5em);
     height: calc(var(--height) - 2em);
+    max-width: 100%;
+    max-height: 100%;
     border-radius: var(--big-radius);
     background-color: var(--background);
     z-index: var(--lowest-layer);
@@ -17,6 +19,8 @@
     transform: translate(-50%, -50%);
     width: var(--width);
     height: var(--height);
+    max-width: 100%;
+    max-height: 100%;
     z-index: var(--lowest-layer);
     pointer-events: none;
     border-radius: var(--big-radius);
@@ -31,6 +35,8 @@
     transform: translate(-50%, -50%);
     width: calc(var(--width) - 3.75em);
     height: calc(var(--height) - 3.4em);
+    max-width: 100%;
+    max-height: 100%;
     background: linear-gradient(to top, hsla(0, 0%, 0%, 0.20), hsla(0, 0%, 0%, 0.20), hsla(0, 0%, 20%, 0.20), hsla(0, 0%, 20%, 0.20));
     background-size: 100% 8px;
     z-index: var(--highest-layer);
@@ -46,6 +52,8 @@
     left: 50%;
     width: calc(var(--width) - 3.75em);
     height: calc(var(--height) - 3.4em);
+    max-width: 100%;
+    max-height: 100%;
     transform: translate(-50%, -50%);
     background-color: var(--background);
     border-radius: var(--big-radius);
@@ -94,7 +102,6 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    margin-left: auto;
 }
 
 .leftContainer {
@@ -106,7 +113,10 @@
 /* Settings icon */
 
 .settingsContainer {
-    margin-right: auto;
+    position: absolute;
+    left: 11%;
+    top: 5%;
+    z-index: var(--highest-layer);
 }
 
 .settingsIcon {
@@ -118,11 +128,14 @@
 }
 
 .settingsOverlay[data-open="true"] {
-    position: absolute;
-    top: -54%;
-    left: -2.65%;
-    width: var(--width);
-    height: var(--height);
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: calc(var(--width) - 3.75em);
+    height: calc(var(--height) - 3.4em);
+    max-width: 100%;
+    max-height: 100%;
     background: rgba(0, 0, 0, 0.5); 
     display: flex;
     justify-content: center;
@@ -144,6 +157,8 @@
     gap: .5rem;
     width: var(--menu-width);
     height: var(--menu-height);
+    max-width: 100%;
+    max-height: 100%;
     image-rendering: pixelated;
     border-image-slice: var(--border-image-slice);
     border-image-width: var(--border-image-width);
@@ -229,15 +244,16 @@ input[type="range"]::-webkit-slider-thumb:hover {
     }
 
     .settingsOverlay[data-open="true"] {
-        top: -50%;
-        left: -1%;
         border-radius: 0;
-        width: 100vw;
-        height: 100vh;
+        width: 100%;
+        height: 100%;
     }
 
     .settingsMenu[data-open="true"] {
-        gap: .5rem;
+        height: 90%;
     }
-    
+    .actionTextContainer {
+        top: 90%;
+        /* bottom: 3em; */
+    }
 }
