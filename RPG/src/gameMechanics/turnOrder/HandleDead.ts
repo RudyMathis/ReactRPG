@@ -3,6 +3,7 @@ import CharacterAtom from "../../atom/CharacterAtom";
 import { GameLevelAtom } from "../../atom/GameLevelAtom";
 import { storeAtom } from "../../atom/storeAtom";
 import { GainExperience } from "../GainExperince";
+import { SubmitHighScore } from "../SubmitHighScore";
 
 export const HandleAllEnemiesDead = () => {
     const allEnemiesDead = Object.values(storeAtom.get(EnemyAtom)).every(e => e.health <= 0);
@@ -35,11 +36,13 @@ export const HandleAllCharactersDead = () => {
     const allCharactersDead =  Object.values(selectedCharacters).every(e => e.health <= 0);
     
     if (allCharactersDead) {
+        SubmitHighScore();
         storeAtom.set(GameLevelAtom, (prev) => ({
             ...prev,
             isRoundOver: false,
             isGameOver: true
         }));
+
         console.log(`Game Over. ${allCharactersDead}. You Lose`);
         return true; // Stop running turns
     }

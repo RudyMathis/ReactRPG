@@ -47,8 +47,12 @@ const EndofRoundDisplay = () => {
         localStorage.setItem('Score', `${JSON.stringify(calculateScore())}`);
         console.log("END OF ROUND")
 
-        currentGameLevel.isRoundOver = true
-        SubmitHighScore();
+        currentGameLevel.isRoundOver = true;
+        
+        if (currentGameLevel.isGameOver) {
+            SubmitHighScore();
+        }
+        
         startNewRound();
     };
 

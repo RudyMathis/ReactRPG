@@ -98,6 +98,10 @@
     text-shadow: 2px 2px 1px var(--shadow);
 }
 
+.scoreContainer {
+    margin-bottom: 1rem;
+}
+
 .rightContainer {
     display: flex;
     flex-direction: column;

@@ -14,7 +14,12 @@ import ActionTextDisplay from "../../components/ui/ActionTextDisplay";
 const LevelLayout = () => {
     const [currentGameLevel] = useAtom(GameLevelAtom);
     const isRoundOver = currentGameLevel.isRoundOver;
-    localStorage.setItem('inProgressGame', 'true')
+    if(currentGameLevel.isGameOver) {
+        localStorage.setItem('inProgressGame', 'false')
+    } else {
+        localStorage.setItem('inProgressGame', 'true')
+    }
+    
     const [background] = useAtom(backgroundAtom);
 
     return (

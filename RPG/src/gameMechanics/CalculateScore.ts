@@ -6,9 +6,9 @@ import { storeAtom } from "../atom/storeAtom";
 export const calculateScore = () => {
     const gameLevel = storeAtom.get(GameLevelAtom);
     const enemies = Object.values(storeAtom.get(EnemyAtom));
+    const addedScore = enemies.length + gameLevel.level + gameLevel.round;
 
-    const score = enemies.length + gameLevel.level + gameLevel.round;
+    storeAtom.set(ScoreAtom, prev => prev + addedScore);
 
-    storeAtom.set(ScoreAtom, score);
-    return score;
+    return storeAtom.get(ScoreAtom);
 };

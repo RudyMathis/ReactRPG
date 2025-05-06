@@ -108,7 +108,7 @@ const Grid = () => {
                 type="character"
                 onTarget={handlePlayerTargeted}
               />
-                {waitingForInput && playerTarget && (
+                {waitingForInput && playerTarget && playerTarget.health > 0 && (
                   <ActionMenu 
                     isVisible={activeMenu.id === char.id && activeMenu.type === 'character'}
                     type='character'

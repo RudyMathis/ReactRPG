@@ -10,32 +10,10 @@ import {
 } from "./BlessingFactory";
 import { blessingAtom } from "../../../atom/BlessingsAtom";
 
-export const Blessings = (character: CharacterType) => {
+export const Blessings = () => {
     const Characters = storeAtom.get(CharacterAtom);
     const allCharacters = Object.values(Characters).filter(char => char.health > 0 && char.isSelected);
-    const liveCharacter = allCharacters.find(char => char.id === character.id);
-
-    if (!liveCharacter) {
-        console.log(`Character with id ${character.id} is dead or not found.`);
-        return;
-    }
-
-    const currentBlessings = liveCharacter.blessings;
     const allBlessingKeys = Object.keys(BlessingsData) as (keyof typeof BlessingsData)[];
-
-    // Only blessings the character doesn't already have
-    const availableBlessings = allBlessingKeys.filter(
-        key => !currentBlessings.some(cb => cb.name === BlessingsData[key].name)
-    );
-
-    if (availableBlessings.length === 0) {
-        console.log(`${liveCharacter.name} already has all blessings.`);
-        checkIfAllSelectedCharactersAreFullyBlessed();
-        return;
-    }
-
-    // Randomly select from available blessings
-    const selectedKey = availableBlessings[Math.floor(Math.random() * availableBlessings.length)];
 
     const blessingFunctionMap: Record<keyof typeof BlessingsData, (character: CharacterType) => void> = {
         BlessingOfLight,
@@ -45,11 +23,31 @@ export const Blessings = (character: CharacterType) => {
         BlessingOfManaRegen,
     };
 
-    blessingFunctionMap[selectedKey](liveCharacter);
+    const shuffledBlessings = [...allBlessingKeys].sort(() => Math.random() - 0.5);
+    const shuffledCharacters = [...allCharacters].sort(() => Math.random() - 0.5);
 
-    console.log(`${liveCharacter.name} received blessing: ${BlessingsData[selectedKey].name}`);
+    let applied = false;
+
+    for (const blessingKey of shuffledBlessings) {
+        for (const character of shuffledCharacters) {
+            const hasBlessing = character.blessings.some(b => b.name === BlessingsData[blessingKey].name);
+            if (!hasBlessing) {
+                blessingFunctionMap[blessingKey](character);
+                console.log(`${character.name} received blessing: ${BlessingsData[blessingKey].name}`);
+                applied = true;
+                break; 
+            }
+        }
+        if (applied) break;
+    }
+
+    if (!applied) {
+        console.warn("No eligible character found to receive a blessing.");
+    }
+
     checkIfAllSelectedCharactersAreFullyBlessed();
 };
+
 
 
 const checkIfAllSelectedCharactersAreFullyBlessed = () => {
