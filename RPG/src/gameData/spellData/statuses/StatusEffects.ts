@@ -127,7 +127,6 @@ export const StatusEffects: Record<StatusName, StatusEffect> = {
         perTurn: (entity, status) => {
             if (status?.duration === 3) {
                 entity.defense = entity.defenseDefault * Buffs.Taunter.defense;
-                entity.health = entity.maxHealth * Buffs.Taunter.health;
             }
         },
         onExpire: (entity) => {

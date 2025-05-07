@@ -15,7 +15,8 @@ export const BlessingOfManaRegen = (character: CharacterType) =>
 
 export const BlessingOfDamage = (character: CharacterType) =>
     ApplyBlessing(character, "BlessingOfDamage", {
-        attack: character.attack * 1.25,
+        attack: Math.round(character.attack * 1.25),
+        attackDefault: Math.round(character.attack * 1.25),
     });
 
 export const BlessingOfLight = (character: CharacterType) =>

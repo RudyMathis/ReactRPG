@@ -2,7 +2,7 @@ import CharacterAtom, { CharacterType } from "../../../atom/CharacterAtom";
 import { storeAtom } from "../../../atom/storeAtom";
 import { BlessingsData } from "./BlessingsData";
 
-type PartialCharacterUpdate = Partial<Pick<CharacterType, 'attack' | 'resistances'>>;
+type PartialCharacterUpdate = Partial<Pick<CharacterType, 'attack' | 'resistances' | 'attackDefault'>>;
 
 export const ApplyBlessing = (
     character: CharacterType,
@@ -14,6 +14,10 @@ export const ApplyBlessing = (
     storeAtom.set(CharacterAtom, (prev) => {
         const updatedChar = prev[character.id];
 
+        if(updatedChar.health > updatedChar.maxHealth) {
+            updatedChar.health = updatedChar.maxHealth;
+        }
+
         const updated: CharacterType = {
             ...updatedChar,
             ...updates,
@@ -21,6 +25,13 @@ export const ApplyBlessing = (
                 ? [...updatedChar.resistances, ...updates.resistances]
                 : updatedChar.resistances,
             blessings: [...updatedChar.blessings, blessingData],
+            health: updatedChar.maxHealth,
+            mana: updatedChar.maxMana,
+            debuffs: [],
+            buffs: [],
+            speed: updatedChar.speedDefault,
+            attack: updatedChar.attackDefault,
+            defense: updatedChar.defenseDefault
         };
 
         return {
