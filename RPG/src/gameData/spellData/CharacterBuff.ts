@@ -54,7 +54,7 @@ export const CharacterBuff = (
                 ...prev,
                 [target.id]: null,
             }));
-        }, 900); // match animation length
+        }, 900);
     }
     
     setTimeout(() => {

@@ -16,6 +16,7 @@ type GameLevelType = {
     background: string;
     isGameOver: boolean;
 }
+
 const getInitialGameLevel = (): GameLevelType => {
     const savedLevel = localStorage.getItem('Level');
     const savedRound = localStorage.getItem('Round');
@@ -42,9 +43,7 @@ const getInitialGameLevel = (): GameLevelType => {
     };
 };
 
-
 export const GameLevelAtom = atom<GameLevelType>(getInitialGameLevel());
-
 
 const generateNewEnemies = (round: number, level: number): Record<number, EnemyType> => {
     const newEnemies: Record<number, EnemyType> = {};
@@ -83,7 +82,6 @@ const generateNewEnemies = (round: number, level: number): Record<number, EnemyT
         enemy.group = enemyGroup;
         enemy.name = finalName;
 
-        // Ensure never weaker than base stats
         enemy.health = Math.round(Math.max(base.health, base.health * scale));
         enemy.maxHealth = Math.round(Math.max(base.maxHealth, base.maxHealth * scale));
         enemy.mana = Math.round(Math.max(base.mana, base.mana * scale));
@@ -140,5 +138,5 @@ export const startNewRound = () => {
     storeAtom.set(turnCountAtom, 1);
     localStorage.setItem('turnCount', '1');
 
-    console.log("Round:", round, "Level:", level);
+    // console.log("Round:", round, "Level:", level);
 };

@@ -48,7 +48,7 @@ export const CharacterAttack = (enemy: EnemyType, character: CharacterType, _tar
                 ...prev,
                 [enemy.id]: null,
             }));
-        }, 900); // match animation length
+        }, 900);
     }
     
     setTimeout(() => {

@@ -102,13 +102,11 @@ export const getRandomClass = (group: string): string => {
     return ""; 
 };
 
-// Function to get a random enemy type
 export const getRandomEnemyType = (): string => {
     const enemyTypes = Object.keys(enemyGroups);
     return enemyTypes[Math.floor(Math.random() * enemyTypes.length)];
 };
 
-// Generate up to 7 unique enemies
 const initialEnemies: Record<number, EnemyType> = {};
 const enemyCount = getEnemyCount();
 
@@ -143,7 +141,7 @@ for (let i = 0; i < enemyCount; i++) {
     initialEnemies[enemy.id] = enemy;
 }
 
-console.log("Initialized Enemies:", initialEnemies);
+// console.log("Initialized Enemies:", initialEnemies);
 
 const EnemyAtom = atom(initialEnemies);
 export default EnemyAtom;

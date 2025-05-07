@@ -24,7 +24,6 @@ export const HandleCharacterHealthUpdate = (playerTarget: CharacterType, updated
                 health: updatedHealth,
                 buffs: [],
                 debuffs: [],
-                // blessings: [],
             },
         }));
     } else {
@@ -46,7 +45,6 @@ export const HandleSetCurrentTurn = (character: CharacterType, isTurn: boolean) 
                 ...prev[character.id],
                 buffs: [],
                 debuffs: [],
-                // blessings: [],
             },
         }));
     } else {

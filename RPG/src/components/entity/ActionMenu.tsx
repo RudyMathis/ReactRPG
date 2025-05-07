@@ -10,7 +10,7 @@ import SoundManager from '../../gameData/SoundManager';
 type ActionMenuProps = {
     isVisible: boolean;
     type: 'character' | 'enemy';
-    isCurrentTurn: CharacterType | EnemyType; // 🆕 passed from Grid
+    isCurrentTurn: CharacterType | EnemyType;
     onSpell: () => void;
     detailScreen: () => void;
 };
@@ -58,7 +58,7 @@ const ActionMenu = ({ isVisible, type, onSpell, detailScreen, isCurrentTurn }: A
                                 if (spell.includes('_Char') && type === 'character') {
                                     
                                     if (isSelf && !char.id) { 
-                                        return null; // 🚫 Skip rendering this button
+                                        return null;
                                     } else {
                                         return <button key={`${char.id}-${index}`} {...buttonProps}>{label}</button>;
                                     }

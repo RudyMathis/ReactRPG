@@ -20,7 +20,6 @@ export const ManaRegen = () => {
                 const regenAmount = char.blessings.some(b => b.name === blessingName)
                     ? blessingManaRegenAmount
                     : manaRegenAmount;
-                console.log("CHARACTER MANA", char.name, char.mana, "regenAmount", regenAmount, "blessing", char.blessings.some(b => b.name === blessingName));
                 return {
                     ...char,
                     mana: Math.min(char.mana + regenAmount, char.maxMana),

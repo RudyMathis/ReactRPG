@@ -55,7 +55,6 @@ const DetailScreen = ({ entity }: CharacterDetailProps) => {
                     </span>
                 </p>
             )}
-            {/* {entity && 'blessings' in entity && entity.blessings.length > 0 && <p>Blessings: <span className={styles.detailValue}>{entity.blessings.length > 1 ? entity.blessings.join(', ') : entity.blessings}</span> </p>} */}
             {entity && 'exp' in entity && <p>Experience: <span className={styles.detailValue}>{entity.exp}</span> </p>}
             {entity && 'maxExp' in entity && <p>Max Experience: <span className={styles.detailValue}>{entity.maxExp}</span> </p>}
         </div>

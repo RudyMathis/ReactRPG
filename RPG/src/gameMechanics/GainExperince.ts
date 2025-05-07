@@ -19,8 +19,6 @@ export const GainExperience = (enemyAmount: number, charactersAmount: number) =>
 
                 const levelUpBonus = (level - char.level) * 3;
 
-                console.log("expGained", expGained, "finalExp", totalExp, "level", level, "maxExp", maxExp);
-
                 return {
                     ...char,
                     exp: totalExp,
@@ -42,8 +40,6 @@ export const GainExperience = (enemyAmount: number, charactersAmount: number) =>
             }
             return char;
         });
-
-        console.log("EXPERIENCE GAIN", updatedCharacters);
 
         return Object.fromEntries(updatedCharacters.map((char) => [char.id, char]));
     });

@@ -31,7 +31,7 @@ const OrientationOverlay = () => {
             alignItems: 'center',
             textAlign: 'center',
             fontSize: '1.5em',
-            zIndex: 9999,
+            zIndex: 10,
             padding: '1em',
         }}>
             Please rotate your device to landscape.<br />

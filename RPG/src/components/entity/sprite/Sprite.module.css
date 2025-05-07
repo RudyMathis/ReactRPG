@@ -7,7 +7,6 @@
     gap: 0.5em;
     width: 7em;
     height: 9em;
-    /* z-index: var(--low-layer); */
 }
 
 .entityContainer:hover {
@@ -57,9 +56,11 @@
 .entityInfoContainer[data-size='small'] {
     top: -5em;
 }
+
 .entityInfoContainer[data-size='medium'] {
     top: -8.5em;
 }
+
 .entityInfoContainer[data-size='large'] {
     top: -9em;
 }

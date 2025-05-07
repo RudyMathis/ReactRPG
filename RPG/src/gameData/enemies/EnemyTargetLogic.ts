@@ -17,7 +17,6 @@ export const getEnemyTarget = (
 
     const targetType = enemy.target;
     const randomIndex = Math.floor(Math.random() * aliveCharacters.length);
-    console.log("target type", targetType);
 
     switch (true) {
         case targetType.includes("TargetSpeedLow"):
@@ -35,7 +34,6 @@ export const getEnemyTarget = (
                 current.defenseDefault < lowest.defenseDefault ? current : lowest
             );
         case targetType.includes("TargetManaHigh"):
-            console.log("targetType mana", targetType);
             return aliveCharacters.reduce((highest, current) =>
                 current.maxMana > highest.maxMana ? current : highest
             );

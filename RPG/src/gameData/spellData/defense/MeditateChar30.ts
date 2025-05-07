@@ -15,7 +15,7 @@ const MeditateChar30 = (
     character.mana += spellCost;
 
     if (character.id !== target.id) {
-      return { id: character.id, mana: character.mana };
+        return { id: character.id, mana: character.mana };
     }
 
     character.mana = Math.min(character.mana + manaRestore, character.maxMana);

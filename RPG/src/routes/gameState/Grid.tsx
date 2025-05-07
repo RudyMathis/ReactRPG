@@ -10,7 +10,6 @@ import ActionMenu from '../../components/entity/ActionMenu';
 import DetailScreen from '../../components/entity/DetailScreen';
 import Btn from '../../components/ui/Btn';
 import { GameLevelAtom } from '../../atom/GameLevelAtom';
-import Overlay from '../../components/Overlay';
 import EntityContainer from '../../components/entity/sprite/EntityContainer';
 import EntityDisplayWrapper from '../../components/entity/sprite/EntityDisplayWrapper';
 import EndGameDisplay from './EndGameDisplay';
@@ -34,7 +33,6 @@ const Grid = () => {
 
   const checkTurnOrderAndRunLogic = () => {
     if (turnOrder.length > 0) {
-        // Ensure music starts only once and doesn't repeat or fail
         if (!SoundManager.getMusic() || SoundManager.getMusic()?.paused) {
             SoundManager.playMusic('/assets/sfx/battle_music_1.mp3');
         }
@@ -66,7 +64,7 @@ const Grid = () => {
 
   const handleNextTurnClick = () => {
     setWaitingForInput(false);
-    setActiveMenu({ id: null, type: null }); // Hide menu
+    setActiveMenu({ id: null, type: null }); 
     if (inputPromiseResolverRef.current) {
       inputPromiseResolverRef.current();
       inputPromiseResolverRef.current = null;
@@ -74,12 +72,12 @@ const Grid = () => {
   };
 
   const handlePlayerTargeted = (entity: EnemyType | CharacterType) => {
-    setPlayerTarget(prev => (prev?.id === entity.id ? null : entity)); // Untarget if already selected
-    console.log("Player targeted", entity.name);
+    setPlayerTarget(prev => (prev?.id === entity.id ? null : entity)); 
+    // console.log("Player targeted", entity.name);
   };
 
   const toggleMenuVisibility = (id: number | null, type: 'character' | 'enemy' | null) => {
-      setActiveMenu({ id: null, type: null }); // First, reset state
+      setActiveMenu({ id: null, type: null });
       setTimeout(() => { 
         setActiveMenu(prev => prev.id === id && prev.type === type ? { id: null, type: null } : { id, type });
       }, 0);
@@ -97,7 +95,6 @@ const Grid = () => {
 
   return (
     <div className={styles.board} data-background={background}>
-      <Overlay />
       {/* Render selected characters */}
       {selectedCharacters.map((char, index) => (
         <React.Fragment key={char.id}>

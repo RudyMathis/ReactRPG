@@ -70,8 +70,8 @@ const SettingsIcon = () => {
                         />
                     </div>
 
-                    <div className={styles.settingsRow}>Gamepedia</div>
-                    <div className={styles.settingsRow}>Credits</div>
+                    {/* <div className={styles.settingsRow}>Gamepedia</div>
+                    <div className={styles.settingsRow}>Credits</div> */}
                 </div>
             </div>
         </div>

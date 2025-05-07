@@ -36,14 +36,12 @@ const EndofRoundDisplay = () => {
         localStorage.setItem('characters', JSON.stringify(storeAtom.get(CharacterAtom)));
         localStorage.setItem('currentEntityTurn', "0");
         localStorage.setItem('Score', `${JSON.stringify(calculateScore())}`);
-        console.log("END OF ROUND")
 
         currentGameLevel.isRoundOver = true;
         
         if (currentGameLevel.isGameOver) {
             SubmitHighScore();
-        }
-        
+        }      
         startNewRound();
     };
 

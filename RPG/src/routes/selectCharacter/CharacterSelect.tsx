@@ -13,16 +13,6 @@ import UserNameInput from "./UserNameInput";
 import SoundManager from "../../gameData/SoundManager";
 import { UserAtom } from "../../atom/persistant/UserAtom";
 const CharacterSelect = () => {
-
-    // const [currentGameLevel] = useAtom(GameLevelAtom);
-    // const [message, setMessage] = useState<string>('');
-
-    // useEffect(() => {
-    //     fetch('http://localhost:8080/api/greeting')
-    //         .then(response => response.text())
-    //         .then(data => setMessage(data))
-    //         .catch(error => console.error('Error fetching data:', error));
-    // }, []);
     const [characters] = useAtom(CharacterAtom);
     const [currentGameLevel] = useAtom(GameLevelAtom);
     const navigate = useNavigate();
@@ -51,7 +41,6 @@ const CharacterSelect = () => {
             <div className={styles.mainContainer}>   
                 <div className={styles.topBar}>
                     <h1>Select Your Character</h1>
-                    {/* <h2>{message}</h2> */}
                     <NavigateBtn locationValue="/" location="Main Menu" />
                 </div>        
                 <CharacterSheets />

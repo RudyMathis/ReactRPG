@@ -32,7 +32,6 @@ const EntityContainer: React.FC<EntityContainerProps> = ({
     const isDefending = defendingEntities[entity.id] ?? false;
     const isDead = type === 'enemy' && 'health' in entity && entity.health <= 0;
     const isPlayerDead = type === 'character' && 'health' in entity && entity.health <= 0;
-    // const enemyCount = Object.keys(entity.enemies as Record<string, EnemyType>).length;
 
     const characterPositions = [
         { gridColumn: 6, gridRow: 10 },

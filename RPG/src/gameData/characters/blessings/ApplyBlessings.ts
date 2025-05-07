@@ -23,8 +23,6 @@ export const ApplyBlessing = (
             blessings: [...updatedChar.blessings, blessingData],
         };
 
-        console.log("updated", updated);
-
         return {
             ...prev,
             [character.id]: updated,

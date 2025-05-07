@@ -16,23 +16,27 @@
         2px 2px 0px var(--fire-soft),
         2px 2px 0px var(--shadow);
 }
+
 .spriteName[data-type='npc'][data-entity-name='Ice'] {
     color: var(--ice);
     text-shadow:
         2px 2px 0px var(--ice-soft) ;
 }
+
 .spriteName[data-type='npc'][data-entity-name='Dark'] {
     color: var(--dark);
     text-shadow:
         2px 2px 0px  var(--dark-soft),
         2px 2px 0px var(--shadow);
 }
+
 .spriteName[data-type='npc'][data-entity-name='Lightning'] {
     color: var(--lightning);
     text-shadow:
         2px 2px 0px  var(--lightning-soft),
         2px 2px 0px var(--shadow);
 }
+
 .spriteName[data-type='npc'][data-entity-name='Holy'] {
     color: var(--holy);
     text-shadow:

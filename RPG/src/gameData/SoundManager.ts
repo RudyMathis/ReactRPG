@@ -67,9 +67,10 @@ class SoundManager {
             sfxClone.play().catch(error => {
                 console.warn(`Failed to play SFX "${name}":`, error);
             });
-        } else {
-            console.warn(`SFX "${name}" not preloaded.`);
-        }
+        } 
+        // else {
+        //     console.warn(`SFX "${name}" not preloaded.`);
+        // }
     }
 
     static setSfxVolume(volume: number) {

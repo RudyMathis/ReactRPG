@@ -24,7 +24,7 @@ const HealAllChar40 = (
         flashUpdate[targetChar.id] = spellAnimation;
 
         if(targetChar.health > targetChar.maxHealth) {
-            console.log("taunted char", targetChar.name)
+            // console.log("taunted char", targetChar.name)
         } else if(targetChar.health + heal > targetChar.maxHealth) {
             targetChar.health = targetChar.maxHealth;
         } else {
@@ -34,7 +34,7 @@ const HealAllChar40 = (
 
     flashUpdate[character.id] = spellAnimation;
     if(character.health > character.maxHealth) {
-        console.log("taunted char", character.name)
+        // console.log("taunted char", character.name)
     } else if(character.health + heal > character.maxHealth) {
         character.health = character.maxHealth;
     } else {

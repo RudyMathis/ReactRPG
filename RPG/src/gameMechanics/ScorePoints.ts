@@ -24,7 +24,6 @@ export const ScorePoints = () => {
                         hasScored: true,
                     },
                 }));
-                console.log('killed enemy level', killedEnemyLevel, "enemy", enemy);
             }
     });
     

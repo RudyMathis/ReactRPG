@@ -9,14 +9,14 @@ const QuickAttackTar0 = (enemy: EnemyType, character: CharacterType, target: Cha
 
     if(targetCharacter) {
         spellCost = 0;
-        enemy.mana += spellCost;
+        enemy.mana -= spellCost;
         const damage =  Math.max(5, Math.round(enemy.attack - character.defense))
         HandleDamageEffect(damage, "Physical", "player", character.id);
 
         return character.health - damage;
     } else {
         spellCost = 0;
-        character.mana += spellCost;
+        character.mana -= spellCost;
         const damage =  Math.max(5, Math.round(character.attack - enemy.defense))
 
         HandleDamageEffect(damage, "Phyical", "npc", enemy.id);

@@ -132,7 +132,6 @@ class EnemyFactory {
                     resistances: [...modifiedEnemy.resistances, ...(effects.resistances ?? [])],
                     vulnerabilities: [...modifiedEnemy.vulnerabilities, ...(effects.vulnerabilities ?? [])]
                 };
-                console.log(modifiedEnemy.spells, "modified enemy");
             }
         });
 

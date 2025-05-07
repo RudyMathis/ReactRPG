@@ -10,6 +10,4 @@ export const ElementTypes = {
     None: "None",
   } as const;
   
-  // Get the literal type values like "Fire" | "Ice" | ...
-  export type ElementType = typeof ElementTypes[keyof typeof ElementTypes];
-  
+export type ElementType = typeof ElementTypes[keyof typeof ElementTypes];

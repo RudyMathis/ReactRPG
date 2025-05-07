@@ -27,9 +27,9 @@ export const StatusEffects: Record<StatusName, StatusEffect> = {
                 HandleDamageEffect(bleedDamage, "Physical", "npc", entity.id); 
             }
         },
-        onExpire: (entity) => {
-            console.log("Bleed expired for", entity.id);
-        },
+        // onExpire: (entity) => {
+        //     console.log("Bleed expired for", entity.id);
+        // },
     },
 
     Burn: {
@@ -55,9 +55,9 @@ export const StatusEffects: Record<StatusName, StatusEffect> = {
                 HandleDamageEffect(burnDamage, "Fire", "npc", entity.id); 
             }
         },
-        onExpire: (entity) => {
-            console.log("Burn expired", entity.name);
-        }
+        // onExpire: (entity) => {
+        //     console.log("Burn expired", entity.name);
+        // }
     },
 
     Frozen: {
@@ -69,7 +69,6 @@ export const StatusEffects: Record<StatusName, StatusEffect> = {
         },
         onExpire: (entity) => {
             entity.speed = entity.speedDefault;
-            console.log("Frozen expired, speed reset");
         }
     },
 
@@ -128,7 +127,7 @@ export const StatusEffects: Record<StatusName, StatusEffect> = {
         perTurn: (entity, status) => {
             if (status?.duration === 3) {
                 entity.defense = entity.defenseDefault * Buffs.Taunter.defense;
-                entity.health = entity.health * Buffs.Taunter.health;
+                entity.health = entity.maxHealth * Buffs.Taunter.health;
             }
         },
         onExpire: (entity) => {

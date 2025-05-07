@@ -5,7 +5,7 @@ const Background = () => {
             <div className={styles.background}></div>
             <div className={styles.crt}></div>
             <div className={styles.glow}></div>
-            <img className={styles.backgroundBorder} src="/assets/backgrounds/crt_frame.png" />
+            <div className={styles.backgroundBorder}></div>
         </>
     )
 }

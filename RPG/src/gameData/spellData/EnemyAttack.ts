@@ -24,9 +24,6 @@ export const EnemyAttack = (
             const spellAnimation = attacks[chosenSpell]?.animation ?? null;
             const spellName = attacks[chosenSpell].name;
 
-            console.log(`Enemy ${enemy.name} is using spell: ${spellName} with cost ${spellCost}`);
-
-            // Start animation
             storeAtom.set(AttackAnimationAtom, prev => ({
                 ...prev,
                 [enemy.id]: true,
@@ -41,7 +38,6 @@ export const EnemyAttack = (
                 image: spellAnimation?.image,
             }));
 
-            // Stop animation after duration
             setTimeout(() => {
                 storeAtom.set(AttackAnimationAtom, prev => ({
                     ...prev,
@@ -51,7 +47,7 @@ export const EnemyAttack = (
                     ...prev,
                     [character.id]: null,
                 }));
-            }, 900); // match your animation duration
+            }, 900);
 
             // Execute attack logic
             if (typeof attacks[chosenSpell]?.func === 'function') {

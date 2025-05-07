@@ -184,7 +184,6 @@
 	background-color: var(--background-secondary);
 	color: var(--font);
 	border: 1px solid var(--background-secondary);
-	
 }
 
 .userNameInputContainer input::placeholder {
@@ -192,7 +191,6 @@
 	opacity: 0.5;
 	color: var(--font);
 }
-
 
 @media (max-height: 420px)  {
     .mainContainer {

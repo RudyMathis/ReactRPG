@@ -3,7 +3,6 @@ export type Vulnerability = {
     value: number;
 };
 
-// Base resistance values
 const Vulnerabilities = {
     Fire: { type: "Ice", value: 10 },
     Ice: { type: "Fire", value: 10 },
@@ -13,6 +12,5 @@ const Vulnerabilities = {
     Dark: { type: "Holy", value: 10 },
     Holy: { type: "Dark", value: 10 },
 };
-
 
 export default Vulnerabilities;

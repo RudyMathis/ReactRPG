@@ -19,7 +19,6 @@ export const FullRestore = () => {
             }
             return char;
         });
-        console.log("FULL RESTORE",updatedCharacters);
     
         return Object.fromEntries(updatedCharacters.map((char) => [char.id, char]));
     });

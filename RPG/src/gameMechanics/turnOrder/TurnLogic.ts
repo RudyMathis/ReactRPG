@@ -26,13 +26,13 @@ export const runTurnLogic = async (
   waitForInput: () => Promise<void>
 ) => {
   const currentTurn = storeAtom.get(turnCountAtom);
-  let i = parseInt(localStorage.getItem('currentEntityTurn') || '0', 10); // Load i from localStorage
+  let i = parseInt(localStorage.getItem('currentEntityTurn') || '0', 10);
 
   if (HandleAllCharactersDead()) return;
   if (HandleAllEnemiesDead()) return;
 
   turnOrder = updatedTurnOder();
-  console.log("Turn Order:", turnOrder);
+  // console.log("Turn Order:", turnOrder);
   
   while (i < turnOrder.length) {
       SaveData(i); // Save the current turn before processing
@@ -40,7 +40,7 @@ export const runTurnLogic = async (
       let entity = turnOrder[i];
 
       if (!entity || entity.health <= 0) {
-          console.log(`${entity.name} is dead.`);
+          // console.log(`${entity.name} is dead.`);
           i++;
           continue;
       }
@@ -54,13 +54,13 @@ export const runTurnLogic = async (
         const enemy = storeAtom.get(EnemyAtom)[entity.id];
 
         if (!enemy) {
-            console.warn(`Enemy with ID ${entity.id} not found in EnemyAtom.`);
+            // console.warn(`Enemy with ID ${entity.id} not found in EnemyAtom.`);
             i++;
             continue;
         }
 
         if (enemy.health <= 0) {
-            console.log(`${enemy.name} died from debuff effects.`);
+            // console.log(`${enemy.name} died from debuff effects.`);
             if(HandleAllCharactersDead() || HandleAllEnemiesDead()) return;
             i++;
             continue;
@@ -73,7 +73,7 @@ export const runTurnLogic = async (
         const character = Object.values(storeAtom.get(CharacterAtom)).find(c => c.id === target?.id && c.health > 0 && c.isSelected);
 
         if (!character || enemy.speed === 0) {
-            console.warn(`No valid target found for ${enemy.name} or enemy speed is 0`);
+            // console.warn(`No valid target found for ${enemy.name} or enemy speed is 0`);
             i++;
             continue;
         }
@@ -81,7 +81,7 @@ export const runTurnLogic = async (
         const updatedCharacterHealth = EnemyAttack(character, enemy, character) as number ?? character.health;
         HandleCharacterHealthUpdate(character, updatedCharacterHealth);
 
-        console.log(`Enemy ${enemy.name} attacked ${character.name} for ${enemy.attack} damage.`);
+        // console.log(`Enemy ${enemy.name} attacked ${character.name} for ${enemy.attack} damage.`);
 
         if (HandleAllCharactersDead() || HandleAllEnemiesDead()) return;
         i++;
@@ -90,7 +90,7 @@ export const runTurnLogic = async (
         const character = entity as CharacterType;
         
         if (character.health <= 0) {
-            console.log(`${character.name} is dead.`);
+            // console.log(`${character.name} is dead.`);
             i++;
             continue;
         }
@@ -98,13 +98,13 @@ export const runTurnLogic = async (
         storeAtom.set(playerTargetAtom, null);
         HandleSetCurrentTurn(character, true);
 
-        console.log(`Character ${character.name}'s turn. Waiting for user input...`);
+        // console.log(`Character ${character.name}'s turn. Waiting for user input...`);
         await waitForInput();
 
         const playerTarget = storeAtom.get(playerTargetAtom);
         const spell = storeAtom.get(selectedSpellAtom);
         const spellCost = Number(spell?.split('$')[1]);
-        console.log(`Using spell: ${spell}`);
+        // console.log(`Using spell: ${spell}`);
 
         if (playerTarget && 'target' in playerTarget) {
           HandleEnemyHealthUpdate(playerTarget, character, spell as string, spellCost);
@@ -121,7 +121,6 @@ export const runTurnLogic = async (
               if ("health" in result) {
                 const targetChar = getCharacterById(result.id);
                 if (targetChar) HandleCharacterHealthUpdate(targetChar, result.health);
-                console.log("HEALTH", targetChar?.name, targetChar?.health)
               }
             });
           }
@@ -133,7 +132,6 @@ export const runTurnLogic = async (
           ) {
             const targetChar = getCharacterById(buffResult.id);
             if (targetChar) HandleCharacterManaUpdate(targetChar, buffResult.mana);
-            console.log("MANA")
           } 
           
           else if (typeof buffResult === "number") {
@@ -141,7 +139,6 @@ export const runTurnLogic = async (
               playerTarget.id === character.id ? character : playerTarget,
               buffResult
             );
-            console.log("NUMBER")
           }
         }
         
@@ -155,9 +152,8 @@ export const runTurnLogic = async (
 
   ManaRegen();
   storeAtom.set(turnCountAtom, currentTurn + 1);
-  SaveData(0); // Save the final turn data
+  SaveData(0);
 
-  console.log(`Turn ${currentTurn} ended.`);
   setTimeout(() => runTurnLogic(turnOrder, waitForInput), 1000);
 };
 
@@ -166,8 +162,7 @@ const updatedTurnOder = () => {
   const enemies = storeAtom.get(EnemyAtom);
   const selectedCharacters = Object.values(characters).filter(char => char.isSelected);
   const allEntities = [...selectedCharacters, ...Object.values(enemies)];
-
-  // Sort entities by speed in descending order (highest to lowest)
   const turnOrder = allEntities.sort((a, b) => b.speed - a.speed);
+
   return turnOrder;
 }

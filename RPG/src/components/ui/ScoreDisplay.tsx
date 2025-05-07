@@ -14,7 +14,7 @@ const ScoreDisplay = () => {
 
     return (
         <div className={styles.scoreContainer}>
-            <span>Score:</span>
+            <span>Score: </span>
             <TickingNumber value={score} />
         </div>
     );

@@ -42,9 +42,8 @@ export const HandleAllCharactersDead = () => {
             isRoundOver: false,
             isGameOver: true
         }));
-
-        console.log(`Game Over. ${allCharactersDead}. You Lose`);
-        return true; // Stop running turns
+        
+        return true;
     }
     return false;
 }

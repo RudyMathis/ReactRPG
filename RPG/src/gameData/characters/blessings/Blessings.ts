@@ -33,7 +33,6 @@ export const Blessings = () => {
             const hasBlessing = character.blessings.some(b => b.name === BlessingsData[blessingKey].name);
             if (!hasBlessing) {
                 blessingFunctionMap[blessingKey](character);
-                console.log(`${character.name} received blessing: ${BlessingsData[blessingKey].name}`);
                 applied = true;
                 break; 
             }
@@ -63,6 +62,5 @@ const checkIfAllSelectedCharactersAreFullyBlessed = () => {
 
     if (fullyBlessed) {
         storeAtom.set(blessingAtom, true);
-        console.log("🎉 All selected characters have all blessings!");
     }
 };

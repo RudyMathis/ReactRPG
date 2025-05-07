@@ -37,7 +37,6 @@ const FireBallTar20 = (enemy: EnemyType, character: CharacterType, target: Chara
             return character.health - damage;
         }
         
-
     } else {
         enemy.debuffs.push({
             type: Debuffs.Burn.type, 

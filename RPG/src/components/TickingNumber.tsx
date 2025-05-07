@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 type TickingNumberProps = {
     value: number;
-    duration?: number; // optional override for duration in ms
+    duration?: number;
     className?: string;
 };
 

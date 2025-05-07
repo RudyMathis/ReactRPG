@@ -25,9 +25,7 @@ const LevelLayout = () => {
     return (
         <div className={styles.levelLayout}>
             <div className={styles.topBar}>
-                {/* <div className={stylesUI.leftContainer}> */}
-                    <NavigateBtn locationValue="/" location="Menu" />
-                {/* </div> */}
+                <NavigateBtn locationValue="/" location="Menu" />
                 <TurnOrderDisplay />
                 <CurrentLevelDisplay />
             </div>
@@ -35,7 +33,7 @@ const LevelLayout = () => {
             <div className={stylesUI.crt}></div>
             <SettingsIcon />
             <Grid />
-            <img className={stylesUI.backgroundBorder} src="/assets/backgrounds/crt_frame.png" />
+            <div className={stylesUI.backgroundBorder}></div>
             {isRoundOver && <EndofRoundDisplay />}
             <ActionTextDisplay />
         </div>
