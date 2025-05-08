@@ -32,6 +32,8 @@ type BuffMeta = {
         image: string;
         rotation?: number;
         brightness?: number;
+        top?: number;
+        left?: number;
     }
 };
 const imagePath = '/assets/vfx/spell_';
@@ -157,6 +159,7 @@ const buffs: Record<string, BuffMeta> = {
             height: 6.86,
             steps: 2,
             image: `${imagePath}taunt.png`,
+            left: 50,
         },
     },
     'Meditate__Char$-30': { 

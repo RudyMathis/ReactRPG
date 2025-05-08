@@ -88,20 +88,6 @@
     border: 2px solid var(--lightning);
 }
 
-.debuffs {
-    display: flex;
-    width: 4.4em;
-    margin-top: 2px;
-    flex-wrap: wrap;
-}
-
-.debuffIcon {
-    width: 1.2rem;
-    height: 1.2rem;
-    object-fit: contain;
-    image-rendering: pixelated;
-}
-
 @media screen and (max-height: 420px) {
     
     .turnOrderPortait {

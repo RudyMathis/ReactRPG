@@ -1,4 +1,3 @@
-// StatusEffects.ts
 import { StatusName } from "./StatusNames";
 import { CharacterType } from "../../../atom/CharacterAtom";
 import { EnemyType } from "../../../atom/BaseEnemyAtom";
@@ -22,14 +21,16 @@ export const StatusEffects: Record<StatusName, StatusEffect> = {
             if(entity.type === "player") {
                 const bleedDamage = Math.round(Math.max(5, Debuffs.Bleed.damage * entity.maxHealth));
                 HandleDamageEffect(bleedDamage, "Physical", "player", entity.id);
+                entity.health -= bleedDamage;
             } else {
                 const bleedDamage = Math.round(Math.max(5, Debuffs.Bleed.damage * entity.maxHealth));
                 HandleDamageEffect(bleedDamage, "Physical", "npc", entity.id); 
+                entity.health -= bleedDamage;
             }
         },
-        // onExpire: (entity) => {
-        //     console.log("Bleed expired for", entity.id);
-        // },
+        onExpire: (entity) => {
+            console.log("Bleed expired for", entity.id);
+        },
     },
 
     Burn: {

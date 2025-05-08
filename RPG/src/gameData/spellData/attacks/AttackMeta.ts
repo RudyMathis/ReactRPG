@@ -22,6 +22,8 @@ export type AttackMeta = {
         image: string;
         rotation?: number;
         brightness?: number;
+        top?: number;
+        left?: number;
     }
     sound?: () => void;
     description?: string;

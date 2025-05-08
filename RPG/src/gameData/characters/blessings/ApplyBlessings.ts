@@ -25,8 +25,6 @@ export const ApplyBlessing = (
                 ? [...updatedChar.resistances, ...updates.resistances]
                 : updatedChar.resistances,
             blessings: [...updatedChar.blessings, blessingData],
-            health: updatedChar.maxHealth,
-            mana: updatedChar.maxMana,
             debuffs: [],
             buffs: [],
             speed: updatedChar.speedDefault,

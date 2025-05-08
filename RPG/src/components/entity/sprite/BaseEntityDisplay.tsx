@@ -46,6 +46,8 @@ function BaseEntityDisplay({ entity }: EnityDetailProps) {
     const attackImage = attackEntry?.animation?.image;
     const attackRotation = attackEntry?.animation?.rotation;
     const attackBrightness = attackEntry?.animation?.brightness;
+    const attackTop = attackEntry?.animation?.top;
+    const attackLeft = attackEntry?.animation?.left;
     
     const defendEntry = Object.values(buffs).find(
         (buff) => buff.animation?.name === activeAnimation
@@ -59,6 +61,8 @@ function BaseEntityDisplay({ entity }: EnityDetailProps) {
     const defendImage = defendEntry?.animation?.image;
     const defendRotation = defendEntry?.animation?.rotation;
     const defendBrightness = defendEntry?.animation?.brightness;
+    const defendTop = defendEntry?.animation?.top;
+    const defendLeft = defendEntry?.animation?.left;
 
     return (
         <>
@@ -71,6 +75,8 @@ function BaseEntityDisplay({ entity }: EnityDetailProps) {
                         width: `calc(${attackWidth}em / ${attackSteps})`,
                         height: `${attackHeight}em`,
                         backgroundImage: `url(${attackImage})`,
+                        top: `${attackTop}%`,
+                        left: `${attackLeft}%`,
                         animation:`${styles[attackName || '']} ${attackDuration}ms steps(${attackSteps}) forwards`,
                         filter: `hue-rotate(${attackRotation}deg) brightness(${attackBrightness})`,
                     }}
@@ -85,6 +91,8 @@ function BaseEntityDisplay({ entity }: EnityDetailProps) {
                         width: `calc(${defendWidth}em / ${defendSteps})`,
                         height: `${defendHeight}em`,
                         backgroundImage: `url(${defendImage})`,
+                        top: `${defendTop}px`,
+                        left: `${defendLeft}px`,
                         animation: `${styles[defendName || '']} ${defendDuration}ms steps(${defendSteps}) forwards`,
                         filter: `hue-rotate(${defendRotation}deg) brightness(${defendBrightness})`,
                     }}
@@ -109,8 +117,9 @@ function BaseEntityDisplay({ entity }: EnityDetailProps) {
                     ))}
                 </div>
             )}
-            <div className={styles.spriteGlow}></div> 
-            <div className={styles.spriteContainer} data-type={entity.type}>
+            <div className={styles.spriteGlow} data-entity-size={('size' in entity) ? entity.size : ''}></div> 
+            {/* <div className={styles.spriteContainer} data-type={entity.type} {entity.health > 0 ? '' : 'data-death = true'}> */}
+            <div className={styles.spriteContainer} data-type={entity.type} {...(entity.health <= 0 ? { 'data-death': true } : {})}>
                 {entity.health > 0 ? (
                     <>
                         <img

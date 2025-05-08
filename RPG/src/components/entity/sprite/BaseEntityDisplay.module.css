@@ -9,6 +9,10 @@
     z-index: var(--lower-layer);
 }
 
+.spriteContainer[data-type='player'][data-death='true'] {
+    width: 5.14em;
+}
+
 .spriteContainer[data-type='npc'] {
     width: 7em;
     height: 13.5em;
@@ -51,13 +55,13 @@
 }
 
 .spriteContainer:has(.sprite[data-entity-size='small']),
-.sprite[data-entity-size='small']  {
+.sprite[data-entity-size='small'], .spriteGlow[data-entity-size='small'] {
     width: 7em;
     height: 9.5em;
 }
 
 .spriteContainer:has(.sprite[data-entity-size='large']),
-.sprite[data-entity-size='large']  {
+.sprite[data-entity-size='large'], .spriteGlow[data-entity-size='large'] {
     width: 10.3em;
 }
 
@@ -157,20 +161,22 @@
     object-fit: initial; 
     image-rendering: pixelated;
     position: absolute;
-    width: 14.2em; 
+    width: 21.42em; 
     filter: grayscale(1);
 }
 
 .deathEffect[data-type='player']{
-    animation: deathPlayerAnimation .6s steps(1) 1;
+    animation: deathPlayerAnimation 800ms steps(4) forwards;
     animation-delay: 1000ms;
 }
 
 @keyframes deathPlayerAnimation {
-    0% { transform: translateX(-217px); width: 20em; }
-    33% { transform: translateX(-154px);  width: 20em;}
-    66% { transform: translateX(-90px); width: 20em; }
-    100% { transform: translateX(0); } 
+    /* 0% { transform: translateX(-217px); width: 16em; }
+    33% { transform: translateX(-154px);  width: 16em;}
+    66% { transform: translateX(-90px); width: 16em; }
+    100% { transform: translateX(0); }  */
+    0% { transform: translateX(-21.42em); }
+    100% { transform: translateX(0em); } 
 }
 
 .spriteDeath[data-type='player'] {

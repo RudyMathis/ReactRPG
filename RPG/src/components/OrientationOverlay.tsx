@@ -1,24 +1,31 @@
-import{ useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+
+const isMobileDevice = () => {
+    return /Mobi|Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
+};
 
 const OrientationOverlay = () => {
-    const [isLandscape, setIsLandscape] = useState(window.matchMedia("(orientation: landscape)").matches);
+    const [showOverlay, setShowOverlay] = useState(false);
 
     useEffect(() => {
         const checkOrientation = () => {
-            setIsLandscape(window.matchMedia("(orientation: landscape)").matches);
+            const isLandscape = window.innerWidth > window.innerHeight;
+            const isMobile = isMobileDevice();
+            setShowOverlay(isMobile && !isLandscape);
         };
+
+        checkOrientation(); // run on mount
 
         window.addEventListener('resize', checkOrientation);
         window.addEventListener('orientationchange', checkOrientation);
 
-        // Cleanup listeners on unmount
         return () => {
             window.removeEventListener('resize', checkOrientation);
             window.removeEventListener('orientationchange', checkOrientation);
         };
     }, []);
 
-    if (isLandscape) return null;
+    if (!showOverlay) return null;
 
     return (
         <div style={{

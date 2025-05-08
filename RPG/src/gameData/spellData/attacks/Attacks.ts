@@ -53,6 +53,7 @@ const attacks: Record<string, AttackMeta> = {
             height: 8.35,
             steps: 2,
             image: '/assets/vfx/spell_burning.png',
+            left: 25,
         },
     },
     Ice_Bolt_Tar$30: {
@@ -83,6 +84,7 @@ const attacks: Record<string, AttackMeta> = {
             height: 10.5,
             steps: 3,
             image: '/assets/vfx/spell_lightning.png',
+            top: -10,
         },
     },
     Shadow_Strike_Tar$0: {
@@ -117,6 +119,7 @@ const attacks: Record<string, AttackMeta> = {
             image: '/assets/vfx/spell_burning.png',
             rotation: 270,
             brightness: 1,
+            left: 25,
         },
     },
     'Heroic_Strike_Tar$-20': {
@@ -162,6 +165,7 @@ const attacks: Record<string, AttackMeta> = {
             height: .64,
             steps: 3,
             image: '/assets/vfx/spell_quickAttack.png',
+            top: 25,
         },
     },
     Garrote__Tar$40: {
@@ -207,6 +211,8 @@ const attacks: Record<string, AttackMeta> = {
             height: 13.28,
             steps: 5,
             image: '/assets/vfx/spell_devastate.png',
+            top: -25,
+            left: 40,
         },
     },
     Multi_Shot_Tar$40: {
@@ -224,6 +230,8 @@ const attacks: Record<string, AttackMeta> = {
             image: '/assets/vfx/spell_aimShot.png',
             rotation: 180,
             brightness: 1.2,
+            top: -25,
+            left: 25,
         },
     },
     Cleave__Tar$30: {
@@ -241,6 +249,8 @@ const attacks: Record<string, AttackMeta> = {
             image: '/assets/vfx/spell_devastate.png',
             rotation: 180,
             brightness: 1.2,
+            top: -25,
+            left: 40,
         },
     },
     Shoot__Tar$0: {
@@ -256,6 +266,8 @@ const attacks: Record<string, AttackMeta> = {
             height: 14.36,
             steps: 3,
             image: '/assets/vfx/spell_shoot.png',
+            top: -50,
+            left: 25,
         },
     },
     Aim_Shot_Tar$50: {
@@ -271,6 +283,8 @@ const attacks: Record<string, AttackMeta> = {
             height: 14.36,
             steps: 5,
             image: '/assets/vfx/spell_aimShot.png',
+            top: -25,
+            left: 25,
         },
     },
     Volley__Tar$20: {
@@ -286,6 +300,8 @@ const attacks: Record<string, AttackMeta> = {
             height: 14.36,
             steps: 3,
             image: '/assets/vfx/spell_shoot.png',
+            top: -50,
+            left: 25,
         },
     },
     Thunderclap__Tar$40: {
@@ -301,6 +317,7 @@ const attacks: Record<string, AttackMeta> = {
             height: 10.5,
             steps: 3,
             image: '/assets/vfx/spell_lightning.png',
+            top: -10,
         },
     },
     Backstab__Tar$60: {
@@ -333,6 +350,7 @@ const attacks: Record<string, AttackMeta> = {
             image: '/assets/vfx/spell_fire.png',
             rotation: 45,
             brightness: 2,
+            top: -10,
         },
     },
     Holy_Strike_Tar$40: {

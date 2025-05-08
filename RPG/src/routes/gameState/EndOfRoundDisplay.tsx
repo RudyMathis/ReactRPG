@@ -10,7 +10,6 @@ import { useAtom } from "jotai";
 import { turnCountAtom } from "../../atom/UseTurnCountAtom";
 import styles from './GameState.module.css'
 import { calculateScore } from "../../gameMechanics/CalculateScore";
-import { SubmitHighScore } from "../../gameMechanics/SubmitHighScore";
 
 const EndofRoundDisplay = () => {
     const AdditionalExperience = 25;
@@ -39,9 +38,6 @@ const EndofRoundDisplay = () => {
 
         currentGameLevel.isRoundOver = true;
         
-        if (currentGameLevel.isGameOver) {
-            SubmitHighScore();
-        }      
         startNewRound();
     };
 
