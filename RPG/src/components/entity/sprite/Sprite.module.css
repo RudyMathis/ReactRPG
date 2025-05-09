@@ -14,6 +14,7 @@
 }
 
 .entityContainer[data-attacking='true'][data-type='player'] {
+    z-index: var(--high-layer);
     animation: attackMoveAnimation 900ms linear 1; 
 } 
 

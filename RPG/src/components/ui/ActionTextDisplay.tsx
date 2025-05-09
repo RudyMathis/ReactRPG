@@ -46,6 +46,10 @@ const ActionTextDisplay = () => {
             message = actions.isAoe
                 ? `${updatedEntityName} used ${actions.action} on the party.`
                 : `${updatedEntityName} used ${actions.action} on ${updatedTargetName}.`;
+        } else if (actions.isMana) {
+            message = actions.isAoe
+                ? `${updatedEntityName} used ${actions.action} on the party for ${actions.value} mana.`
+                : `${updatedEntityName} used ${actions.action} for ${actions.value} mana.`;
         } else {
             message = actions.isAoe
                 ? `${updatedEntityName} used ${actions.action} on the party for ${actions.value} health.`

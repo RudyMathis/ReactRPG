@@ -12,4 +12,5 @@ export const actionsTextAtom = atom<
     isDefense: boolean,
     isAoe: boolean,
     isBuff?: boolean,
+    isMana?: boolean,
 }>();

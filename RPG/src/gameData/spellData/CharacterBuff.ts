@@ -83,6 +83,7 @@ export const CharacterBuff = (
         isDefense: true,
         isAoe: buffs[spell].isAoe,
         isBuff: buffs[spell].isBuff,
+        isMana: buffs[spell].isMana,
     });
 
     return result;

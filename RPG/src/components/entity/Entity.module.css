@@ -6,42 +6,37 @@
     margin-bottom: .25rem;
     color: var(--white);
     text-shadow: 
-        2px 2px 0px var(--white-soft),
-        2px 2px 0px var(--shadow);
+        2px 2px 2px var(--shadow);
 }
 
 .spriteName[data-type='npc'][data-entity-name='Fire'] {
     color: var(--fire);
     text-shadow:
-        2px 2px 0px var(--fire-soft),
-        2px 2px 0px var(--shadow);
+        2px 2px 2px var(--white);
 }
 
 .spriteName[data-type='npc'][data-entity-name='Ice'] {
     color: var(--ice);
     text-shadow:
-        2px 2px 0px var(--ice-soft) ;
+        2px 2px 2px var(--shadow);
 }
 
 .spriteName[data-type='npc'][data-entity-name='Dark'] {
     color: var(--dark);
     text-shadow:
-        2px 2px 0px  var(--dark-soft),
-        2px 2px 0px var(--shadow);
+        2px 2px 2px var(--white);
 }
 
 .spriteName[data-type='npc'][data-entity-name='Lightning'] {
     color: var(--lightning);
     text-shadow:
-        2px 2px 0px  var(--lightning-soft),
-        2px 2px 0px var(--shadow);
+        2px 2px 2px var(--shadow);
 }
 
 .spriteName[data-type='npc'][data-entity-name='Holy'] {
     color: var(--holy);
     text-shadow:
-        2px 2px 0px  var(--holy-soft),
-        2px 2px 0px var(--shadow);
+        2px 2px 2px var(--shadow);
 }
 
 /* ARROW */
@@ -141,13 +136,39 @@
     background-color: var(--background-secondary);
 }
 
-.detailStatus {
+.detailName[data-element='Ice'] {
+    color: var(--ice);
+}
+
+.detailName[data-element='Fire'] {
     color: var(--fire);
+}
+
+.detailName[data-element='Dark'] {
+    color: var(--dark);
+}
+
+
+.detailStatus[data-buff='true'] {
+    color: var(--buff);
+    background-color: var(--background-secondary);
+}
+
+.detailStatus[data-debuff='true'] {
+    color: var(--debuff);
     background-color: var(--background-secondary);
 }
 
 .detailValue {
-    color: var(--fire);
+    color: var(--white);
+}
+
+.detailValue[data-buff=true] {
+    color: var(--buff);
+}
+
+.detailValue[data-buff=false] {
+    color: var(--debuff);
 }
 
 /* Action Menu */

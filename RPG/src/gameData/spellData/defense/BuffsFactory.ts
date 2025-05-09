@@ -23,6 +23,8 @@ type BuffMeta = {
     isSelfBuff: boolean;
     isAoe: boolean;
     isBuff: boolean;
+    stat?: string;
+    isMana?: boolean;
     animation: {
         name: string;
         duration: number;
@@ -169,6 +171,7 @@ const buffs: Record<string, BuffMeta> = {
         isSelfBuff: true,
         isAoe: false,
         isBuff: false,
+        isMana: true,
         animation: {
             name: 'meditate',
             duration: 900,
