@@ -26,13 +26,15 @@ const TurnOrderDisplay = () => {
                     <div className={`${styles.turnOrderPortait} ${entity.type}${entity.health <= 0 ? ` ${styles.dead}` : ''}`} key={entity.id ?? index}>
                         <div
                             data-entity-modified={(entity.name).match(/Fire|Ice|Dark/)}
-                            className={`${styles.turnOrderItem} ${styles.characterSprite} ${entity.name}`}
+                            data-entity-type={entity.type}
+                            className={`${styles.turnOrderItem} ${styles.turnOrderSpriteContainer}`}
                         >
                             <img
                                 src={imageSrc}
                                 className={styles.turnOrderSprite}
                                 data-entity-type={entity.type}
                                 data-entity-name={entity.name}
+                                data-entity-size={('size' in entity) ? entity.size : ''}
                                 alt={entity.name.replace('_', ' ')}
                             />
                         </div>

@@ -2,9 +2,10 @@ import { ApplyBlessing } from "./ApplyBlessings";
 import { CharacterType } from "../../../atom/CharacterAtom";
 import Resistances from "../../Resistances";
 
-export const BlessingOfHolyDamage = (character: CharacterType) =>
-    ApplyBlessing(character, "BlessingOfHolyDamage", {
-        attack: character.attack * 1.1,
+export const BlessingOfLightning = (character: CharacterType) =>
+    ApplyBlessing(character, "BlessingOfLightning", {
+        attack: Math.round(character.attack * 1.1),
+        attackDefault: Math.round(character.attack * 1.1),
     });
 
 export const BlessingOfBurn = (character: CharacterType) =>
@@ -15,8 +16,8 @@ export const BlessingOfManaRegen = (character: CharacterType) =>
 
 export const BlessingOfDamage = (character: CharacterType) =>
     ApplyBlessing(character, "BlessingOfDamage", {
-        attack: Math.round(character.attack * 1.25),
-        attackDefault: Math.round(character.attack * 1.25),
+        attack: Math.round(character.attack * 1.5),
+        attackDefault: Math.round(character.attack * 1.5),
     });
 
 export const BlessingOfLight = (character: CharacterType) =>

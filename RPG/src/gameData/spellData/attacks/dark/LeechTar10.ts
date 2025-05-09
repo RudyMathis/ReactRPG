@@ -3,7 +3,7 @@ import { CharacterType } from "../../../../atom/CharacterAtom";
 import { HandleDamageEffect } from "../../../../gameMechanics/HandleDamageEffect";
 import Resistances from "../../../Resistances";
 import Vulnerabilites from "../../../Vulnerabilities";
-import { BlessingOfBurnBonus, BlessingOfHolyDamageBonus } from "../../AdditionalBlessingDamage";
+import { BlessingOfBurnBonus, BlessingOfLightningBonus } from "../../AdditionalBlessingDamage";
 
 const LeechTar10 = (enemy: EnemyType, character: CharacterType, target: CharacterType | EnemyType, spellCost: number) =>{ 
     const targetCharacter = 'id' in target && target.id === character.id && target.type === character.type
@@ -37,7 +37,7 @@ const LeechTar10 = (enemy: EnemyType, character: CharacterType, target: Characte
         const damage = Math.max(Math.round(character.attack * .9));
 
         BlessingOfBurnBonus(character, enemy);
-        BlessingOfHolyDamageBonus(character, enemy);
+        BlessingOfLightningBonus(character, enemy);
         
         if (darkResistance) {
             HandleDamageEffect(damageResistance, "Dark", "npc", enemy.id);

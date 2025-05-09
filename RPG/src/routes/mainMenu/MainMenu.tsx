@@ -2,7 +2,7 @@ import styles from '../Route.module.css';
 import { NewGameBtn } from './NewGameBtn';
 import { ContinueGameBtn } from './ContinueGameBtn';
 import { useEffect, useState } from 'react';
-import NavigateBtn from '../../components/ui/NavigateBtn';
+// import NavigateBtn from '../../components/ui/NavigateBtn';
 import Background from '../../components/ui/Background';
 import HighScoreDisplay from './HighScoreDisplay';
 import SoundManager from '../../gameData/SoundManager';
@@ -35,7 +35,7 @@ const MainMenu = () => {
                 <HighScoreDisplay />
                 <NewGameBtn />
                 {isInProgress && <ContinueGameBtn />}
-                <NavigateBtn locationValue="/options" location="Options" />
+                {/* <NavigateBtn locationValue="/options" location="Options" /> */}
             </div>
             <Background />
         </>

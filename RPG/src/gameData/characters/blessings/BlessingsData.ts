@@ -14,7 +14,7 @@ export const BlessingsData = {
         name: "Blessing of Damage", 
         type: "Buff", 
     },
-    BlessingOfHolyDamage: {
+    BlessingOfLightning: {
         name: "Blessing of Holy Damage", 
         type: "Damage", 
         element: "Holy", 

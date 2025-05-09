@@ -3,7 +3,7 @@ import { CharacterType } from "../../../../atom/CharacterAtom";
 import { HandleDamageEffect } from "../../..//../gameMechanics/HandleDamageEffect";
 import Resistances from "../..//../Resistances";
 import Vulnerabilites from "../..//../Vulnerabilities";
-import { BlessingOfBurnBonus, BlessingOfHolyDamageBonus } from "../../AdditionalBlessingDamage";
+import { BlessingOfBurnBonus, BlessingOfLightningBonus } from "../../AdditionalBlessingDamage";
 
 const ShadowDaggerTar30 = (enemy: EnemyType, character: CharacterType, target: CharacterType | EnemyType, spellCost: number) =>{ 
     const targetCharacter = 'id' in target && target.id === character.id && target.type === character.type
@@ -38,7 +38,7 @@ const ShadowDaggerTar30 = (enemy: EnemyType, character: CharacterType, target: C
         const damage = Math.round(character.attack * 1.25)
 
         BlessingOfBurnBonus(character, enemy);
-        BlessingOfHolyDamageBonus(character, enemy);
+        BlessingOfLightningBonus(character, enemy);
 
         if (darkResistance) {
             HandleDamageEffect(damageResistance, "Dark", "npc", enemy.id);

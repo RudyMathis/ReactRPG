@@ -25,6 +25,7 @@
 }
 
 .entityContainer[data-defending='true'][data-type='player'] {
+    z-index: var(--high-layer);
     animation: defendMoveAnimation 900ms linear 1; 
 } 
 
@@ -72,6 +73,7 @@
 
 [data-dead='true'][data-type='npc'] {
     animation: deathNPCAnimation 900ms linear forwards;
+    z-index: var(--high-layer);
     animation-delay: 1000ms;
 }
 

@@ -3,7 +3,7 @@ import { CharacterType } from "../../../../atom/CharacterAtom";
 import { HandleDamageEffect } from "../../../../gameMechanics/HandleDamageEffect";
 import Resistances from "../../../Resistances";
 import Vulnerabilites from "../../../Vulnerabilities";
-import { BlessingOfBurnBonus, BlessingOfHolyDamageBonus } from "../../AdditionalBlessingDamage";
+import { BlessingOfBurnBonus } from "../../AdditionalBlessingDamage";
 
 const LightningBoltTar40 = (enemy: EnemyType, character: CharacterType, target: CharacterType | EnemyType, spellCost: number) =>{ 
     const targetCharacter = 'id' in target && target.id === character.id && target.type === character.type
@@ -17,6 +17,7 @@ const LightningBoltTar40 = (enemy: EnemyType, character: CharacterType, target: 
         const damageResistance = Math.max(1, Math.round(enemy.attack - Resistances.Lightning.value))
         const damageVulnerability = Math.round(enemy.attack + Vulnerabilites.Lightning.value)
         const damage = Math.round(enemy.attack * 1.25)
+        character.mana = Math.round(character.mana / 2);
         
         if (lightningResistance) {
             HandleDamageEffect(damageResistance, "Lightning", "player", character.id);
@@ -36,9 +37,9 @@ const LightningBoltTar40 = (enemy: EnemyType, character: CharacterType, target: 
         const damageResistance = Math.max(1, Math.round(character.attack - Resistances.Lightning.value))
         const damageVulnerability = Math.round(character.attack + Vulnerabilites.Lightning.value)
         const damage = Math.round(character.attack * 1.25)
+        enemy.mana = Math.round(enemy.mana / 2);
 
         BlessingOfBurnBonus(character, enemy);
-        BlessingOfHolyDamageBonus(character, enemy);
 
         if (lightningResistance) {
             HandleDamageEffect(damageResistance, "Lightning", "npc", enemy.id);

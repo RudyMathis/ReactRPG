@@ -1,7 +1,7 @@
 import { EnemyType } from "../../../../atom/BaseEnemyAtom";
 import { CharacterType } from "../../../../atom/CharacterAtom";
 import Debuffs from "../../../Debuffs";
-import { BlessingOfBurnBonus, BlessingOfHolyDamageBonus } from "../../AdditionalBlessingDamage";
+import { BlessingOfBurnBonus, BlessingOfLightningBonus } from "../../AdditionalBlessingDamage";
 
 const DevastateTar60 = (enemy: EnemyType, character: CharacterType, target: CharacterType | EnemyType, spellCost: number) =>{ 
     const targetCharacter = 'id' in target && target.id === character.id && target.type === character.type
@@ -30,7 +30,7 @@ const DevastateTar60 = (enemy: EnemyType, character: CharacterType, target: Char
 
         if(enemy.debuffs.find(d => d.type === Debuffs.Sundered.type)) {
             BlessingOfBurnBonus(character, enemy);
-            BlessingOfHolyDamageBonus(character, enemy);
+            BlessingOfLightningBonus(character, enemy);
             return enemy.health - Math.max(5, (character.attack - enemy.defense));
         } else {
             enemy.debuffs.push({
@@ -42,7 +42,7 @@ const DevastateTar60 = (enemy: EnemyType, character: CharacterType, target: Char
             
             enemy.defense = 0;
             BlessingOfBurnBonus(character, enemy);
-            BlessingOfHolyDamageBonus(character, enemy);
+            BlessingOfLightningBonus(character, enemy);
             return enemy.health - Math.max(5, (character.attack - enemy.defense));
         }
     }

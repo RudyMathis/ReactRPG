@@ -51,7 +51,7 @@ const DetailScreen = ({ entity }: CharacterDetailProps) => {
                 <p>
                     Blessings:{" "}
                     <span className={styles.detailValue}>
-                    {entity.blessings.map(blessing => blessing.name).join(", ")}
+                        {entity.blessings.map(blessing => blessing.name).join(", ")}
                     </span>
                 </p>
             )}

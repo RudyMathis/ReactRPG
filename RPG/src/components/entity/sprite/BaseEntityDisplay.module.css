@@ -171,10 +171,6 @@
 }
 
 @keyframes deathPlayerAnimation {
-    /* 0% { transform: translateX(-217px); width: 16em; }
-    33% { transform: translateX(-154px);  width: 16em;}
-    66% { transform: translateX(-90px); width: 16em; }
-    100% { transform: translateX(0); }  */
     0% { transform: translateX(-21.42em); }
     100% { transform: translateX(0em); } 
 }

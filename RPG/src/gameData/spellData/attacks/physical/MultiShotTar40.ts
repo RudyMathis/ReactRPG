@@ -1,7 +1,7 @@
 import EnemyAtom, { EnemyType } from "../../../../atom/BaseEnemyAtom";
 import CharacterAtom, { CharacterType } from "../../../../atom/CharacterAtom";
 import { storeAtom } from "../../../../atom/storeAtom";
-import { BlessingOfBurnBonus, BlessingOfHolyDamageBonus } from "../../AdditionalBlessingDamage";
+import { BlessingOfBurnBonus, BlessingOfLightningBonus } from "../../AdditionalBlessingDamage";
 import { HandleDamageEffect } from "../../../../gameMechanics/HandleDamageEffect";
 import { FlashAnimationAtom } from "../../../../atom/effects/FlashAnimationAtom";
 
@@ -105,7 +105,7 @@ const MultiShotTar$40 = (
         if (prevEnemy) {
             
             BlessingOfBurnBonus(character, prevEnemy);
-            BlessingOfHolyDamageBonus(character, prevEnemy);
+            BlessingOfLightningBonus(character, prevEnemy);
             HandleDamageEffect(damage, "Physical", "npc", prevEnemy.id);
             
             flashUpdate[prevEnemy.id] = spellAnimation;
@@ -126,7 +126,7 @@ const MultiShotTar$40 = (
         if (nextEnemy) {
             
             BlessingOfBurnBonus(character, nextEnemy);
-            BlessingOfHolyDamageBonus(character, nextEnemy);
+            BlessingOfLightningBonus(character, nextEnemy);
             HandleDamageEffect(damage, "Physical", "npc", nextEnemy.id);
             
             flashUpdate[nextEnemy.id] = spellAnimation;
@@ -145,7 +145,7 @@ const MultiShotTar$40 = (
         }
 
         BlessingOfBurnBonus(character, enemy);
-        BlessingOfHolyDamageBonus(character, enemy);
+        BlessingOfLightningBonus(character, enemy);
         HandleDamageEffect(damage, "Physical", "npc", enemy.id);
 
         flashUpdate[enemy.id] = spellAnimation;

@@ -15,15 +15,8 @@ export const BlessingOfBurnBonus = (character: CharacterType, targetEnemy: Enemy
     }
 };
 
-export const BlessingOfHolyDamageBonus = (character: CharacterType, targetEnemy: EnemyType) => {
-    if(character.blessings.find(b => b.name === BlessingsData.BlessingOfHolyDamage.name)) {
-        targetEnemy.debuffs.push({
-            type: Debuffs.Burn.type, 
-            duration: 3,
-            damage: Debuffs.Burn.damage,
-            name: Debuffs.Burn.name,
-            icon: Debuffs.Burn.icon
-        });
-        //  UPDATE TO DO HOLY DEBUFF
+export const BlessingOfLightningBonus = (character: CharacterType, targetEnemy: EnemyType) => {
+    if(character.blessings.find(b => b.name === BlessingsData.BlessingOfLightning.name)) {
+        targetEnemy.mana = Math.round(targetEnemy.mana / 2);
     }
 };

@@ -4,7 +4,7 @@ import { BlessingsData } from "./BlessingsData";
 import {
     BlessingOfDamage,
     BlessingOfBurn,
-    BlessingOfHolyDamage,
+    BlessingOfLightning,
     BlessingOfLight,
     BlessingOfManaRegen,
 } from "./BlessingFactory";
@@ -18,7 +18,7 @@ export const Blessings = () => {
     const blessingFunctionMap: Record<keyof typeof BlessingsData, (character: CharacterType) => void> = {
         BlessingOfLight,
         BlessingOfDamage,
-        BlessingOfHolyDamage,
+        BlessingOfLightning,
         BlessingOfBurn,
         BlessingOfManaRegen,
     };
@@ -46,7 +46,6 @@ export const Blessings = () => {
 
     checkIfAllSelectedCharactersAreFullyBlessed();
 };
-
 
 
 const checkIfAllSelectedCharactersAreFullyBlessed = () => {

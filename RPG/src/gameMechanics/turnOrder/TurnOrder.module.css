@@ -16,46 +16,22 @@
     height: 175%;
     object-fit: cover;
     image-rendering: pixelated;
-    transform: translateX(-3px);
 }
 
-.turnOrderSprite[data-entity-type="player"] {
-    height: 200%;
-    transform: translateX(0);
-}
-
-.turnOrderContainer .characterSprite {
+.turnOrderContainer .turnOrderSpriteContainer {
     width: 3.6em;
     height: 3.6em;
     overflow: hidden;
     object-fit: cover; 
 }
 
-.turnOrderContainer .characterSprite.player {
-    height: 175%;
-    object-fit: cover; 
-    object-position: 0 .7em;
-}
-
-.turnOrderContainer .characterSprite.npc {
+.turnOrderSprite[data-entity-type="player"] {
     height: 200%;
-    object-position: 0 1.8em;
 }
 
-.turnOrderContainer .npc.Ent {
-    object-position: 1.8em 1.8em;
-}
-
-.turnOrderContainer .npc.Manticore {
-    object-position: 0 5px;
-}
-
-.turnOrderContainer .npc.Goblin {
-    object-position: 1em 1.8em;
-}
-.turnOrderContainer .npc.Rat {
-    height: 175%;
-    object-position: 1em .7em;
+.turnOrderSprite[data-entity-size="medium"], .turnOrderSprite[data-entity-size="large"] {
+    height: 250%;
+    object-position: -.85em 0;
 }
 
 .turnOrderItem {
@@ -94,7 +70,7 @@
         width: 3em;
     }
 
-    .turnOrderContainer .characterSprite {
+    .turnOrderContainer .turnOrderSpriteContainer {
         width: 3em;
         height: 3em;
     }

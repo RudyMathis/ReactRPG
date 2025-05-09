@@ -3,7 +3,7 @@ import { CharacterType } from "../../../../atom/CharacterAtom";
 import { HandleDamageEffect } from "../../../../gameMechanics/HandleDamageEffect";
 import Resistances from "../../../Resistances";
 import Vulnerabilites from "../../../Vulnerabilities";
-import { BlessingOfBurnBonus, BlessingOfHolyDamageBonus } from "../../AdditionalBlessingDamage";
+import { BlessingOfBurnBonus, BlessingOfLightningBonus } from "../../AdditionalBlessingDamage";
 
 const FrostbiteTar20 = (enemy: EnemyType, character: CharacterType, target: CharacterType | EnemyType, spellCost: number) =>{ 
     const targetCharacter = 'id' in target && target.id === character.id && target.type === character.type
@@ -39,7 +39,7 @@ const FrostbiteTar20 = (enemy: EnemyType, character: CharacterType, target: Char
         const damage = Math.round(character.attack * 1.1)
 
         BlessingOfBurnBonus(character, enemy);
-        BlessingOfHolyDamageBonus(character, enemy);
+        BlessingOfLightningBonus(character, enemy);
         
         if(iceResistance) {
             HandleDamageEffect(damageResistance, "Ice", "npc", enemy.id);

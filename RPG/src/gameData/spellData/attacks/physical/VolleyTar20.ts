@@ -1,7 +1,7 @@
 import EnemyAtom, { EnemyType } from "../../../../atom/BaseEnemyAtom";
 import CharacterAtom, { CharacterType } from "../../../../atom/CharacterAtom";
 import { storeAtom } from "../../../../atom/storeAtom";
-import { BlessingOfBurnBonus, BlessingOfHolyDamageBonus } from "../../AdditionalBlessingDamage";
+import { BlessingOfBurnBonus, BlessingOfLightningBonus } from "../../AdditionalBlessingDamage";
 import { HandleDamageEffect } from "../../../../gameMechanics/HandleDamageEffect";
 import { FlashAnimationAtom } from "../../../../atom/effects/FlashAnimationAtom";
 
@@ -52,7 +52,7 @@ const VolleyTar20 = (
             targetEnemy.health -= damage;
             HandleDamageEffect(damage, "Physical", "npc", targetEnemy.id);
             BlessingOfBurnBonus(character, targetEnemy);
-            BlessingOfHolyDamageBonus(character, targetEnemy);
+            BlessingOfLightningBonus(character, targetEnemy);
         });
 
         storeAtom.set(FlashAnimationAtom, (prev) => ({ ...prev, ...flashUpdate }));

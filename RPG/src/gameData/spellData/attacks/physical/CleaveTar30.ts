@@ -1,7 +1,7 @@
 import EnemyAtom, { EnemyType } from "../../../../atom/BaseEnemyAtom";
 import CharacterAtom, { CharacterType } from "../../../../atom/CharacterAtom";
 import { storeAtom } from "../../../../atom/storeAtom";
-import { BlessingOfBurnBonus, BlessingOfHolyDamageBonus } from "../../AdditionalBlessingDamage";
+import { BlessingOfBurnBonus, BlessingOfLightningBonus } from "../../AdditionalBlessingDamage";
 import { HandleDamageEffect } from "../../../../gameMechanics/HandleDamageEffect";
 import { FlashAnimationAtom } from "../../../../atom/effects/FlashAnimationAtom";
 
@@ -83,7 +83,7 @@ const CleaveTar30 = (
             flashUpdate[nextEnemy.id] = spellAnimation;
             HandleDamageEffect(damage, "Physical", "npc", nextEnemy.id);
             BlessingOfBurnBonus(character, nextEnemy);
-            BlessingOfHolyDamageBonus(character, nextEnemy);
+            BlessingOfLightningBonus(character, nextEnemy);
             nextEnemy.health -= damage;
             storeAtom.set(FlashAnimationAtom, (prev) => ({ ...prev, ...flashUpdate }));
             setTimeout(() => {
@@ -99,7 +99,7 @@ const CleaveTar30 = (
 
         HandleDamageEffect(damage, "Physical", "npc", enemy.id);
         BlessingOfBurnBonus(character, enemy);
-        BlessingOfHolyDamageBonus(character, enemy);
+        BlessingOfLightningBonus(character, enemy);
         flashUpdate[enemy.id] = spellAnimation;
 
         storeAtom.set(FlashAnimationAtom, (prev) => ({ ...prev, ...flashUpdate }));

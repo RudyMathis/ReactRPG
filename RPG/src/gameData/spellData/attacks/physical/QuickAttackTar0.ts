@@ -2,7 +2,7 @@ import { EnemyType } from "../../../../atom/BaseEnemyAtom";
 import { CharacterType } from "../../../../atom/CharacterAtom";
 import { HandleDamageEffect } from "../../../../gameMechanics/HandleDamageEffect";
 
-import { BlessingOfBurnBonus, BlessingOfHolyDamageBonus } from "../../AdditionalBlessingDamage";
+import { BlessingOfBurnBonus, BlessingOfLightningBonus } from "../../AdditionalBlessingDamage";
 
 const QuickAttackTar0 = (enemy: EnemyType, character: CharacterType, target: CharacterType | EnemyType, spellCost: number) =>{ 
     const targetCharacter = 'id' in target && target.id === character.id && target.type === character.type
@@ -21,7 +21,7 @@ const QuickAttackTar0 = (enemy: EnemyType, character: CharacterType, target: Cha
 
         HandleDamageEffect(damage, "Phyical", "npc", enemy.id);
         BlessingOfBurnBonus(character, enemy);
-        BlessingOfHolyDamageBonus(character, enemy);
+        BlessingOfLightningBonus(character, enemy);
         return enemy.health - damage;
     }
 }

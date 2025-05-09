@@ -118,7 +118,6 @@ function BaseEntityDisplay({ entity }: EnityDetailProps) {
                 </div>
             )}
             <div className={styles.spriteGlow} data-entity-size={('size' in entity) ? entity.size : ''}></div> 
-            {/* <div className={styles.spriteContainer} data-type={entity.type} {entity.health > 0 ? '' : 'data-death = true'}> */}
             <div className={styles.spriteContainer} data-type={entity.type} {...(entity.health <= 0 ? { 'data-death': true } : {})}>
                 {entity.health > 0 ? (
                     <>
