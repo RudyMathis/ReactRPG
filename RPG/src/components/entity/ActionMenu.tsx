@@ -49,8 +49,7 @@ const ActionMenu = ({ isVisible, type, onSpell, detailScreen, isCurrentTurn }: A
                                 }
 
                                 const buttonProps = {
-                                    className: `${styles.actionMenuButton} element-${element.toLowerCase()}`,
-                                    'data-element':`${element}`,
+                                    className: `${styles.actionMenuButton}`,
                                     onClick: () => {
                                         onSpell();
                                         handleSpellClick(spell);
@@ -60,25 +59,36 @@ const ActionMenu = ({ isVisible, type, onSpell, detailScreen, isCurrentTurn }: A
                                 };
 
                                 const label = attacks[spell]?.name || buffs[spell]?.name;
-                
+
                                 if (spell.includes('_Char') && type === 'character') {
+                                    const costLabel = buffs[spell].cost == 0 ? 'Free' : '';
+                                    const displayCost = Math.abs(buffs[spell].cost ?? 0);
+                                    const stat = buffs[spell]?.stat;
+                                    const statValue = buffs[spell]?.statValue;
+                                    const isMoreInfo = buffs[spell]?.isMoreInfo;
+                                    const additionalInfo = buffs[spell]?.additionalInfo;
                                     
                                     if (isSelf && !char.id) { 
                                         return null;
                                     } else {
                                         return <button key={`${char.id}-${index}`} {...buttonProps}>
-                                            {label} 
-                                            <MoreInformationDisplay
-                                                spellName={label}
-                                                spellCost={attacks[spell]?.cost || buffs[spell]?.cost || 0}
-                                                spellElement={attacks[spell]?.element || buffs[spell]?.element || ''}
-                                                spellDamage={attacks[spell]?.damageMulitplier || 0}
-                                            />
+                                            <div className={styles.spellInfo}>
+                                                <p data-element={`${element}`} className={styles.spellName}>{label}</p>
+                                                <p className={styles.spellCost}>{costLabel}{costLabel !== 'Free' ? ` ${displayCost}` : ''}</p>
+                                            </div>
+                                            <p className={styles.spellDefense}>{statValue} {stat}</p>
+                                            {isMoreInfo && 
+                                                <MoreInformationDisplay
+                                                    spellInfo={additionalInfo ?? ''}
+                                                />
+                                            }
                                         </button>;
                                     }
                                 }
                 
                                 if (spell.includes('_Tar') && type === 'enemy') {
+                                    const costLabel = attacks[spell].cost < 0 ? '+' : '';
+                                    const displayCost = Math.abs(attacks[spell].cost);
 
                                     let resistance;
                                     if(playerTarget?.resistances.find(res => res.type === element)) {
@@ -95,20 +105,17 @@ const ActionMenu = ({ isVisible, type, onSpell, detailScreen, isCurrentTurn }: A
                                     }
 
                                     let defense = playerTarget?.defense ?? 0;
-
                                     if(element !== 'Physical') defense = 0;
 
                                     const rawAdjusted = spellDamage + vulnerability - resistance;
                                     const adjustedDamage = Math.max(5, Math.round(rawAdjusted - defense));
 
                                     return <button key={`${char.id}-${index}`} {...buttonProps}>
-                                        {label}
-                                        <MoreInformationDisplay
-                                            spellName={label}
-                                            spellCost={attacks[spell]?.cost || 0}
-                                            spellElement={attacks[spell]?.element || ''}
-                                            spellDamage={adjustedDamage || 0}
-                                        />
+                                        <div className={styles.spellInfo}>
+                                            <p data-element={`${element}`} className={styles.spellName}>{label}</p>
+                                            <p className={styles.spellCost}>{costLabel}{displayCost}</p>
+                                        </div>
+                                        <p data-vulnerability={vulnerability > 0} data-resistance={resistance > 0} className={styles.spellDamage}>{adjustedDamage}</p>
                                     </button>;
                                 }
                 

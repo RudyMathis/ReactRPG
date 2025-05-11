@@ -2,13 +2,13 @@ import CharacterAtom, { CharacterType } from "../../../atom/CharacterAtom";
 import { storeAtom } from "../../../atom/storeAtom";
 import { FlashAnimationAtom } from "../../../atom/effects/FlashAnimationAtom";
 
+const spellCost = 40;
+const stat = "party health";
+const statValue = 15;
 const HealAllChar40 = (
-    character: CharacterType,
-    _target: CharacterType,
-    spellCost: number
+    character: CharacterType
 ): { id: number; health: number }[] => {
-    const heal = 15;
-    spellCost = 40;
+    const heal = statValue;
     character.mana -= spellCost;
 
     const characters = Object.values(storeAtom.get(CharacterAtom));
@@ -55,4 +55,5 @@ const HealAllChar40 = (
     return selectedCharacters;
 };
 
+export { spellCost, stat, statValue };
 export default HealAllChar40;

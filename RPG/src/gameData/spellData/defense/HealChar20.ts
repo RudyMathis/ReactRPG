@@ -1,12 +1,13 @@
 import { CharacterType } from "../../../atom/CharacterAtom";
 
+const spellCost = 20;
+const stat = "health";
+const statValue = 20;
 const HealChar20 = (
     character: CharacterType,
-    target: CharacterType,
-    spellCost: number
+    target: CharacterType
 ): { id: number; health: number }[] => {
-    const heal = 20;
-    spellCost = 20;
+    const heal = statValue;
     character.mana -= spellCost;
 
     const targetChar = character.id === target.id ? character : target;
@@ -16,4 +17,5 @@ const HealChar20 = (
     return [{ id: targetChar.id, health: targetChar.health }];
 };
 
+export { spellCost, stat, statValue };
 export default HealChar20;

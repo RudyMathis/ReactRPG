@@ -3,13 +3,13 @@ import { FlashAnimationAtom } from "../../../atom/effects/FlashAnimationAtom";
 import { storeAtom } from "../../../atom/storeAtom";
 import Buffs, { Buff } from "../../Buffs";
 
-const ProtectPartyChar50 = (
-    character: CharacterType,
-    _target: CharacterType,
-    spellCost: number
-): { id: number; buff: Buff }[] => {
+const spellCost = 50;
+const isMoreInfo = true;
+const additionalInfo = "Increase defense for the party";
 
-    spellCost = 50;
+const ProtectPartyChar50 = (
+    character: CharacterType
+): { id: number; buff: Buff }[] => {
     character.mana -= spellCost;
 
     const characters = Object.values(storeAtom.get(CharacterAtom));
@@ -60,4 +60,5 @@ const ProtectPartyChar50 = (
     return selectedCharacters.map(char => ({ id: char.id, buff: Buffs.Protected }));
 };
 
+export { spellCost, isMoreInfo, additionalInfo };
 export default ProtectPartyChar50;

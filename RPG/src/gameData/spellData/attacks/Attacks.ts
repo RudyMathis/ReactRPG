@@ -63,7 +63,6 @@ import { spellCost as HolyStrikeCost, damageMulitplier as HolyStrikeDamageMulitp
 import BurningSpiritsTar60 from "./fire/BurningSpiritsTar60";
 import { spellCost as BurningSpiritsCost, damageMulitplier as BurningSpiritsDamageMulitplier } from "./fire/BurningSpiritsTar60";
 
-
 import { ElementType } from "../ElementTypes";
 import { EnemyType } from "../../../atom/BaseEnemyAtom";
 import { CharacterType } from "../../../atom/CharacterAtom";
@@ -72,7 +71,7 @@ export type AttackMeta = {
     name: string;
     element: ElementType;
     cost: number;
-    damageMulitplier?: number;
+    damageMulitplier: number;
     func: (
         enemy: EnemyType,
         character: CharacterType,

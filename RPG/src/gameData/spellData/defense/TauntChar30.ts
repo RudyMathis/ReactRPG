@@ -1,13 +1,12 @@
 import Buffs, { Buff } from "../../Buffs";
 import { CharacterType } from "../../../atom/CharacterAtom";
 
+const spellCost = 30;
+const isMoreInfo = true;
+const additionalInfo = "Increase health/defense and forces enemy to attack you";
 const TauntChar30 = (
     character: CharacterType,
-    _target: CharacterType,
-    spellCost: number
 ): { id: number; buff: Buff } => {
-
-    spellCost = 30;
     character.mana -= spellCost;
 
     if (character.buffs.find(d => d.name === Buffs.Taunter.buffName)) {
@@ -27,4 +26,5 @@ const TauntChar30 = (
 
 };
 
+export { spellCost, isMoreInfo, additionalInfo };
 export default TauntChar30;

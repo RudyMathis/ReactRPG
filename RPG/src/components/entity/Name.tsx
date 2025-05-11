@@ -18,7 +18,7 @@ const Name: React.FC<NameProps> = ({ entity }) => {
         .replace('Rabid', '')
         .replace('King', '')
         .replace('Assassin', '')
-        .replace('Knight', '')
+        // .replace('Knight', '')
         .replace('Warlock', '')
         .replace('Ancient', '')
         .replace('Paladin', '')

@@ -1,11 +1,12 @@
 import { CharacterType } from "../../../atom/CharacterAtom";
 
+const spellCost = 10;
+const isMoreInfo = true;
+const additionalInfo = "Removes all debuffs";
 const CureChar10 = (
     character: CharacterType,
-    target: CharacterType,
-    spellCost: number
+    target: CharacterType
     ): { id: number; health: number }[] => {
-        spellCost = 10;
         character.mana -= spellCost;
     
         if (target.debuffs.length > 0 && target.health > 0) {
@@ -15,4 +16,5 @@ const CureChar10 = (
         return [{ id: target.id, health: target.health }];
     };
 
+export { spellCost, isMoreInfo, additionalInfo };
 export default CureChar10;

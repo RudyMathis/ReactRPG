@@ -46,13 +46,13 @@ const elementEffects: Record<string, Partial<EnemyType>> = {
 };
 
 const classEffects: Record<string, Partial<EnemyType>> = {
-    "Knight": {
-        attack: 15,
-        attackDefault: 15,
-        defense: 10,
-        defenseDefault: 10,
-        spells: ["Heroic_Strike_Tar$-20"],
-    },
+    // "Knight": {
+    //     attack: 15,
+    //     attackDefault: 15,
+    //     defense: 10,
+    //     defenseDefault: 10,
+    //     spells: ["Heroic_Strike_Tar$-20"],
+    // },
     "Rabid": {
         attack: 10,
         attackDefault: 10,
@@ -136,7 +136,9 @@ class EnemyFactory {
             }
         });
 
-        if (baseEnemy.maxMana === 0 && modifiedEnemy.name.includes("Fire") || modifiedEnemy.name.includes("Ice") || modifiedEnemy.name.includes("Knight") ) {
+        if (baseEnemy.maxMana === 0 && modifiedEnemy.name.includes("Fire") || modifiedEnemy.name.includes("Ice") 
+            // || modifiedEnemy.name.includes("Knight") 
+        ) {
             modifiedEnemy = {
                 ...modifiedEnemy,
                 mana: addedMana,

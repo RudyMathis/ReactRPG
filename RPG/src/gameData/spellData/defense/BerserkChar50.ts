@@ -1,13 +1,13 @@
 import Buffs, { Buff } from "../../Buffs";
 import { CharacterType } from "../../../atom/CharacterAtom";
 
-const BerserkChar50 = (
-    character: CharacterType,
-    _target: CharacterType,
-    spellCost: number
-): { id: number; buff: Buff } => {
+const spellCost = 50;
+const isMoreInfo = true;
+const additionalInfo = "Increase attack and speed";
 
-    spellCost = 50;
+const BerserkChar50 = (
+    character: CharacterType
+): { id: number; buff: Buff } => {
     character.mana -= spellCost;
 
     if (character.buffs.find(d => d.name === Buffs.Berserk.buffName)) {
@@ -25,4 +25,5 @@ const BerserkChar50 = (
 
 };
 
+export { spellCost, isMoreInfo, additionalInfo };
 export default BerserkChar50;

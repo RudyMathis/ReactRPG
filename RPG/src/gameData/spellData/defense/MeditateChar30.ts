@@ -1,17 +1,18 @@
 import { CharacterType } from "../../../atom/CharacterAtom";
 import { BlessingsData } from "../../characters/blessings/BlessingsData";
 
+const spellCost = 0;
+const stat = "mana";
+const statValue = 30;
 const MeditateChar30 = (
     character: CharacterType,
-    target: CharacterType,
-    spellCost: number
+    target: CharacterType
 ): { id: number; mana: number } => {
-    let manaRestore = 30;
+    let manaRestore = statValue;
     if(character.blessings.some(d => d.name === BlessingsData.BlessingOfManaRegen.name)) {
         manaRestore *= 2;
     }
     
-    spellCost = 0;
     character.mana += spellCost;
 
     if (character.id !== target.id) {
@@ -22,4 +23,5 @@ const MeditateChar30 = (
     return { id: character.id, mana: character.mana };
 };
 
+export { spellCost, stat, statValue };
 export default MeditateChar30;

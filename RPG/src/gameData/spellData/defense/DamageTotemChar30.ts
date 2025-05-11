@@ -3,13 +3,13 @@ import { FlashAnimationAtom } from "../../../atom/effects/FlashAnimationAtom";
 import { storeAtom } from "../../../atom/storeAtom";
 import Buffs, { Buff } from "../../Buffs";
 
-const DamageTotemChar30 = (
-    character: CharacterType,
-    _target: CharacterType,
-    spellCost: number
-): { id: number; buff: Buff }[] => {
+const spellCost = 30;
+const isMoreInfo = true;
+const additionalInfo = "Increase attack damage for the party";
 
-    spellCost = 30;
+const DamageTotemChar30 = (
+    character: CharacterType
+): { id: number; buff: Buff }[] => {
     character.mana -= spellCost;
 
     const characters = Object.values(storeAtom.get(CharacterAtom));
@@ -61,4 +61,5 @@ const DamageTotemChar30 = (
     return selectedCharacters.map(char => ({ id: char.id, buff: Buffs.DamageTotem }));
 };
 
+export { spellCost, isMoreInfo, additionalInfo };
 export default DamageTotemChar30;

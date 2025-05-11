@@ -90,12 +90,24 @@
 
 .actionMenuButton {
     display: flex;
-    align-items: center;
+    align-items:flex-start;
     justify-content: space-between;
     padding: 5px 10px;
     background-color: var(--background-secondary);
     color: var(--font);
     border: 1px solid var(--background-secondary);
+}
+
+.spellInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: .25rem;
+    margin-right: 1rem;
+}
+
+.spellCost {
+    font-size: .8rem;;
 }
 
 .actionMenuButton:disabled, .actionMenuButton:disabled:hover {
@@ -106,6 +118,52 @@
 .actionMenuButton:hover {
     cursor: pointer;
     filter: brightness(1.2);
+}
+
+.spellName[data-element='Fire'] {
+	color: var(--fire);
+}
+
+.spellName[data-element='Water'] {
+	color: var(--water);
+}
+.spellName[data-element='Ice'] {
+	color: var(--ice);
+}
+
+.spellName[data-element='Earth'] {
+	color: var(--earth);
+}
+
+.spellName[data-element='Lightning'] {
+	color: var(--lightning);
+}
+
+.spellName[data-element='Dark'] {
+	color: var(--dark);
+}
+
+.spellName[data-element='Holy'] {
+	color: var(--light);
+}
+
+.spellDamage[data-vulnerability='true'] {
+    color: var(--buff);
+}
+
+.spellDamage[data-resistance='true'] {
+    color: var(--debuff);
+}
+
+.spellDefense {
+    font-size: .8rem;
+}
+
+@media screen and (max-height: 420px) {
+    .actionMenuButton {
+        padding: 2px 5px;
+        font-size: 1.25rem;
+    }
 }
 
 /* DETAIL SCREEN */
@@ -174,40 +232,6 @@
     color: var(--debuff);
 }
 
-/* Action Menu */
-.actionMenuButton[data-element='Fire'] {
-	color: var(--fire);
-}
-
-.actionMenuButton[data-element='Water'] {
-	color: var(--water);
-}
-.actionMenuButton[data-element='Ice'] {
-	color: var(--ice);
-}
-
-.actionMenuButton[data-element='Earth'] {
-	color: var(--earth);
-}
-
-.actionMenuButton[data-element='Lightning'] {
-	color: var(--lightning);
-}
-
-.actionMenuButton[data-element='Dark'] {
-	color: var(--dark);
-}
-
-.actionMenuButton[data-element='Holy'] {
-	color: var(--light);
-}
-
-@media screen and (max-height: 420px) {
-    .actionMenuButton {
-        padding: 2px 5px;
-        font-size: 1.25rem;
-    }
-}
 
 /* More information button */
 
@@ -224,12 +248,16 @@
     position: absolute;
     top: -15%;
     left: 0;
-    transform: translate( 33%, -15%);
-    width: max-content;
-    line-height: 1.1rem;
-    padding: 1rem;
-    font-size: 1.25rem;
+    transform: translate( 12%, -15%);
+    /* min-width: 15em; */
+    /* width: content; */
+    max-width: 30em;
+    padding: 2rem;
+    line-height: 1.25rem;
+    font-size: .9rem;
+    text-wrap: pretty;
     image-rendering: pixelated;
+    background-color: var(--background-secondary);
     border-image-slice: var(--border-image-slice);
     border-image-width: var(--border-image-width);
     border-image-source: var(--border-image-source);

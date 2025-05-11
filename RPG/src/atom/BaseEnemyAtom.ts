@@ -88,7 +88,7 @@ export const getRandomElement = (): string => {
 // Function to get a random class based on enemy group
 export const getRandomClass = (group: string): string => {
     if (group === "humanoide") {
-        const classes = ["Knight", "Warlock", "Assassin", "Paladin", ""];
+        const classes = ["Warlock", "Assassin", "Paladin", ""];
         return classes[Math.floor(Math.random() * classes.length)];
     } 
     if (group === "beast") {

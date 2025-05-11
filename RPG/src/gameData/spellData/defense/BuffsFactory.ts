@@ -1,14 +1,31 @@
-import HealChar20 from "./HealChar20";
-import CureChar10 from "./CureChar10";
-import HealAllChar40 from "./HealAllChar40";
 import { CharacterType } from "../../../atom/CharacterAtom";
-import MeditateChar30 from "./MeditateChar30";
-import BerserkChar50 from "./BerserkChar50";
 import { ElementTypes } from "../ElementTypes";
-import DamageTotemChar30 from "./DamageTotemChar30";
 import CharacterBuffResult from "../../characters/CharacterBuffResultType";
+
+import HealChar20 from "./HealChar20";
+import { spellCost as HealChar20Cost , stat as HealChar20Stat, statValue as HealChar20StatValue } from "./HealChar20";
+
+import CureChar10 from "./CureChar10";
+import { spellCost as CureChar10Cost , isMoreInfo as CureChar10isMoreInfo, additionalInfo as CureChar10additionalInfo } from "./CureChar10";
+
+import HealAllChar40 from "./HealAllChar40";
+import { spellCost as HealAllChar40Cost , stat as HealAllChar40Stat, statValue as HealAllChar40StatValue } from "./HealAllChar40";
+
+import MeditateChar30 from "./MeditateChar30";
+import { spellCost as MeditateChar30Cost , stat as MeditateChar30Stat, statValue as MeditateChar30StatValue } from "./MeditateChar30";
+
+import BerserkChar50 from "./BerserkChar50";
+import { spellCost as BerserkChar50Cost , isMoreInfo as BerserkChar50isMoreInfo, additionalInfo as BerserkChar50additionalInfo } from "./BerserkChar50";
+
+import DamageTotemChar30 from "./DamageTotemChar30";
+import { spellCost as DamageTotemChar30Cost , isMoreInfo as DamageTotemChar30isMoreInfo, additionalInfo as DamageTotemChar30additionalInfo } from "./DamageTotemChar30";
+
 import TauntChar30 from "./TauntChar30";
+import { spellCost as TauntChar30Cost , isMoreInfo as TauntChar30isMoreInfo, additionalInfo as TauntChar30additionalInfo } from "./TauntChar30";
+
 import ProtectPartyChar50 from "./ProtectPartyChar50";
+import { spellCost as ProtectPartyChar50Cost , isMoreInfo as ProtectPartyChar50isMoreInfo, additionalInfo as ProtectPartyChar50additionalInfo } from "./ProtectPartyChar50";
+
 type BuffFunction = (
     character: CharacterType,
     target: CharacterType,
@@ -19,12 +36,15 @@ type BuffMeta = {
     name: string;
     buffName?: string;
     cost: number;
+    stat?: string;
+    isMoreInfo?: boolean;
+    additionalInfo?: string;
+    statValue?: number;
     func: BuffFunction;
     element: string;
     isSelfBuff: boolean;
     isAoe: boolean;
     isBuff: boolean;
-    stat?: string;
     isMana?: boolean;
     animation: {
         name: string;
@@ -44,7 +64,9 @@ const imagePath = '/assets/vfx/spell_';
 const buffs: Record<string, BuffMeta> = {
     Heal__Char$20: { 
         name: 'Heal',
-        cost: 20,
+        cost: HealChar20Cost,
+        stat: HealChar20Stat,
+        statValue: HealChar20StatValue,
         func: HealChar20, 
         element: ElementTypes.Holy, 
         isSelfBuff: false, 
@@ -63,7 +85,9 @@ const buffs: Record<string, BuffMeta> = {
     },
     Cure__Char$10: { 
         name: 'Cure',
-        cost: 10,
+        cost: CureChar10Cost,
+        isMoreInfo: CureChar10isMoreInfo,
+        additionalInfo: CureChar10additionalInfo,
         func: CureChar10, 
         element: ElementTypes.Holy, 
         isSelfBuff: false,
@@ -80,7 +104,9 @@ const buffs: Record<string, BuffMeta> = {
     },
     Heal_All_Char$40: { 
         name: 'Heal All',
-        cost: 40,
+        cost: HealAllChar40Cost,
+        stat: HealAllChar40Stat,
+        statValue: HealAllChar40StatValue,
         func: HealAllChar40, 
         element: ElementTypes.Holy, 
         isSelfBuff: false,
@@ -100,7 +126,9 @@ const buffs: Record<string, BuffMeta> = {
     Damage_Totem_Char$30: { 
         name: 'Damage Totem',
         buffName: 'Damage Totem',
-        cost: 30,
+        cost: DamageTotemChar30Cost,
+        isMoreInfo: DamageTotemChar30isMoreInfo,
+        additionalInfo: DamageTotemChar30additionalInfo,
         func: DamageTotemChar30, 
         element: ElementTypes.Physical, 
         isSelfBuff: false,
@@ -120,7 +148,9 @@ const buffs: Record<string, BuffMeta> = {
     Protect_Party_Char$50: { 
         name: 'Protect Party',
         buffName: 'Protected',
-        cost: 50,
+        cost: ProtectPartyChar50Cost,
+        isMoreInfo: ProtectPartyChar50isMoreInfo,
+        additionalInfo: ProtectPartyChar50additionalInfo,
         func: ProtectPartyChar50, 
         element: ElementTypes.Physical, 
         isSelfBuff: false,
@@ -138,7 +168,9 @@ const buffs: Record<string, BuffMeta> = {
     Berserk__Char$50: { 
         name: 'Berserk',
         buffName: 'Berserk',
-        cost: 50,
+        cost: BerserkChar50Cost,
+        isMoreInfo: BerserkChar50isMoreInfo,
+        additionalInfo: BerserkChar50additionalInfo,
         func: BerserkChar50, 
         element: ElementTypes.Fire, 
         isSelfBuff: true,
@@ -156,7 +188,9 @@ const buffs: Record<string, BuffMeta> = {
     Taunt__Char$30: { 
         name: 'Taunt',
         buffName: 'Taunter',
-        cost: 30,
+        cost: TauntChar30Cost,
+        isMoreInfo: TauntChar30isMoreInfo,
+        additionalInfo: TauntChar30additionalInfo,
         func: TauntChar30, 
         element: ElementTypes.Physical, 
         isSelfBuff: true,
@@ -174,7 +208,9 @@ const buffs: Record<string, BuffMeta> = {
     },
     'Meditate__Char$-30': { 
         name: 'Meditate',
-        cost: -30,
+        cost: MeditateChar30Cost,
+        stat: MeditateChar30Stat,
+        statValue: MeditateChar30StatValue,
         func: MeditateChar30, 
         element: ElementTypes.Holy, 
         isSelfBuff: true,
