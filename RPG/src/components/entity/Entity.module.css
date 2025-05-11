@@ -89,6 +89,9 @@
 }
 
 .actionMenuButton {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     padding: 5px 10px;
     background-color: var(--background-secondary);
     color: var(--font);
@@ -204,4 +207,48 @@
         padding: 2px 5px;
         font-size: 1.25rem;
     }
+}
+
+/* More information button */
+
+.moreInformationIcon {
+    background-color: transparent;
+    color: var(--buff);
+    border: none;
+    padding: 0 .5rem 0 1em;
+    text-shadow: none;
+}
+
+.moreInformationText {
+    display: none;
+    position: absolute;
+    top: -15%;
+    left: 0;
+    transform: translate( 33%, -15%);
+    width: max-content;
+    line-height: 1.1rem;
+    padding: 1rem;
+    font-size: 1.25rem;
+    image-rendering: pixelated;
+    border-image-slice: var(--border-image-slice);
+    border-image-width: var(--border-image-width);
+    border-image-source: var(--border-image-source);
+    border-image-repeat: var(--border-image-repeat);
+    color: var(--font);
+    z-index: var(--high-layer);
+    text-align: justify;
+}
+
+.moreInformationText p {
+    padding: .25rem;
+    font-size: .9rem;
+}
+
+.moreInformationWrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.moreInformationWrapper:hover .moreInformationText {
+    display: block;
 }

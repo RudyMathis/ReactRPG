@@ -5,13 +5,13 @@ import { BlessingOfBurnBonus, BlessingOfLightningBonus } from "../../AdditionalB
 import { HandleDamageEffect } from "../../../../gameMechanics/HandleDamageEffect";
 import { FlashAnimationAtom } from "../../../../atom/effects/FlashAnimationAtom";
 
+const spellCost = 20;
+const damageMulitplier = 1;
 const VolleyTar20 = (
     enemy: EnemyType,
     character: CharacterType,
-    target: CharacterType | EnemyType,
-    spellCost: number
+    target: CharacterType | EnemyType
 ) => {
-    spellCost = 20;
     const targetCharacter = 'id' in target && target.id === character.id && target.type === character.type
     const spellAnimation = 'shoot';
 
@@ -23,7 +23,7 @@ const VolleyTar20 = (
         const flashUpdate: Record<number, string | null> = {};
 
         selectedCharacters.forEach(targetChar => {
-            const damage = Math.max(5, Math.round(enemy.attack) - targetChar.defense);
+            const damage = Math.max(5, Math.round((enemy.attack * damageMulitplier) - targetChar.defense));
             targetChar.health -= damage;
             HandleDamageEffect(damage, "Physical", "player", targetChar.id);
         });
@@ -48,7 +48,7 @@ const VolleyTar20 = (
     
         enemies.forEach(targetEnemy => {
             flashUpdate[targetEnemy.id] = spellAnimation;
-            const damage = Math.max(5, Math.round(character.attack - targetEnemy.defense));
+            const damage = Math.max(5, Math.round((character.attack * damageMulitplier) - targetEnemy.defense));
             targetEnemy.health -= damage;
             HandleDamageEffect(damage, "Physical", "npc", targetEnemy.id);
             BlessingOfBurnBonus(character, targetEnemy);
@@ -70,4 +70,5 @@ const VolleyTar20 = (
     }
 };
 
+export { spellCost, damageMulitplier };
 export default VolleyTar20;

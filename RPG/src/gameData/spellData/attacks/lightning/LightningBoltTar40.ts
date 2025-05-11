@@ -5,18 +5,19 @@ import Resistances from "../../../Resistances";
 import Vulnerabilites from "../../../Vulnerabilities";
 import { BlessingOfBurnBonus } from "../../AdditionalBlessingDamage";
 
-const LightningBoltTar40 = (enemy: EnemyType, character: CharacterType, target: CharacterType | EnemyType, spellCost: number) =>{ 
+const spellCost = 40;
+const damageMulitplier = 1.25;
+const LightningBoltTar40 = (enemy: EnemyType, character: CharacterType, target: CharacterType | EnemyType) =>{ 
     const targetCharacter = 'id' in target && target.id === character.id && target.type === character.type
-    spellCost = 40;
 
     if(targetCharacter) {
         enemy.mana -= spellCost;
 
+        const damage = Math.round(enemy.attack * damageMulitplier)
         const lightningResistance = character.resistances.find(res => res.type ===  Resistances.Lightning.type);
-        const lightningVulnerability = character.vulnerabilities.find(vul => vul.type === Vulnerabilites.Lightning.type);
-        const damageResistance = Math.max(1, Math.round(enemy.attack - Resistances.Lightning.value))
-        const damageVulnerability = Math.round(enemy.attack + Vulnerabilites.Lightning.value)
-        const damage = Math.round(enemy.attack * 1.25)
+        const lightningVulnerability = character.vulnerabilities.find(vul => vul.type === Vulnerabilites.Lightning.name);
+        const damageResistance = Math.max(5, Math.round(damage - Resistances.Lightning.value))
+        const damageVulnerability = Math.round(damage + Vulnerabilites.Lightning.value)
         character.mana = Math.round(character.mana / 2);
         
         if (lightningResistance) {
@@ -32,11 +33,11 @@ const LightningBoltTar40 = (enemy: EnemyType, character: CharacterType, target: 
     } else {
         character.mana -= spellCost;
 
+        const damage = Math.round(character.attack * damageMulitplier)
         const lightningResistance = enemy.resistances.find(res => res.type ===  Resistances.Lightning.type);
-        const lightningVulnerability = enemy.vulnerabilities.find(vul => vul.type === Vulnerabilites.Lightning.type);
-        const damageResistance = Math.max(1, Math.round(character.attack - Resistances.Lightning.value))
-        const damageVulnerability = Math.round(character.attack + Vulnerabilites.Lightning.value)
-        const damage = Math.round(character.attack * 1.25)
+        const lightningVulnerability = enemy.vulnerabilities.find(vul => vul.type === Vulnerabilites.Lightning.name);
+        const damageResistance = Math.max(5, Math.round(damage - Resistances.Lightning.value))
+        const damageVulnerability = Math.round(damage + Vulnerabilites.Lightning.value)
         enemy.mana = Math.round(enemy.mana / 2);
 
         BlessingOfBurnBonus(character, enemy);
@@ -54,4 +55,5 @@ const LightningBoltTar40 = (enemy: EnemyType, character: CharacterType, target: 
     }
 }
 
+export { spellCost, damageMulitplier };
 export default LightningBoltTar40

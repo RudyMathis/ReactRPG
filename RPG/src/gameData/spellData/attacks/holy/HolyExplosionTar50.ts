@@ -4,14 +4,17 @@ import { storeAtom } from "../../../../atom/storeAtom";
 import { BlessingOfBurnBonus, BlessingOfLightningBonus } from "../../AdditionalBlessingDamage";
 import { HandleDamageEffect } from "../../../../gameMechanics/HandleDamageEffect";
 import { FlashAnimationAtom } from "../../../../atom/effects/FlashAnimationAtom";
+import Resistances from "../../../Resistances";
+import Vulnerabilites from "../../../Vulnerabilities";
 
+const spellCost = 50;
+const damageMulitplier = .9;
 const HolyExplosionTar50 = (
     enemy: EnemyType,
     character: CharacterType,
-    target: CharacterType | EnemyType,
-    spellCost: number
+    target: CharacterType | EnemyType
 ) => {
-    spellCost = 50;
+
     const targetCharacter = 'id' in target && target.id === character.id && target.type === character.type
     const spellAnimation = 'holyExplosion';
 
@@ -24,15 +27,16 @@ const HolyExplosionTar50 = (
 
         selectedCharacters.forEach(targetChar => {
             flashUpdate[targetChar.id] = spellAnimation;
-            const resistance = targetChar.resistances.find(res => res.type === "Holy")?.value || 0;
-            const vulnerability = targetChar.vulnerabilities.find(vul => vul.type === "Holy")?.value || 0;
+            let damage = Math.round(character.attack * damageMulitplier);
+            const holyResistance = targetChar.resistances.find(res => res.type ===  Resistances.Holy.type);
+            const holyVulnerability = targetChar.vulnerabilities.find(vul => vul.type === Vulnerabilites.Holy.name);
+            const damageResistance = Math.max(5, Math.round(damage - Resistances.Holy.value))
+            const damageVulnerability = Math.round(damage + Vulnerabilites.Holy.value)
 
-            let damage = Math.round(enemy.attack * 0.9);
-
-            if (resistance > 0) {
-                damage = Math.max(10, Math.round(enemy.attack - resistance));
-            } else if (vulnerability > 0) {
-                damage = Math.round(enemy.attack + vulnerability);
+            if (holyResistance) {
+                damage = damageResistance;
+            } else if (holyVulnerability) {
+                damage = damageVulnerability;
             }
 
             targetChar.health -= damage;
@@ -59,22 +63,22 @@ const HolyExplosionTar50 = (
     
         enemies.forEach(targetEnemy => {
             flashUpdate[targetEnemy.id] = spellAnimation;
-            const resistance = targetEnemy.resistances.find(res => res.type === "Holy")?.value || 0;
-            const vulnerability = targetEnemy.vulnerabilities.find(vul => vul.type === "Holy")?.value || 0;
+            let damage = Math.round(character.attack * damageMulitplier);
+            const holyResistance = targetEnemy.resistances.find(res => res.type ===  Resistances.Holy.type);
+            const holyVulnerability = targetEnemy.vulnerabilities.find(vul => vul.type === Vulnerabilites.Holy.name);
+            const damageResistance = Math.max(5, Math.round(damage - Resistances.Holy.value))
+            const damageVulnerability = Math.round(damage + Vulnerabilites.Holy.value)
 
-            let damage = Math.round(character.attack * 0.9);
-
-            if (resistance > 0) {
-                damage = Math.max(10, Math.round(character.attack - resistance));
-            } else if (vulnerability > 0) {
-                damage = Math.round(character.attack + vulnerability);
+            if (holyResistance) {
+                damage = damageResistance;
+            } else if (holyVulnerability) {
+                damage = damageVulnerability;
             }
 
             targetEnemy.health -= damage;
             HandleDamageEffect(damage, "Holy", "npc", targetEnemy.id);
             BlessingOfBurnBonus(character, targetEnemy);
-            BlessingOfLightningBonus(character, targetEnemy);
-            
+            BlessingOfLightningBonus(character, targetEnemy);            
         });
 
         storeAtom.set(FlashAnimationAtom, (prev) => ({ ...prev, ...flashUpdate }));
@@ -92,5 +96,5 @@ const HolyExplosionTar50 = (
     }
 };
 
+export { spellCost, damageMulitplier };
 export default HolyExplosionTar50;
-

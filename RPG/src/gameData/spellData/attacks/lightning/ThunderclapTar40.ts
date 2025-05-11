@@ -4,14 +4,16 @@ import { storeAtom } from "../../../../atom/storeAtom";
 import { BlessingOfBurnBonus, BlessingOfLightningBonus } from "../../AdditionalBlessingDamage";
 import { HandleDamageEffect } from "../../../../gameMechanics/HandleDamageEffect";
 import { FlashAnimationAtom } from "../../../../atom/effects/FlashAnimationAtom"; 
+import Resistances from "../../../Resistances";
+import Vulnerabilites from "../../../Vulnerabilities";
 
+const spellCost = 40;
+const damageMulitplier = .9;
 const ThunderclapTar40 = (
     enemy: EnemyType,
     character: CharacterType,
-    target: CharacterType | EnemyType,
-    spellCost: number
+    target: CharacterType | EnemyType
 ) => {
-    spellCost = 40;
     const targetCharacter = 'id' in target && target.id === character.id && target.type === character.type
 
     const spellAnimation = 'lightning';
@@ -25,16 +27,16 @@ const ThunderclapTar40 = (
         
         selectedCharacters.forEach(targetChar => {
             flashUpdate[targetChar.id] = spellAnimation;
-            const resistance = targetChar.resistances.find(res => res.type === "Lightning")?.value || 0;
-            const vulnerability = targetChar.vulnerabilities.find(vul => vul.type === "Lightning")?.value || 0;
+            let damage = Math.round(character.attack * damageMulitplier);
+            const lightningResistance = targetChar.resistances.find(res => res.type ===  Resistances.Lightning.type);
+            const lightningVulnerability = targetChar.vulnerabilities.find(vul => vul.type === Vulnerabilites.Lightning.name);
+            const damageResistance = Math.max(5, Math.round(damage - Resistances.Lightning.value))
+            const damageVulnerability = Math.round(damage + Vulnerabilites.Lightning.value)
 
-            let damage = Math.round(enemy.attack * 0.9);
-            targetChar.mana = Math.round(targetChar.mana / 2);
-
-            if (resistance > 0) {
-                damage = Math.max(5, Math.round(enemy.attack - resistance));
-            } else if (vulnerability > 0) {
-                damage = Math.round(enemy.attack + vulnerability);
+            if (lightningResistance) {
+                damage = damageResistance;
+            } else if (lightningVulnerability) {
+                damage = damageVulnerability;
             }
 
             targetChar.health -= damage;
@@ -61,22 +63,22 @@ const ThunderclapTar40 = (
 
         enemies.forEach(targetEnemy => {
             flashUpdate[targetEnemy.id] = spellAnimation;
-            const resistance = targetEnemy.resistances.find(res => res.type === "Lightning")?.value || 0;
-            const vulnerability = targetEnemy.vulnerabilities.find(vul => vul.type === "Lightning")?.value || 0;
+            let damage = Math.round(character.attack * damageMulitplier);
+            const lightningResistance = targetEnemy.resistances.find(res => res.type ===  Resistances.Lightning.type);
+            const lightningVulnerability = targetEnemy.vulnerabilities.find(vul => vul.type === Vulnerabilites.Lightning.name);
+            const damageResistance = Math.max(5, Math.round(damage - Resistances.Lightning.value))
+            const damageVulnerability = Math.round(damage + Vulnerabilites.Lightning.value)
 
-            let damage = Math.round(character.attack * 0.9);
-            targetEnemy.mana = Math.round(targetEnemy.mana / 2);
-
-            if (resistance > 0) {
-                damage = Math.max(5, Math.round(character.attack - resistance));
-            } else if (vulnerability > 0) {
-                damage = Math.round(character.attack + vulnerability);
+            if (lightningResistance) {
+                damage = damageResistance;
+            } else if (lightningVulnerability) {
+                damage = damageVulnerability;
             }
 
+            targetEnemy.health -= damage;
             HandleDamageEffect(damage, "Lightning", "npc", targetEnemy.id);
             BlessingOfBurnBonus(character, targetEnemy);
             BlessingOfLightningBonus(character, targetEnemy);
-            targetEnemy.health -= damage;
         });
         
         storeAtom.set(FlashAnimationAtom, (prev) => ({ ...prev, ...flashUpdate }));
@@ -94,4 +96,5 @@ const ThunderclapTar40 = (
     }
 };
 
+export { spellCost, damageMulitplier };
 export default ThunderclapTar40;

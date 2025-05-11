@@ -1,36 +1,109 @@
-import { AttackMeta } from "./AttackMeta";
 import { ElementTypes } from "../ElementTypes";
 
 import DevastateTar60 from "./physical/DevastateTar60";
-import FireBallTar20 from "./fire/FireBallTar20";
-import FrostbiteTar20 from "./ice/FrostbiteTar20";
-import GarroteTar40 from "./physical/GarroteTar40";
-import HeroicStrikeTar20 from "./physical/HeroicStrikeTar20";
-import IceBoltTar30 from "./ice/IceBoltTar30";
-import LightningBoltTar40 from "./lightning/LightningBoltTar40";
-import MultiShotTar$40 from "./physical/MultiShotTar40";
-import ShadowStrikeTar0 from "./dark/ShadowStrikeTar0";
-import QuickAttackTar0 from "./physical/QuickAttackTar0";
-import ShootTar0 from "./physical/ShootTar0";
-import AimShotTar50 from "./physical/AimShotTar50";
-import VolleyTar20 from "./physical/VolleyTar20";
-import ThunderclapTar40 from "./lightning/ThunderclapTar40";
-import LeechTar10 from "./dark/LeechTar10";
-import BackstabTar60 from "./physical/BackstabTar60";
-import ShadowDaggerTar30 from "./dark/ShadowDaggerTar30";
-import CleaveTar30 from "./physical/CleaveTar30";
-import HolyExplosionTar50 from "./holy/HolyExplosionTar50";
-import HolyStrikeTar40 from "./holy/HolyStrikeTar40";
-import BurningSpiritsTar60 from "./fire/BurningSpiritsTar60";
+import { spellCost as DevastateCost, damageMulitplier as DevastateDamageMulitplier } from "./physical/DevastateTar60";
 
+import FireBallTar20 from "./fire/FireBallTar20";
+import { spellCost as FireBallCost, damageMulitplier as FireBallDamageMulitplier } from "./fire/FireBallTar20";
+
+import FrostbiteTar20 from "./ice/FrostbiteTar20";
+import { spellCost as FrostbiteCost, damageMulitplier as FrostbiteDamageMulitplier } from "./ice/FrostbiteTar20";
+
+import GarroteTar40 from "./physical/GarroteTar40";
+import { spellCost as GarroteCost, damageMulitplier as GarroteDamageMulitplier } from "./physical/GarroteTar40";
+
+import HeroicStrikeTar20 from "./physical/HeroicStrikeTar20";
+import { spellCost as HeroicStrikeCost, damageMulitplier as HeroicStrikeDamageMulitplier } from "./physical/HeroicStrikeTar20";
+
+import IceBoltTar30 from "./ice/IceBoltTar30";
+import { spellCost as IceBoltCost, damageMulitplier as IceBoltDamageMulitplier } from "./ice/IceBoltTar30";
+
+import LightningBoltTar40 from "./lightning/LightningBoltTar40";
+import { spellCost as  LightningBoltCost, damageMulitplier as  LightningBoltDamageMulitplier } from "./lightning/LightningBoltTar40";
+
+import MultiShotTar$40 from "./physical/MultiShotTar40";
+import { spellCost as MultiShotCost, damageMulitplier as MultiShotDamageMulitplier } from "./physical/MultiShotTar40";
+
+import ShadowStrikeTar0 from "./dark/ShadowStrikeTar0";
+import { spellCost as ShadowStrikeCost, damageMulitplier as ShadowStrikeDamageMulitplier } from "./dark/ShadowStrikeTar0";
+
+import QuickAttackTar0 from "./physical/QuickAttackTar0";
+import { spellCost as  QuickAttackCost, damageMulitplier as  QuickAttackDamageMulitplier } from "./physical/QuickAttackTar0";
+
+import ShootTar0 from "./physical/ShootTar0";
+import { spellCost as ShootCost, damageMulitplier as ShootDamageMulitplier } from "./physical/ShootTar0";
+
+import AimShotTar50 from "./physical/AimShotTar50";
+import { spellCost as AimShotCost, damageMulitplier as AimShotDamageMulitplier } from "./physical/AimShotTar50";
+
+import VolleyTar20 from "./physical/VolleyTar20";
+import { spellCost as VolleyCost, damageMulitplier as VolleyDamageMulitplier } from "./physical/VolleyTar20";
+
+import ThunderclapTar40 from "./lightning/ThunderclapTar40";
+import { spellCost as ThunderclapCost, damageMulitplier as ThunderclapDamageMulitplier } from "./lightning/ThunderclapTar40";
+
+import LeechTar10 from "./dark/LeechTar10";
+import { spellCost as LeechCost, damageMulitplier as LeechDamageMulitplier } from "./dark/LeechTar10";
+
+import BackstabTar60 from "./physical/BackstabTar60";
+import { spellCost as BackstabCost, damageMulitplier as BackstabDamageMulitplier } from "./physical/BackstabTar60";
+
+import ShadowDaggerTar30 from "./dark/ShadowDaggerTar30";
+import { spellCost as ShadowDaggerCost, damageMulitplier as ShadowDaggerDamageMulitplier }  from "./dark/ShadowDaggerTar30";
+
+import CleaveTar30 from "./physical/CleaveTar30";
+import { spellCost as CleaveCost, damageMulitplier as CleaveDamageMulitplier } from "./physical/CleaveTar30";
+
+import HolyExplosionTar50 from "./holy/HolyExplosionTar50";
+import { spellCost as HolyExplosionCost, damageMulitplier as HolyExplosionDamageMulitplier } from "./holy/HolyExplosionTar50";
+
+import HolyStrikeTar40 from "./holy/HolyStrikeTar40";
+import { spellCost as HolyStrikeCost, damageMulitplier as HolyStrikeDamageMulitplier } from "./holy/HolyStrikeTar40";
+
+import BurningSpiritsTar60 from "./fire/BurningSpiritsTar60";
+import { spellCost as BurningSpiritsCost, damageMulitplier as BurningSpiritsDamageMulitplier } from "./fire/BurningSpiritsTar60";
+
+
+import { ElementType } from "../ElementTypes";
+import { EnemyType } from "../../../atom/BaseEnemyAtom";
+import { CharacterType } from "../../../atom/CharacterAtom";
+
+export type AttackMeta = {
+    name: string;
+    element: ElementType;
+    cost: number;
+    damageMulitplier?: number;
+    func: (
+        enemy: EnemyType,
+        character: CharacterType,
+        target: CharacterType | EnemyType,
+        spellCost: number,
+    ) => number;
+    aoe: boolean;
+    animation: {
+        name: string;
+        duration: number;
+        width: number;
+        height: number;
+        steps: number;
+        image: string;
+        rotation?: number;
+        brightness?: number;
+        top?: number;
+        left?: number;
+    }
+    sound?: () => void;
+    description?: string;
+};
 
 const attacks: Record<string, AttackMeta> = {
     Fire_Ball_Tar$20: {
         name: 'Fire Ball',
         element: ElementTypes.Fire,
-        cost: 20,
-        aoe: false,
+        cost: FireBallCost,
+        damageMulitplier: FireBallDamageMulitplier,
         func: FireBallTar20,
+        aoe: false,
         animation: {
             name: 'fire',
             duration: 900,
@@ -43,9 +116,10 @@ const attacks: Record<string, AttackMeta> = {
     Burning_Spirits_Tar$60: {
         name: 'Burning Spirits',
         element: ElementTypes.Fire,
-        cost: 60,
-        aoe: true,
+        cost: BurningSpiritsCost,
+        damageMulitplier: BurningSpiritsDamageMulitplier,
         func: BurningSpiritsTar60,
+        aoe: true,
         animation: {
             name: 'burning',
             duration: 900,
@@ -59,9 +133,10 @@ const attacks: Record<string, AttackMeta> = {
     Ice_Bolt_Tar$30: {
         name: 'Ice Bolt',
         element: ElementTypes.Ice,
-        cost: 30,
-        aoe: false,
+        cost: IceBoltCost,
+        damageMulitplier: IceBoltDamageMulitplier,
         func: IceBoltTar30,
+        aoe: false,
         animation: {
             name: 'ice',
             duration: 900,
@@ -74,9 +149,10 @@ const attacks: Record<string, AttackMeta> = {
     Lightning_Bolt_Tar$40: {
         name: 'Lightning Bolt',
         element: ElementTypes.Lightning,
-        cost: 40,
-        aoe: false,
+        cost: LightningBoltCost,
+        damageMulitplier: LightningBoltDamageMulitplier,
         func: LightningBoltTar40,
+        aoe: false,
         animation: {
             name: 'lightning',
             duration: 900,
@@ -90,9 +166,10 @@ const attacks: Record<string, AttackMeta> = {
     Shadow_Strike_Tar$0: {
         name: 'Shadow Strike',
         element: ElementTypes.Dark,
-        cost: 0,
-        aoe: false,
+        cost: ShadowStrikeCost,
+        damageMulitplier: ShadowStrikeDamageMulitplier,
         func: ShadowStrikeTar0,
+        aoe: false,
         animation: {
             name: 'shadowStrike',
             duration: 600,
@@ -107,9 +184,10 @@ const attacks: Record<string, AttackMeta> = {
     Shadow_Dagger_Tar$30: {
         name: 'Shadow Dagger',
         element: ElementTypes.Dark,
-        cost: 30,
-        aoe: false,
+        cost: ShadowDaggerCost,
+        damageMulitplier: ShadowDaggerDamageMulitplier,
         func: ShadowDaggerTar30,
+        aoe: false,
         animation: {
             name: 'shadowDagger',
             duration: 900,
@@ -125,9 +203,10 @@ const attacks: Record<string, AttackMeta> = {
     'Heroic_Strike_Tar$-20': {
         name: 'Heroic Strike',
         element: ElementTypes.Physical,
-        cost: -20,
-        aoe: false,
+        cost: HeroicStrikeCost,
+        damageMulitplier: HeroicStrikeDamageMulitplier,
         func: HeroicStrikeTar20,
+        aoe: false,
         animation: {
             name: 'sword',
             duration: 600,
@@ -140,9 +219,10 @@ const attacks: Record<string, AttackMeta> = {
     'Leech__Tar$-10': {
         name: 'Leech',
         element: ElementTypes.Dark,
-        cost: -10,
-        aoe: false,
+        cost: LeechCost,
+        damageMulitplier: LeechDamageMulitplier,
         func: LeechTar10,
+        aoe: false,
         animation: {
             name: 'leech',
             duration: 900,
@@ -155,9 +235,10 @@ const attacks: Record<string, AttackMeta> = {
     Quick_Attack_Tar$0: {
         name: 'Quick Attack',
         element: ElementTypes.Physical,
-        cost: 0,
-        aoe: false,
+        cost: QuickAttackCost,
+        damageMulitplier: QuickAttackDamageMulitplier,
         func: QuickAttackTar0,
+        aoe: false,
         animation: {
             name: 'quickAttack',
             duration: 300,
@@ -171,9 +252,10 @@ const attacks: Record<string, AttackMeta> = {
     Garrote__Tar$40: {
         name: 'Garrote',
         element: ElementTypes.Physical,
-        cost: 40,
-        aoe: false,
+        cost: GarroteCost,
+        damageMulitplier: GarroteDamageMulitplier,
         func: GarroteTar40,
+        aoe: false,
         animation: {
             name: 'garrote',
             duration: 900,
@@ -186,9 +268,10 @@ const attacks: Record<string, AttackMeta> = {
     Frostbite__Tar$20: {
         name: 'Frostbite',
         element: ElementTypes.Ice,
-        cost: 20,
-        aoe: false,
+        cost: FrostbiteCost,
+        damageMulitplier: FrostbiteDamageMulitplier,
         func: FrostbiteTar20,
+        aoe: false,
         animation: {
             name: 'ice',
             duration: 900,
@@ -201,9 +284,10 @@ const attacks: Record<string, AttackMeta> = {
     Devastate__Tar$60: {
         name: 'Devastate',
         element: ElementTypes.Physical,
-        cost: 60,
-        aoe: false,
+        cost: DevastateCost,
+        damageMulitplier: DevastateDamageMulitplier,
         func: DevastateTar60,
+        aoe: false,
         animation: {
             name: 'devastate',
             duration: 900,
@@ -218,9 +302,10 @@ const attacks: Record<string, AttackMeta> = {
     Multi_Shot_Tar$40: {
         name: 'Multi Shot',
         element: ElementTypes.Physical,
-        cost: 40,
-        aoe: true,
+        cost: MultiShotCost,
+        damageMulitplier: MultiShotDamageMulitplier,
         func: MultiShotTar$40,
+        aoe: true,
         animation: {
             name: 'multiShot',
             duration: 900,
@@ -237,9 +322,10 @@ const attacks: Record<string, AttackMeta> = {
     Cleave__Tar$30: {
         name: 'Cleave',
         element: ElementTypes.Physical,
-        cost: 30,
-        aoe: true,
+        cost: CleaveCost,
+        damageMulitplier: CleaveDamageMulitplier,
         func: CleaveTar30,
+        aoe: true,
         animation: {
             name: 'cleave',
             duration: 900,
@@ -256,9 +342,10 @@ const attacks: Record<string, AttackMeta> = {
     Shoot__Tar$0: {
         name: 'Shoot',
         element: ElementTypes.Physical,
-        cost: 0,
-        aoe: false,
+        cost: ShootCost,
+        damageMulitplier: ShootDamageMulitplier,
         func: ShootTar0,
+        aoe: false,
         animation: {
             name: 'shoot',
             duration: 900,
@@ -273,9 +360,10 @@ const attacks: Record<string, AttackMeta> = {
     Aim_Shot_Tar$50: {
         name: 'Aim Shot',
         element: ElementTypes.Physical,
-        cost: 50,
-        aoe: false,
+        cost: AimShotCost,
+        damageMulitplier: AimShotDamageMulitplier,
         func: AimShotTar50,
+        aoe: false,
         animation: {
             name: 'aimShot',
             duration: 900,
@@ -290,9 +378,10 @@ const attacks: Record<string, AttackMeta> = {
     Volley__Tar$20: {
         name: 'Volley',
         element: ElementTypes.Physical,
-        cost: 20,
-        aoe: true,
+        cost: VolleyCost,
+        damageMulitplier: VolleyDamageMulitplier,
         func: VolleyTar20,
+        aoe: true,
         animation: {
             name: 'shoot',
             duration: 900,
@@ -307,9 +396,10 @@ const attacks: Record<string, AttackMeta> = {
     Thunderclap__Tar$40: {
         name: 'Thunderclap',
         element: ElementTypes.Lightning,
-        cost: 40,
-        aoe: true,
+        cost: ThunderclapCost,
+        damageMulitplier: ThunderclapDamageMulitplier,
         func: ThunderclapTar40,
+        aoe: true,
         animation: {
             name: 'lightning',
             duration: 900,
@@ -323,9 +413,10 @@ const attacks: Record<string, AttackMeta> = {
     Backstab__Tar$60: {
         name: 'Backstab',
         element: ElementTypes.Physical,
-        cost: 60,
-        aoe: false,
+        cost: BackstabCost,
+        damageMulitplier: BackstabDamageMulitplier,
         func: BackstabTar60,
+        aoe: false,
         animation: {
             name: 'backstab',
             duration: 900,
@@ -338,9 +429,10 @@ const attacks: Record<string, AttackMeta> = {
     Holy_Explosion_Tar$50: {
         name: 'Holy Explosion',
         element: ElementTypes.Holy,
-        cost: 50,
-        aoe: true,
+        cost: HolyExplosionCost,
+        damageMulitplier: HolyExplosionDamageMulitplier,
         func: HolyExplosionTar50,
+        aoe: true,
         animation: {
             name: 'holyExplosion',
             duration: 900,
@@ -356,9 +448,10 @@ const attacks: Record<string, AttackMeta> = {
     Holy_Strike_Tar$40: {
         name: 'Holy Strike',
         element: ElementTypes.Holy,
-        cost: 40,
-        aoe: false,
+        cost: HolyStrikeCost,
+        damageMulitplier: HolyStrikeDamageMulitplier,
         func: HolyStrikeTar40,
+        aoe: false,
         animation: {
             name: 'holyStrike',
             duration: 900,

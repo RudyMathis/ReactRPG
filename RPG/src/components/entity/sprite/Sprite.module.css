@@ -36,6 +36,7 @@
 }
 
 .entityContainer[data-attacking='true'][data-type='npc'] {
+    z-index: var(--high-layer);
     animation: attackNPCMoveAnimation 900ms linear 1 reverse; 
 }
 

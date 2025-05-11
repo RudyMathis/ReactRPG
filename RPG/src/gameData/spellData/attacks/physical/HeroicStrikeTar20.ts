@@ -3,20 +3,20 @@ import { CharacterType } from "../../../../atom/CharacterAtom";
 import { HandleDamageEffect } from "../../../../gameMechanics/HandleDamageEffect";
 import { BlessingOfBurnBonus, BlessingOfLightningBonus } from "../../AdditionalBlessingDamage";
 
-const HeroicStrikeTar20 = (enemy: EnemyType, character: CharacterType, target: CharacterType | EnemyType, spellCost: number) =>{ 
+const spellCost = -20;
+const damageMulitplier = 1;
+const HeroicStrikeTar20 = (enemy: EnemyType, character: CharacterType, target: CharacterType | EnemyType) =>{ 
     const targetCharacter = 'id' in target && target.id === character.id && target.type === character.type
 
     if(targetCharacter) {
-        spellCost = 20;
-        enemy.mana += spellCost;
-        const damage =  Math.max(5, Math.round(enemy.attack - character.defense))
+        enemy.mana += Math.abs(spellCost);
+        const damage = Math.max(5, Math.round((enemy.attack * damageMulitplier) - character.defense))
         HandleDamageEffect(damage, "Physical", "player", character.id);
 
         return character.health - damage;
     } else {
-        spellCost = 20;
-        character.mana += spellCost;
-        const damage =  Math.max(5, Math.round(character.attack - enemy.defense))
+        character.mana += Math.abs(spellCost);
+        const damage = Math.max(5, Math.round((character.attack * damageMulitplier) - enemy.defense))
 
         HandleDamageEffect(damage, "Phyical", "npc", enemy.id);
         BlessingOfBurnBonus(character, enemy);
@@ -25,4 +25,5 @@ const HeroicStrikeTar20 = (enemy: EnemyType, character: CharacterType, target: C
     }
 }
 
+export { spellCost, damageMulitplier };
 export default HeroicStrikeTar20

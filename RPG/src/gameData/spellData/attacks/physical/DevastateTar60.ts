@@ -3,14 +3,17 @@ import { CharacterType } from "../../../../atom/CharacterAtom";
 import Debuffs from "../../../Debuffs";
 import { BlessingOfBurnBonus, BlessingOfLightningBonus } from "../../AdditionalBlessingDamage";
 
-const DevastateTar60 = (enemy: EnemyType, character: CharacterType, target: CharacterType | EnemyType, spellCost: number) =>{ 
+const spellCost = 60;
+const damageMulitplier = 1;
+const DevastateTar60 = (enemy: EnemyType, character: CharacterType, target: CharacterType | EnemyType) =>{ 
     const targetCharacter = 'id' in target && target.id === character.id && target.type === character.type
 
     if (targetCharacter) {
-        spellCost = 60;
         enemy.mana -= spellCost;
+        const damage = Math.max(5, ((enemy.attack * damageMulitplier) - character.defense));
+
         if (character.debuffs.find(d => d.type === Debuffs.Sundered.type)) {
-            return character.health - Math.max(5, enemy.attack - character.defense);
+            return character.health - damage;
         } else {
             character.debuffs.push({
                 type: Debuffs.Sundered.type, 
@@ -21,17 +24,16 @@ const DevastateTar60 = (enemy: EnemyType, character: CharacterType, target: Char
             });
 
             character.defense = 0;
-            return character.health - Math.max(5, character.attack - character.defense);
+            return character.health - damage;
         }
     } else {
-
-        spellCost = 60;
         character.mana -= spellCost;
+        const damage = Math.max(5, ((character.attack * damageMulitplier) - enemy.defense));
 
         if(enemy.debuffs.find(d => d.type === Debuffs.Sundered.type)) {
             BlessingOfBurnBonus(character, enemy);
             BlessingOfLightningBonus(character, enemy);
-            return enemy.health - Math.max(5, (character.attack - enemy.defense));
+            return enemy.health - damage;
         } else {
             enemy.debuffs.push({
                 type: Debuffs.Sundered.type, 
@@ -43,9 +45,10 @@ const DevastateTar60 = (enemy: EnemyType, character: CharacterType, target: Char
             enemy.defense = 0;
             BlessingOfBurnBonus(character, enemy);
             BlessingOfLightningBonus(character, enemy);
-            return enemy.health - Math.max(5, (character.attack - enemy.defense));
+            return enemy.health - damage;
         }
     }
 }
 
+export { spellCost, damageMulitplier };
 export default DevastateTar60

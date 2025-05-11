@@ -5,18 +5,20 @@ import Debuffs from "../../../Debuffs";
 import Resistances from "../../../Resistances";
 import Vulnerabilites from "../../../Vulnerabilities";
 
-const FireBallTar20 = (enemy: EnemyType, character: CharacterType, target: CharacterType | EnemyType, spellCost: number) =>{ 
+const spellCost = 20;
+const damageMulitplier = 1;
+
+const FireBallTar20 = (enemy: EnemyType, character: CharacterType, target: CharacterType | EnemyType) =>{ 
     const targetCharacter = 'id' in target && target.id === character.id && target.type === character.type
-    spellCost = 20;
 
     if(targetCharacter) {
         enemy.mana -= spellCost;
 
+        const damage = Math.max(5, Math.round(enemy.attack));
         const fireResistance = character.resistances.find(res => res.type ===  Resistances.Fire.type);
-        const fireVulnerability = character.vulnerabilities.find(vul => vul.type === Vulnerabilites.Fire.type);
-        const damageResistance = Math.max(1, Math.round(enemy.attack - Resistances.Fire.value))
-        const damageVulnerability = Math.round(enemy.attack + Vulnerabilites.Fire.value)
-        const damage = Math.max(5, Math.round(enemy.attack))
+        const fireVulnerability = character.vulnerabilities.find(vul => vul.type === Vulnerabilites.Fire.name);
+        const damageResistance = Math.max(1, Math.round(damage - Resistances.Fire.value))
+        const damageVulnerability = Math.round(damage + Vulnerabilites.Fire.value)
 
         character.debuffs.push({
             type: Debuffs.Burn.type, 
@@ -47,11 +49,11 @@ const FireBallTar20 = (enemy: EnemyType, character: CharacterType, target: Chara
         });
         character.mana -= spellCost;
         
-        const fireResistance = enemy.resistances.find(res => res.type ===  Resistances.Fire.type);
-        const fireVulnerability = enemy.vulnerabilities.find(vul => vul.type === Vulnerabilites.Fire.type);
-        const damageResistance = Math.max(1, Math.round(character.attack - Resistances.Fire.value))
-        const damageVulnerability = Math.round(character.attack + Vulnerabilites.Fire.value)
         const damage = Math.max(5, Math.round(character.attack))
+        const fireResistance = enemy.resistances.find(res => res.type ===  Resistances.Fire.type);
+        const fireVulnerability = enemy.vulnerabilities.find(vul => vul.type === Vulnerabilites.Fire.name);
+        const damageResistance = Math.max(5, Math.round(damage - Resistances.Fire.value))
+        const damageVulnerability = Math.round(damage + Vulnerabilites.Fire.value)
 
         if (fireResistance) {
             HandleDamageEffect(damageResistance, "Fire", "npc", enemy.id);
@@ -64,6 +66,8 @@ const FireBallTar20 = (enemy: EnemyType, character: CharacterType, target: Chara
             return enemy.health - damage;
         }
     }
+    
 }
 
+export { spellCost, damageMulitplier };
 export default FireBallTar20

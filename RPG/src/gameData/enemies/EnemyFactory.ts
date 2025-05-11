@@ -1,7 +1,8 @@
 import { determineEnemyGroup, EnemyType, getRandomClass, getRandomElement, getRandomEnemyType } from "../../atom/BaseEnemyAtom";
 import BaseEnemyData from "./BaseEnemyData.json";
 import Resistances from "../Resistances";
-import Vulnerabilites from "../Vulnerabilities";
+import Vulnerabilities from "../Vulnerabilities";
+
 import { getEnemyCount } from "./EnemyCount";
 
 type BaseEnemyDataRecord = Record<string, EnemyType>;
@@ -18,7 +19,7 @@ const elementEffects: Record<string, Partial<EnemyType>> = {
         maxMana: 30,
         spells: ["Frostbite__Tar$20"],
         resistances: [Resistances.Ice],
-        vulnerabilities: [Vulnerabilites.Ice],
+        vulnerabilities: [Vulnerabilities.Ice],
     },
     "Fire": {
         health: 30,
@@ -29,7 +30,7 @@ const elementEffects: Record<string, Partial<EnemyType>> = {
         maxMana: 30,
         spells: ["Fire_Ball_Tar$20"],
         resistances: [Resistances.Fire],
-        vulnerabilities: [Vulnerabilites.Fire],
+        vulnerabilities: [Vulnerabilities.Fire],
     },
     "Dark": {
         health: 30,
@@ -40,7 +41,7 @@ const elementEffects: Record<string, Partial<EnemyType>> = {
         defenseDefault: 5,
         spells: ["Shadow_Strike_Tar$0"],
         resistances: [Resistances.Dark],
-        vulnerabilities: [Vulnerabilites.Dark],
+        vulnerabilities: [Vulnerabilities.Dark],
     }
 };
 
@@ -170,6 +171,8 @@ export const generateInitialEnemies = (): Record<number, EnemyType> => {
 
         initialEnemies[enemy.id] = enemy;
     }
+
+    console.log(initialEnemies);
 
     return initialEnemies;
 };

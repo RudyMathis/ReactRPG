@@ -5,18 +5,19 @@ import Resistances from "../..//../Resistances";
 import Vulnerabilites from "../..//../Vulnerabilities";
 import { BlessingOfBurnBonus, BlessingOfLightningBonus } from "../../AdditionalBlessingDamage";
 
-const ShadowStrikeTar0 = (enemy: EnemyType, character: CharacterType, target: CharacterType | EnemyType, spellCost: number) =>{ 
+const spellCost = 0;
+const damageMulitplier = 1.1;
+const ShadowStrikeTar0 = (enemy: EnemyType, character: CharacterType, target: CharacterType | EnemyType) =>{ 
     const targetCharacter = 'id' in target && target.id === character.id && target.type === character.type
-    spellCost = 0;
 
     if(targetCharacter) {
         enemy.mana -= spellCost;
 
+        const damage = Math.round(enemy.attack * damageMulitplier)
         const darkResistance = character.resistances.find(res => res.type ===  Resistances.Dark.type);
-        const darkVulnerability = character.vulnerabilities.find(vul => vul.type === Vulnerabilites.Dark.type);
-        const damageResistance = Math.max(1, Math.round(enemy.attack - Resistances.Dark.value))
-        const damageVulnerability = Math.round(enemy.attack + Vulnerabilites.Dark.value)
-        const damage = Math.round(enemy.attack * 1.25)
+        const darkVulnerability = character.vulnerabilities.find(vul => vul.type === Vulnerabilites.Dark.name);
+        const damageResistance = Math.max(5, Math.round(damage - Resistances.Dark.value))
+        const damageVulnerability = Math.round(damage + Vulnerabilites.Dark.value)
         
         if (darkResistance) {
             HandleDamageEffect(damageResistance, "Dark", "player", character.id);
@@ -31,11 +32,11 @@ const ShadowStrikeTar0 = (enemy: EnemyType, character: CharacterType, target: Ch
     } else {
         character.mana -= spellCost;
 
+        const damage = Math.round(character.attack * damageMulitplier)
         const darkResistance = enemy.resistances.find(res => res.type ===  Resistances.Dark.type);
-        const darkVulnerability = enemy.vulnerabilities.find(vul => vul.type === Vulnerabilites.Dark.type);
-        const damageResistance = Math.max(1, Math.round(character.attack - Resistances.Dark.value))
-        const damageVulnerability = Math.round(character.attack + Vulnerabilites.Dark.value)
-        const damage = Math.round(character.attack * 1.25)
+        const darkVulnerability = enemy.vulnerabilities.find(vul => vul.type === Vulnerabilites.Dark.name);
+        const damageResistance = Math.max(1, Math.round(damage - Resistances.Dark.value))
+        const damageVulnerability = Math.round(damage + Vulnerabilites.Dark.value)
 
         BlessingOfBurnBonus(character, enemy);
         BlessingOfLightningBonus(character, enemy);
@@ -53,4 +54,5 @@ const ShadowStrikeTar0 = (enemy: EnemyType, character: CharacterType, target: Ch
     }
 }
 
+export { spellCost, damageMulitplier };
 export default ShadowStrikeTar0

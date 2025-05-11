@@ -5,17 +5,20 @@ import Resistances from "../../../Resistances";
 import Vulnerabilites from "../../../Vulnerabilities";
 import { BlessingOfBurnBonus, BlessingOfLightningBonus } from "../../AdditionalBlessingDamage";
 
-const LeechTar10 = (enemy: EnemyType, character: CharacterType, target: CharacterType | EnemyType, spellCost: number) =>{ 
+const spellCost = -10;
+const damageMulitplier = .9;
+
+const LeechTar10 = (enemy: EnemyType, character: CharacterType, target: CharacterType | EnemyType) =>{ 
     const targetCharacter = 'id' in target && target.id === character.id && target.type === character.type
-    spellCost = 10;
 
     if(targetCharacter) {
-        enemy.mana += spellCost;
+        enemy.mana += Math.abs(spellCost);
+
+        const damage = Math.max(10, Math.round(enemy.attack * damageMulitplier))
         const darkResistance = character.resistances.find(res => res.type ===  Resistances.Dark.type);
-        const darkVulnerability = character.vulnerabilities.find(vul => vul.type === Vulnerabilites.Dark.type);
-        const damageResistance = Math.max(5, Math.round(enemy.attack - Resistances.Dark.value))
-        const damageVulnerability = Math.round(enemy.attack + Vulnerabilites.Dark.value)
-        const damage = Math.max(10, Math.round(enemy.attack * .9))
+        const darkVulnerability = character.vulnerabilities.find(vul => vul.type === Vulnerabilites.Dark.name);
+        const damageResistance = Math.max(5, Math.round(damage - Resistances.Dark.value))
+        const damageVulnerability = Math.round(damage + Vulnerabilites.Dark.value)
         
         if (darkResistance) {
             HandleDamageEffect(damageResistance, "Dark", "player", character.id);
@@ -28,13 +31,13 @@ const LeechTar10 = (enemy: EnemyType, character: CharacterType, target: Characte
             return character.health - damage;
         }
     } else {
-        character.mana += spellCost;
+        character.mana += Math.abs(spellCost);
         
+        const damage = Math.max(character.attack * damageMulitplier);
         const darkResistance = enemy.resistances.find(res => res.type ===  Resistances.Dark.type);
-        const darkVulnerability = enemy.vulnerabilities.find(vul => vul.type === Vulnerabilites.Dark.type);
-        const damageResistance = Math.max(5, Math.round(character.attack - Resistances.Dark.value))
-        const damageVulnerability = Math.round(character.attack + Vulnerabilites.Dark.value)
-        const damage = Math.max(Math.round(character.attack * .9));
+        const darkVulnerability = enemy.vulnerabilities.find(vul => vul.type === Vulnerabilites.Dark.name);
+        const damageResistance = Math.max(5, Math.round(damage - Resistances.Dark.value))
+        const damageVulnerability = Math.round(damage + Vulnerabilites.Dark.value)
 
         BlessingOfBurnBonus(character, enemy);
         BlessingOfLightningBonus(character, enemy);
@@ -52,4 +55,5 @@ const LeechTar10 = (enemy: EnemyType, character: CharacterType, target: Characte
     }
 }
 
+export { spellCost, damageMulitplier };
 export default LeechTar10

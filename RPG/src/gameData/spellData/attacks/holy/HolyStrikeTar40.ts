@@ -5,18 +5,20 @@ import Resistances from "../../../Resistances";
 import Vulnerabilites from "../../../Vulnerabilities";
 import { BlessingOfBurnBonus, BlessingOfLightningBonus } from "../../AdditionalBlessingDamage";
 
-const HolyStrikeTar40 = (enemy: EnemyType, character: CharacterType, target: CharacterType | EnemyType, spellCost: number) =>{ 
+const spellCost = 40;
+const damageMulitplier = 2;
+
+const HolyStrikeTar40 = (enemy: EnemyType, character: CharacterType, target: CharacterType | EnemyType) =>{ 
     const targetCharacter = 'id' in target && target.id === character.id && target.type === character.type
-    spellCost = 40;
 
     if(targetCharacter) {
         enemy.mana -= spellCost;
 
+        const damage = Math.round(enemy.attack * damageMulitplier);
         const holyResistance = character.resistances.find(res => res.type ===  Resistances.Holy.type);
-        const holyVulnerability = character.vulnerabilities.find(vul => vul.type === Vulnerabilites.Holy.type);
-        const damageResistance = Math.max(1, Math.round(enemy.attack - Resistances.Holy.value))
-        const damageVulnerability = Math.round(enemy.attack + Vulnerabilites.Holy.value)
-        const damage = Math.round(enemy.attack * 2)
+        const holyVulnerability = character.vulnerabilities.find(vul => vul.type === Vulnerabilites.Holy.name);
+        const damageResistance = Math.max(5, Math.round(damage - Resistances.Holy.value))
+        const damageVulnerability = Math.round(damage + Vulnerabilites.Holy.value)
         
         if (holyResistance) {
             HandleDamageEffect(damageResistance, "Holy", "player", character.id);
@@ -31,11 +33,11 @@ const HolyStrikeTar40 = (enemy: EnemyType, character: CharacterType, target: Cha
     } else {
         character.mana -= spellCost;
 
+        const damage = Math.round(character.attack * damageMulitplier);
         const holyResistance = enemy.resistances.find(res => res.type ===  Resistances.Holy.type);
-        const holyVulnerability = enemy.vulnerabilities.find(vul => vul.type === Vulnerabilites.Holy.type);
-        const damageResistance = Math.max(1, Math.round(character.attack - Resistances.Holy.value))
-        const damageVulnerability = Math.round(character.attack + Vulnerabilites.Holy.value)
-        const damage = Math.round(character.attack * 2)
+        const holyVulnerability = enemy.vulnerabilities.find(vul => vul.type === Vulnerabilites.Holy.name);
+        const damageResistance = Math.max(5, Math.round(damage - Resistances.Holy.value))
+        const damageVulnerability = Math.round(damage + Vulnerabilites.Holy.value)
 
         BlessingOfBurnBonus(character, enemy);
         BlessingOfLightningBonus(character, enemy);
@@ -53,4 +55,5 @@ const HolyStrikeTar40 = (enemy: EnemyType, character: CharacterType, target: Cha
     }
 }
 
+export { spellCost, damageMulitplier };
 export default HolyStrikeTar40

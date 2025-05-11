@@ -5,13 +5,13 @@ import { BlessingOfBurnBonus, BlessingOfLightningBonus } from "../../AdditionalB
 import { HandleDamageEffect } from "../../../../gameMechanics/HandleDamageEffect";
 import { FlashAnimationAtom } from "../../../../atom/effects/FlashAnimationAtom";
 
+const spellCost = 40;
+const damageMulitplier = 1;
 const MultiShotTar$40 = (
     enemy: EnemyType,
     character: CharacterType,
-    target: CharacterType | EnemyType,
-    spellCost: number
+    target: CharacterType | EnemyType
 ) => {
-    spellCost = 40;
     const targetCharacter = 'id' in target && target.id === character.id && target.type === character.type;
     const spellAnimation = 'multiShot';
 
@@ -29,7 +29,7 @@ const MultiShotTar$40 = (
             return character.health;
         }
 
-        const damage = Math.max(5, Math.round(enemy.attack) - character.defense);
+        const damage = Math.max(5, Math.round(enemy.attack * damageMulitplier) - character.defense);
 
         const prevCharacter = characterIndex > 0 ? sortedCharacters[characterIndex - 1] : null;
         const nextCharacter = characterIndex < sortedCharacters.length - 1 ? sortedCharacters[characterIndex + 1] : null;
@@ -97,7 +97,7 @@ const MultiShotTar$40 = (
             return enemy.health;
         }
 
-        const damage = Math.max(5, Math.round(character.attack - enemy.defense));
+        const damage = Math.max(5, Math.round((character.attack * damageMulitplier) - enemy.defense));
 
         const prevEnemy = enemyIndex > 0 ? sortedEnemies[enemyIndex - 1] : null;
         const nextEnemy = enemyIndex < sortedEnemies.length - 1 ? sortedEnemies[enemyIndex + 1] : null;
@@ -164,4 +164,5 @@ const MultiShotTar$40 = (
     }
 };
 
+export { spellCost, damageMulitplier };
 export default MultiShotTar$40;

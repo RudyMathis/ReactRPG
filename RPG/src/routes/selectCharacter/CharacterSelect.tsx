@@ -40,7 +40,7 @@ const CharacterSelect = () => {
         <>
             <div className={styles.mainContainer}>   
                 <div className={styles.topBar}>
-                    <h1>Select Your Character</h1>
+                    <h1>Select 4 Characters</h1>
                     <NavigateBtn locationValue="/" location="Main Menu" />
                 </div>        
                 <CharacterSheets />

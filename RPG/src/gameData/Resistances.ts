@@ -4,7 +4,7 @@ export type Resistance = {
 };
 
 // Base resistance values
-const Resistances = {
+const Resistances: Record<string, Resistance> = {
     Ice: { type: "Ice", value: 10 },
     Fire: { type: "Fire", value: 10 },
     Water: { type: "Water", value: 10 },

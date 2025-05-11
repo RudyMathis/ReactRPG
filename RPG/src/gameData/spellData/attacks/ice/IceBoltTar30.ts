@@ -4,18 +4,22 @@ import { HandleDamageEffect } from "../../../../gameMechanics/HandleDamageEffect
 import Debuffs from "../../../Debuffs";
 import Resistances from "../../../Resistances";
 import Vulnerabilites from "../../../Vulnerabilities";
+import { BlessingOfBurnBonus, BlessingOfLightningBonus } from "../../AdditionalBlessingDamage";
 
-const IceBoltTar30 = (enemy: EnemyType, character: CharacterType, target: CharacterType | EnemyType, spellCost: number) =>{ 
+const spellCost = 30;
+const damageMulitplier = 1.1;
+
+const IceBoltTar30 = (enemy: EnemyType, character: CharacterType, target: CharacterType | EnemyType) =>{ 
     const targetCharacter = 'id' in target && target.id === character.id && target.type === character.type
-    spellCost = 30;
 
     if(targetCharacter) {
         enemy.mana -= spellCost;
 
+        const damage = Math.round(enemy.attack * damageMulitplier)
         const iceResistance = character.resistances.find(resistance => resistance.type === Resistances.Ice.type);
-        const iceVulnerability = character.vulnerabilities.find(vulnerability => vulnerability.type === Vulnerabilites.Ice.type);
-        const damageResistance = Math.max(1, Math.round(enemy.attack - Resistances.Ice.value))
-        const damageVulnerability = Math.round(enemy.attack + Vulnerabilites.Ice.value)
+        const iceVulnerability = character.vulnerabilities.find(vulnerability => vulnerability.type === Vulnerabilites.Ice.name);
+        const damageResistance = Math.max(5, Math.round(damage - Resistances.Ice.value))
+        const damageVulnerability = Math.round(damage + Vulnerabilites.Ice.value)
 
         if(character.debuffs.find(d => d.name === Debuffs.Frozen.name)){
             if(iceResistance) {
@@ -25,8 +29,8 @@ const IceBoltTar30 = (enemy: EnemyType, character: CharacterType, target: Charac
                 HandleDamageEffect(damageVulnerability, "Ice", "player", character.id);
                 return character.health - damageVulnerability;
             } else {
-                HandleDamageEffect(enemy.attack, "Ice", "player", character.id);
-                return character.health - enemy.attack;
+                HandleDamageEffect(damage, "Ice", "player", character.id);
+                return character.health - damage;
             }
 
         } else {
@@ -41,24 +45,26 @@ const IceBoltTar30 = (enemy: EnemyType, character: CharacterType, target: Charac
 
             if(iceResistance) {
                 HandleDamageEffect(damageResistance, "Ice", "player", character.id);
+
                 return character.health - damageResistance;
             } else if (iceVulnerability) {
                 HandleDamageEffect(damageVulnerability, "Ice", "player", character.id);
                 return character.health - damageVulnerability;
             } else {
-                HandleDamageEffect(enemy.attack, "Ice", "player", character.id);
-                return character.health - enemy.attack;
+
+                HandleDamageEffect(damage, "Ice", "player", character.id);
+                return character.health - damage;
             }
         }
 
     } else {
         character.mana -= spellCost;
 
-        const iceResistance = enemy.resistances.find(resistance => resistance.type === Resistances.Ice.type);
-        const iceVulnerability = enemy.vulnerabilities.find(vulnerability => vulnerability.type === Vulnerabilites.Ice.type);
-        const damageResistance = Math.max(1, Math.round(character.attack - Resistances.Ice.value))
-        const damageVulnerability = Math.round(character.attack + Vulnerabilites.Ice.value)
-        const damage = Math.round(character.attack * 1.1)
+        const damage = Math.round(character.attack * damageMulitplier)
+        const iceResistance = enemy.resistances.find(res => res.type === Resistances.Ice.type);
+        const iceVulnerability = enemy.vulnerabilities.find(vul => vul.type === Vulnerabilites.Ice.name);
+        const damageResistance = Math.max(5, Math.round(damage - Resistances.Ice.value))
+        const damageVulnerability = Math.round(damage + Vulnerabilites.Ice.value)
 
         if(enemy.debuffs.find(d => d.name === Debuffs.Frozen.name)){
             enemy.debuffs.fill({
@@ -68,6 +74,7 @@ const IceBoltTar30 = (enemy: EnemyType, character: CharacterType, target: Charac
                 icon: Debuffs.Frozen.icon
             });
             enemy.speed = 0;
+
             if(iceResistance) {
                 HandleDamageEffect(damageResistance, "Ice", "npc", enemy.id);
                 return enemy.health - damageResistance;
@@ -75,7 +82,7 @@ const IceBoltTar30 = (enemy: EnemyType, character: CharacterType, target: Charac
                 HandleDamageEffect(damageVulnerability, "Ice", "npc", enemy.id);
                 return enemy.health - damageVulnerability;
             } else {
-                HandleDamageEffect(character.attack, "Ice", "npc", enemy.id);
+                HandleDamageEffect(damage, "Ice", "npc", enemy.id);
                 return enemy.health - damage;
             }
         } else {
@@ -86,7 +93,11 @@ const IceBoltTar30 = (enemy: EnemyType, character: CharacterType, target: Charac
                 icon: Debuffs.Frozen.icon
             });
             enemy.speed = 0;
+
+            BlessingOfBurnBonus(character, enemy);
+            BlessingOfLightningBonus(character, enemy);
     
+            console.log("icename", Vulnerabilites.Ice.name, "iceResistance", iceResistance, "iceVulnerability", iceVulnerability, "damageResistance", damageResistance, "damageVulnerability", damageVulnerability, "damage", damage);
             if(iceResistance) {
                 HandleDamageEffect(damageResistance, "Ice", "npc", enemy.id);
                 return enemy.health - damageResistance;
@@ -94,11 +105,12 @@ const IceBoltTar30 = (enemy: EnemyType, character: CharacterType, target: Charac
                 HandleDamageEffect(damageVulnerability, "Ice", "npc", enemy.id);
                 return enemy.health - damageVulnerability;
             } else {
-                HandleDamageEffect(character.attack, "Ice", "npc", enemy.id);
+                HandleDamageEffect(damage, "Ice", "npc", enemy.id);
                 return enemy.health - damage;
             }
         }
     }
 }
 
+export { spellCost, damageMulitplier };
 export default IceBoltTar30

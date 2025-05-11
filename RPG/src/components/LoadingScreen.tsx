@@ -1,6 +1,4 @@
-// LoadingScreen.tsx
 import { useEffect, useState } from 'react';
-// import './LoadingScreen.css';
 
 export default function LoadingScreen({ onFinish }: { onFinish: () => void }) {
     const [loadingText, setLoadingText] = useState("LOADING");
@@ -27,7 +25,6 @@ export default function LoadingScreen({ onFinish }: { onFinish: () => void }) {
             img.src = src;
         });
 
-        // Wait 2-3 seconds or until all images are loaded
         setTimeout(() => {
                 clearInterval(interval);
                 onFinish(); // move to main menu
