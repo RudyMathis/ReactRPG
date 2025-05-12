@@ -330,3 +330,21 @@
 @keyframes meditate {
     from {background-position-x: 0;} to {background-position-x: -15em;}
 }
+
+.targetArrow {
+    position: absolute;
+    top: -60%;
+    left: 40%;
+    transform: translateX(-50%);
+    z-index: var(--high-layer);
+    pointer-events: none;
+    width: 2.28em;
+    height: 1.86em;
+    rotate: 90deg;
+    animation: targetArrow 1000ms infinite ease-in-out;
+}
+
+@keyframes targetArrow {
+    0%, 100% { transform: translateX(-50%); }
+    50% { transform: translateX(0%); }
+}

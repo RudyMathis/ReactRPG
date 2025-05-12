@@ -1,14 +1,16 @@
+import { useAtomValue } from "jotai";
 import { EnemyType } from "../../atom/BaseEnemyAtom";
 import { CharacterType } from "../../atom/CharacterAtom";
+import { hoveredSpellAtom } from "../../atom/HoveredSpellAtom";
 import styles from './Entity.module.css';
 
-type Entity = CharacterType | EnemyType;
-
 type NameProps = {
-    entity: Entity;
+    entity: CharacterType | EnemyType;
 };
 
 const Name: React.FC<NameProps> = ({ entity }) => {
+    const hoveredSpell = useAtomValue(hoveredSpellAtom);
+    const isTargeted = hoveredSpell?.affectedEnemyIds.includes(entity.id);
 
     const displayName = entity.name
         .replace('_', ' ')
@@ -30,6 +32,7 @@ const Name: React.FC<NameProps> = ({ entity }) => {
             data-entity-name={`${entity.name.match(/Fire|Ice|Dark|Lightning|Holy|Earth/)}`} 
             data-type={entity.type}
         >
+            {isTargeted && <img className={styles.targetArrow} src="/assets/Arrow.png" />}
             {entity.type === 'player' ? entity.name : displayName}
         </div>
     );

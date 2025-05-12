@@ -209,7 +209,6 @@
     color: var(--dark);
 }
 
-
 .detailStatus[data-buff='true'] {
     color: var(--buff);
     background-color: var(--background-secondary);
@@ -232,7 +231,6 @@
     color: var(--debuff);
 }
 
-
 /* More information button */
 
 .moreInformationIcon {
@@ -249,8 +247,6 @@
     top: -15%;
     left: 0;
     transform: translate( 12%, -15%);
-    /* min-width: 15em; */
-    /* width: content; */
     max-width: 30em;
     padding: 2rem;
     line-height: 1.25rem;
@@ -279,4 +275,24 @@
 
 .moreInformationWrapper:hover .moreInformationText {
     display: block;
+}
+
+/* Target Arrow */
+
+.targetArrow {
+    position: absolute;
+    top: -60%;
+    left: 40%;
+    transform: translateX(-50%);
+    z-index: var(--high-layer);
+    pointer-events: none;
+    width: 2.28em;
+    height: 1.86em;
+    rotate: 90deg;
+    animation: targetArrow 1000ms infinite ease-in-out;
+}
+
+@keyframes targetArrow {
+    0%, 100% { transform: translateX(-50%); }
+    50% { transform: translateX(0%); }
 }

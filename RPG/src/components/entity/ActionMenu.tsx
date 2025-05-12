@@ -1,17 +1,18 @@
-import { useAtom } from 'jotai';
+import { useAtom, useSetAtom } from 'jotai';
 import CharacterAtom from "../../atom/CharacterAtom";
 import { selectedSpellAtom } from "../../atom/SelectedSpellAtom";
 import attacks from "../../gameData/spellData/attacks/Attacks";
 import styles from './Entity.module.css';
 import buffs from '../../gameData/spellData/defense/BuffsFactory';
-import { EnemyType } from '../../atom/BaseEnemyAtom';
+import EnemyAtom, { EnemyType } from '../../atom/BaseEnemyAtom';
 import { CharacterType } from '../../atom/CharacterAtom';
 import SoundManager from '../../gameData/SoundManager';
 import MoreInformationDisplay from './MoreInformationDisplay';
 import { playerTargetAtom } from '../../atom/PlayerTargetAtom';
 import Resistances from '../../gameData/Resistances';
 import Vulnerabilites from '../../gameData/Vulnerabilities';
-
+import { hoveredSpellAtom } from '../../atom/HoveredSpellAtom';
+import { storeAtom } from '../../atom/storeAtom';
 type ActionMenuProps = {
     isVisible: boolean;
     type: 'character' | 'enemy';
@@ -25,9 +26,7 @@ const ActionMenu = ({ isVisible, type, onSpell, detailScreen, isCurrentTurn }: A
     const selectedCharacters = Object.values(characters).filter(char => char.currentTurn && char.isSelected);
     const [, setSelectedSpell] = useAtom(selectedSpellAtom);
     const [playerTarget] = useAtom(playerTargetAtom);
-
-    
-    
+    const setHoveredSpell = useSetAtom(hoveredSpellAtom);
     const handleSpellClick = (spell: string) => {
         setSelectedSpell(spell);
         SoundManager.playSfx(spell); 
@@ -110,7 +109,43 @@ const ActionMenu = ({ isVisible, type, onSpell, detailScreen, isCurrentTurn }: A
                                     const rawAdjusted = spellDamage + vulnerability - resistance;
                                     const adjustedDamage = Math.max(5, Math.round(rawAdjusted - defense));
 
-                                    return <button key={`${char.id}-${index}`} {...buttonProps}>
+                                    const enemies = Object.values(storeAtom.get(EnemyAtom));
+                                    const sortedEnemies = [...enemies].sort((a, b) => a.order - b.order);
+                                    const enemyIndex = sortedEnemies.findIndex(e => e.id === playerTarget?.id);
+                                    const prevEnemy = enemyIndex > 0 ? sortedEnemies[enemyIndex - 1] : null;
+                                    const enemy = sortedEnemies.find(e => e.id === playerTarget?.id);
+                                    const nextEnemy = enemyIndex < sortedEnemies.length - 1 ? sortedEnemies[enemyIndex + 1] : null;
+                                    
+                                    return <button 
+                                                key={`${char.id}-${index}`} 
+                                                {...buttonProps} 
+                                                onMouseEnter={() => {
+                                                    if (label === 'Multi Shot' && enemy) {
+                                                        const affectedEnemyIds = [
+                                                            prevEnemy?.id,
+                                                            enemy.id,
+                                                            nextEnemy?.id
+                                                        ].map(id => id ?? 0).filter(Boolean);
+
+                                                        setHoveredSpell({ label, affectedEnemyIds });
+                                                    } else if (label === 'Cleave') {
+                                                        const affectedEnemyIds = [
+                                                            enemy?.id,
+                                                            nextEnemy?.id
+                                                        ].map(id => id ?? 0).filter(Boolean);
+
+                                                        setHoveredSpell({ label, affectedEnemyIds });
+                                                    } else {
+                                                        setHoveredSpell(null);
+                                                    }
+                                                }}
+                                                onMouseLeave={() => setHoveredSpell(null)}
+                                                onClick={() => {
+                                                    setHoveredSpell(null);
+                                                    onSpell();
+                                                    handleSpellClick(spell);
+                                                }}
+                                            >
                                         <div className={styles.spellInfo}>
                                             <p data-element={`${element}`} className={styles.spellName}>{label}</p>
                                             <p className={styles.spellCost}>{costLabel}{displayCost}</p>
@@ -118,7 +153,7 @@ const ActionMenu = ({ isVisible, type, onSpell, detailScreen, isCurrentTurn }: A
                                         <p data-vulnerability={vulnerability > 0} data-resistance={resistance > 0} className={styles.spellDamage}>{adjustedDamage}</p>
                                     </button>;
                                 }
-                
+
                                 return null;
                             })}
                             <button className={styles.actionMenuButton} onClick={detailScreen}>Details</button>
