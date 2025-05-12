@@ -9,7 +9,7 @@ import { backgroundAtom } from "../../atom/BackgroundAtom";
 import styles from './GameState.module.css';
 import stylesUI from '../../components/ui/UI.module.css'
 import SettingsIcon from "../../components/ui/SettingsIcon";
-import ActionTextDisplay from "../../components/ui/ActionTextDisplay";
+// import ActionTextDisplay from "../../components/ui/ActionTextDisplay";
 
 const LevelLayout = () => {
     const [currentGameLevel] = useAtom(GameLevelAtom);
@@ -35,7 +35,7 @@ const LevelLayout = () => {
             <Grid />
             <div className={stylesUI.backgroundBorder}></div>
             {isRoundOver && <EndofRoundDisplay />}
-            <ActionTextDisplay />
+            {/* <ActionTextDisplay /> */}
         </div>
     );
 }

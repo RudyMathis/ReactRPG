@@ -163,9 +163,6 @@ button {
 	:root {
 		font-size: 13px;
 	}
-	/* :root * {
-		outline: 1px solid red;
-	}; */
 }
 
 @media (max-width: 1080px)  {
@@ -174,7 +171,7 @@ button {
 	}
 }
 
-@media (max-width: 420px)  {
+@media (max-width: 431px)  {
 	:root {
 		font-size: 9px;
 		width: 100%;

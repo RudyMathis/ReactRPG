@@ -13,6 +13,7 @@ import Resistances from '../../gameData/Resistances';
 import Vulnerabilites from '../../gameData/Vulnerabilities';
 import { hoveredSpellAtom } from '../../atom/HoveredSpellAtom';
 import { storeAtom } from '../../atom/storeAtom';
+
 type ActionMenuProps = {
     isVisible: boolean;
     type: 'character' | 'enemy';
@@ -24,6 +25,7 @@ type ActionMenuProps = {
 const ActionMenu = ({ isVisible, type, onSpell, detailScreen, isCurrentTurn }: ActionMenuProps) => {
     const [characters] = useAtom(CharacterAtom);
     const selectedCharacters = Object.values(characters).filter(char => char.currentTurn && char.isSelected);
+    const pickedCharacters = Object.values(characters).filter(char => char.isSelected);
     const [, setSelectedSpell] = useAtom(selectedSpellAtom);
     const [playerTarget] = useAtom(playerTargetAtom);
     const setHoveredSpell = useSetAtom(hoveredSpellAtom);
@@ -42,6 +44,8 @@ const ActionMenu = ({ isVisible, type, onSpell, detailScreen, isCurrentTurn }: A
                                 const element = attacks[spell]?.element || buffs[spell]?.element || '';
                                 const isSelf = buffs[spell]?.isSelfBuff;
                                 const spellDamage = Math.round(char.attack * (attacks[spell]?.damageMulitplier ?? 0));
+                                const aoeAttack = attacks[spell]?.aoe;
+                                const aoeDefense = buffs[spell]?.isAoe;
 
                                 if (isCurrentTurn.id !== char.id && isSelf) {
                                     return null; 
@@ -70,7 +74,27 @@ const ActionMenu = ({ isVisible, type, onSpell, detailScreen, isCurrentTurn }: A
                                     if (isSelf && !char.id) { 
                                         return null;
                                     } else {
-                                        return <button key={`${char.id}-${index}`} {...buttonProps}>
+                                        return <button 
+                                                key={`${char.id}-${index}`} 
+                                                {...buttonProps} 
+                                                onMouseEnter={() => {
+                                                    if (char && !aoeDefense) {
+                                                        const affectedEntityIds = [
+                                                            playerTarget?.id,
+                                                        ].map(id => id ?? 0).filter(Boolean);
+                                                        setHoveredSpell({ label, affectedEntityIds });
+                                                    } else {
+                                                        const affectedEntityIds = pickedCharacters.map(char => char.id);
+                                                        setHoveredSpell({ label, affectedEntityIds });
+                                                    }
+                                                }}
+                                                onMouseLeave={() => setHoveredSpell(null)}
+                                                onClick={() => {
+                                                    setHoveredSpell(null);
+                                                    onSpell();
+                                                    handleSpellClick(spell);
+                                                }}
+                                            >
                                             <div className={styles.spellInfo}>
                                                 <p data-element={`${element}`} className={styles.spellName}>{label}</p>
                                                 <p className={styles.spellCost}>{costLabel}{costLabel !== 'Free' ? ` ${displayCost}` : ''}</p>
@@ -120,23 +144,31 @@ const ActionMenu = ({ isVisible, type, onSpell, detailScreen, isCurrentTurn }: A
                                                 key={`${char.id}-${index}`} 
                                                 {...buttonProps} 
                                                 onMouseEnter={() => {
-                                                    if (label === 'Multi Shot' && enemy) {
-                                                        const affectedEnemyIds = [
+                                                    if (enemy && !aoeAttack) {
+                                                        const affectedEntityIds = [
+                                                            playerTarget?.id,
+                                                        ].map(id => id ?? 0).filter(Boolean);
+
+                                                        setHoveredSpell({ label, affectedEntityIds });
+                                                    }
+                                                    else if (label === 'Multi Shot' && enemy) {
+                                                        const affectedEntityIds = [
                                                             prevEnemy?.id,
                                                             enemy.id,
                                                             nextEnemy?.id
                                                         ].map(id => id ?? 0).filter(Boolean);
 
-                                                        setHoveredSpell({ label, affectedEnemyIds });
+                                                        setHoveredSpell({ label, affectedEntityIds });
                                                     } else if (label === 'Cleave') {
-                                                        const affectedEnemyIds = [
+                                                        const affectedEntityIds = [
                                                             enemy?.id,
                                                             nextEnemy?.id
                                                         ].map(id => id ?? 0).filter(Boolean);
 
-                                                        setHoveredSpell({ label, affectedEnemyIds });
+                                                        setHoveredSpell({ label, affectedEntityIds });
                                                     } else {
-                                                        setHoveredSpell(null);
+                                                    const affectedEntityIds = enemies.map(enemy => enemy.id as number);
+                                                    setHoveredSpell({ label, affectedEntityIds });
                                                     }
                                                 }}
                                                 onMouseLeave={() => setHoveredSpell(null)}

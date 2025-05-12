@@ -64,7 +64,7 @@
     border: 2px solid var(--lightning);
 }
 
-@media screen and (max-height: 420px) {
+@media (max-height: 431px) {
     
     .turnOrderPortait {
         width: 3em;

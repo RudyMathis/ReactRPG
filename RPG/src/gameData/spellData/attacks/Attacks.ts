@@ -75,8 +75,7 @@ export type AttackMeta = {
     func: (
         enemy: EnemyType,
         character: CharacterType,
-        target: CharacterType | EnemyType,
-        spellCost: number,
+        target: CharacterType | EnemyType
     ) => number;
     aoe: boolean;
     animation: {

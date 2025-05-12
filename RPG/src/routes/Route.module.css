@@ -192,7 +192,7 @@
 	color: var(--font);
 }
 
-@media (max-height: 420px)  {
+@media (max-height: 431px)  {
     .mainContainer {
         width: 85%;
     }

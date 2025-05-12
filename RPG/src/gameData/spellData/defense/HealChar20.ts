@@ -1,7 +1,6 @@
 import { CharacterType } from "../../../atom/CharacterAtom";
 
 const spellCost = 20;
-const stat = "health";
 const statValue = 20;
 const HealChar20 = (
     character: CharacterType,
@@ -17,5 +16,5 @@ const HealChar20 = (
     return [{ id: targetChar.id, health: targetChar.health }];
 };
 
-export { spellCost, stat, statValue };
+export { spellCost, statValue };
 export default HealChar20;

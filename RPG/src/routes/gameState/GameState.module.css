@@ -151,13 +151,13 @@
 
 
 
-@media (max-width: 420px)  {
+@media (max-width: 431px)  {
     .levelLayout {
         rotate: 90deg;
     }
 }
 
-@media (max-height: 420px)  {
+@media (max-height: 431px)  {
 
     .levelLayout {
         height: 100%;

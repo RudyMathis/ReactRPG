@@ -3,7 +3,6 @@ import { storeAtom } from "../../../atom/storeAtom";
 import { FlashAnimationAtom } from "../../../atom/effects/FlashAnimationAtom";
 
 const spellCost = 40;
-const stat = "party health";
 const statValue = 15;
 const HealAllChar40 = (
     character: CharacterType
@@ -55,5 +54,5 @@ const HealAllChar40 = (
     return selectedCharacters;
 };
 
-export { spellCost, stat, statValue };
+export { spellCost, statValue };
 export default HealAllChar40;

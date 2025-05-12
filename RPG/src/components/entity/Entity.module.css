@@ -61,7 +61,7 @@
 
 .actionMenuContainer {
     position: absolute;
-    top: 0;
+    top: -25%;
     z-index: var(--high-layer);
     width: max-content;
     line-height: 1.1rem;
@@ -115,7 +115,7 @@
     filter: brightness(0.5);
 }
 
-.actionMenuButton:hover {
+.actionMenuButton .spellName:hover {
     cursor: pointer;
     filter: brightness(1.2);
 }
@@ -159,7 +159,7 @@
     font-size: .8rem;
 }
 
-@media screen and (max-height: 420px) {
+@media screen and (max-height: 431px) {
     .actionMenuButton {
         padding: 2px 5px;
         font-size: 1.25rem;
@@ -243,11 +243,12 @@
 
 .moreInformationText {
     display: none;
-    position: absolute;
-    top: -15%;
-    left: 0;
-    transform: translate( 12%, -15%);
-    max-width: 30em;
+    position: fixed;
+    bottom: 18vh; 
+    left: 50%;
+    transform: translateX(-50%);
+    width: max-content;
+    max-width: 50em;
     padding: 2rem;
     line-height: 1.25rem;
     font-size: .9rem;
@@ -268,18 +269,38 @@
     font-size: .9rem;
 }
 
-.moreInformationWrapper {
+/* .moreInformationWrapper {
     position: relative;
     display: inline-block;
+} */
+
+.moreInformationWrapper:hover 
+.moreInformationText {
+    display: block;
 }
 
-.moreInformationWrapper:hover .moreInformationText {
-    display: block;
+@media (max-width: 1920px) {
+    .moreInformationText {
+        bottom: 20vh; 
+
+    }
+}
+
+@media (max-width: 1080px)  {
+    .moreInformationText {
+        bottom: 30vh; 
+    }
+}
+
+@media (max-height: 431px)  {
+    .moreInformationText {
+        bottom: 3vh; 
+    }
 }
 
 /* Target Arrow */
 
-.targetArrow {
+/* .targetArrow {
     position: absolute;
     top: -60%;
     left: 40%;
@@ -290,9 +311,25 @@
     height: 1.86em;
     rotate: 90deg;
     animation: targetArrow 1000ms infinite ease-in-out;
+} */
+.targetArrow {
+    position: absolute;
+    top: -60%;
+    left: 40%;
+    transform: translateX(-50%);
+    z-index: var(--high-layer);
+    pointer-events: none;
+    animation: targetArrow 1200ms infinite ease-in-out;
+    image-rendering: pixelated;
+    color: var(--white);
+    text-shadow: none;
 }
 
-@keyframes targetArrow {
+/* @keyframes targetArrow {
     0%, 100% { transform: translateX(-50%); }
     50% { transform: translateX(0%); }
+} */
+@keyframes targetArrow {
+    0%, 100% { transform: translateY(-30%); }
+    50% { transform: translateY(0%); }
 }

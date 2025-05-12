@@ -10,7 +10,7 @@ type NameProps = {
 
 const Name: React.FC<NameProps> = ({ entity }) => {
     const hoveredSpell = useAtomValue(hoveredSpellAtom);
-    const isTargeted = hoveredSpell?.affectedEnemyIds.includes(entity.id);
+    const isTargeted = hoveredSpell?.affectedEntityIds.includes(entity.id);
 
     const displayName = entity.name
         .replace('_', ' ')
@@ -32,7 +32,8 @@ const Name: React.FC<NameProps> = ({ entity }) => {
             data-entity-name={`${entity.name.match(/Fire|Ice|Dark|Lightning|Holy|Earth/)}`} 
             data-type={entity.type}
         >
-            {isTargeted && <img className={styles.targetArrow} src="/assets/Arrow.png" />}
+            {/* {isTargeted && <img className={styles.targetArrow} src="/assets/Arrow.png" />} */}
+            {isTargeted && <p className={styles.targetArrow}>&#9660;</p>}
             {entity.type === 'player' ? entity.name : displayName}
         </div>
     );
