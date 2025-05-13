@@ -117,7 +117,7 @@
     position: absolute;
     left: 12%;
     top: 5%;
-    z-index: var(--highest-layer);
+    z-index: var(--high-layer);
 }
 
 .settingsIcon {

@@ -66,7 +66,6 @@ const ActionMenu = ({ isVisible, type, onSpell, detailScreen, isCurrentTurn }: A
                                 if (spell.includes('_Char') && type === 'character') {
                                     const costLabel = buffs[spell].cost == 0 ? 'Free' : '';
                                     const displayCost = Math.abs(buffs[spell].cost ?? 0);
-                                    const stat = buffs[spell]?.stat;
                                     const statValue = buffs[spell]?.statValue;
                                     const isMoreInfo = buffs[spell]?.isMoreInfo;
                                     const additionalInfo = buffs[spell]?.additionalInfo;
@@ -99,7 +98,7 @@ const ActionMenu = ({ isVisible, type, onSpell, detailScreen, isCurrentTurn }: A
                                                 <p data-element={`${element}`} className={styles.spellName}>{label}</p>
                                                 <p className={styles.spellCost}>{costLabel}{costLabel !== 'Free' ? ` ${displayCost}` : ''}</p>
                                             </div>
-                                            <p className={styles.spellDefense}>{statValue} {stat}</p>
+                                            <p className={styles.spellDefense}>{statValue}</p>
                                             {isMoreInfo && 
                                                 <MoreInformationDisplay
                                                     spellInfo={additionalInfo ?? ''}

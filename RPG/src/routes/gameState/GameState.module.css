@@ -86,7 +86,7 @@
     padding: 1.4em;
     border-radius: 1em;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    z-index: var(--highest-layer); 
+    z-index: var(--higher-layer); 
 }
 
 .begin {
@@ -97,6 +97,11 @@
     z-index: var(--mid-layer);
     box-shadow: 2px 8px 2px rgba(0, 0, 0, 0.75);
     animation: floatButton 900ms ease-in-out infinite;
+}
+
+.begin[data-tutorial="Begin"] {
+    z-index: var(--tutorial-top-layer);
+    z-index: 20;
 }
 
 @keyframes floatButton {
@@ -123,7 +128,7 @@
     top: 5%;
     left: 50%;
     transform: translateX(-50%);
-    z-index: var(--highest-layer);
+    z-index: var(--high-layer);
 }
 
 .currentDisplayContainer {

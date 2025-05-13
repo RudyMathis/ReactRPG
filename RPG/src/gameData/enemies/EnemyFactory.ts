@@ -179,6 +179,18 @@ export const generateInitialEnemies = (): Record<number, EnemyType> => {
     return initialEnemies;
 };
 
-
+export const generateTutorialEnemies = (): Record<number, EnemyType> => {
+    const tutorialEnemies = Object.values(BaseEnemyData).filter(enemy => enemy.isTutorial);
+        const enemyRecord: Record<number, EnemyType> = {};
+        for (const enemy of tutorialEnemies) {
+            enemyRecord[enemy.id] = {
+                ...enemy,
+                buffs: [],
+                debuffs: [],
+                order: 0,
+            };
+        }
+    return enemyRecord;
+};
 
 export default EnemyFactory;

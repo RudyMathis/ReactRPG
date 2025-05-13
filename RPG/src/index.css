@@ -37,7 +37,11 @@
 	--low-layer: 2;
 	--mid-layer: 3;
 	--high-layer: 4;
-	--highest-layer: 5;
+	--higher-layer: 5;
+	--highest-layer: 6;
+
+	--tutorial-bottom-layer: 7;
+	--tutorial-top-layer: 8;
 
 	--width: 85.7em;
 	--height: 64.3em;

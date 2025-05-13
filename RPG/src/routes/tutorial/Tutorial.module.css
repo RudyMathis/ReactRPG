@@ -1,0 +1,103 @@
+/* Tutorial */
+
+.tutorialHighlight {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: var(--width);
+    height: var(--height);
+    z-index: var(--tutorial-bottom-layer);
+    overflow: hidden;
+    pointer-events: auto;
+}
+
+.tutorialHighlight.blur::before {
+    filter: blur(20px);
+}
+.tutorialTopClickHole {
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: var(--tutorial-top-layer);
+}
+.tutorialContainer {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: var(--tutorial-bottom-layer);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.tutorialHighlight[data-highlight='topBar'] {
+    top: 60%;
+    width: var(--width);
+    height: calc(var(--height) - 10em);
+}
+
+.tutorialHighlight[data-highlight='topBar']::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: var(--width);
+    height: calc(var(--height) - 10em);
+    z-index: var(--tutorial-bottom-layer);
+    background:
+        linear-gradient(
+            to bottom,
+            transparent 0%,
+            transparent 5%,
+            rgba(0, 0, 0, 0.8) 5%,
+            rgba(0, 0, 0, 0.8) 100%
+        );
+}
+
+.tutorialTopClickHole[data-highlight='topBar'] {
+    width: var(--width);
+    height: 10em;
+}
+
+.tutorialContainer[data-position="topBar"] {
+    transform: translate(-50%, -30%);
+}
+
+.tutorialHighlight[data-highlight='begin'] {
+    transform: translate(-50%, -50%);
+    z-index: var(--tutorial-bottom-layer);
+}
+
+.tutorialHighlight[data-highlight='begin']::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 50%;
+    height: 0;
+    padding-bottom: 50%;
+    transform: translate(-50%, -50%);
+    border: solid 29em rgba(0, 0, 0, 0.8);
+    border-radius: 50%;
+}
+
+.tutorialTopClickHole[data-highlight='begin'] {
+    width: 50%;
+    height: 50%;
+    transform: translate(50%, 50%);
+    border-radius: 50%;
+}
+
+.tutorialContainer[data-position="begin"] {
+    top: 90%;
+}
+
+.tutorialButtonContainer {
+    display: flex;
+    gap: 1rem;
+}

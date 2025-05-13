@@ -3,12 +3,12 @@ type BtnProps = {
     text: string
     className?: string
     disabled?: boolean
-}
+} & React.HTMLAttributes<HTMLDivElement>;
 
-const Btn = ({ onClick, text, className }: BtnProps) => {
+const Btn = ({ onClick, text, className, ...rest }: BtnProps) => {
 
     return (
-        <div onClick={onClick} className={className ? `btn ${className}`: 'btn'}>{text}</div>
+        <div onClick={onClick} className={className ? `btn ${className}`: 'btn'} {...rest}>{text}</div>
     );
 }
 

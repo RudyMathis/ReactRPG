@@ -54,6 +54,7 @@ export type EnemyType = {
     debuffs: DebuffEffect[];
     isSelected: boolean;
     type: string;
+    isTutorial: boolean;
     hasScored: boolean;
     resource_type: string;
     base: string;

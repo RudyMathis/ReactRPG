@@ -24,6 +24,7 @@
         "currentTurn": false,
         "isSelected": false,
         "type": "player",
+        "isTutorial": true,
         "resource_type": "energy"
     },
     "Cleric": {
@@ -51,6 +52,7 @@
         "currentTurn": false,
         "isSelected": false,
         "type": "player",
+        "isTutorial": true,
         "resource_type": "mana"
     },
     "Knight": {
@@ -78,6 +80,7 @@
         "currentTurn": false,
         "isSelected": false,
         "type": "player",
+        "isTutorial": false,
         "resource_type": "rage"
     },
     "Mage": {
@@ -105,6 +108,7 @@
         "currentTurn": false,
         "isSelected": false,
         "type": "player",
+        "isTutorial": true,
         "resource_type": "mana"
     },
     "Monk": {
@@ -132,6 +136,7 @@
         "currentTurn": false,
         "isSelected": false,
         "type": "player",
+        "isTutorial": false,
         "resource_type": "energy"
     },
     "Rogue": {
@@ -159,6 +164,7 @@
         "currentTurn": false,
         "isSelected": false,
         "type": "player",
+        "isTutorial": false,
         "resource_type": "energy"
     },
     "Shaman": {
@@ -186,6 +192,7 @@
         "currentTurn": false,
         "isSelected": false,
         "type": "player",
+        "isTutorial": true,
         "resource_type": "mana"
     },
     "Warrior": {
@@ -213,6 +220,7 @@
         "currentTurn": false,
         "isSelected": false,
         "type": "player",
+        "isTutorial": false,
         "resource_type": "rage"
     }
 }

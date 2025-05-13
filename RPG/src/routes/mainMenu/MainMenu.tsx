@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import Background from '../../components/ui/Background';
 import HighScoreDisplay from './HighScoreDisplay';
 import SoundManager from '../../gameData/SoundManager';
+import { TutorialBtn } from '../tutorial/TutorialBtn';
 
 const MainMenu = () => {
     const [isInProgress, setIsInProgress] = useState(false);
@@ -33,6 +34,7 @@ const MainMenu = () => {
                     <h1 className={`${styles.p} ${styles.title}`}>p</h1>
                 </div>
                 <HighScoreDisplay />
+                <TutorialBtn />
                 <NewGameBtn />
                 {isInProgress && <ContinueGameBtn />}
                 {/* <NavigateBtn locationValue="/options" location="Options" /> */}

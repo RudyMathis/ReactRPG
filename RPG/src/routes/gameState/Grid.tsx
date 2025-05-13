@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState, useCallback, useRef, useEffect  } from 'react';
-import { useAtom } from 'jotai';
+import { useAtom, useAtomValue } from 'jotai';
 import CharacterAtom, { CharacterType } from '../../atom/CharacterAtom';
 import EnemyAtom, { EnemyType } from '../../atom/BaseEnemyAtom';
 import { useTurnOrder }  from '../../gameMechanics/turnOrder/useTurnOrder';
@@ -15,11 +15,12 @@ import EntityDisplayWrapper from '../../components/entity/sprite/EntityDisplayWr
 import EndGameDisplay from './EndGameDisplay';
 import SoundManager from '../../gameData/SoundManager';
 import styles from './GameState.module.css';
+import { tutorialAtom } from '../../atom/TutorialAtom';
 
 const Grid = () => {
   const [characters] = useAtom(CharacterAtom);
-  const [enemies, setEnemies] = useAtom(EnemyAtom);
   const selectedCharacters = Object.values(characters).filter(char => char.isSelected);
+  const [enemies, setEnemies] = useAtom(EnemyAtom);
   const [activeMenu, setActiveMenu] = useState<{ id: number | null; type: 'character' | 'enemy' | null }>({ id: null, type: null });
   const turnOrder = useTurnOrder();
   const [playerTarget, setPlayerTarget] = useAtom(playerTargetAtom);
@@ -29,6 +30,9 @@ const Grid = () => {
   const [activeDetailScreen, setActiveDetailScreen] = useState<CharacterType | EnemyType | null>(null);
   const [currentGameLevel] = useAtom(GameLevelAtom);
   const background = localStorage.getItem('background');
+  const tutorial = useAtomValue(tutorialAtom);
+  const front = tutorial?.front || ''; // fallback in case null
+
   SoundManager.preloadSfx('Quick_Attack_Tar$0', '/assets/sfx/Quick_Attack.mp3');
 
   const checkTurnOrderAndRunLogic = () => {
@@ -45,15 +49,30 @@ const Grid = () => {
     if (!gameLevel.isRoundOver) {
       // reinitialize enemy ordering.
       const enemyArray = Object.values(enemies);
-      const shuffled = enemyArray.sort(() => Math.random() - 0.5)
-        .map((enemy, index) => ({ ...enemy, order: index + 1 }));
-      const reorderedEnemies = shuffled.reduce((acc: Record<number, EnemyType>, enemy) => {
-        acc[enemy.id] = enemy;
-        return acc;
-      }, {});
-      setEnemies(reorderedEnemies);
+
+        if(tutorial?.isTutorial) {
+          const shuffled = enemyArray.filter((enemy) => enemy.isTutorial)
+            .map((enemy, index) => ({ ...enemy, order: index + 1 }));
+
+          const reorderedEnemies = shuffled.reduce((acc: Record<number, EnemyType>, enemy) => {
+            acc[enemy.id] = enemy;
+            return acc;
+          }, {});
+          
+          setEnemies(reorderedEnemies);
+        } else {
+          const shuffled = enemyArray.sort(() => Math.random() - 0.5)
+            .map((enemy, index) => ({ ...enemy, order: index + 1 }));
+
+          const reorderedEnemies = shuffled.reduce((acc: Record<number, EnemyType>, enemy) => {
+            acc[enemy.id] = enemy;
+            return acc;
+          }, {});
+
+          setEnemies(reorderedEnemies);
+        }
     }
-  }, [gameLevel.isRoundOver]);
+  }, [gameLevel.isRoundOver, tutorial]);
   
   const waitForInput = useCallback((): Promise<void> => {
     setWaitingForInput(true);
@@ -157,7 +176,7 @@ const Grid = () => {
           </div>
         </div>
       )}
-      {currentGameLevel.isRoundOver == false && <Btn onClick={checkTurnOrderAndRunLogic} className={styles.begin} text="Begin" />}
+      {currentGameLevel.isRoundOver == false && <Btn onClick={checkTurnOrderAndRunLogic} className={styles.begin} text="Begin" data-tutorial={front}/>}
       {currentGameLevel.isGameOver && <EndGameDisplay />}
     </div>
   );

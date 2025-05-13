@@ -1,0 +1,46 @@
+{
+    "Tutorial": [
+        {
+            "id": 0,
+            "front": "",
+            "hideNext": false,
+            "position": "topBar",
+            "text": "Welcome to Sacred Loop! In this tutorial you will learn the basics!"
+        },
+        {
+            "id": 1,
+            "front": "",
+            "hideNext": false,
+            "position": "topBar",
+            "text": "From left to right there is the menu button to bring you back to the main menu, the settings icon to change the volume and read more about the game mechanics, the turn order showing you the attack order, then finally the score and round and level."
+        },
+        {
+            "id": 2,
+            "front": "",
+            "hideNext": false,
+            "position": "topBar",
+            "text": "The turn order will update at the start of every round and is effected by characters and enemies speed. Frozen enemies and frozen characters will be at the end of the turn order."
+        },
+        {
+            "id": 3,
+            "front": "",
+            "hideNext": false,
+            "position": "topBar",
+            "text": "Speaking of rounds, this game is broken down into turns, cycles, rounds, and levels. Every character and enemy gets a turn before the order cycle is reset, the turn cycle continues untill either all characters are dead or all enemies are. Once that happens the round is over and you advance to the next round."
+        },
+        {
+            "id": 4,
+            "front": "",
+            "hideNext": false,
+            "position": "topBar",
+            "text": "After 3 rounds you move on to the next level where enemies will have leveled up and have increased stats."
+        },
+        {
+            "id": 5,
+            "front": "Begin",
+            "hideNext": true,
+            "position": "begin",
+            "text": "Let's start our first round by clicking the Begin Button, the enemy will go first."
+        }
+    ]
+}

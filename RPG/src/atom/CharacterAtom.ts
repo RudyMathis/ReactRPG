@@ -61,6 +61,7 @@ export type CharacterType = {
     currentTurn: boolean;
     isSelected: boolean;
     type: string;
+    isTutorial: boolean;
     resource_type: string;
 }
 

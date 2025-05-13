@@ -1,4 +1,4 @@
-import { useAtom } from "jotai";
+import { useAtom, useAtomValue } from "jotai";
 import { GameLevelAtom } from "../../atom/GameLevelAtom";
 import NavigateBtn from "../../components/ui/NavigateBtn";
 import Grid from "./Grid";
@@ -9,11 +9,15 @@ import { backgroundAtom } from "../../atom/BackgroundAtom";
 import styles from './GameState.module.css';
 import stylesUI from '../../components/ui/UI.module.css'
 import SettingsIcon from "../../components/ui/SettingsIcon";
+import TutorialDisplay from "../tutorial/TutorialDisplay";
 // import ActionTextDisplay from "../../components/ui/ActionTextDisplay";
+import { tutorialAtom } from "../../atom/TutorialAtom";
 
 const LevelLayout = () => {
     const [currentGameLevel] = useAtom(GameLevelAtom);
     const isRoundOver = currentGameLevel.isRoundOver;
+    const tutorial = useAtomValue(tutorialAtom);
+
     if(currentGameLevel.isGameOver) {
         localStorage.setItem('inProgressGame', 'false')
     } else {
@@ -32,6 +36,7 @@ const LevelLayout = () => {
             <img src={`/assets/backgrounds/${background}.jpg`} className={stylesUI.glow} data-glow={background} />
             <div className={stylesUI.crt}></div>
             <SettingsIcon />
+            {tutorial?.isTutorial && <TutorialDisplay />}
             <Grid />
             <div className={stylesUI.backgroundBorder}></div>
             {isRoundOver && <EndofRoundDisplay />}
