@@ -41,7 +41,7 @@
 
 	--width: 85.7em;
 	--height: 64.3em;
-	--big-radius: 2.25em / 8em;
+	--big-radius: 7em;
 
 	--menu-width: 57em;
 	--menu-height: 43em;
@@ -92,15 +92,7 @@ footer, header, hgroup, menu, nav, section {
 }
 
 body {
-	line-height: 1;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	background-color: var(--shadow);
-	width: 100%;
-	height: 100%;
-	background-image: url('/assets/backgrounds/background_texture.png');
-	background-repeat: round;
+	background-color: black;
 }
 
 ol, ul {

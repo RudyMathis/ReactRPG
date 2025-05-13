@@ -27,6 +27,7 @@
     height: calc(var(--height) - 2em);
     max-width: 100%;
     max-height: 100%;
+    box-shadow: 0 0 4em rgba(0,0,0,1) inset;
     border-radius: var(--big-radius);
 }
 
@@ -116,7 +117,7 @@
     justify-content: space-between;
     align-items: center;
     position: absolute;
-    width: calc(var(--width) - 8%);
+    width: calc(var(--width) - 10%);
     max-width: 100%;
     max-height: 100%;
     top: 5%;
