@@ -10,22 +10,28 @@ const TutorialDisplay = () => {
     const [highlight, setHighlight] = useState(Tutorial.Tutorial[0].id);
     const [text, setText] = useState(Tutorial.Tutorial[0].text);
     const [position, setPosition] = useState(Tutorial.Tutorial[0].position);
-    // const [, setFront] = useState(Tutorial.Tutorial[0].front);
+    const [tutorial, setTutorial] = useAtom(tutorialAtom);
     const hideNext = Tutorial.Tutorial[highlight].hideNext;
-    const [, setTutorial] = useAtom(tutorialAtom);
+    const isHighlight = tutorial?.isHighlight;
 
     useEffect(() => {
         // Initialize tutorial on mount
         setTutorial({
             isTutorial: true,
             front: Tutorial.Tutorial[0].front,
+            isHighlight: false,
         });
     }, []);
+
     const handlePrev = () => {
         if(highlight === 0) return
         setHighlight(highlight - 1);
         setText(Tutorial.Tutorial[highlight - 1].text);
         setPosition(Tutorial.Tutorial[highlight - 1].position)
+        setTutorial(prev => ({
+            ...(prev || { isTutorial: true }),
+            front: Tutorial.Tutorial[highlight - 1].front,
+        }));
     }
     const handleNext = () => {
         if(highlight === Tutorial.Tutorial.length - 1) return
@@ -34,15 +40,32 @@ const TutorialDisplay = () => {
         setPosition(Tutorial.Tutorial[highlight + 1].position);
         setTutorial(prev => ({
             ...(prev || { isTutorial: true }),
-            front: Tutorial.Tutorial[highlight + 1].front
+            front: Tutorial.Tutorial[highlight + 1].front,
         }));
     }
 
+    const jumpToStep = (id: number) => {
+        setHighlight(id);
+        setText(Tutorial.Tutorial[id].text);
+        setPosition(Tutorial.Tutorial[id].position);
+        setTutorial(prev => ({
+            ...(prev || { isTutorial: true }),
+            front: Tutorial.Tutorial[id].front,
+            isHighlight: true,
+        }));
+    };
+
+    useEffect(() => {
+        if (tutorial?.isHighlight) {
+            jumpToStep(6);
+        }
+    }, [tutorial?.isHighlight]);
+
+
     return (
         <>
-            <div className={`${styles.tutorialHighlight} ${styles.blur}`} data-highlight={position}></div>
-            <div className={styles.tutorialTopClickHole}data-highlight={position}></div>
-            
+            <div className={`${styles.tutorialHighlight} ${styles.blur}`} data-highlight={position}  data-ishighlight={isHighlight ? 'true' : 'false'}></div>
+            <div className={styles.tutorialTopClickHole} data-highlight={position} data-ishighlight={isHighlight ? 'true' : 'false'}></div>
             <div className={styles.tutorialContainer} data-position={position}>
                 <p className={styles.tutorialText}>{text}</p>
                 <div className={styles.tutorialButtonContainer}>

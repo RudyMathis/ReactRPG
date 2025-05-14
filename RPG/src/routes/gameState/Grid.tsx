@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState, useCallback, useRef, useEffect  } from 'react';
-import { useAtom, useAtomValue } from 'jotai';
+import { useAtom } from 'jotai';
 import CharacterAtom, { CharacterType } from '../../atom/CharacterAtom';
 import EnemyAtom, { EnemyType } from '../../atom/BaseEnemyAtom';
 import { useTurnOrder }  from '../../gameMechanics/turnOrder/useTurnOrder';
@@ -16,6 +16,7 @@ import EndGameDisplay from './EndGameDisplay';
 import SoundManager from '../../gameData/SoundManager';
 import styles from './GameState.module.css';
 import { tutorialAtom } from '../../atom/TutorialAtom';
+import { backgroundAtom } from '../../atom/BackgroundAtom';
 
 const Grid = () => {
   const [characters] = useAtom(CharacterAtom);
@@ -29,9 +30,10 @@ const Grid = () => {
   const [gameLevel] = useAtom(GameLevelAtom);
   const [activeDetailScreen, setActiveDetailScreen] = useState<CharacterType | EnemyType | null>(null);
   const [currentGameLevel] = useAtom(GameLevelAtom);
-  const background = localStorage.getItem('background');
-  const tutorial = useAtomValue(tutorialAtom);
-  const front = tutorial?.front || ''; // fallback in case null
+  const [background] = useAtom(backgroundAtom);
+  const [tutorial, setTutorial] = useAtom(tutorialAtom);
+
+  const front = tutorial?.front || '';
 
   SoundManager.preloadSfx('Quick_Attack_Tar$0', '/assets/sfx/Quick_Attack.mp3');
 
@@ -42,7 +44,15 @@ const Grid = () => {
         }
         runTurnLogic(turnOrder, waitForInput);
     }
-    currentGameLevel.isRoundOver = true;
+      currentGameLevel.isRoundOver = false;
+      currentGameLevel.isHideBegin = true
+
+      if(tutorial?.isTutorial){
+        setTutorial({
+          isTutorial: true,
+          isHighlight: true,
+        });
+      }
   };
 
   useEffect(() => {
@@ -176,7 +186,7 @@ const Grid = () => {
           </div>
         </div>
       )}
-      {currentGameLevel.isRoundOver == false && <Btn onClick={checkTurnOrderAndRunLogic} className={styles.begin} text="Begin" data-tutorial={front}/>}
+      {currentGameLevel.isHideBegin == false && <Btn onClick={checkTurnOrderAndRunLogic} className={styles.begin} text="Begin" {...(tutorial?.isTutorial && { 'data-tutorial': front })}/>}
       {currentGameLevel.isGameOver && <EndGameDisplay />}
     </div>
   );

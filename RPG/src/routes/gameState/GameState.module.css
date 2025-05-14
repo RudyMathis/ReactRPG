@@ -101,7 +101,6 @@
 
 .begin[data-tutorial="Begin"] {
     z-index: var(--tutorial-top-layer);
-    z-index: 20;
 }
 
 @keyframes floatButton {

@@ -31,7 +31,8 @@ const CharacterSelect = () => {
         localStorage.setItem("selectedParty", "true");
         setBackground(newBackground);
         SaveData();
-        currentGameLevel.isRoundOver = false
+        currentGameLevel.isRoundOver = false;
+        currentGameLevel.isHideBegin = false;
         currentGameLevel.background = newBackground;
         setTutorial({ isTutorial: false });
 

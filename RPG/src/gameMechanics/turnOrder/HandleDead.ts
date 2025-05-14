@@ -11,7 +11,7 @@ export const HandleAllEnemiesDead = () => {
     if (allEnemiesDead) {
         storeAtom.set(GameLevelAtom, (prev) => ({
             ...prev,
-            isRoundOver: true  
+            isRoundOver: true
         }));
         
         storeAtom.set(CharacterAtom, prev => {
@@ -40,6 +40,7 @@ export const HandleAllCharactersDead = () => {
         storeAtom.set(GameLevelAtom, (prev) => ({
             ...prev,
             isRoundOver: false,
+            isHideBegin: false,
             isGameOver: true
         }));
         

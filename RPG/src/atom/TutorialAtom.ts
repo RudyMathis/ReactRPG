@@ -2,6 +2,7 @@ import { atom } from "jotai";
 
 type Tutorial = {
     isTutorial: boolean;
+    isHighlight?: boolean;
     front?: string;
 };
 

@@ -15,6 +15,7 @@ type GameLevelType = {
     isLevelOver: boolean;
     background: string;
     isGameOver: boolean;
+    isHideBegin: boolean;
 }
 
 const getInitialGameLevel = (): GameLevelType => {
@@ -28,6 +29,7 @@ const getInitialGameLevel = (): GameLevelType => {
             level: parseInt(savedLevel, 10),
             isRoundOver: false,
             isLevelOver: false,
+            isHideBegin: false,
             background: savedBackground || generateNewBackground(),
             isGameOver: false
         };
@@ -38,6 +40,7 @@ const getInitialGameLevel = (): GameLevelType => {
         level: 1,
         isRoundOver: false,
         isLevelOver: false,
+        isHideBegin: false,
         background: savedBackground || generateNewBackground(),
         isGameOver: false
     };
@@ -101,8 +104,6 @@ const generateNewEnemies = (round: number, level: number): Record<number, EnemyT
     return newEnemies;
 };
 
-
-
 export const startNewRound = () => {
     storeAtom.set(GameLevelAtom, (prev) => {
         let newRound = prev.round + 1;
@@ -125,6 +126,7 @@ export const startNewRound = () => {
             level: newLevel,
             isRoundOver: false,
             isLevelOver: false,
+            isHideBegin: false,
             background: newBackground,
         };
     });
@@ -137,6 +139,4 @@ export const startNewRound = () => {
     localStorage.setItem('enemies', JSON.stringify(newEnemies));
     storeAtom.set(turnCountAtom, 1);
     localStorage.setItem('turnCount', '1');
-
-    // console.log("Round:", round, "Level:", level);
 };

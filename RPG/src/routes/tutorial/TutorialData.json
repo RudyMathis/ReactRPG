@@ -41,6 +41,41 @@
             "hideNext": true,
             "position": "begin",
             "text": "Let's start our first round by clicking the Begin Button, the enemy will go first."
+        },
+        {
+            "id": 6,
+            "front": "Characters",
+            "hideNext": false,
+            "position": "topBar",
+            "text": "Now it's your turn Shaman's turn."
+        },
+        {
+            "id": 7,
+            "front": "Characters",
+            "hideNext": false,
+            "position": "topBar",
+            "text": "You can left click any of your characters right now and either buff them or check out their stats under details."
+        },
+        {
+            "id": 8,
+            "front": "Characters",
+            "hideNext": false,
+            "position": "topBar",
+            "text": "You can also select the shaman for spells the shaman can do on itself."
+        },
+        {
+            "id": 9,
+            "front": "Characters",
+            "hideNext": false,
+            "position": "topBar",
+            "text": "This is called the action menu and from here you can see how much it costs (under the spell name) and how much it does (to the right of the name)."
+        },
+        {
+            "id": 10,
+            "front": "Characters",
+            "hideNext": false,
+            "position": "topBar",
+            "text": "The green 🛈 will give more information on the spell, for Damage totem for example gives a buff that 'Increase attack damage for the party'."
         }
     ]
 }

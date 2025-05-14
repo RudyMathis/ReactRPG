@@ -30,6 +30,7 @@ export const TutorialBtn = () => {
         currentGameLevel.isRoundOver = false;
         currentGameLevel.isLevelOver = false;
         currentGameLevel.isGameOver = false;
+        currentGameLevel.isHideBegin = false;
         currentGameLevel.level = 1;
         currentGameLevel.round = 1;
 

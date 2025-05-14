@@ -32,15 +32,15 @@ const LevelLayout = () => {
 
     return (
         <div className={styles.levelLayout}>
-                <Btn className={styles.reflectionBtn} onClick={() => handleReflection()} text="menu" />
-                <RelectionCurrentLevelDisplay />
+            <Btn className={styles.reflectionBtn} onClick={() => handleReflection()} text="menu" />
+            <RelectionCurrentLevelDisplay />
             <div className={styles.topBar}>
                 <NavigateBtn locationValue="/" location="Menu" />
                 <TurnOrderDisplay />
                 <CurrentLevelDisplay />
             </div>
             {/* <img src={`/assets/backgrounds/${background}.jpg`} className={stylesUI.glow} data-glow={background} /> */}
-            <div  className={stylesUI.backgroundGlow} data-glow={background} ></div>
+            <div className={stylesUI.backgroundGlow} data-glow={background} ></div>
             <div className={stylesUI.crt}></div>
             <SettingsIcon />
             {tutorial?.isTutorial && <TutorialDisplay />}

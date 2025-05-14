@@ -2,12 +2,13 @@
 import { CharacterType } from "../../../atom/CharacterAtom";
 import { EnemyType } from "../../../atom/BaseEnemyAtom";
 import Name from "../Name";
-import { useAtom } from "jotai";
+import { useAtom, useAtomValue } from "jotai";
 import { AttackAnimationAtom } from "../../../atom/effects/AttackAnimationAtom";
 import HealthBar from "../bars/HealthBar";
 import ManaBar from "../bars/ManaBar";
 import styles from'./Sprite.module.css';
 import { DefenseAnimationAtom } from "../../../atom/effects/DefenseAnimationAtom";
+import { tutorialAtom } from "../../../atom/TutorialAtom";
 
 type Entity = CharacterType | EnemyType;
 
@@ -32,6 +33,12 @@ const EntityContainer: React.FC<EntityContainerProps> = ({
     const isDefending = defendingEntities[entity.id] ?? false;
     const isDead = type === 'enemy' && 'health' in entity && entity.health <= 0;
     const isPlayerDead = type === 'character' && 'health' in entity && entity.health <= 0;
+    const tutorial = useAtomValue(tutorialAtom);
+    let front = tutorial?.front || '';
+
+    if(tutorial?.isHighlight) {
+        front = tutorial?.front || '';
+    }
 
     const characterPositions = [
         { gridColumn: 6, gridRow: 10 },
@@ -87,6 +94,7 @@ const EntityContainer: React.FC<EntityContainerProps> = ({
                 gridColumn,
                 gridRow,
             }}
+            {...(tutorial?.isHighlight && { 'data-tutorial': front })}
         >
             <div className={styles.entityInfoContainer} data-size={('size' in entity) ? entity.size : ''}>
                 <Name entity={entity} />
