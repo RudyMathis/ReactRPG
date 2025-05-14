@@ -40,8 +40,10 @@
 	--higher-layer: 5;
 	--highest-layer: 6;
 
-	--tutorial-bottom-layer: 7;
-	--tutorial-top-layer: 8;
+	--reflection-layer: 7;
+
+	--tutorial-bottom-layer: 8;
+	--tutorial-top-layer: 9;
 
 	--width: 85.7em;
 	--height: 64.3em;

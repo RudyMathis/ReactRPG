@@ -12,6 +12,8 @@ import SettingsIcon from "../../components/ui/SettingsIcon";
 import TutorialDisplay from "../tutorial/TutorialDisplay";
 // import ActionTextDisplay from "../../components/ui/ActionTextDisplay";
 import { tutorialAtom } from "../../atom/TutorialAtom";
+import Btn from "../../components/ui/Btn";
+import RelectionCurrentLevelDisplay from "../../components/ui/ReflectionCurrentLevelDisplay";
 
 const LevelLayout = () => {
     const [currentGameLevel] = useAtom(GameLevelAtom);
@@ -23,17 +25,22 @@ const LevelLayout = () => {
     } else {
         localStorage.setItem('inProgressGame', 'true')
     }
+    const handleReflection = () => {
+    }
     
     const [background] = useAtom(backgroundAtom);
 
     return (
         <div className={styles.levelLayout}>
+                <Btn className={styles.reflectionBtn} onClick={() => handleReflection()} text="menu" />
+                <RelectionCurrentLevelDisplay />
             <div className={styles.topBar}>
                 <NavigateBtn locationValue="/" location="Menu" />
                 <TurnOrderDisplay />
                 <CurrentLevelDisplay />
             </div>
-            <img src={`/assets/backgrounds/${background}.jpg`} className={stylesUI.glow} data-glow={background} />
+            {/* <img src={`/assets/backgrounds/${background}.jpg`} className={stylesUI.glow} data-glow={background} /> */}
+            <div  className={stylesUI.backgroundGlow} data-glow={background} ></div>
             <div className={stylesUI.crt}></div>
             <SettingsIcon />
             {tutorial?.isTutorial && <TutorialDisplay />}

@@ -12,6 +12,103 @@
     z-index: var(--lowest-layer);
 }
 
+/* GLOW */
+
+.backgroundGlow {
+    position: fixed;
+    top: 49.5%;
+    left: 50%;
+    width: calc(var(--width) - 8.5em);
+    height: 0;
+    padding-bottom: 53em;
+    transform: translate(-50%, -50%);
+    z-index: var(--reflection-layer);
+    pointer-events: none;
+}
+
+@keyframes backgroundGlowPulse {
+    0%, 100% {
+        filter: blur(2.5em) saturate(1);
+        opacity: 0.4;
+    }
+    50% {
+        filter: blur(1.5em) saturate(1.3);
+        opacity: 0.6;
+    }
+}
+
+.backgroundGlow::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    transform: scale(1.1);
+    border-style: solid;
+    border-image-slice: 27;
+    border-image-width: 20px;
+    border-image-outset: 0;
+    border-image-repeat: stretch;
+    border-image-source: inherit;
+    border: solid 4em var(--background);
+    filter: blur(2em);
+    opacity: 0.5;
+    animation: backgroundGlowPulse 5s ease-in-out infinite;
+    pointer-events: none;
+}
+
+.backgroundGlow[data-glow='Field']::before {
+    border-style: solid; 
+    border-image-slice: 27 27 27 27;
+    border-image-width: 20px 20px 20px 20px;
+    border-image-outset: 0px 0px 0px 0px;
+    border-image-repeat: stretch stretch; 
+    border-image-source: url('/assets/backgrounds/Field.jpg');
+}
+
+.backgroundGlow[data-glow='Forest']::before {
+    border-style: solid; 
+    border-image-slice: 27 27 27 27;
+    border-image-width: 20px 20px 20px 20px;
+    border-image-outset: 0px 0px 0px 0px;
+    border-image-repeat: stretch stretch; 
+    border-image-source: url('/assets/backgrounds/Forest.jpg');
+}
+
+.backgroundGlow[data-glow='Desert']::before {
+    border-style: solid; 
+    border-image-slice: 27 27 27 27;
+    border-image-width: 20px 20px 20px 20px;
+    border-image-outset: 0px 0px 0px 0px;
+    border-image-repeat: stretch stretch; 
+    border-image-source: url('/assets/backgrounds/Desert.jpg');
+}
+
+.backgroundGlow[data-glow='Cave']::before {
+    border-style: solid; 
+    border-image-slice: 27 27 27 27;
+    border-image-width: 20px 20px 20px 20px;
+    border-image-outset: 0px 0px 0px 0px;
+    border-image-repeat: stretch stretch; 
+    border-image-source: url('/assets/backgrounds/Cave.jpg');
+}
+
+.backgroundGlow[data-glow='City']::before {
+    border-style: solid; 
+    border-image-slice: 27 27 27 27;
+    border-image-width: 20px 20px 20px 20px;
+    border-image-outset: 0px 0px 0px 0px;
+    border-image-repeat: stretch stretch; 
+    border-image-source: url('/assets/backgrounds/City.jpg');
+}
+
+.backgroundGlow[data-glow='Snow']::before {
+    border-style: solid; 
+    border-image-slice: 27 27 27 27;
+    border-image-width: 20px 20px 20px 20px;
+    border-image-outset: 0px 0px 0px 0px;
+    border-image-repeat: stretch stretch; 
+    border-image-source: url('/assets/backgrounds/Snow.jpg');
+}
+
 .backgroundBorder {
     position: fixed;
     top: 48.75%;
@@ -19,7 +116,7 @@
     transform: translate(-50%, -50%);
     width: calc(var(--width) + 14.5em);
     height: calc(var(--height) + 16em);
-    z-index: var(--lowest-layer);
+    z-index: var(--highest-layer);
     pointer-events: none;
     background-image: url('/assets/backgrounds/crt_frame.png');
     background-size: contain;
@@ -34,58 +131,14 @@
     transform: translate(-50%, -50%);
     width: calc(var(--width) - 3.75em);
     height: calc(var(--height) - 3.4em);
+    width: var(--width);
+    height: var(--height);
     max-width: 100%;
     max-height: 100%;
     background: linear-gradient(to top, hsla(0, 0%, 0%, 0.20), hsla(0, 0%, 0%, 0.20), hsla(0, 0%, 20%, 0.20), hsla(0, 0%, 20%, 0.20));
     background-size: 100% 8px;
-    z-index: var(--highest-layer);
+    z-index: var(--higher-layer);
     pointer-events: none;
-    border-radius: var(--big-radius);
-}
-
-/* GLOW */
-
-.glow {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    width: calc(var(--width) - 3.55em);
-    height: calc(var(--height) - 3.2em);
-    max-width: 100%;
-    max-height: 100%;
-    transform: translate(-50%, -50%);
-    background-color: var(--background);
-    background-size: cover;
-    pointer-events: none;
-    filter: blur(1em) opacity(.25);
-    animation: glow 3000ms ease-in-out infinite;
-    z-index: var(--lower-layer);
-}
-
-@keyframes glow {
-    0%, 100% {     
-        filter: blur(1em) opacity(.25); }
-    50% {     
-        filter: blur(.5em) opacity(.25); }
-}
-
-.glow[data-glow='Field'] {
-    background-image: url('/assets/backgrounds/Field.jpg');
-}
-.glow[data-glow='Forest'] {
-    background-image: url('/assets/backgrounds/Forest.jpg');
-}
-.glow[data-glow='Desert'] {
-    background-image: url('/assets/backgrounds/Desert.jpg');
-}
-.glow[data-glow='Cave'] {
-    background-image: url('/assets/backgrounds/Cave.jpg');
-}
-.glow[data-glow='City'] {
-    background-image: url('/assets/backgrounds/City.jpg');
-}
-.glow[data-glow='Snow'] {
-    background-image: url('/assets/backgrounds/Snow.jpg');
 }
 
 /* LEVEL */
@@ -257,4 +310,21 @@ input[type="range"]::-webkit-slider-thumb:hover {
     .actionTextContainer {
         top: 90%;
     }
+}
+
+/* Reflections */
+
+.reflectionRightContainer {
+    position: absolute;
+    top: 4em;
+    right: -1em;
+    filter: blur(3px) opacity(.65);
+    z-index: var(--reflection-layer);
+    -webkit-mask-image: linear-gradient(to right, transparent 60%, black 95%, black 95%, transparent 100%);
+    pointer-events: none;
+    mask-image: linear-gradient(to right, transparent 60%, black 95%, black 95%, transparent 100%);
+}
+
+.reflectionRightContainer span{
+    text-shadow: none;
 }
