@@ -19,6 +19,7 @@ const LevelLayout = () => {
     const [currentGameLevel] = useAtom(GameLevelAtom);
     const isRoundOver = currentGameLevel.isRoundOver;
     const tutorial = useAtomValue(tutorialAtom);
+    const [background] = useAtom(backgroundAtom);
 
     if(currentGameLevel.isGameOver) {
         localStorage.setItem('inProgressGame', 'false')
@@ -28,22 +29,19 @@ const LevelLayout = () => {
     const handleReflection = () => {
     }
     
-    const [background] = useAtom(backgroundAtom);
-
     return (
         <div className={styles.levelLayout}>
             <Btn className={styles.reflectionBtn} onClick={() => handleReflection()} text="menu" />
             <RelectionCurrentLevelDisplay />
-            <div className={styles.topBar}>
+            <div className={styles.topBar} {...(tutorial?.isClick && { 'data-tutorial': tutorial?.isClick })}>
                 <NavigateBtn locationValue="/" location="Menu" />
                 <TurnOrderDisplay />
                 <CurrentLevelDisplay />
             </div>
-            {/* <img src={`/assets/backgrounds/${background}.jpg`} className={stylesUI.glow} data-glow={background} /> */}
             <div className={stylesUI.backgroundGlow} data-glow={background} ></div>
             <div className={stylesUI.crt}></div>
             <SettingsIcon />
-            {tutorial?.isTutorial && <TutorialDisplay />}
+            {tutorial?.isTutorial == true && <TutorialDisplay />}
             <Grid />
             <div className={stylesUI.backgroundBorder}></div>
             {isRoundOver && <EndofRoundDisplay />}

@@ -100,7 +100,7 @@
 }
 
 .begin[data-tutorial="Begin"] {
-    z-index: var(--tutorial-top-layer);
+    z-index: var(--tutorial-highest-layer);
 }
 
 @keyframes floatButton {

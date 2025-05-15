@@ -120,6 +120,11 @@
     filter: brightness(1.2);
 }
 
+.actionMenuButton .spellName[data-tutorial='true'][data-tutorial-disabled='true']:hover {
+    cursor: not-allowed;
+    filter: none;
+}
+
 .spellName[data-element='Fire'] {
 	color: var(--fire);
 }
@@ -276,13 +281,16 @@
 
 .moreInformationWrapper:hover 
 .moreInformationText {
+    cursor: pointer;
     display: block;
+}
+.moreInformationWrapper[data-tutorial='true'][data-tutorial-disabled='true']:hover {
+    cursor: pointer;
 }
 
 @media (max-width: 1920px) {
     .moreInformationText {
         bottom: 20vh; 
-
     }
 }
 

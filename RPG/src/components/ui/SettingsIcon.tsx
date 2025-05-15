@@ -1,12 +1,15 @@
 import { useEffect, useRef, useState } from 'react';
 import styles from './UI.module.css';
 import SoundManager from '../../gameData/SoundManager';
+import { useAtomValue } from 'jotai';
+import { tutorialAtom } from '../../atom/TutorialAtom';
 
 const SettingsIcon = () => {
     const [open, setOpen] = useState(false);
     const [volume, setVolume] = useState(50);
     const menuRef = useRef<HTMLDivElement>(null);
-    
+    const tutorial = useAtomValue(tutorialAtom);
+
     const handleOpenSettings = () => {
         setOpen(prev => !prev);
     };
@@ -43,7 +46,7 @@ const SettingsIcon = () => {
     }, [open]);
 
     return (
-        <div className={styles.settingsContainer}>
+        <div className={styles.settingsContainer} {...(tutorial?.isClick && { 'data-tutorial': tutorial?.isClick })}>
             <img
                 src="/assets/Settings_Icon.png"
                 className={styles.settingsIcon}

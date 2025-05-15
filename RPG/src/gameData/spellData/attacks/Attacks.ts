@@ -67,6 +67,7 @@ import { ElementType } from "../ElementTypes";
 import { EnemyType } from "../../../atom/BaseEnemyAtom";
 import { CharacterType } from "../../../atom/CharacterAtom";
 
+
 export type AttackMeta = {
     name: string;
     element: ElementType;
@@ -75,7 +76,8 @@ export type AttackMeta = {
     func: (
         enemy: EnemyType,
         character: CharacterType,
-        target: CharacterType | EnemyType
+        target: CharacterType | EnemyType,
+        spellCost: number,
     ) => number;
     aoe: boolean;
     animation: {

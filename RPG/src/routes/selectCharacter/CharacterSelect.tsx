@@ -12,7 +12,7 @@ import { backgroundAtom, generateNewBackground } from "../../atom/BackgroundAtom
 import UserNameInput from "./UserNameInput";
 import SoundManager from "../../gameData/SoundManager";
 import { UserAtom } from "../../atom/persistant/UserAtom";
-import { tutorialAtom } from "../../atom/TutorialAtom";
+
 const CharacterSelect = () => {
     const [characters] = useAtom(CharacterAtom);
     const [currentGameLevel] = useAtom(GameLevelAtom);
@@ -20,7 +20,7 @@ const CharacterSelect = () => {
     const selectedCharacters = Object.values(characters).filter(char => char.isSelected);
     const setBackground = useSetAtom(backgroundAtom);
     const [userName] = useAtom(UserAtom);
-    const setTutorial = useSetAtom(tutorialAtom);
+
     SoundManager.stopMusic();
     const handleBeginAdventure = () => {
         if (selectedCharacters.length !== 4) return;
@@ -34,7 +34,6 @@ const CharacterSelect = () => {
         currentGameLevel.isRoundOver = false;
         currentGameLevel.isHideBegin = false;
         currentGameLevel.background = newBackground;
-        setTutorial({ isTutorial: false });
 
         navigate("/game");
     };

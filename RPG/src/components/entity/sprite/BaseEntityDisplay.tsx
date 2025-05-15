@@ -2,13 +2,14 @@ import type { CharacterType } from "../../../atom/CharacterAtom";
 import type { EnemyType } from "../../../atom/BaseEnemyAtom";
 import { AttackAnimationAtom } from "../../../atom/effects/AttackAnimationAtom";
 import { FlashAnimationAtom } from "../../../atom/effects/FlashAnimationAtom";
-import { useAtom } from "jotai";
+import { useAtom, useAtomValue } from "jotai";
 import { DamageEffectAtom } from "../../../atom/effects/DamageEffectAtom";
 import { EntityImages } from "./EntityImages";
 import styles from './BaseEntityDisplay.module.css';
 import attacks from "../../../gameData/spellData/attacks/Attacks";
 import buffs from "../../../gameData/spellData/defense/BuffsFactory";
 import { DefenseAnimationAtom } from "../../../atom/effects/DefenseAnimationAtom";
+import { tutorialAtom } from "../../../atom/TutorialAtom";
 
 type EnityDetailProps = {
     entity: CharacterType | EnemyType;
@@ -19,6 +20,8 @@ function BaseEntityDisplay({ entity }: EnityDetailProps) {
     const [defendEntities] = useAtom(DefenseAnimationAtom);
     const [flashEntities] = useAtom(FlashAnimationAtom);
     const [damageEffectMap] = useAtom(DamageEffectAtom);
+    const tutorial = useAtomValue(tutorialAtom);
+
     const effectData = damageEffectMap[entity.id];
 
     const imageSrc = EntityImages[entity.name] || EntityImages[(entity as EnemyType).base] || '/assets/default.png';
@@ -118,7 +121,13 @@ function BaseEntityDisplay({ entity }: EnityDetailProps) {
                 </div>
             )}
             <div className={styles.spriteGlow} data-entity-size={('size' in entity) ? entity.size : ''}></div> 
-            <div className={styles.spriteContainer} data-type={entity.type} {...(entity.health <= 0 ? { 'data-death': true } : {})}>
+            <div 
+                className={styles.spriteContainer} 
+                data-type={entity.type} 
+                {...(entity.health <= 0 ? { 'data-death': true } : {})}
+                {...(tutorial?.isClick && { 'data-tutorial': tutorial?.isClick })}
+                {...(tutorial?.isTutorial && { 'data-tutorial-front': tutorial?.front })}
+            >
                 {entity.health > 0 ? (
                     <>
                         <img

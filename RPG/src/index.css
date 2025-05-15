@@ -42,8 +42,10 @@
 
 	--reflection-layer: 7;
 
-	--tutorial-bottom-layer: 8;
-	--tutorial-top-layer: 9;
+	--tutorial-lowest-layer: 8;
+	--tutorial-low-layer: 9;
+	--tutorial-middle-layer: 10;
+	--tutorial-highest-layer: 11;
 
 	--width: 85.7em;
 	--height: 64.3em;
@@ -195,4 +197,25 @@ button {
 	justify-content: center;
 	font-size: 1.5rem;
 	letter-spacing: 2px;
-  }
+}
+
+/* tutorial */
+body [data-tutorial='true'][data-type='player'] {
+	z-index: var(--tutorial-middle-layer);
+}
+
+body [data-tutorial='true'][data-type='player'][data-tutorial-front='npc'] {
+	z-index: var(--tutorial-lowest-layer);
+}
+
+body [data-tutorial='true'][data-type='npc'] {
+	z-index: var(--tutorial-middle-layer);
+}
+
+body [data-tutorial='true'][data-type='npc'][data-tutorial-front='player'] {
+	z-index: var(--tutorial-lowest-layer);
+}
+
+body [data-tutorial='true'] {
+	z-index: var(--tutorial-highest-layer);
+}

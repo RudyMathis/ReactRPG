@@ -3,79 +3,146 @@
         {
             "id": 0,
             "front": "",
+            "hidePrev": false,
             "hideNext": false,
             "position": "topBar",
+            "textPosition": "center",
             "text": "Welcome to Sacred Loop! In this tutorial you will learn the basics!"
         },
         {
             "id": 1,
             "front": "",
+            "hidePrev": false,
             "hideNext": false,
             "position": "topBar",
+            "textPosition": "center",
             "text": "From left to right there is the menu button to bring you back to the main menu, the settings icon to change the volume and read more about the game mechanics, the turn order showing you the attack order, then finally the score and round and level."
         },
         {
             "id": 2,
             "front": "",
+            "hidePrev": false,
             "hideNext": false,
             "position": "topBar",
+            "textPosition": "center",
             "text": "The turn order will update at the start of every round and is effected by characters and enemies speed. Frozen enemies and frozen characters will be at the end of the turn order."
         },
         {
             "id": 3,
             "front": "",
+            "hidePrev": false,
             "hideNext": false,
             "position": "topBar",
+            "textPosition": "center",
             "text": "Speaking of rounds, this game is broken down into turns, cycles, rounds, and levels. Every character and enemy gets a turn before the order cycle is reset, the turn cycle continues untill either all characters are dead or all enemies are. Once that happens the round is over and you advance to the next round."
         },
         {
             "id": 4,
             "front": "",
+            "hidePrev": false,
             "hideNext": false,
             "position": "topBar",
+            "textPosition": "center",
             "text": "After 3 rounds you move on to the next level where enemies will have leveled up and have increased stats."
         },
         {
             "id": 5,
             "front": "Begin",
+            "hidePrev": false,
             "hideNext": true,
             "position": "begin",
+            "textPosition": "bottom",
             "text": "Let's start our first round by clicking the Begin Button, the enemy will go first."
         },
         {
             "id": 6,
-            "front": "Characters",
+            "front": "player",
+            "hidePrev": true,
             "hideNext": false,
-            "position": "topBar",
+            "position": "player",
+            "textPosition": "center",
             "text": "Now it's your turn Shaman's turn."
         },
         {
             "id": 7,
-            "front": "Characters",
+            "front": "player",
+            "hidePrev": false,
             "hideNext": false,
-            "position": "topBar",
+            "position": "player",
+            "textPosition": "bottom",
             "text": "You can left click any of your characters right now and either buff them or check out their stats under details."
         },
         {
             "id": 8,
-            "front": "Characters",
+            "front": "player",
+            "hidePrev": false,
             "hideNext": false,
-            "position": "topBar",
+            "position": "player",
+            "textPosition": "bottom",
             "text": "You can also select the shaman for spells the shaman can do on itself."
         },
         {
             "id": 9,
-            "front": "Characters",
+            "front": "player",
+            "hidePrev": false,
             "hideNext": false,
-            "position": "topBar",
+            "position": "player",
+            "textPosition": "bottom",
             "text": "This is called the action menu and from here you can see how much it costs (under the spell name) and how much it does (to the right of the name)."
         },
         {
             "id": 10,
-            "front": "Characters",
+            "front": "player",
+            "hidePrev": false,
             "hideNext": false,
-            "position": "topBar",
+            "position": "player",
+            "textPosition": "bottom",
             "text": "The green 🛈 will give more information on the spell, for Damage totem for example gives a buff that 'Increase attack damage for the party'."
+        },
+        {
+            "id": 11,
+            "front": "npc",
+            "hidePrev": false,
+            "hideNext": false,
+            "position": "npc",
+            "textPosition": "bottom",
+            "text": "Your Shaman currently only has 1 spell to use on the enemies, 'Buring Sprits'. This is a 'Fire' spell indicated by the red lettering."
+        },
+        {
+            "id": 12,
+            "front": "npc",
+            "hidePrev": false,
+            "hideNext": false,
+            "position": "npc",
+            "textPosition": "bottom",
+            "text": "It cost 60 mana and does 27 damage. If you hover over it you will see arrows over the enemies heads that indicated who will take damage."
+        },
+        {
+            "id": 13,
+            "front": "npc",
+            "hidePrev": false,
+            "hideNext": false,
+            "position": "npc",
+            "textPosition": "bottom",
+            "text": "Just like with the your party, you can inspect them by clicking 'Details', this will show you the stats of the enemy."
+        },
+        {
+            "id": 14,
+            "front": "npc",
+            "hidePrev": false,
+            "hideNext": true,
+            "position": "npc",
+            "textPosition": "bottom",
+            "text": "Click on the spell to continue the round."
+        },
+        {
+            "id": 15,
+            "front": "all",
+            "hidePrev": true,
+            "hideNext": true,
+            "position": "npc",
+            "textPosition": "bottom",
+            "text": ""
         }
     ]
 }

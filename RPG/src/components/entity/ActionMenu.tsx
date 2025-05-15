@@ -13,6 +13,8 @@ import Resistances from '../../gameData/Resistances';
 import Vulnerabilites from '../../gameData/Vulnerabilities';
 import { hoveredSpellAtom } from '../../atom/HoveredSpellAtom';
 import { storeAtom } from '../../atom/storeAtom';
+import { tutorialAtom } from '../../atom/TutorialAtom';
+import { useEffect } from 'react';
 
 type ActionMenuProps = {
     isVisible: boolean;
@@ -29,14 +31,35 @@ const ActionMenu = ({ isVisible, type, onSpell, detailScreen, isCurrentTurn }: A
     const [, setSelectedSpell] = useAtom(selectedSpellAtom);
     const [playerTarget] = useAtom(playerTargetAtom);
     const setHoveredSpell = useSetAtom(hoveredSpellAtom);
+    const [tutorial, setTutorial] = useAtom(tutorialAtom);
+    const isClick = {...(tutorial?.isClick === true && { 'data-tutorial': tutorial?.isClick })}
+    const isDisabled = {...(tutorial?.isDisabled === true && { 'data-tutorial-disabled': tutorial?.isDisabled })} 
+
+    useEffect(() => {
+        if (tutorial?.isTutorial && tutorial?.isNextPhase) {
+            setTutorial(prev => ({
+                ...prev,
+                isTutorial: true,
+                isDisabled: false,
+            }));
+            console.log("HELLO");
+        }
+    }, []);
+
     const handleSpellClick = (spell: string) => {
         setSelectedSpell(spell);
         SoundManager.playSfx(spell); 
+        if(tutorial?.isTutorial){
+            setTutorial({
+                isTutorial: true,
+                isNextPhase: true,
+            });
+        }
     };
 
     return (
         isVisible && (
-            <div className={`${styles.actionMenuContainer}`} data-type={type}>
+            <div className={`${styles.actionMenuContainer}`} data-type={type} {...(tutorial?.isClick && { 'data-tutorial': tutorial?.isClick })}>
                 {selectedCharacters.map((char) => (
                     char.currentTurn ? (
                         <div key={char.id} className={styles.actionMenuItem}>
@@ -54,11 +77,13 @@ const ActionMenu = ({ isVisible, type, onSpell, detailScreen, isCurrentTurn }: A
                                 const buttonProps = {
                                     className: `${styles.actionMenuButton}`,
                                     onClick: () => {
+                                        if(tutorial?.isDisabled) return;
                                         onSpell();
                                         handleSpellClick(spell);
                                     },
                                     'data-spell': spell,
                                     disabled: char.mana < Number(spell.split('$')[1])
+                                    
                                 };
 
                                 const label = attacks[spell]?.name || buffs[spell]?.name;
@@ -89,13 +114,21 @@ const ActionMenu = ({ isVisible, type, onSpell, detailScreen, isCurrentTurn }: A
                                                 }}
                                                 onMouseLeave={() => setHoveredSpell(null)}
                                                 onClick={() => {
+                                                    if(tutorial?.isDisabled) return;
                                                     setHoveredSpell(null);
                                                     onSpell();
                                                     handleSpellClick(spell);
                                                 }}
                                             >
                                             <div className={styles.spellInfo}>
-                                                <p data-element={`${element}`} className={styles.spellName}>{label}</p>
+                                                <p 
+                                                    data-element={`${element}`}
+                                                    className={styles.spellName}                                                
+                                                    {...isClick}
+                                                    {...isDisabled}
+                                                >
+                                                    {label}
+                                                </p>
                                                 <p className={styles.spellCost}>{costLabel}{costLabel !== 'Free' ? ` ${displayCost}` : ''}</p>
                                             </div>
                                             <p className={styles.spellDefense}>{statValue}</p>
@@ -141,7 +174,7 @@ const ActionMenu = ({ isVisible, type, onSpell, detailScreen, isCurrentTurn }: A
                                     
                                     return <button 
                                                 key={`${char.id}-${index}`} 
-                                                {...buttonProps} 
+                                                {...buttonProps}
                                                 onMouseEnter={() => {
                                                     if (enemy && !aoeAttack) {
                                                         const affectedEntityIds = [
@@ -172,13 +205,21 @@ const ActionMenu = ({ isVisible, type, onSpell, detailScreen, isCurrentTurn }: A
                                                 }}
                                                 onMouseLeave={() => setHoveredSpell(null)}
                                                 onClick={() => {
+                                                    if(tutorial?.isDisabled) return;
                                                     setHoveredSpell(null);
                                                     onSpell();
                                                     handleSpellClick(spell);
                                                 }}
                                             >
                                         <div className={styles.spellInfo}>
-                                            <p data-element={`${element}`} className={styles.spellName}>{label}</p>
+                                            <p 
+                                                data-element={`${element}`}
+                                                className={styles.spellName}
+                                                {...isClick}
+                                                {...isDisabled}
+                                            >
+                                                {label}
+                                            </p>
                                             <p className={styles.spellCost}>{costLabel}{displayCost}</p>
                                         </div>
                                         <p data-vulnerability={vulnerability > 0} data-resistance={resistance > 0} className={styles.spellDamage}>{adjustedDamage}</p>

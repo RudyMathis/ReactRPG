@@ -17,6 +17,7 @@ import SoundManager from '../../gameData/SoundManager';
 import styles from './GameState.module.css';
 import { tutorialAtom } from '../../atom/TutorialAtom';
 import { backgroundAtom } from '../../atom/BackgroundAtom';
+import { useHandleTutorialStart } from '../tutorial/useHandleTutorialStart';
 
 const Grid = () => {
   const [characters] = useAtom(CharacterAtom);
@@ -32,6 +33,26 @@ const Grid = () => {
   const [currentGameLevel] = useAtom(GameLevelAtom);
   const [background] = useAtom(backgroundAtom);
   const [tutorial, setTutorial] = useAtom(tutorialAtom);
+  const handleTutorialStart = useHandleTutorialStart();
+
+  useEffect(() => {
+    const tutorialInProgress = localStorage.getItem('tutorialInProgress');
+    if(tutorialInProgress) {
+        setTutorial({
+            isTutorial: true,
+            front: '',
+            isHighlight: false,
+            isNextPhase: false,
+            isNextTurn: false,
+            isStartTutorial: false,
+            isEndTutorial: false,
+            isClick: false,
+            isDisabled: false,
+        });
+        
+        handleTutorialStart();
+      }
+  }, []);
 
   const front = tutorial?.front || '';
 
@@ -47,42 +68,50 @@ const Grid = () => {
       currentGameLevel.isRoundOver = false;
       currentGameLevel.isHideBegin = true
 
-      if(tutorial?.isTutorial){
-        setTutorial({
-          isTutorial: true,
-          isHighlight: true,
-        });
+      if(tutorial?.isTutorial == true){
+          setTutorial(prev => ({
+            ...prev,
+            isTutorial: true,
+            isStartTutorial: true,
+            isClick: false,
+          }));
+
+        setTimeout(() => {
+          setTutorial({
+            isTutorial: true,
+            isDisabled: true,
+            isClick: true,
+          });
+
+        }, 4000);
       }
+      
   };
 
   useEffect(() => {
-    if (!gameLevel.isRoundOver) {
-      // reinitialize enemy ordering.
-      const enemyArray = Object.values(enemies);
+  if (!gameLevel.isRoundOver) {
+    const enemyArray = Object.values(enemies);
 
-        if(tutorial?.isTutorial) {
-          const shuffled = enemyArray.filter((enemy) => enemy.isTutorial)
-            .map((enemy, index) => ({ ...enemy, order: index + 1 }));
+    const reorder = (array: EnemyType[]) => {
+      return array.map((enemy, index) => ({ ...enemy, order: index + 1 }))
+        .reduce((acc: Record<number, EnemyType>, enemy) => {
+          acc[enemy.id] = enemy;
+          return acc;
+        }, {});
+    };
 
-          const reorderedEnemies = shuffled.reduce((acc: Record<number, EnemyType>, enemy) => {
-            acc[enemy.id] = enemy;
-            return acc;
-          }, {});
-          
-          setEnemies(reorderedEnemies);
-        } else {
-          const shuffled = enemyArray.sort(() => Math.random() - 0.5)
-            .map((enemy, index) => ({ ...enemy, order: index + 1 }));
+    setTimeout(() => {
+      if (tutorial?.isTutorial) {
+        const tutorialEnemies = enemyArray.filter((enemy) => enemy.isTutorial);
+        setEnemies(reorder(tutorialEnemies));
+      } else {
+        const shuffled = [...enemyArray].sort(() => Math.random() - 0.5);
+        setEnemies(reorder(shuffled));
+      }
+    }, 500);
+  }
+}, [gameLevel.isRoundOver, tutorial]);
 
-          const reorderedEnemies = shuffled.reduce((acc: Record<number, EnemyType>, enemy) => {
-            acc[enemy.id] = enemy;
-            return acc;
-          }, {});
-
-          setEnemies(reorderedEnemies);
-        }
-    }
-  }, [gameLevel.isRoundOver, tutorial]);
   
   const waitForInput = useCallback((): Promise<void> => {
     setWaitingForInput(true);
@@ -180,13 +209,13 @@ const Grid = () => {
           </React.Fragment>
       ))}
       {activeDetailScreen && (
-        <div className={styles.detailScreenOverlay} onClick={closeDetailScreen}>
+        <div className={styles.detailScreenOverlay} onClick={closeDetailScreen} {...(tutorial?.isClick && { 'data-tutorial': tutorial?.isClick })}>
           <div className={styles.detailScreenContent} onClick={(e) => e.stopPropagation()}>
             <DetailScreen entity={activeDetailScreen} />
           </div>
         </div>
       )}
-      {currentGameLevel.isHideBegin == false && <Btn onClick={checkTurnOrderAndRunLogic} className={styles.begin} text="Begin" {...(tutorial?.isTutorial && { 'data-tutorial': front })}/>}
+      {currentGameLevel.isHideBegin == false && <Btn onClick={checkTurnOrderAndRunLogic} className={styles.begin} text="Begin" {...(tutorial?.isTutorial == true && { 'data-tutorial': front })}/>}
       {currentGameLevel.isGameOver && <EndGameDisplay />}
     </div>
   );
