@@ -28,7 +28,8 @@ import { spellCost as ProtectPartyChar50Cost, isMoreInfo as ProtectPartyChar50is
 
 type BuffFunction = (
     character: CharacterType,
-    target: CharacterType
+    target: CharacterType,
+    spellCost: number,
 ) => CharacterBuffResult;
 
 type BuffMeta = {
