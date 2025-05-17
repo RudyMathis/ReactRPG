@@ -22,13 +22,13 @@ const LightningBoltTar40 = (enemy: EnemyType, character: CharacterType, target: 
         
         if (lightningResistance) {
             HandleDamageEffect(damageResistance, "Lightning", "player", character.id);
-            return character.health - damageResistance;
+            return character.health -= damageResistance;
         } else if (lightningVulnerability) {
             HandleDamageEffect(damageVulnerability, "Lightning", "player", character.id);
-            return character.health - damageVulnerability;
+            return character.health -= damageVulnerability;
         } else {
             HandleDamageEffect(damage, "Lightning", "player", character.id);
-            return character.health - damage;
+            return character.health -= damage;
         }
     } else {
         character.mana -= spellCost;
@@ -44,13 +44,13 @@ const LightningBoltTar40 = (enemy: EnemyType, character: CharacterType, target: 
 
         if (lightningResistance) {
             HandleDamageEffect(damageResistance, "Lightning", "npc", enemy.id);
-            return enemy.health - damageResistance;
+            return enemy.health -= damageResistance;
         } else if (lightningVulnerability) {
             HandleDamageEffect(damageVulnerability, "Lightning", "npc", enemy.id);
-            return enemy.health - damageVulnerability;
+            return enemy.health -= damageVulnerability;
         } else {
             HandleDamageEffect(damage, "Lightning", "npc", enemy.id);
-            return enemy.health - damage;
+            return enemy.health -= damage;
         }
     }
 }

@@ -22,13 +22,13 @@ const HolyStrikeTar40 = (enemy: EnemyType, character: CharacterType, target: Cha
         
         if (holyResistance) {
             HandleDamageEffect(damageResistance, "Holy", "player", character.id);
-            return character.health - damageResistance;
+            return character.health -= damageResistance;
         } else if (holyVulnerability) {
             HandleDamageEffect(damageVulnerability, "Holy", "player", character.id);
-            return character.health - damageVulnerability;
+            return character.health -= damageVulnerability;
         } else {
             HandleDamageEffect(damage, "Holy", "player", character.id);
-            return character.health - damage;
+            return character.health -= damage;
         }
     } else {
         character.mana -= spellCost;
@@ -44,13 +44,13 @@ const HolyStrikeTar40 = (enemy: EnemyType, character: CharacterType, target: Cha
 
         if (holyResistance) {
             HandleDamageEffect(damageResistance, "Holy", "npc", enemy.id);
-            return enemy.health - damageResistance;
+            return enemy.health -= damageResistance;
         } else if (holyVulnerability) {
             HandleDamageEffect(damageVulnerability, "Holy", "npc", enemy.id);
-            return enemy.health - damageVulnerability;
+            return enemy.health -= damageVulnerability;
         } else {
             HandleDamageEffect(damage, "Holy", "npc", enemy.id);
-            return enemy.health - damage;
+            return enemy.health -= damage;
         }
     }
 }

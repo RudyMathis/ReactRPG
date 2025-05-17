@@ -14,7 +14,7 @@ const ShootTar0 = (enemy: EnemyType, character: CharacterType, target: Character
         const damage = Math.max(5, Math.round((enemy.attack * damageMulitplier) - character.defense))
         HandleDamageEffect(damage, "Physical", "player", character.id);
 
-        return character.health - damage;
+        return character.health -= damage;
     } else {
         character.mana -= spellCost;
 
@@ -23,7 +23,7 @@ const ShootTar0 = (enemy: EnemyType, character: CharacterType, target: Character
         HandleDamageEffect(damage, "Phyical", "npc", enemy.id);
         BlessingOfBurnBonus(character, enemy);
         BlessingOfLightningBonus(character, enemy);
-        return enemy.health - damage;
+        return enemy.health -= damage;
     }
 }
 

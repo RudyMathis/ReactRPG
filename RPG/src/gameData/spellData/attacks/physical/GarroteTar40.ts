@@ -15,7 +15,7 @@ const GarroteTar40 = (enemy: EnemyType, character: CharacterType, target: Charac
 
         if (character.debuffs.find(d => d.name === Debuffs.Bleed.name)) {
             HandleDamageEffect(damage, "Physical", "player", character.id);
-            return character.health - damage;
+            return character.health -= damage;
         } else {
             character.debuffs.push({
                 type: Debuffs.Bleed.type,
@@ -25,7 +25,7 @@ const GarroteTar40 = (enemy: EnemyType, character: CharacterType, target: Charac
                 icon: Debuffs.Bleed.icon
             });
             HandleDamageEffect(damage, "Physical", "player", character.id);
-            return character.health - damage;
+            return character.health -= damage;
         }
     } else {
         character.mana -= spellCost;
@@ -35,7 +35,7 @@ const GarroteTar40 = (enemy: EnemyType, character: CharacterType, target: Charac
             HandleDamageEffect(damage, "Physical", "npc", enemy.id);
             BlessingOfBurnBonus(character, enemy);
             BlessingOfLightningBonus(character, enemy);
-            return enemy.health - damage;
+            return enemy.health -= damage;
         } else {
             enemy.debuffs.push({
                 type: Debuffs.Bleed.type, duration: 3,
@@ -45,7 +45,7 @@ const GarroteTar40 = (enemy: EnemyType, character: CharacterType, target: Charac
             HandleDamageEffect(damage, "Physical", "npc", enemy.id);
             BlessingOfBurnBonus(character, enemy);
             BlessingOfLightningBonus(character, enemy);
-            return enemy.health - damage;
+            return enemy.health -= damage;
         }
     }
 }

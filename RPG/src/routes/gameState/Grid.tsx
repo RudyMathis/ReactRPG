@@ -15,7 +15,7 @@ import EntityDisplayWrapper from '../../components/entity/sprite/EntityDisplayWr
 import EndGameDisplay from './EndGameDisplay';
 import SoundManager from '../../gameData/SoundManager';
 import styles from './GameState.module.css';
-import { tutorialAtom } from '../../atom/TutorialAtom';
+import { useTutorialManager } from '../tutorial/useTutorialManager';
 import { backgroundAtom } from '../../atom/BackgroundAtom';
 import { useHandleTutorialStart } from '../tutorial/useHandleTutorialStart';
 
@@ -28,33 +28,20 @@ const Grid = () => {
   const [playerTarget, setPlayerTarget] = useAtom(playerTargetAtom);
   const [waitingForInput, setWaitingForInput] = useState(false);
   const inputPromiseResolverRef = useRef<(() => void) | null>(null);
-  const [gameLevel] = useAtom(GameLevelAtom);
   const [activeDetailScreen, setActiveDetailScreen] = useState<CharacterType | EnemyType | null>(null);
   const [currentGameLevel] = useAtom(GameLevelAtom);
   const [background] = useAtom(backgroundAtom);
-  const [tutorial, setTutorial] = useAtom(tutorialAtom);
+  const {tutorial, jumpToStep} = useTutorialManager();
   const handleTutorialStart = useHandleTutorialStart();
+  const hasStartedRef = useRef(false);
 
   useEffect(() => {
-    const tutorialInProgress = localStorage.getItem('tutorialInProgress');
-    if(tutorialInProgress) {
-        setTutorial({
-            isTutorial: true,
-            front: '',
-            isHighlight: false,
-            isNextPhase: false,
-            isNextTurn: false,
-            isStartTutorial: false,
-            isEndTutorial: false,
-            isClick: false,
-            isDisabled: false,
-        });
-        
-        handleTutorialStart();
-      }
-  }, []);
-
-  const front = tutorial?.front || '';
+    if (tutorial.isTutorial && !hasStartedRef.current) {
+      hasStartedRef.current = true;
+      handleTutorialStart();
+      localStorage.removeItem('tutorialState');
+    }
+  }, [tutorial.isTutorial]);
 
   SoundManager.preloadSfx('Quick_Attack_Tar$0', '/assets/sfx/Quick_Attack.mp3');
 
@@ -68,51 +55,30 @@ const Grid = () => {
       currentGameLevel.isRoundOver = false;
       currentGameLevel.isHideBegin = true
 
-      if(tutorial?.isTutorial == true){
-          setTutorial(prev => ({
-            ...prev,
-            isTutorial: true,
-            isStartTutorial: true,
-            isClick: false,
-          }));
-
+      if(tutorial.isTutorial){
+        jumpToStep(6);
         setTimeout(() => {
-          setTutorial({
-            isTutorial: true,
-            isDisabled: true,
-            isClick: true,
-          });
-
-        }, 4000);
+          jumpToStep(7);
+        }, 4000)
       }
-      
   };
 
   useEffect(() => {
-  if (!gameLevel.isRoundOver) {
-    const enemyArray = Object.values(enemies);
+    if (tutorial.isTutorial && tutorial.isStartTutorial) {
+      const reorder = (array: EnemyType[]) => {
+        return array.map((enemy, index) => ({ ...enemy, order: index + 1 }))
+          .reduce((acc: Record<number, EnemyType>, enemy) => {
+            acc[enemy.id] = enemy;
+            return acc;
+          }, {});
+      };
 
-    const reorder = (array: EnemyType[]) => {
-      return array.map((enemy, index) => ({ ...enemy, order: index + 1 }))
-        .reduce((acc: Record<number, EnemyType>, enemy) => {
-          acc[enemy.id] = enemy;
-          return acc;
-        }, {});
-    };
-
-    setTimeout(() => {
-      if (tutorial?.isTutorial) {
+        const enemyArray = Object.values(enemies);
         const tutorialEnemies = enemyArray.filter((enemy) => enemy.isTutorial);
         setEnemies(reorder(tutorialEnemies));
-      } else {
-        const shuffled = [...enemyArray].sort(() => Math.random() - 0.5);
-        setEnemies(reorder(shuffled));
-      }
-    }, 500);
-  }
-}, [gameLevel.isRoundOver, tutorial]);
+    }
+  }, [tutorial]);
 
-  
   const waitForInput = useCallback((): Promise<void> => {
     setWaitingForInput(true);
     return new Promise(resolve => {
@@ -209,13 +175,13 @@ const Grid = () => {
           </React.Fragment>
       ))}
       {activeDetailScreen && (
-        <div className={styles.detailScreenOverlay} onClick={closeDetailScreen} {...(tutorial?.isClick && { 'data-tutorial': tutorial?.isClick })}>
+        <div className={styles.detailScreenOverlay} onClick={closeDetailScreen} {...(tutorial.isTutorial && { 'data-tutorial-layer': tutorial.tutorialLayer })}>
           <div className={styles.detailScreenContent} onClick={(e) => e.stopPropagation()}>
             <DetailScreen entity={activeDetailScreen} />
           </div>
         </div>
       )}
-      {currentGameLevel.isHideBegin == false && <Btn onClick={checkTurnOrderAndRunLogic} className={styles.begin} text="Begin" {...(tutorial?.isTutorial == true && { 'data-tutorial': front })}/>}
+      {currentGameLevel.isHideBegin == false && <Btn onClick={checkTurnOrderAndRunLogic} className={styles.begin} text="Begin" {...(tutorial.isTutorial && { 'data-tutorial-layer': tutorial.tutorialLayer })}/>}
       {currentGameLevel.isGameOver && <EndGameDisplay />}
     </div>
   );

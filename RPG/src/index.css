@@ -42,10 +42,16 @@
 
 	--reflection-layer: 7;
 
-	--tutorial-lowest-layer: 8;
+	/* --tutorial-lowest-layer: 8;
 	--tutorial-low-layer: 9;
 	--tutorial-middle-layer: 10;
-	--tutorial-highest-layer: 11;
+	--tutorial-highest-layer: 11; */
+	--tutorial-layer-1: 8;
+	--tutorial-layer-2: 9;
+	--tutorial-layer-3: 10;
+	--tutorial-layer-4: 11;
+
+	--border-layer: 12;
 
 	--width: 85.7em;
 	--height: 64.3em;
@@ -200,22 +206,18 @@ button {
 }
 
 /* tutorial */
-body [data-tutorial='true'][data-type='player'] {
-	z-index: var(--tutorial-middle-layer);
+body [data-tutorial-layer='layer1'] {
+	z-index: var(--tutorial-layer-1);
 }
 
-body [data-tutorial='true'][data-type='player'][data-tutorial-front='npc'] {
-	z-index: var(--tutorial-lowest-layer);
+body [data-tutorial-layer='layer2'] {
+	z-index: var(--tutorial-layer-2);
 }
 
-body [data-tutorial='true'][data-type='npc'] {
-	z-index: var(--tutorial-middle-layer);
+body [data-tutorial-layer='layer3'] {
+	z-index: var(--tutorial-layer-3);
 }
 
-body [data-tutorial='true'][data-type='npc'][data-tutorial-front='player'] {
-	z-index: var(--tutorial-lowest-layer);
-}
-
-body [data-tutorial='true'] {
-	z-index: var(--tutorial-highest-layer);
+body [data-tutorial-layer='layer4'] {
+	z-index: var(--tutorial-layer-4);
 }

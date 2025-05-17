@@ -4,7 +4,7 @@ import { GameLevelAtom } from "../../atom/GameLevelAtom";
 import { storeAtom } from "../../atom/storeAtom";
 import { GainExperience } from "../GainExperince";
 import { SubmitHighScore } from "../SubmitHighScore";
-import { tutorialAtom } from "../../atom/TutorialAtom";
+import { tutorialAtom } from "../../atom/TutorialAtomNew";
 
 export const HandleAllEnemiesDead = () => {
     const allEnemiesDead = Object.values(storeAtom.get(EnemyAtom)).every(e => e.health <= 0);
@@ -12,20 +12,13 @@ export const HandleAllEnemiesDead = () => {
     
     if (allEnemiesDead) {
         
-        if (tutorial?.isTutorial) {
+        if (tutorial.isTutorial) {
             storeAtom.set(tutorialAtom, 
-                { 
-                    ...tutorial, 
-                    isTutorial: true,
-                    isEndTutorial: true,
-                });
-            storeAtom.set(GameLevelAtom, (prev) => ({
-                ...prev,
-                isRoundOver: false,
-                isHideBegin: false,
-                isGameOver: true
-            }));
-            localStorage.removeItem('tutorialInProgress');
+            { 
+                ...tutorial, 
+                isEndTutorial: true,
+            });
+            localStorage.removeItem('tutorialState');
         } else {
             storeAtom.set(GameLevelAtom, (prev) => ({
                 ...prev,

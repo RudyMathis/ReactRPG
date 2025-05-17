@@ -1,29 +1,62 @@
-/* Tutorial */
-
-.tutorialHighlight {
+.tutorialContainer {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: calc(var(--width) + 10em);
-    height: calc(var(--height) + 10em);
-    z-index: var(--tutorial-low-layer);
     overflow: hidden;
-    pointer-events: auto;
+    width: var(--width);
+    height: var(--height);
     max-width: 100vw;
     max-height: 100vh;
+    pointer-events: none;
+    z-index: var(--tutorial-low-layer);
 }
 
-.tutorialHighlight.blur::before {
-    filter: blur(20px);
+.tutorialContainer[data-is-visible='false'] {
+    display: none;
 }
 
-.tutorialTopClickHole {
+.tutorialOverlay {
     position: absolute;
     top: 0;
     left: 0;
-    pointer-events: none;
-    z-index: var(--tutorial-highest-layer);
+    width: 100%;
+    height: 100%;
+    pointer-events: auto;
+    background-color: hsla(0, 0%, 0%, 0.9);
+}
+
+.tutorialOverlay[data-type='top'] {
+    clip-path: inset(20% 0 0 0);
+}
+
+.tutorialOverlay[data-type='center'] {
+    display: none;
+}
+
+.tutorialOverlay[data-type='right'] {
+    clip-path: inset(0 0 0 50%);
+}
+
+.tutorialOverlay[data-type='left'] {
+    clip-path: inset(0 50% 0 0);
+}
+
+.tutorialOverlayHole {
+    position: absolute;
+    display: none;
+    top: 0;
+    left: 0;
+    width: 15em;
+    height: 15em;
+    pointer-events: auto;
+    background-color: transparent;
+    border: 50em solid hsla(0, 0%, 0%, 0.9);;
+    border-radius: 50%;
+}
+
+.tutorialOverlayHole[data-type='center'] {
+    display: block;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .tutorialTextContainer {
@@ -31,137 +64,18 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    z-index: var(--tutorial-low-layer);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 1rem;
+    gap: 2rem;
+    pointer-events: auto;
 }
 
-.tutorialHighlight[data-highlight='topBar'] {
-    top: 60%;
-    height: calc(var(--height) - 10em);
-    width: calc(var(--width) + 10em);
-}
-
-.tutorialHighlight[data-highlight='topBar']::before {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: calc(var(--width) + 10em);
-    height: calc(var(--height) - 10em);
-    z-index: var(--tutorial-low-layer);
-    background:
-        linear-gradient(
-            to bottom,
-            transparent 0%,
-            transparent 5%,
-            rgba(0, 0, 0, 0.8) 5%,
-            rgba(0, 0, 0, 0.8) 100%
-        );
-}
-
-.tutorialTopClickHole[data-highlight='topBar'] {
-    width: var(--width);
-    height: 10em;
-}
-
-
-.tutorialHighlight[data-highlight='begin'] {
-    transform: translate(-50%, -50%);
-    z-index: var(--tutorial-low-layer);
-}
-
-.tutorialHighlight[data-highlight='begin']::before {
-    content: "";
-    position: absolute;
-    top: 50%;
+.tutorialTextContainer[data-position='bottom'] {
+    top: 80%;
     left: 50%;
-    width: 50%;
-    height: 0;
-    padding-bottom: 50%;
     transform: translate(-50%, -50%);
-    border: solid 29em rgba(0, 0, 0, 0.8);
-    border-radius: 50%;
-}
-
-.tutorialTopClickHole[data-highlight='begin'] {
-    width: 50%;
-    height: 50%;
-    transform: translate(50%, 50%);
-    border-radius: 50%;
-}
-
-.tutorialHighlight.blur[data-highlight='player'] {
-    /* top: 60%; */
-    /* height: 100%; */
-    /* width: calc(var(--width) + 10em); */
-}
-
-.tutorialHighlight[data-highlight='player']::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: calc(var(--width) - 40%);
-    height: 100%;
-    z-index: var(--tutorial-low-layer);
-    background:
-        linear-gradient(
-            to left,
-            transparent 0%,
-            transparent 5%,
-            rgba(0, 0, 0, 0.8) 5%,
-            rgba(0, 0, 0, 0.8) 100%
-        );
-}
-
-.tutorialTopClickHole[data-highlight='player'] {
-    width: var(--width);
-}
-
-.tutorialHighlight[data-highlight='npc']::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: calc(var(--width) - 40%);
-    height: 100%;
-    z-index: var(--tutorial-low-layer);
-    background:
-        linear-gradient(
-            to right,
-            transparent 0%,
-            transparent 5%,
-            rgba(0, 0, 0, 0.8) 5%,
-            rgba(0, 0, 0, 0.8) 100%
-        );
-}
-
-.tutorialTopClickHole[data-highlight='npc'] {
-    width: var(--width);
-}
-
-
-/* Text Container */
-
-.tutorialTextContainer[data-position="center"] {
-    transform: translate(-50%, -30%);
-}
-
-.tutorialTextContainer[data-position="bottom"] {
-    top: 90%;
-}
-
-/* highlight check */
-
-.tutorialTopClickHole[data-ishighlight="true"], .tutorialHighlight[data-ishighlight="true"] {
-    display: none;
-}
-.tutorialTopClickHole[data-ishighlight="false"], .tutorialHighlight[data-ishighlight="false"] {
-    display: block;
 }
 
 .tutorialButtonContainer {

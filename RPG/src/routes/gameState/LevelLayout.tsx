@@ -9,9 +9,9 @@ import { backgroundAtom } from "../../atom/BackgroundAtom";
 import styles from './GameState.module.css';
 import stylesUI from '../../components/ui/UI.module.css'
 import SettingsIcon from "../../components/ui/SettingsIcon";
-import TutorialDisplay from "../tutorial/TutorialDisplay";
 // import ActionTextDisplay from "../../components/ui/ActionTextDisplay";
-import { tutorialAtom } from "../../atom/TutorialAtom";
+import TutorialDisplay from "../tutorial/TutorialDisplayNew";
+import { tutorialAtom } from "../../atom/TutorialAtomNew";
 import Btn from "../../components/ui/Btn";
 import RelectionCurrentLevelDisplay from "../../components/ui/ReflectionCurrentLevelDisplay";
 
@@ -33,7 +33,7 @@ const LevelLayout = () => {
         <div className={styles.levelLayout}>
             <Btn className={styles.reflectionBtn} onClick={() => handleReflection()} text="menu" />
             <RelectionCurrentLevelDisplay />
-            <div className={styles.topBar} {...(tutorial?.isClick && { 'data-tutorial': tutorial?.isClick })}>
+            <div className={styles.topBar}>
                 <NavigateBtn locationValue="/" location="Menu" />
                 <TurnOrderDisplay />
                 <CurrentLevelDisplay />
@@ -41,7 +41,7 @@ const LevelLayout = () => {
             <div className={stylesUI.backgroundGlow} data-glow={background} ></div>
             <div className={stylesUI.crt}></div>
             <SettingsIcon />
-            {tutorial?.isTutorial == true && <TutorialDisplay />}
+            {tutorial.isTutorial && tutorial.isTutorialVisible && <TutorialDisplay />}
             <Grid />
             <div className={stylesUI.backgroundBorder}></div>
             {isRoundOver && <EndofRoundDisplay />}

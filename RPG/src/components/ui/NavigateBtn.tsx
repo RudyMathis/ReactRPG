@@ -8,7 +8,7 @@ type NavigateBtnProps = {
 const NavigateBtn = ({ locationValue, location}: NavigateBtnProps) => {
     const navigate = useNavigate();
     const handleNavigation = () => {
-        localStorage.removeItem('tutorialInProgress');
+        localStorage.removeItem('tutorialState');
         navigate(locationValue);
     };
 

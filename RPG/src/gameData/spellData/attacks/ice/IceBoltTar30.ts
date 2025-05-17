@@ -24,13 +24,13 @@ const IceBoltTar30 = (enemy: EnemyType, character: CharacterType, target: Charac
         if(character.debuffs.find(d => d.name === Debuffs.Frozen.name)){
             if(iceResistance) {
                 HandleDamageEffect(damageResistance, "Ice", "player", character.id);
-                return character.health - damageResistance;
+                return character.health -= damageResistance;
             } else if (iceVulnerability) {
                 HandleDamageEffect(damageVulnerability, "Ice", "player", character.id);
-                return character.health - damageVulnerability;
+                return character.health -= damageVulnerability;
             } else {
                 HandleDamageEffect(damage, "Ice", "player", character.id);
-                return character.health - damage;
+                return character.health -= damage;
             }
 
         } else {
@@ -46,14 +46,14 @@ const IceBoltTar30 = (enemy: EnemyType, character: CharacterType, target: Charac
             if(iceResistance) {
                 HandleDamageEffect(damageResistance, "Ice", "player", character.id);
 
-                return character.health - damageResistance;
+                return character.health -= damageResistance;
             } else if (iceVulnerability) {
                 HandleDamageEffect(damageVulnerability, "Ice", "player", character.id);
-                return character.health - damageVulnerability;
+                return character.health -= damageVulnerability;
             } else {
 
                 HandleDamageEffect(damage, "Ice", "player", character.id);
-                return character.health - damage;
+                return character.health -= damage;
             }
         }
 
@@ -77,13 +77,13 @@ const IceBoltTar30 = (enemy: EnemyType, character: CharacterType, target: Charac
 
             if(iceResistance) {
                 HandleDamageEffect(damageResistance, "Ice", "npc", enemy.id);
-                return enemy.health - damageResistance;
+                return enemy.health -= damageResistance;
             } else if (iceVulnerability) {
                 HandleDamageEffect(damageVulnerability, "Ice", "npc", enemy.id);
-                return enemy.health - damageVulnerability;
+                return enemy.health -= damageVulnerability;
             } else {
                 HandleDamageEffect(damage, "Ice", "npc", enemy.id);
-                return enemy.health - damage;
+                return enemy.health -= damage;
             }
         } else {
             enemy.debuffs.push({
@@ -100,13 +100,13 @@ const IceBoltTar30 = (enemy: EnemyType, character: CharacterType, target: Charac
             console.log("icename", Vulnerabilites.Ice.name, "iceResistance", iceResistance, "iceVulnerability", iceVulnerability, "damageResistance", damageResistance, "damageVulnerability", damageVulnerability, "damage", damage);
             if(iceResistance) {
                 HandleDamageEffect(damageResistance, "Ice", "npc", enemy.id);
-                return enemy.health - damageResistance;
+                return enemy.health -= damageResistance;
             } else if (iceVulnerability) {
                 HandleDamageEffect(damageVulnerability, "Ice", "npc", enemy.id);
-                return enemy.health - damageVulnerability;
+                return enemy.health -= damageVulnerability;
             } else {
                 HandleDamageEffect(damage, "Ice", "npc", enemy.id);
-                return enemy.health - damage;
+                return enemy.health -= damage;
             }
         }
     }

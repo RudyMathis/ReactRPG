@@ -13,8 +13,8 @@ import Resistances from '../../gameData/Resistances';
 import Vulnerabilites from '../../gameData/Vulnerabilities';
 import { hoveredSpellAtom } from '../../atom/HoveredSpellAtom';
 import { storeAtom } from '../../atom/storeAtom';
-import { tutorialAtom } from '../../atom/TutorialAtom';
-import { useEffect } from 'react';
+import { useTutorialManager } from '../../routes/tutorial/useTutorialManager';
+import { getTutorialStep } from '../../routes/tutorial/getTutorialStep';
 
 type ActionMenuProps = {
     isVisible: boolean;
@@ -31,35 +31,29 @@ const ActionMenu = ({ isVisible, type, onSpell, detailScreen, isCurrentTurn }: A
     const [, setSelectedSpell] = useAtom(selectedSpellAtom);
     const [playerTarget] = useAtom(playerTargetAtom);
     const setHoveredSpell = useSetAtom(hoveredSpellAtom);
-    const [tutorial, setTutorial] = useAtom(tutorialAtom);
-    const isClick = {...(tutorial?.isClick === true && { 'data-tutorial': tutorial?.isClick })}
-    const isDisabled = {...(tutorial?.isDisabled === true && { 'data-tutorial-disabled': tutorial?.isDisabled })} 
+    const { tutorial, jumpToStep} = useTutorialManager();
+    const skipStep = getTutorialStep(16);
+    let isClick = {};
+    
+    if(!tutorial.isTutorial) 
+        isClick = {'data-tutorial-clickable': false};
 
-    useEffect(() => {
-        if (tutorial?.isTutorial && tutorial?.isNextPhase) {
-            setTutorial(prev => ({
-                ...prev,
-                isTutorial: true,
-                isDisabled: false,
-            }));
-            console.log("HELLO");
-        }
-    }, []);
+    if (tutorial.isTutorial && tutorial.isTutorialClickable) {
+        isClick = {'data-tutorial-clickable': tutorial.isTutorialClickable};
+    }
 
     const handleSpellClick = (spell: string) => {
         setSelectedSpell(spell);
         SoundManager.playSfx(spell); 
-        if(tutorial?.isTutorial){
-            setTutorial({
-                isTutorial: true,
-                isNextPhase: true,
-            });
-        }
+
+        if (tutorial.isTutorial && skipStep){
+            jumpToStep(17);
+        };
     };
 
     return (
         isVisible && (
-            <div className={`${styles.actionMenuContainer}`} data-type={type} {...(tutorial?.isClick && { 'data-tutorial': tutorial?.isClick })}>
+            <div className={`${styles.actionMenuContainer}`} data-type={type} {...(tutorial.isTutorial && { 'data-tutorial-layer': tutorial.tutorialLayer })}>
                 {selectedCharacters.map((char) => (
                     char.currentTurn ? (
                         <div key={char.id} className={styles.actionMenuItem}>
@@ -77,12 +71,11 @@ const ActionMenu = ({ isVisible, type, onSpell, detailScreen, isCurrentTurn }: A
                                 const buttonProps = {
                                     className: `${styles.actionMenuButton}`,
                                     onClick: () => {
-                                        if(tutorial?.isDisabled) return;
                                         onSpell();
                                         handleSpellClick(spell);
                                     },
                                     'data-spell': spell,
-                                    disabled: char.mana < Number(spell.split('$')[1])
+                                    disabled: char.mana < Number(spell.split('$')[1]) || Object.keys(isClick).length === 0,
                                     
                                 };
 
@@ -114,7 +107,6 @@ const ActionMenu = ({ isVisible, type, onSpell, detailScreen, isCurrentTurn }: A
                                                 }}
                                                 onMouseLeave={() => setHoveredSpell(null)}
                                                 onClick={() => {
-                                                    if(tutorial?.isDisabled) return;
                                                     setHoveredSpell(null);
                                                     onSpell();
                                                     handleSpellClick(spell);
@@ -124,8 +116,6 @@ const ActionMenu = ({ isVisible, type, onSpell, detailScreen, isCurrentTurn }: A
                                                 <p 
                                                     data-element={`${element}`}
                                                     className={styles.spellName}                                                
-                                                    {...isClick}
-                                                    {...isDisabled}
                                                 >
                                                     {label}
                                                 </p>
@@ -205,7 +195,6 @@ const ActionMenu = ({ isVisible, type, onSpell, detailScreen, isCurrentTurn }: A
                                                 }}
                                                 onMouseLeave={() => setHoveredSpell(null)}
                                                 onClick={() => {
-                                                    if(tutorial?.isDisabled) return;
                                                     setHoveredSpell(null);
                                                     onSpell();
                                                     handleSpellClick(spell);
@@ -215,8 +204,6 @@ const ActionMenu = ({ isVisible, type, onSpell, detailScreen, isCurrentTurn }: A
                                             <p 
                                                 data-element={`${element}`}
                                                 className={styles.spellName}
-                                                {...isClick}
-                                                {...isDisabled}
                                             >
                                                 {label}
                                             </p>

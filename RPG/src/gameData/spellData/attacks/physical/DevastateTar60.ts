@@ -13,7 +13,7 @@ const DevastateTar60 = (enemy: EnemyType, character: CharacterType, target: Char
         const damage = Math.max(5, ((enemy.attack * damageMulitplier) - character.defense));
 
         if (character.debuffs.find(d => d.type === Debuffs.Sundered.type)) {
-            return character.health - damage;
+            return character.health -= damage;
         } else {
             character.debuffs.push({
                 type: Debuffs.Sundered.type, 
@@ -24,7 +24,7 @@ const DevastateTar60 = (enemy: EnemyType, character: CharacterType, target: Char
             });
 
             character.defense = 0;
-            return character.health - damage;
+            return character.health -= damage;
         }
     } else {
         character.mana -= spellCost;
@@ -33,7 +33,7 @@ const DevastateTar60 = (enemy: EnemyType, character: CharacterType, target: Char
         if(enemy.debuffs.find(d => d.type === Debuffs.Sundered.type)) {
             BlessingOfBurnBonus(character, enemy);
             BlessingOfLightningBonus(character, enemy);
-            return enemy.health - damage;
+            return enemy.health -= damage;
         } else {
             enemy.debuffs.push({
                 type: Debuffs.Sundered.type, 
@@ -45,7 +45,7 @@ const DevastateTar60 = (enemy: EnemyType, character: CharacterType, target: Char
             enemy.defense = 0;
             BlessingOfBurnBonus(character, enemy);
             BlessingOfLightningBonus(character, enemy);
-            return enemy.health - damage;
+            return enemy.health -= damage;
         }
     }
 }

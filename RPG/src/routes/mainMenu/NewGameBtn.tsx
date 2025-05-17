@@ -8,6 +8,8 @@ import EnemyAtom from "../../atom/BaseEnemyAtom";
 import { generateInitialEnemies } from "../../gameData/enemies/EnemyFactory";
 import { RemoveData } from "../../gameMechanics/RemoveData";
 import { turnCountAtom } from "../../atom/UseTurnCountAtom";
+import { tutorialAtom } from "../../atom/TutorialAtomNew";
+import { useSetAtom } from "jotai";
 
 export const NewGameBtn = () => {
     const navigate = useNavigate();
@@ -15,6 +17,7 @@ export const NewGameBtn = () => {
     const [, setEnemies] = useAtom(EnemyAtom);
     const [currentGameLevel] = useAtom(GameLevelAtom);
     const [, setCurrentTurn] = useAtom(turnCountAtom);
+    const setTutorial = useSetAtom(tutorialAtom);
 
     const handleStart = () => {
         RemoveData();
@@ -34,7 +37,7 @@ export const NewGameBtn = () => {
             }
             return resetCharacters;
         });
-    
+
         setEnemies(() => generateInitialEnemies());
         
         localStorage.setItem('inProgressGame', 'false');
@@ -47,6 +50,23 @@ export const NewGameBtn = () => {
         currentGameLevel.isHideBegin = false;
         currentGameLevel.level = 1;
         currentGameLevel.round = 1;
+
+        setTutorial((prev) => ({
+            ...prev,
+            isTutorial: false,
+            tutorialId: -1,
+            tutorialText: '',
+            isStartTutorial: false,
+            isEndTutorial: false,
+            isPrevTutorial: false,
+            isNextTutorial: false,
+            isTutorialClickable: false,
+            isTutorialVisible: false,
+            tutorialLayer: 'layer1',
+            tutorialOverlayType: 'center',
+            tutorialTextPosition: 'center',
+        }));
+
         navigate('/select-character');
     };
     

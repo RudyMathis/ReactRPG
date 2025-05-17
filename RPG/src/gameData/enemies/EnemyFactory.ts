@@ -153,7 +153,6 @@ export const generateInitialEnemies = (): Record<number, EnemyType> => {
     const initialEnemies: Record<number, EnemyType> = {};
     const enemyCount = getEnemyCount();
 
-
     for (let i = 0; i < enemyCount; i++) {
         const enemyType = getRandomEnemyType();
         const group = determineEnemyGroup(enemyType);
@@ -174,8 +173,6 @@ export const generateInitialEnemies = (): Record<number, EnemyType> => {
         initialEnemies[enemy.id] = enemy;
     }
 
-    console.log(initialEnemies);
-
     return initialEnemies;
 };
 
@@ -190,6 +187,7 @@ export const generateTutorialEnemies = (): Record<number, EnemyType> => {
                 order: 0,
             };
         }
+
     return enemyRecord;
 };
 

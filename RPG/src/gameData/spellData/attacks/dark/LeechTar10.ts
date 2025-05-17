@@ -22,13 +22,13 @@ const LeechTar10 = (enemy: EnemyType, character: CharacterType, target: Characte
         
         if (darkResistance) {
             HandleDamageEffect(damageResistance, "Dark", "player", character.id);
-            return character.health - damageResistance;
+            return character.health -= damageResistance;
         } else if (darkVulnerability) {
             HandleDamageEffect(damageVulnerability, "Dark", "player", character.id);
-            return character.health - damageVulnerability;
+            return character.health -= damageVulnerability;
         } else {
             HandleDamageEffect(damage, "Dark", "player", character.id);
-            return character.health - damage;
+            return character.health -= damage;
         }
     } else {
         character.mana += Math.abs(spellCost);
@@ -44,13 +44,13 @@ const LeechTar10 = (enemy: EnemyType, character: CharacterType, target: Characte
         
         if (darkResistance) {
             HandleDamageEffect(damageResistance, "Dark", "npc", enemy.id);
-            return enemy.health - damageResistance;
+            return enemy.health -= damageResistance;
         } else if (darkVulnerability) {
             HandleDamageEffect(damageVulnerability, "Dark", "npc", enemy.id);
-            return enemy.health - damageVulnerability;
+            return enemy.health -= damageVulnerability;
         } else {
             HandleDamageEffect(damage, "Dark", "npc", enemy.id);
-            return enemy.health - damage;
+            return enemy.health -= damage;
         }
     }
 }

@@ -1,4 +1,4 @@
-import { useAtom, useSetAtom } from "jotai";
+import { useAtom } from "jotai";
 import { useNavigate } from "react-router";
 import { GameLevelAtom } from "../../atom/GameLevelAtom";
 import { RemoveData } from "../../gameMechanics/RemoveData";
@@ -7,23 +7,24 @@ import { generateTutorialEnemies } from "../../gameData/enemies/EnemyFactory";
 import EnemyAtom from "../../atom/BaseEnemyAtom";
 import characterAtom, { CharacterType } from "../../atom/CharacterAtom";
 import CharacterData from "../../gameData/characters/CharacterData.json";
-import { tutorialAtom } from "../../atom/TutorialAtom";
+import { tutorialAtom } from "../../atom/TutorialAtomNew";
 import { generateNewBackground } from "../../atom/BackgroundAtom";
+import { getTutorialStep } from './getTutorialStep';
+
 
 export const useHandleTutorialStart = () => {
     const [, setCharacters] = useAtom(characterAtom);
     const [currentGameLevel] = useAtom(GameLevelAtom);
     const [, setCurrentTurn] = useAtom(turnCountAtom);
     const [, setEnemies] = useAtom(EnemyAtom);
-    const setTutorial = useSetAtom(tutorialAtom);
     const navigate = useNavigate();
+    const [, setTutorial] = useAtom(tutorialAtom);
 
     return () => {
         RemoveData();
         localStorage.setItem('inProgressGame', 'false');
         localStorage.setItem('Score', '0');
         localStorage.setItem('turnCount', '0');
-        localStorage.setItem('tutorialInProgress', 'true');
         setCurrentTurn(0);
 
         currentGameLevel.isRoundOver = false;
@@ -50,7 +51,8 @@ export const useHandleTutorialStart = () => {
         const newBackground = generateNewBackground();
         localStorage.setItem("background", newBackground);
 
-        setTutorial({ isTutorial: true });
+        const firstStep = getTutorialStep(0);
+        if (firstStep) setTutorial(firstStep);
         setCharacters(tutorialCharacters);
         setEnemies(() => generateTutorialEnemies());
 

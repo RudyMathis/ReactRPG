@@ -48,7 +48,7 @@
     border-image-outset: 0;
     border-image-repeat: stretch;
     border-image-source: inherit;
-    border: solid 4em var(--background);
+    border: 4em solid var(--background);
     filter: blur(2em);
     opacity: 0.5;
     animation: backgroundGlowPulse 5s ease-in-out infinite;
@@ -116,7 +116,8 @@
     transform: translate(-50%, -50%);
     width: calc(var(--width) + 14.5em);
     height: calc(var(--height) + 16em);
-    z-index: var(--highest-layer);
+    /* z-index: var(--highest-layer); */
+    z-index: var(--border-layer);
     pointer-events: none;
     background-image: url('/assets/backgrounds/crt_frame.png');
     background-size: contain;

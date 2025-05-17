@@ -30,13 +30,13 @@ const FireBallTar20 = (enemy: EnemyType, character: CharacterType, target: Chara
         
         if (fireResistance) {
             HandleDamageEffect(damageResistance, "Fire", "player", character.id);
-            return character.health - damageResistance;
+            return character.health -= damageResistance;
         } else if (fireVulnerability) {
             HandleDamageEffect(damageVulnerability, "Fire", "player", character.id);
-            return character.health - damageVulnerability;
+            return character.health -= damageVulnerability;
         } else {
             HandleDamageEffect(enemy.attack, "Fire", "player", character.id);
-            return character.health - damage;
+            return character.health -= damage;
         }
         
     } else {
@@ -57,13 +57,13 @@ const FireBallTar20 = (enemy: EnemyType, character: CharacterType, target: Chara
 
         if (fireResistance) {
             HandleDamageEffect(damageResistance, "Fire", "npc", enemy.id);
-            return enemy.health - damageResistance;
+            return enemy.health -= damageResistance;
         } else if (fireVulnerability) {
             HandleDamageEffect(damageVulnerability, "Fire", "npc", enemy.id);
-            return enemy.health - damageVulnerability;
+            return enemy.health -= damageVulnerability;
         } else {
             HandleDamageEffect(character.attack, "Fire", "npc", enemy.id);
-            return enemy.health - damage;
+            return enemy.health -= damage;
         }
     }
     
