@@ -7,16 +7,10 @@ export const activeMenuAtom = atom<{ id: number | null; type: EntityType }>({
     type: null,
 });
 
-export const toggleMenuAtom = atom(null, (get, set, payload: { id: number | null; type: EntityType }) => {
-    const prev = get(activeMenuAtom);
-    const prevId = prev.id;
-    const prevType = prev.type;
+export const toggleMenuAtom = atom(null, (_get, set, payload: { id: number | null; type: EntityType }) => {
     if(payload.id === null && payload.type === null) {
         set(activeMenuAtom, { id: null, type: null });
-        console.log("clicked away");
     } else {
         set(activeMenuAtom, payload);
-        console.log(payload.id, prevId);
-        console.log(payload.type, prevType);
     }
 });
