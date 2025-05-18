@@ -1,4 +1,3 @@
-import React from 'react';
 import { CharacterType } from '../../../atom/CharacterAtom';
 import { EnemyType } from '../../../atom/BaseEnemyAtom';
 import styles from '../GameState.module.css';

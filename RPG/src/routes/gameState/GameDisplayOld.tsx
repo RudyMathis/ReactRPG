@@ -6,7 +6,7 @@ import EnemyAtom, { EnemyType } from '../../atom/BaseEnemyAtom';
 import { useTurnOrder }  from '../../gameMechanics/turnOrder/useTurnOrder';
 import { playerTargetAtom } from '../../atom/PlayerTargetAtom';
 import { runTurnLogic } from '../../gameMechanics/turnOrder/TurnLogic';
-import ActionMenu from '../../components/entity/ActionMenu';
+import ActionMenu from '../../components/entity/ActionMenuOld';
 import DetailScreen from '../../components/entity/DetailScreen';
 import Btn from '../../components/ui/Btn';
 import { GameLevelAtom } from '../../atom/GameLevelAtom';

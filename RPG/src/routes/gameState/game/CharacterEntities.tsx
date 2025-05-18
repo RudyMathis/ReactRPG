@@ -3,7 +3,7 @@ import { CharacterType } from '../../../atom/CharacterAtom';
 import { EnemyType } from '../../../atom/BaseEnemyAtom';
 import EntityContainer from '../../../components/entity/sprite/EntityContainer';
 import EntityDisplayWrapper from '../../../components/entity/sprite/EntityDisplayWrapper';
-import ActionMenu from '../../../components/entity/ActionMenu';
+import ActionMenu from '../../../components/entity/actionMenu/ActionMenu';
 
 type Entity = CharacterType | EnemyType | null;
 type EntityType = 'character' | 'enemy' | null;
