@@ -2,16 +2,9 @@ import { useTurnOrder } from "./useTurnOrder";
 import styles from './TurnOrder.module.css';
 import { EnemyType } from "../../atom/BaseEnemyAtom";
 import { EntityImages } from "../../components/entity/sprite/EntityImages";
-// import { turnCountAtom } from "../../atom/UseTurnCountAtom";
 
 const TurnOrderDisplay = () => {
     const turnOrder = useTurnOrder(); 
-//     const [currentTurn] = useAtom(turnCountAtom);
-
-//     useEffect(() => {
-//         setTurnOrder(fullTurnOrder);
-//     }, [currentTurn]);
-// Keeping this code, because it don't update the turn order untill next turn which I liked at one point
 
     return (
         <div className={styles.turnOrderContainer}>

@@ -31,6 +31,17 @@
     border-radius: var(--big-radius);
 }
 
+.boardOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: calc(var(--width) - 1.5em);
+    height: calc(var(--height) - 2em);
+    max-width: 100%;
+    max-height: 100%;
+    z-index: var(--lower-layer);
+}
+
 .board[data-background="Cave"] {
     background-image: url('/assets/backgrounds/Cave.jpg');
 }

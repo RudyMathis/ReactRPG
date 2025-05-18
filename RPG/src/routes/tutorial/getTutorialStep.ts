@@ -1,4 +1,4 @@
-import TutorialData from './TutorialDataNew.json';
+import TutorialData from './TutorialData.json';
 
 const tutorialSteps = TutorialData.Tutorial;
 

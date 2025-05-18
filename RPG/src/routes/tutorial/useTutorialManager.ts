@@ -1,7 +1,7 @@
 import { useEffect, useCallback } from 'react';
 import { useAtom } from 'jotai';
 import { tutorialAtom } from '../../atom/TutorialAtomNew';
-import TutorialData from './TutorialDataNew.json';
+import TutorialData from './TutorialData.json';
 import { getTutorialStep } from './getTutorialStep';
 
 const tutorialSteps = TutorialData.Tutorial;
