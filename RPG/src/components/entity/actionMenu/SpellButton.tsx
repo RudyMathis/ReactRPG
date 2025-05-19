@@ -1,5 +1,5 @@
 import { useAtom, useSetAtom } from "jotai";
-import MoreInformationDisplay from "../MoreInformationDisplay";
+import MoreInformationDisplay from "./MoreInformationDisplay";
 import { playerTargetAtom } from "../../../atom/PlayerTargetAtom";
 import { hoveredSpellAtom } from "../../../atom/HoveredSpellAtom";
 import CharacterAtom, { CharacterType } from "../../../atom/CharacterAtom";

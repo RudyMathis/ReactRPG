@@ -16,8 +16,7 @@ export const getTutorialStep = (id: number) => {
         isNextTutorial: !!step.isNext,
         isTutorialClickable: !!step.isClickable,
         isTutorialVisible: !!step.isTutorialVisible,
-        tutorialLayer: step.tutorialLayer as 'layer1' | 'layer2' | 'layer3' | 'layer4',
-        tutorialOverlayType: step.overlayType as 'top' | 'bottom' | 'left' | 'right' | 'center' | 'all',
+        tutorialEntity: step.tutorialEntity as '' | 'player' | 'npc',
         tutorialTextPosition: step.textPosition as 'top' | 'bottom' | 'left' | 'right' | 'center' | 'all',
     };
 };

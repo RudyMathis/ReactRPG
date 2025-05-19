@@ -16,7 +16,5 @@ export const useToggleMenu = () => {
         );
     };
 
-    console.log(activeMenu.id, "activeMenu", activeMenu.type);
-
     return { activeMenu, toggleMenu };
 };

@@ -15,10 +15,9 @@ const TutorialDisplay = () => {
     if (!tutorial.isTutorialVisible) return null;
 
     return (
-        <section className={styles.tutorialContainer} data-tutorial-layer='layer2' data-is-visible={tutorial.isTutorialVisible}>
-            <div className={styles.tutorialOverlay} data-type={tutorial.tutorialOverlayType} data-tutorial-layer='layer3'></div>
-            <div className={styles.tutorialOverlayHole} data-type={tutorial.tutorialOverlayType} data-tutorial-layer='layer3'></div>
-            <div className={styles.tutorialTextContainer} data-position={tutorial.tutorialTextPosition} data-tutorial-layer='layer4'>
+        <section className={styles.tutorialContainer} data-is-visible={tutorial.isTutorialVisible}>
+            <div className={styles.tutorialOverlay} data-tutorial-layer='bottom' onClick={() => handleToggleMenu(null, null)}></div>
+            <div className={styles.tutorialTextContainer} data-position={tutorial.tutorialTextPosition} data-tutorial-layer='top'>
                 <p className={styles.tutorialText}>{tutorial.tutorialText}</p>
                 <div className={styles.tutorialButtonContainer}>
                     {tutorial.isPrevTutorial && <Btn onClick={() => { prev(); handleToggleMenu(null, null);}} text="Back" />}

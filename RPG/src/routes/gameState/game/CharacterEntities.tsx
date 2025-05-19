@@ -1,4 +1,3 @@
-import React from 'react';
 import { CharacterType } from '../../../atom/CharacterAtom';
 import { EnemyType } from '../../../atom/BaseEnemyAtom';
 import EntityContainer from '../../../components/entity/sprite/EntityContainer';

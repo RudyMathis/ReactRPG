@@ -2,12 +2,13 @@
 import { CharacterType } from "../../../atom/CharacterAtom";
 import { EnemyType } from "../../../atom/BaseEnemyAtom";
 import Name from "../Name";
-import { useAtom } from "jotai";
+import { useAtom, useAtomValue } from "jotai";
 import { AttackAnimationAtom } from "../../../atom/effects/AttackAnimationAtom";
 import HealthBar from "../bars/HealthBar";
 import ManaBar from "../bars/ManaBar";
 import styles from'./Sprite.module.css';
 import { DefenseAnimationAtom } from "../../../atom/effects/DefenseAnimationAtom";
+import { tutorialAtom } from "../../../atom/TutorialAtom";
 
 type Entity = CharacterType | EnemyType;
 
@@ -32,6 +33,7 @@ const EntityContainer: React.FC<EntityContainerProps> = ({
     const isDefending = defendingEntities[entity.id] ?? false;
     const isDead = type === 'enemy' && 'health' in entity && entity.health <= 0;
     const isPlayerDead = type === 'character' && 'health' in entity && entity.health <= 0;
+    const tutorial = useAtomValue(tutorialAtom);
 
     const characterPositions = [
         { gridColumn: 6, gridRow: 10 },
@@ -88,7 +90,11 @@ const EntityContainer: React.FC<EntityContainerProps> = ({
                 gridRow,
             }}
         >
-            <div className={styles.entityInfoContainer} data-size={('size' in entity) ? entity.size : ''}>
+            <div 
+                className={styles.entityInfoContainer}
+                data-size={('size' in entity) ? entity.size : ''}
+                {...(tutorial.isTutorial && tutorial.tutorialEntity === entity.type ? { 'data-tutorial-layer': 'entity' } : {})}
+            >
                 <Name entity={entity} />
                 <div className={styles.entityBarContainer}>
                     <HealthBar health={entity.health <= 0 ? 0 : entity.health} maxHealth={entity.maxHealth} />

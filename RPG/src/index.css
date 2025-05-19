@@ -42,14 +42,9 @@
 
 	--reflection-layer: 7;
 
-	/* --tutorial-lowest-layer: 8;
-	--tutorial-low-layer: 9;
-	--tutorial-middle-layer: 10;
-	--tutorial-highest-layer: 11; */
-	--tutorial-layer-1: 8;
-	--tutorial-layer-2: 9;
-	--tutorial-layer-3: 10;
-	--tutorial-layer-4: 11;
+	--tutorial-layer-bottom: 8;
+	--tutorial-layer-entity: 9;
+	--tutorial-layer-top: 10;
 
 	--border-layer: 12;
 
@@ -206,18 +201,14 @@ button {
 }
 
 /* tutorial */
-body [data-tutorial-layer='layer1'] {
-	z-index: var(--tutorial-layer-1);
+body [data-tutorial-layer='bottom'] {
+	z-index: var(--tutorial-layer-bottom);
 }
 
-body [data-tutorial-layer='layer2'] {
-	z-index: var(--tutorial-layer-2);
+body [data-tutorial-layer='entity'] {
+	z-index: var(--tutorial-layer-entity);
 }
 
-body [data-tutorial-layer='layer3'] {
-	z-index: var(--tutorial-layer-3);
-}
-
-body [data-tutorial-layer='layer4'] {
-	z-index: var(--tutorial-layer-4);
+body [data-tutorial-layer='top']{
+	z-index: var(--tutorial-layer-top);
 }

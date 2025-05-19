@@ -46,7 +46,7 @@ const SettingsIcon = () => {
     }, [open]);
 
     return (
-        <div className={styles.settingsContainer} {...(tutorial?.isClick && { 'data-tutorial': tutorial?.isClick })}>
+        <div className={styles.settingsContainer} {...(tutorial.isTutorial && { 'data-tutorial-layer': 'top' })}>
             <img
                 src="/assets/Settings_Icon.png"
                 className={styles.settingsIcon}

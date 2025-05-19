@@ -10,7 +10,7 @@ import stylesUI from '../../components/ui/UI.module.css'
 import SettingsIcon from "../../components/ui/SettingsIcon";
 // import ActionTextDisplay from "../../components/ui/ActionTextDisplay";
 import TutorialDisplay from "../tutorial/TutorialDisplay";
-import { tutorialAtom } from "../../atom/TutorialAtomNew";
+import { tutorialAtom } from "../../atom/TutorialAtom";
 import Btn from "../../components/ui/Btn";
 import RelectionCurrentLevelDisplay from "../../components/ui/ReflectionCurrentLevelDisplay";
 import GameDisplay from "./game/GameDisplay";
@@ -33,7 +33,7 @@ const LevelLayout = () => {
         <div className={styles.levelLayout}>
             <Btn className={styles.reflectionBtn} onClick={() => handleReflection()} text="menu" />
             <RelectionCurrentLevelDisplay />
-            <div className={styles.topBar}>
+            <div className={styles.topBar} {...(tutorial.isTutorial && { 'data-tutorial-layer': 'top' })}>
                 <NavigateBtn locationValue="/" location="Menu" />
                 <TurnOrderDisplay />
                 <CurrentLevelDisplay />

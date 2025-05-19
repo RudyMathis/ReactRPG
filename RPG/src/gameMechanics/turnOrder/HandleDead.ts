@@ -4,7 +4,7 @@ import { GameLevelAtom } from "../../atom/GameLevelAtom";
 import { storeAtom } from "../../atom/storeAtom";
 import { GainExperience } from "../GainExperince";
 import { SubmitHighScore } from "../SubmitHighScore";
-import { tutorialAtom } from "../../atom/TutorialAtomNew";
+import { tutorialAtom } from "../../atom/TutorialAtom";
 
 export const HandleAllEnemiesDead = () => {
     const allEnemiesDead = Object.values(storeAtom.get(EnemyAtom)).every(e => e.health <= 0);

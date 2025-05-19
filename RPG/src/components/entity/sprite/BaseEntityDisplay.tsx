@@ -20,8 +20,6 @@ function BaseEntityDisplay({ entity }: EnityDetailProps) {
     const [defendEntities] = useAtom(DefenseAnimationAtom);
     const [flashEntities] = useAtom(FlashAnimationAtom);
     const [damageEffectMap] = useAtom(DamageEffectAtom);
-    const tutorial = useAtomValue(tutorialAtom);
-
     const effectData = damageEffectMap[entity.id];
 
     const imageSrc = EntityImages[entity.name] || EntityImages[(entity as EnemyType).base] || '/assets/default.png';
@@ -66,6 +64,8 @@ function BaseEntityDisplay({ entity }: EnityDetailProps) {
     const defendBrightness = defendEntry?.animation?.brightness;
     const defendTop = defendEntry?.animation?.top;
     const defendLeft = defendEntry?.animation?.left;
+
+    const tutorial = useAtomValue(tutorialAtom);
 
     return (
         <>
@@ -125,8 +125,7 @@ function BaseEntityDisplay({ entity }: EnityDetailProps) {
                 className={styles.spriteContainer} 
                 data-type={entity.type} 
                 {...(entity.health <= 0 ? { 'data-death': true } : {})}
-                {...(tutorial?.isClick && { 'data-tutorial': tutorial?.isClick })}
-                {...(tutorial?.isTutorial && { 'data-tutorial-front': tutorial?.front })}
+                {...(tutorial.isTutorial && tutorial.tutorialEntity === entity.type ? { 'data-tutorial-layer': 'entity' } : {})}
             >
                 {entity.health > 0 ? (
                     <>

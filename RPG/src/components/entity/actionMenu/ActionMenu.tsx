@@ -54,7 +54,7 @@ const ActionMenu = ({
             <div
                 className={`${styles.actionMenuContainer}`}
                 data-type={type}
-                {...(tutorial.isTutorial && {'data-tutorial-layer': tutorial.tutorialLayer})}
+                {...(tutorial.isTutorial && {'data-tutorial-layer': 'top'})}
             >
                 {selectedCharacters.map((char) =>
                     char.currentTurn ? (

@@ -7,7 +7,7 @@ import { generateTutorialEnemies } from "../../gameData/enemies/EnemyFactory";
 import EnemyAtom from "../../atom/BaseEnemyAtom";
 import characterAtom, { CharacterType } from "../../atom/CharacterAtom";
 import CharacterData from "../../gameData/characters/CharacterData.json";
-import { tutorialAtom } from "../../atom/TutorialAtomNew";
+import { tutorialAtom } from "../../atom/TutorialAtom";
 import { generateNewBackground } from "../../atom/BackgroundAtom";
 import { getTutorialStep } from './getTutorialStep';
 

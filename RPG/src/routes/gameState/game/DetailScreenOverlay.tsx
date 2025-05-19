@@ -13,7 +13,7 @@ const DetailScreenOverlay: React.FC<Props> = ({ entity, close, tutorialLayer }) 
     <div
         className={styles.detailScreenOverlay}
         onClick={close}
-        {...(tutorialLayer && { 'data-tutorial-layer': tutorialLayer })}
+        {...(tutorialLayer && { 'data-tutorial-layer': 'top' })}
     >
         <div className={styles.detailScreenContent} onClick={e => e.stopPropagation()}>
             <DetailScreen entity={entity} />

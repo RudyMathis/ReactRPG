@@ -4,210 +4,191 @@
             "id": 0,
             "text": "Welcome to Sacred Loop! In this tutorial you will learn the basics!",
             "textPosition": "center",
-            "overlayType": "all",
             "isPrev": false,
             "isNext": true,
             "isClickable": false,
             "isTutorialVisible": true,
-            "tutorialLayer": "layer1"
+            "tutorialEntity": ""
         },
         {
             "id": 1,
             "text": "From left to right there is the menu button to bring you back to the main menu, the settings icon to change the volume and read more about the game mechanics, the turn order showing you the attack order, then finally the score and round and level.",
             "textPosition": "center",
-            "overlayType": "top",
             "isPrev": true,
             "isNext": true,
             "isClickable": false,
             "isTutorialVisible": true,
-            "tutorialLayer": "layer1"
+            "tutorialEntity": ""
         },
         {
             "id": 2,
             "text": "The turn order will update at the start of every round and is effected by characters and enemies speed. Frozen enemies and frozen characters will be at the end of the turn order.",
             "textPosition": "center",
-            "overlayType": "top",
             "isPrev": true,
             "isNext": true,
             "isClickable": false,
             "isTutorialVisible": true,
-            "tutorialLayer": "layer1"
+            "tutorialEntity": ""
         },
         {
             "id": 3,
             "text": "Speaking of rounds, this game is broken down into turns, cycles, rounds, and levels. Every character and enemy gets a turn before the order cycle is reset, the turn cycle continues untill either all characters are dead or all enemies are. Once that happens the round is over and you advance to the next round.",
             "textPosition": "center",
-            "overlayType": "top",
             "isPrev": true,
             "isNext": true,
             "isClickable": false,
             "isTutorialVisible": true,
-            "tutorialLayer": "layer1"
+            "tutorialEntity": ""
         },
         {
             "id": 4,
             "text": "After 3 rounds you move on to the next level where enemies will have leveled up and have increased stats.",
             "textPosition": "center",
-            "overlayType": "top",
             "isPrev": true,
             "isNext": true,
             "isClickable": false,
             "isTutorialVisible": true,
-            "tutorialLayer": "layer1"
+            "tutorialEntity": ""
         },
         {
             "id": 5,
             "text": "Let's start our first round by clicking the Begin Button, the enemy will go first.",
             "textPosition": "bottom",
-            "overlayType": "center",
             "isPrev": true,
             "isNext": false,
             "isClickable": false,
             "isTutorialVisible": true,
-            "tutorialLayer": "layer4"
+            "tutorialEntity": "Begin"
         },
         {
             "id": 6,
             "text": "",
-            "textPosition": "bottom",
-            "overlayType": "center",
+            "textPosition": "right",
             "isPrev": false,
             "isNext": false,
             "isClickable": false,
             "isTutorialVisible": false,
-            "tutorialLayer": "layer4"
+            "tutorialEntity": ""
         },
         {
             "id": 7,
             "text": "Now it's your turn Shaman's turn.",
-            "textPosition": "bottom",
-            "overlayType": "right",
+            "textPosition": "right",
             "isPrev": false,
             "isNext": true,
             "isClickable": false,
             "isTutorialVisible": true,
-            "tutorialLayer": "layer4"
+            "tutorialEntity": "player"
         },
         {
             "id": 8,
             "text": "You can left click any of your party members right now and see that you can buff them or check out their stats under details.",
-            "textPosition": "bottom",
-            "overlayType": "right",
+            "textPosition": "right",
             "isPrev": true,
             "isNext": true,
             "isClickable": false,
             "isTutorialVisible": true,
-            "tutorialLayer": "layer4"
+            "tutorialEntity": "player"
         },
         {
             "id": 9,
             "text": "Right now your spells are greyed out, but later they will be available to you.",
-            "textPosition": "bottom",
-            "overlayType": "right",
+            "textPosition": "right",
             "isPrev": true,
             "isNext": true,
             "isClickable": false,
             "isTutorialVisible": true,
-            "tutorialLayer": "layer4"
+            "tutorialEntity": "player"
         },
         {
             "id": 10,
             "text": "This context window will allow you cast spells depending on if it's your party member, youself, or an enemy.",
-            "textPosition": "bottom",
-            "overlayType": "right",
+            "textPosition": "right",
             "isPrev": true,
             "isNext": true,
             "isClickable": false,
             "isTutorialVisible": true,
-            "tutorialLayer": "layer4"
+            "tutorialEntity": "player"
         },
         {
             "id": 11,
             "text": "The number under the spell name is the mana cost of the spell.",
-            "textPosition": "bottom",
-            "overlayType": "right",
+            "textPosition": "right",
             "isPrev": true,
             "isNext": true,
             "isClickable": false,
             "isTutorialVisible": true,
-            "tutorialLayer": "layer4"
+            "tutorialEntity": "player"
         },
         {
             "id": 12,
             "text": "The number to the right is the damage or healing of the spell.",
-            "textPosition": "bottom",
-            "overlayType": "right",
+            "textPosition": "right",
             "isPrev": true,
             "isNext": true,
             "isClickable": false,
             "isTutorialVisible": true,
-            "tutorialLayer": "layer4"
+            "tutorialEntity": "player"
         },
         {
             "id": 13,
             "text": "Hovering over the green 🛈 will give more context to the spell as some spells give a buff increase stats or a debuff to decrease stats.",
-            "textPosition": "bottom",
-            "overlayType": "right",
+            "textPosition": "right",
             "isPrev": true,
             "isNext": true,
             "isClickable": false,
             "isTutorialVisible": true,
-            "tutorialLayer": "layer4"
+            "tutorialEntity": "player"
         },
         {
             "id": 14,
             "text": "Here you can see the enemy's stats and notice you have one spell you can use on them.",
-            "textPosition": "bottom",
-            "overlayType": "left",
+            "textPosition": "left",
             "isPrev": true,
             "isNext": true,
             "isClickable": false,
             "isTutorialVisible": true,
-            "tutorialLayer": "layer4"
+            "tutorialEntity": "npc"
         },
         {
             "id": 15,
             "text": "Notice the arrows above the enemies heads, that indicats who it will attack. You will now see the arrows when you hover over spells.",
-            "textPosition": "bottom",
-            "overlayType": "left",
+            "textPosition": "left",
             "isPrev": true,
             "isNext": true,
             "isClickable": true,
             "isTutorialVisible": true,
-            "tutorialLayer": "layer4"
+            "tutorialEntity": "npc"
         },
         {
             "id": 16,
             "text": "Use the spell 'Buring Spirits' to continue the round",
-            "textPosition": "bottom",
-            "overlayType": "left",
+            "textPosition": "left",
             "isPrev": true,
             "isNext": false,
             "isClickable": true,
             "isTutorialVisible": true,
-            "tutorialLayer": "layer4"
+            "tutorialEntity": "npc"
         },
         {
             "id": 17,
             "text": "",
-            "textPosition": "bottom",
-            "overlayType": "left",
+            "textPosition": "left",
             "isPrev": true,
             "isNext": false,
             "isClickable": true,
             "isTutorialVisible": false,
-            "tutorialLayer": "layer4"
+            "tutorialEntity": ""
         },
         {
             "id": 18,
             "text": "Congrats, you won the round and finished the tutorial, good luck on your next adventure!",
             "textPosition": "center",
-            "overlayType": "all",
             "isPrev": false,
             "isNext": false,
             "isClickable": true,
             "isTutorialVisible": true,
-            "tutorialLayer": "layer1"
+            "tutorialEntity": ""
         }
     ]
 }

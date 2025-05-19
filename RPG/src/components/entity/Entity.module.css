@@ -41,15 +41,18 @@
 
 /* ARROW */
 
-.currentTurnArrow img{
+.currentTurnArrow {
     position: absolute;
     top: 37%;
     left: -50%;
+    z-index: var(--mid-layer);
+}
+
+.currentTurnArrow img{
     width: 2.28em;
     height: 1.86em;
     animation: floatArrow 1000ms infinite ease-in-out;
     image-rendering: pixelated;
-    z-index: var(--mid-layer);
 }
 
 @keyframes floatArrow {

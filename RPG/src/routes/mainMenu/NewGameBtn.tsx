@@ -8,7 +8,7 @@ import EnemyAtom from "../../atom/BaseEnemyAtom";
 import { generateInitialEnemies } from "../../gameData/enemies/EnemyFactory";
 import { RemoveData } from "../../gameMechanics/RemoveData";
 import { turnCountAtom } from "../../atom/UseTurnCountAtom";
-import { tutorialAtom } from "../../atom/TutorialAtomNew";
+import { tutorialAtom } from "../../atom/TutorialAtom";
 import { useSetAtom } from "jotai";
 
 export const NewGameBtn = () => {
@@ -62,8 +62,7 @@ export const NewGameBtn = () => {
             isNextTutorial: false,
             isTutorialClickable: false,
             isTutorialVisible: false,
-            tutorialLayer: 'layer1',
-            tutorialOverlayType: 'center',
+            tutorialEntity: '',
             tutorialTextPosition: 'center',
         }));
 

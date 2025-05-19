@@ -8,9 +8,5 @@ export const activeMenuAtom = atom<{ id: number | null; type: EntityType }>({
 });
 
 export const toggleMenuAtom = atom(null, (_get, set, payload: { id: number | null; type: EntityType }) => {
-    if(payload.id === null && payload.type === null) {
-        set(activeMenuAtom, { id: null, type: null });
-    } else {
-        set(activeMenuAtom, payload);
-    }
+    set(activeMenuAtom, payload);
 });

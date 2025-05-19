@@ -23,42 +23,6 @@
     background-color: hsla(0, 0%, 0%, 0.9);
 }
 
-.tutorialOverlay[data-type='top'] {
-    clip-path: inset(20% 0 0 0);
-}
-
-.tutorialOverlay[data-type='center'] {
-    display: none;
-}
-
-.tutorialOverlay[data-type='right'] {
-    clip-path: inset(0 0 0 50%);
-}
-
-.tutorialOverlay[data-type='left'] {
-    clip-path: inset(0 50% 0 0);
-}
-
-.tutorialOverlayHole {
-    position: absolute;
-    display: none;
-    top: 0;
-    left: 0;
-    width: 15em;
-    height: 15em;
-    pointer-events: auto;
-    background-color: transparent;
-    border: 50em solid hsla(0, 0%, 0%, 0.9);;
-    border-radius: 50%;
-}
-
-.tutorialOverlayHole[data-type='center'] {
-    display: block;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
 .tutorialTextContainer {
     position: absolute;
     top: 50%;
@@ -70,12 +34,38 @@
     align-items: center;
     gap: 2rem;
     pointer-events: auto;
+    max-width: 40em;
 }
 
 .tutorialTextContainer[data-position='bottom'] {
     top: 80%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+
+.tutorialTextContainer[data-position='right'] {
+    top: 50%;
+    left: 75%;
+    transform: translate(-50%, -50%);
+}
+
+.tutorialTextContainer[data-position='left'] {
+    top: 50%;
+    left: 25%;
+    transform: translate(-50%, -50%);
+}
+
+.tutorialText {
+    text-align: center;
+    border-image-slice: var(--border-image-slice);
+    border-image-width: var(--border-image-width);
+    border-image-source: var(--border-image-source);
+    border-image-repeat: var(--border-image-repeat);
+    background-color: var(--background-secondary);
+    image-rendering: pixelated;
+    padding: 3em;
+    line-height: 1.2;
+    text-shadow: 3px 3px 1px var(--shadow);
 }
 
 .tutorialButtonContainer {

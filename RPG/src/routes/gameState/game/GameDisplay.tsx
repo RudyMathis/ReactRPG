@@ -97,7 +97,7 @@ const GameDisplay = () => {
     return (
         <div className={styles.board} data-background={background}>
             <div className={styles.boardOverlay} onClick={handleToggleMenuClick}></div>
-
+            
             <CharacterEntities
                 characters={selectedCharacters}
                 activeMenu={activeMenu}
@@ -106,9 +106,8 @@ const GameDisplay = () => {
                 onTarget={handlePlayerTargeted}
                 onSpell={resolveInput}
                 showDetail={setActiveDetailScreen}
-                toggleMenu={handleToggleMenu}
+                toggleMenu={handleToggleMenu}                
             />
-
             <EnemyEntities
                 enemies={Object.values(enemies).sort((a, b) => a.order - b.order)}
                 activeMenu={activeMenu}
@@ -124,7 +123,7 @@ const GameDisplay = () => {
                 <DetailScreenOverlay
                     entity={activeDetailScreen}
                     close={() => setActiveDetailScreen(null)}
-                    {...tutorial.isTutorial && { tutorialLayer: tutorial.tutorialLayer }}
+                    {...tutorial.isTutorial && { tutorialLayer: 'top' }}
                 />
             )}
 
@@ -133,7 +132,7 @@ const GameDisplay = () => {
                     onClick={checkTurnOrderAndRunLogic}
                     className={styles.begin}
                     text="Begin"
-                    {...(tutorial.isTutorial && { 'data-tutorial-layer': tutorial.tutorialLayer })}
+                    {...(tutorial.isTutorial && tutorial.tutorialEntity === 'Begin' ? { 'data-tutorial-layer': 'top' } : {})}
                 />
             )}
 

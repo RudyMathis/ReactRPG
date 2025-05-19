@@ -9,7 +9,7 @@ type CharacterDisplayProps = {
 const CharacterDisplay: React.FC<CharacterDisplayProps> = ({ character}) => {
     return (
         <>
-            {character.currentTurn && <CurrentTurnArrow />}
+            {character.currentTurn && <CurrentTurnArrow character={character}/>}
             <BaseEntityDisplay entity={character}/>
         </>
     );
