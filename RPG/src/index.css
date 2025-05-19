@@ -40,13 +40,12 @@
 	--higher-layer: 5;
 	--highest-layer: 6;
 
-	--reflection-layer: 7;
-
-	--tutorial-layer-bottom: 8;
-	--tutorial-layer-entity: 9;
-	--tutorial-layer-top: 10;
-
-	--border-layer: 12;
+	--tutorial-layer-bottom: 7;
+	--tutorial-layer-entity: 8;
+	--tutorial-layer-top: 9;
+	
+	--border-layer: 10;
+	--reflection-layer: 11;
 
 	--width: 85.7em;
 	--height: 64.3em;
@@ -201,6 +200,10 @@ button {
 }
 
 /* tutorial */
+body [data-tutorial-show='true'] {
+	z-index: var(--highest-layer);
+}
+
 body [data-tutorial-layer='bottom'] {
 	z-index: var(--tutorial-layer-bottom);
 }

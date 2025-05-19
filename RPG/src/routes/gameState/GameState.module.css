@@ -209,3 +209,7 @@
     pointer-events: none;
     cursor: unset;
 }
+
+.reflectionBtn[data-tutorial-show='true'] {
+    z-index: var(--highest-layer);
+}

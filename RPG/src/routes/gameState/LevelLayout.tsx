@@ -31,14 +31,14 @@ const LevelLayout = () => {
     
     return (
         <div className={styles.levelLayout}>
-            <Btn className={styles.reflectionBtn} onClick={() => handleReflection()} text="menu" />
+            <Btn className={styles.reflectionBtn} {...(tutorial.isTutorial &&  { 'data-tutorial-show': tutorial.isTutorialVisible })} onClick={() => handleReflection()} text="menu" />
             <RelectionCurrentLevelDisplay />
             <div className={styles.topBar} {...(tutorial.isTutorial && { 'data-tutorial-layer': 'top' })}>
                 <NavigateBtn locationValue="/" location="Menu" />
                 <TurnOrderDisplay />
                 <CurrentLevelDisplay />
             </div>
-            <div className={stylesUI.backgroundGlow} data-glow={background} ></div>
+            <div className={stylesUI.backgroundGlow} data-glow={background} {...(tutorial.isTutorial &&  { 'data-tutorial-show': tutorial.isTutorialVisible })}></div>
             <div className={stylesUI.crt}></div>
             <SettingsIcon />
             {tutorial.isTutorial && tutorial.isTutorialVisible && <TutorialDisplay />}

@@ -326,6 +326,11 @@ input[type="range"]::-webkit-slider-thumb:hover {
     mask-image: linear-gradient(to right, transparent 60%, black 95%, black 95%, transparent 100%);
 }
 
+.reflectionRightContainer[data-tutorial-show='true'] {
+    z-index: var(--highest-layer);
+}
+
+
 .reflectionRightContainer span{
     text-shadow: none;
 }
