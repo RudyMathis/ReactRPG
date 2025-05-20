@@ -49,6 +49,7 @@
 
 	--width: 85.7em;
 	--height: 64.3em;
+	--small-radius: 2em;
 	--big-radius: 7em;
 
 	--menu-width: 57em;
@@ -105,6 +106,7 @@ footer, header, hgroup, menu, nav, section {
 
 body {
 	background-color: black;
+	color: var(--white);
 }
 
 ol, ul {
@@ -129,11 +131,16 @@ table {
 h1 {
 	font-size: 2rem;
 	text-shadow:
-    3px 3px 0 var(--shadow),
-    -3px 3px 0 var(--shadow),
-    -3px -3px 0 var(--shadow),
-    3px -3px 0 var(--shadow);
+		3px 3px 0 var(--shadow),
+		-3px 3px 0 var(--shadow),
+		-3px -3px 0 var(--shadow),
+		3px -3px 0 var(--shadow);
 }
+
+h2 {
+	text-shadow: 2px 2px 2px var(--shadow);
+}
+
 
 button {
 	font-family: "Press Start 2P", system-ui;
@@ -151,11 +158,13 @@ button {
     padding: 1rem;
     font-size: 1.25rem;
     image-rendering: pixelated;
-    color: var(--font);
+    color: var(--white);
     border-image-slice: var(--border-image-slice);
     border-image-width: var(--border-image-width);
     border-image-source: var(--border-image-source);
     border-image-repeat: var(--border-image-repeat);
+	background-color: var(--background-secondary);
+	border-radius: var(--small-radius);
 }
 
 .btn:hover {

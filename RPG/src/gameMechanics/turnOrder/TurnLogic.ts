@@ -16,8 +16,7 @@ import { LoadInitialStates } from "../LoadInitialStates";
 import { HandleCharacterHealthUpdate, HandleCharacterManaUpdate, HandleEnemyHealthUpdate, HandleSetCurrentTurn } from "../../atom/SetAtom";
 import { getCharacterById } from "../../gameData/spellData/defense/getCharacterById";
 import { tutorialAtom } from "../../atom/TutorialAtom";
-// import TutorialData from "../../routes/tutorial/TutorialData.json";
-// import { getTutorialStep } from '../../routes/tutorial/getTutorialStep';
+import { updatedTurnOder } from "./UpdateTurnOrder";
 
 type CharacterType = (typeof CharacterAtom) extends import('jotai').Atom<Record<number, infer T>> ? T : never;
 type EnemyType = (typeof EnemyAtom) extends import('jotai').Atom<Record<number, infer T>> ? T : never;
@@ -35,22 +34,17 @@ export const runTurnLogic = async (
   if (HandleAllEnemiesDead()) return;
 
   turnOrder = updatedTurnOder();
-  // console.log("Turn Order:", turnOrder);
   
   while (i < turnOrder.length) {
-      SaveData(i); // Save the current turn before processing
+      SaveData(i);
 
       let entity = turnOrder[i];
 
-      if (!entity || entity.health <= 0) {
-          // console.log(`${entity.name} is dead.`);
-          i++;
-          continue;
-      }
+      if (!entity || entity.health <= 0) {i++; continue;}
 
       entity = entity.type === "player" ? storeAtom.get(CharacterAtom)[entity.id] : storeAtom.get(EnemyAtom)[entity.id];
       Statuses(entity);
-        const tutorial = storeAtom.get(tutorialAtom);
+      const tutorial = storeAtom.get(tutorialAtom);
       
       if ('target' in entity) {
         await new Promise(resolve => setTimeout(resolve, 500));
@@ -59,30 +53,15 @@ export const runTurnLogic = async (
             { 
                 ...tutorial, 
                 tutorialId: 6,
-                // tutorialText: "",
-                // isPrevTutorial: false,
-                // isNextTutorial: false,
-                // isTutorialClickable: false,
                 isTutorialVisible: false,
-                // tutorialEntity: '',
-                // tutorialTextPosition: 'right',
             });
         }
 
         const enemy = storeAtom.get(EnemyAtom)[entity.id];
 
-        if (!enemy) {
-            // console.warn(`Enemy with ID ${entity.id} not found in EnemyAtom.`);
-            i++;
-            continue;
-        }
+        if (!enemy) {i++; continue;}
 
-        if (enemy.health <= 0) {
-            // console.log(`${enemy.name} died from debuff effects.`);
-            if(HandleAllCharactersDead() || HandleAllEnemiesDead()) return;
-            i++;
-            continue;
-        }
+        if (enemy.health <= 0) {if(HandleAllCharactersDead() || HandleAllEnemiesDead()) return; i++; continue;}
 
         const allCharacters = Object.values(storeAtom.get(CharacterAtom));
         const alivePlayers = allCharacters.filter(c => c.type === 'player' && c.health > 0 && c.isSelected) as CharacterType[];
@@ -90,28 +69,17 @@ export const runTurnLogic = async (
         const target = getEnemyTarget(enemy, alivePlayers);
         const character = Object.values(storeAtom.get(CharacterAtom)).find(c => c.id === target?.id && c.health > 0 && c.isSelected);
 
-        if (!character || enemy.speed === 0) {
-            // console.warn(`No valid target found for ${enemy.name} or enemy speed is 0`);
-            i++;
-            continue;
-        }
+        if (!character || enemy.speed === 0) {i++;continue;}
 
         const updatedCharacterHealth = EnemyAttack(character, enemy, character) as number ?? character.health;
         HandleCharacterHealthUpdate(character, updatedCharacterHealth);
-
-        // console.log(`Enemy ${enemy.name} attacked ${character.name} for ${enemy.attack} damage.`);
 
         if (HandleAllCharactersDead() || HandleAllEnemiesDead()) return;
         i++;
         await new Promise(resolve => setTimeout(resolve, 1500));
       } else {
         const character = entity as CharacterType;
-        
-        if (character.health <= 0) {
-            // console.log(`${character.name} is dead.`);
-            i++;
-            continue;
-        }
+        if (character.health <= 0) {i++; continue;}
 
         storeAtom.set(playerTargetAtom, null);
         HandleSetCurrentTurn(character, true);
@@ -136,7 +104,6 @@ export const runTurnLogic = async (
         const playerTarget = storeAtom.get(playerTargetAtom);
         const spell = storeAtom.get(selectedSpellAtom);
         const spellCost = Number(spell?.split('$')[1]);
-        // console.log(`Using spell: ${spell}`);
 
         if (playerTarget && 'target' in playerTarget) {
           HandleEnemyHealthUpdate(playerTarget, character, spell as string, spellCost);
@@ -155,18 +122,10 @@ export const runTurnLogic = async (
                 if (targetChar) HandleCharacterHealthUpdate(targetChar, result.health);
               }
             });
-          }
-          
-          else if (
-            typeof buffResult === "object" &&
-            buffResult !== null &&
-            "mana" in buffResult
-          ) {
+          } else if ( typeof buffResult === "object" && buffResult !== null && "mana" in buffResult) {
             const targetChar = getCharacterById(buffResult.id);
             if (targetChar) HandleCharacterManaUpdate(targetChar, buffResult.mana);
-          } 
-          
-          else if (typeof buffResult === "number") {
+          } else if (typeof buffResult === "number") {
             HandleCharacterHealthUpdate(
               playerTarget.id === character.id ? character : playerTarget,
               buffResult
@@ -175,7 +134,6 @@ export const runTurnLogic = async (
         }
         
         HandleSetCurrentTurn(character, false);
-
         if (HandleAllCharactersDead() || HandleAllEnemiesDead()) return;
         i++;
         await new Promise(resolve => setTimeout(resolve, 1500));
@@ -188,13 +146,3 @@ export const runTurnLogic = async (
 
   setTimeout(() => runTurnLogic(turnOrder, waitForInput), 1000);
 };
-
-const updatedTurnOder = () => {
-  const characters = storeAtom.get(CharacterAtom);
-  const enemies = storeAtom.get(EnemyAtom);
-  const selectedCharacters = Object.values(characters).filter(char => char.isSelected);
-  const allEntities = [...selectedCharacters, ...Object.values(enemies)];
-  const turnOrder = allEntities.sort((a, b) => b.speed - a.speed);
-
-  return turnOrder;
-}

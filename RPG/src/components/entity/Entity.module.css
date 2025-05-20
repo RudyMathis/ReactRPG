@@ -277,11 +277,6 @@
     font-size: .9rem;
 }
 
-/* .moreInformationWrapper {
-    position: relative;
-    display: inline-block;
-} */
-
 .moreInformationWrapper:hover 
 .moreInformationText {
     cursor: pointer;
@@ -310,23 +305,12 @@
 }
 
 /* Target Arrow */
-
-/* .targetArrow {
-    position: absolute;
-    top: -60%;
-    left: 40%;
-    transform: translateX(-50%);
-    z-index: var(--high-layer);
-    pointer-events: none;
-    width: 2.28em;
-    height: 1.86em;
-    rotate: 90deg;
-    animation: targetArrow 1000ms infinite ease-in-out;
-} */
 .targetArrow {
     position: absolute;
-    top: -60%;
+    top: -40%;
     left: 40%;
+    width: 16px;
+    height: 12px;
     transform: translateX(-50%);
     z-index: var(--high-layer);
     pointer-events: none;
@@ -334,12 +318,9 @@
     image-rendering: pixelated;
     color: var(--white);
     text-shadow: none;
+    filter: drop-shadow(1px 1px 2px var(--shadow));
 }
 
-/* @keyframes targetArrow {
-    0%, 100% { transform: translateX(-50%); }
-    50% { transform: translateX(0%); }
-} */
 @keyframes targetArrow {
     0%, 100% { transform: translateY(-30%); }
     50% { transform: translateY(0%); }

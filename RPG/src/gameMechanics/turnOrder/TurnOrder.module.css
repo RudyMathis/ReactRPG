@@ -37,7 +37,6 @@
 .turnOrderItem {
     background-color: var(--white-soft);
     border: 2px solid var(--white);
-    padding: .5rem;
 }
 
 .turnOrderPortait.dead {

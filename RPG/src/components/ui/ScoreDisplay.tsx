@@ -1,6 +1,5 @@
 import { useAtomValue } from 'jotai';
 import { ScoreAtom } from '../../atom/persistant/ScoreAtom';
-import TickingNumber from '../TickingNumber';
 import styles from './UI.module.css';
 import { storeAtom } from '../../atom/storeAtom';
 
@@ -14,8 +13,8 @@ const ScoreDisplay = () => {
 
     return (
         <div className={styles.scoreContainer}>
-            <span>Score: </span>
-            <TickingNumber value={score} />
+            <h2>Score</h2>
+            <h2>{String(score).padStart(5, '0')}</h2> 
         </div>
     );
 };
