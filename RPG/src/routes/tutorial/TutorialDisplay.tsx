@@ -12,7 +12,7 @@ const TutorialDisplay = () => {
         toggleMenu({ id, type });
     };
 
-    if (!tutorial.isTutorialVisible) return null;
+    // if (!tutorial.isTutorialVisible) return null;
 
     return (
         <section className={styles.tutorialContainer} data-is-visible={tutorial.isTutorialVisible}>
