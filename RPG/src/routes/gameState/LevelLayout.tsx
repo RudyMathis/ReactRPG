@@ -27,8 +27,18 @@ const LevelLayout = () => {
         localStorage.setItem('inProgressGame', 'true')
     }
     const handleReflection = () => {
-    }
-    
+    } // Needed for Btn component
+
+        function setViewportUnits() {
+            const vh = window.innerHeight * 0.01;
+            const vw = window.innerWidth * 0.01;
+            document.documentElement.style.setProperty('--vh', `${vh}px`);
+            document.documentElement.style.setProperty('--vw', `${vw}px`);
+        }
+        window.addEventListener('resize', setViewportUnits);
+        window.addEventListener('orientationchange', setViewportUnits);
+        setViewportUnits();
+
     return (
         <div className={styles.levelLayout}>
             <Btn className={styles.reflectionBtn} {...(tutorial.isTutorial &&  { 'data-tutorial-show': tutorial.isTutorialVisible })} onClick={() => handleReflection()} text="menu" />
