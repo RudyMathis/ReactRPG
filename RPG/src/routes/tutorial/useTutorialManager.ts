@@ -41,7 +41,7 @@ export const useTutorialManager = () => {
 
   const jumpToStep = useCallback((id: number) => {
     if (id >= 0 && id < tutorialSteps.length) setStep(id);
-    console.log("Jumping to step", id, tutorialSteps[id]);
+    // console.log("Jumping to step", id, tutorialSteps[id]);
   }, [setStep]);
 
   useEffect(() => {

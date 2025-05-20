@@ -56,12 +56,10 @@ const GameDisplay = () => {
             runTurnLogic(turnOrder, waitForInput);
         }
         currentGameLevel.isRoundOver = false;
-        currentGameLevel.isHideBegin = true
+        currentGameLevel.isHideBegin = true;
 
         if (tutorial.isTutorial) {
-            jumpToStep(6);
-            setTimeout(() => jumpToStep(7), 4000);
-            jumpToStep(7);
+            jumpToStep(6)
         }
     };
 

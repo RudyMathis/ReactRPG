@@ -15,6 +15,9 @@ import { HandleAllCharactersDead, HandleAllEnemiesDead } from "./HandleDead";
 import { LoadInitialStates } from "../LoadInitialStates";
 import { HandleCharacterHealthUpdate, HandleCharacterManaUpdate, HandleEnemyHealthUpdate, HandleSetCurrentTurn } from "../../atom/SetAtom";
 import { getCharacterById } from "../../gameData/spellData/defense/getCharacterById";
+import { tutorialAtom } from "../../atom/TutorialAtom";
+// import TutorialData from "../../routes/tutorial/TutorialData.json";
+// import { getTutorialStep } from '../../routes/tutorial/getTutorialStep';
 
 type CharacterType = (typeof CharacterAtom) extends import('jotai').Atom<Record<number, infer T>> ? T : never;
 type EnemyType = (typeof EnemyAtom) extends import('jotai').Atom<Record<number, infer T>> ? T : never;
@@ -98,7 +101,23 @@ export const runTurnLogic = async (
         storeAtom.set(playerTargetAtom, null);
         HandleSetCurrentTurn(character, true);
 
-        // console.log(`Character ${character.name}'s turn. Waiting for user input...`);
+        const tutorial = storeAtom.get(tutorialAtom);
+        const tutorialStep = storeAtom.get(tutorialAtom);
+        if(tutorialStep.tutorialId === 6) {
+          storeAtom.set(tutorialAtom, 
+            { 
+                ...tutorial, 
+                tutorialId: 7,
+                tutorialText: "Now it's your turn Shaman's turn.",
+                isPrevTutorial: false,
+                isNextTutorial: true,
+                isTutorialClickable: false,
+                isTutorialVisible: true,
+                tutorialEntity: 'player',
+                tutorialTextPosition: 'right',
+            });
+        }
+
         await waitForInput();
 
         const playerTarget = storeAtom.get(playerTargetAtom);
