@@ -10,13 +10,11 @@
 }
 
 .tutorialContainer[data-is-visible='true'] {
-    /* display: block; */
-    visibility: visible;
-
+    display: block;
 }
 
 .tutorialContainer[data-is-visible='false'] {
-    visibility: hidden;
+    display: none;
 }
 
 .tutorialOverlay {

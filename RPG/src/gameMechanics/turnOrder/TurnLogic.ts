@@ -59,13 +59,13 @@ export const runTurnLogic = async (
             { 
                 ...tutorial, 
                 tutorialId: 6,
-                tutorialText: "",
-                isPrevTutorial: false,
-                isNextTutorial: false,
-                isTutorialClickable: false,
-                // isTutorialVisible: false,
-                tutorialEntity: '',
-                tutorialTextPosition: 'right',
+                // tutorialText: "",
+                // isPrevTutorial: false,
+                // isNextTutorial: false,
+                // isTutorialClickable: false,
+                isTutorialVisible: false,
+                // tutorialEntity: '',
+                // tutorialTextPosition: 'right',
             });
         }
 

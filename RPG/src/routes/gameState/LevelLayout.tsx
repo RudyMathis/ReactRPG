@@ -41,7 +41,7 @@ const LevelLayout = () => {
             <div className={stylesUI.backgroundGlow} data-glow={background} {...(tutorial.isTutorial &&  { 'data-tutorial-show': tutorial.isTutorialVisible })}></div>
             <div className={stylesUI.crt}></div>
             <SettingsIcon />
-            {tutorial.isTutorial && tutorial.isTutorialVisible && <TutorialDisplay />}
+            {tutorial.isTutorial && <TutorialDisplay />}
             <GameDisplay />
             <div className={stylesUI.backgroundBorder}></div>
             {isRoundOver && <EndofRoundDisplay />}
