@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { useAtom } from 'jotai';
+import { useAtom, useSetAtom } from 'jotai';
 import CharacterAtom, { CharacterType } from '../../../atom/CharacterAtom';
 import EnemyAtom, { EnemyType } from '../../../atom/BaseEnemyAtom';
 import { useTurnOrder }  from '../../../gameMechanics/turnOrder/useTurnOrder';
@@ -18,6 +18,7 @@ import CharacterEntities from './CharacterEntities';
 import EnemyEntities from './EnemyEntities';
 import DetailScreenOverlay from './DetailScreenOverlay';
 import { activeMenuAtom, toggleMenuAtom } from '../../../atom/ToggleMenuAtom';
+import { tutorialAtom } from '../../../atom/TutorialAtom';
 
 type EntityType = 'character' | 'enemy' | null; 
 
@@ -37,6 +38,7 @@ const GameDisplay = () => {
     const handleTutorialStart = useHandleTutorialStart();
     const hasStartedRef = useRef(false);
     const { waitingForInput, waitForInput, resolveInput } = useGameInput();
+    const setTutorial = useSetAtom(tutorialAtom);
 
     useEffect(() => {
         if (tutorial.isTutorial && !hasStartedRef.current) {
@@ -61,11 +63,20 @@ const GameDisplay = () => {
         if (tutorial.isTutorial) {
             // jumpToStep(6);
             // requestAnimationFrame(() => {
-            tutorial.isTutorialVisible = false;
-                setTimeout(() => {
-                    jumpToStep(7);
-                    tutorial.isTutorialVisible = true;
-                }, 4000);
+        setTutorial((prev) => ({
+            ...prev,
+            isTutorial: true,
+            isTutorialVisible: false,
+
+        }));
+        setTimeout(() => {
+            jumpToStep(7);
+            setTutorial((prev) => ({
+                ...prev,
+                isTutorial: true,
+                isTutorialVisible: true,
+            }));
+        }, 4000);
             // });
             
         }
