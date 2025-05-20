@@ -61,8 +61,10 @@ const GameDisplay = () => {
         if (tutorial.isTutorial) {
             // jumpToStep(6);
             // requestAnimationFrame(() => {
+            tutorial.isTutorialVisible = false;
                 setTimeout(() => {
                     jumpToStep(7);
+                    tutorial.isTutorialVisible = true;
                 }, 4000);
             // });
             
