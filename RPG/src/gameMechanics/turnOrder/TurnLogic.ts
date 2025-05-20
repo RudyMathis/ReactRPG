@@ -63,7 +63,7 @@ export const runTurnLogic = async (
                 isPrevTutorial: false,
                 isNextTutorial: false,
                 isTutorialClickable: false,
-                isTutorialVisible: false,
+                // isTutorialVisible: false,
                 tutorialEntity: '',
                 tutorialTextPosition: 'right',
             });
