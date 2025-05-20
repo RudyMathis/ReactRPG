@@ -59,12 +59,13 @@ const GameDisplay = () => {
         currentGameLevel.isHideBegin = true
 
         if (tutorial.isTutorial) {
-            jumpToStep(6);
-            requestAnimationFrame(() => {
+            // jumpToStep(6);
+            // requestAnimationFrame(() => {
                 setTimeout(() => {
                     jumpToStep(7);
                 }, 4000);
-            });
+            // });
+            
         }
     };
 
