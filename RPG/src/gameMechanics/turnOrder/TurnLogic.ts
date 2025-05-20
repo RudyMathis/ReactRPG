@@ -50,9 +50,24 @@ export const runTurnLogic = async (
 
       entity = entity.type === "player" ? storeAtom.get(CharacterAtom)[entity.id] : storeAtom.get(EnemyAtom)[entity.id];
       Statuses(entity);
+        const tutorial = storeAtom.get(tutorialAtom);
       
       if ('target' in entity) {
         await new Promise(resolve => setTimeout(resolve, 500));
+        if(storeAtom.get(tutorialAtom).tutorialId === 5) {
+          storeAtom.set(tutorialAtom, 
+            { 
+                ...tutorial, 
+                tutorialId: 6,
+                tutorialText: "",
+                isPrevTutorial: false,
+                isNextTutorial: false,
+                isTutorialClickable: false,
+                isTutorialVisible: false,
+                tutorialEntity: '',
+                tutorialTextPosition: 'right',
+            });
+        }
 
         const enemy = storeAtom.get(EnemyAtom)[entity.id];
 
@@ -101,9 +116,7 @@ export const runTurnLogic = async (
         storeAtom.set(playerTargetAtom, null);
         HandleSetCurrentTurn(character, true);
 
-        const tutorial = storeAtom.get(tutorialAtom);
-        const tutorialStep = storeAtom.get(tutorialAtom);
-        if(tutorialStep.tutorialId === 6) {
+        if(storeAtom.get(tutorialAtom).tutorialId === 6) {
           storeAtom.set(tutorialAtom, 
             { 
                 ...tutorial, 

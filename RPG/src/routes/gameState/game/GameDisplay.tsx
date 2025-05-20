@@ -33,7 +33,8 @@ const GameDisplay = () => {
     const [activeDetailScreen, setActiveDetailScreen] = useState<CharacterType | EnemyType | null>(null);
     const [currentGameLevel] = useAtom(GameLevelAtom);
     const [background] = useAtom(backgroundAtom);
-    const {tutorial, jumpToStep} = useTutorialManager();
+    // const {tutorial, jumpToStep} = useTutorialManager();
+    const {tutorial} = useTutorialManager();
     const handleTutorialStart = useHandleTutorialStart();
     const hasStartedRef = useRef(false);
     const { waitingForInput, waitForInput, resolveInput } = useGameInput();
@@ -58,9 +59,9 @@ const GameDisplay = () => {
         currentGameLevel.isRoundOver = false;
         currentGameLevel.isHideBegin = true;
 
-        if (tutorial.isTutorial) {
-            jumpToStep(6)
-        }
+        // if (tutorial.isTutorial) {
+        //     jumpToStep(6)
+        // }
     };
 
     useEffect(() => {
