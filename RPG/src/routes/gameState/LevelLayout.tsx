@@ -14,6 +14,7 @@ import { tutorialAtom } from "../../atom/TutorialAtom";
 import Btn from "../../components/ui/Btn";
 import RelectionCurrentLevelDisplay from "../../components/ui/ReflectionCurrentLevelDisplay";
 import GameDisplay from "./game/GameDisplay";
+import { useEffect } from "react";
 
 const LevelLayout = () => {
     const [currentGameLevel] = useAtom(GameLevelAtom);
@@ -29,15 +30,22 @@ const LevelLayout = () => {
     const handleReflection = () => {
     } // Needed for Btn component
 
+        useEffect(() => {
         function setViewportUnits() {
             const vh = window.innerHeight * 0.01;
-            const vw = window.innerWidth * 0.01;
             document.documentElement.style.setProperty('--vh', `${vh}px`);
-            document.documentElement.style.setProperty('--vw', `${vw}px`);
         }
+
+        setViewportUnits();
         window.addEventListener('resize', setViewportUnits);
         window.addEventListener('orientationchange', setViewportUnits);
-        setViewportUnits();
+
+        return () => {
+            window.removeEventListener('resize', setViewportUnits);
+            window.removeEventListener('orientationchange', setViewportUnits);
+        };
+    }, []);
+
 
     return (
         <div className={styles.levelLayout}>
