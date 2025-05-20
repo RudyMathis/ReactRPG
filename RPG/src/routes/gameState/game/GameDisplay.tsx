@@ -60,10 +60,8 @@ const GameDisplay = () => {
 
         if(tutorial.isTutorial){
             jumpToStep(6);
-            console.log("Jumping to step 6", tutorial);
             setTimeout(() => {
                 jumpToStep(7);
-                console.log("Jumping to step 7", tutorial);
             }, 4000)
         }
     };
