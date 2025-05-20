@@ -61,7 +61,7 @@ const GameDisplay = () => {
         if (tutorial.isTutorial) {
             jumpToStep(6);
             setTimeout(() => jumpToStep(7), 4000);
-            // jumpToStep(7);
+            jumpToStep(7);
         }
     };
 
