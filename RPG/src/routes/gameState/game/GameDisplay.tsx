@@ -58,11 +58,13 @@ const GameDisplay = () => {
         currentGameLevel.isRoundOver = false;
         currentGameLevel.isHideBegin = true
 
-        if(tutorial.isTutorial){
+        if (tutorial.isTutorial) {
             jumpToStep(6);
-            setTimeout(() => {
-                jumpToStep(7);
-            }, 4000)
+            requestAnimationFrame(() => {
+                setTimeout(() => {
+                    jumpToStep(7);
+                }, 4000);
+            });
         }
     };
 
