@@ -4,6 +4,7 @@ import { storeAtom } from "../../../atom/storeAtom";
 import Buffs, { Buff } from "../../Buffs";
 
 const spellCost = 50;
+const statValue = 25;
 const isMoreInfo = true;
 const additionalInfo = "Increase defense for the party by 25";
 
@@ -60,5 +61,5 @@ const ProtectPartyChar50 = (
     return selectedCharacters.map(char => ({ id: char.id, buff: Buffs.Protected }));
 };
 
-export { spellCost, isMoreInfo, additionalInfo };
+export { spellCost, statValue, isMoreInfo, additionalInfo };
 export default ProtectPartyChar50;

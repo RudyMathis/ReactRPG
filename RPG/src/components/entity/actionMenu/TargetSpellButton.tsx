@@ -4,6 +4,10 @@ import { CharacterType } from '../../../atom/CharacterAtom';
 import { playerTargetAtom } from '../../../atom/PlayerTargetAtom';
 import { hoveredSpellAtom } from '../../../atom/HoveredSpellAtom';
 import { storeAtom } from '../../../atom/storeAtom';
+import Resistances from '../../../gameData/Resistances';
+import Vulnerabilities from '../../../gameData/Vulnerabilities';
+import attacks from '../../../gameData/spellData/attacks/Attacks';
+
 import styles from '../Entity.module.css';
 
 type TargetSpellButtonProps = {
@@ -58,32 +62,44 @@ const TargetSpellButton = ({
             key={`${char.id}-${index}`}
             {...buttonProps}
             onMouseEnter={() => {
-                if (enemy && !aoeAttack) {
-                    const affectedEntityIds = [playerTarget?.id]
-                        .map((id) => id ?? 0)
-                        .filter(Boolean);
-                    setHoveredSpell({ label, affectedEntityIds });
+                const calcAdjustedDamage = (target: EnemyType | undefined | null) => {
+                    if (!target) return 0;
+                    let defense = target.defense ?? 0;
+                    if (element !== 'Physical') defense = 0;
+
+                    const hasResistance = !!target.resistances.find(res => res.type === element);
+                    const resistanceValue = hasResistance ? Resistances[element]?.value ?? 0 : 0;
+
+                    const hasVulnerability = !!target.vulnerabilities.find(vul => vul.type === element);
+                    const vulnerabilityValue = hasVulnerability ? Vulnerabilities[element]?.value ?? 0 : 0;
+
+                    const spellDamage = Math.round(char.attack * (attacks[spell]?.damageMulitplier ?? 0));
+                    const rawAdjusted = spellDamage + vulnerabilityValue - resistanceValue;
+                    return Math.max(5, Math.round(rawAdjusted - defense));
+                };
+
+                let targets: EnemyType[] = [];
+
+                if (!aoeAttack && enemy) {
+                    targets = [enemy];
                 } else if (label === 'Multi Shot' && enemy) {
-                    const affectedEntityIds = [
-                        prevEnemy?.id,
-                        enemy.id,
-                        nextEnemy?.id,
-                    ]
-                        .map((id) => id ?? 0)
-                        .filter(Boolean);
-                    setHoveredSpell({ label, affectedEntityIds });
-                } else if (label === 'Cleave') {
-                    const affectedEntityIds = [enemy?.id, nextEnemy?.id]
-                        .map((id) => id ?? 0)
-                        .filter(Boolean);
-                    setHoveredSpell({ label, affectedEntityIds });
+                    targets = [prevEnemy, enemy, nextEnemy].filter(Boolean) as EnemyType[];
+                } else if (label === 'Cleave' && enemy) {
+                    targets = [enemy, nextEnemy].filter(Boolean) as EnemyType[];
                 } else {
-                    const affectedEntityIds = enemies.map(
-                        (enemy) => enemy.id as number
-                    );
-                    setHoveredSpell({ label, affectedEntityIds });
+                    targets = enemies;
                 }
+
+                const affectedEntityIds = targets.map(e => e.id);
+                const adjustedDamages = targets.map(e => calcAdjustedDamage(e));
+
+                setHoveredSpell({
+                    label,
+                    affectedEntityIds,
+                    adjustedDamage: adjustedDamages,
+                });
             }}
+
             onMouseLeave={() => setHoveredSpell(null)}
             onClick={() => {
                 setHoveredSpell(null);

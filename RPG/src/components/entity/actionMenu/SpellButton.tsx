@@ -16,6 +16,7 @@ type SpellButtonProps = {
     costLabel: string;
     displayCost: string;
     statValue: number | undefined;
+    isBuff: boolean | undefined;
     isMoreInfo: boolean | undefined;
     additionalInfo: string | undefined;
     aoeDefense: boolean | undefined;
@@ -33,6 +34,7 @@ const SpellButton = ({
     costLabel,
     displayCost,
     statValue,
+    isBuff,
     isMoreInfo,
     additionalInfo,
     aoeDefense,
@@ -50,16 +52,20 @@ const SpellButton = ({
             key={`${char.id}-${index}`}
             {...buttonProps}
             onMouseEnter={() => {
-                if (char && !aoeDefense) {
-                    const affectedEntityIds = [playerTarget?.id]
-                        .map((id) => id ?? 0)
-                        .filter(Boolean);
-                    setHoveredSpell({ label, affectedEntityIds });
-                } else {
-                    const affectedEntityIds = pickedCharacters.map((c) => c.id);
-                    setHoveredSpell({ label, affectedEntityIds });
-                }
+                const targets = (!aoeDefense && playerTarget)
+                    ? [playerTarget]
+                    : pickedCharacters;
+
+                const affectedEntityIds = targets.map((c) => c.id);
+                const statValues = targets.map(() => statValue ?? 0);
+
+                setHoveredSpell({
+                    label,
+                    affectedEntityIds,
+                    statValues,
+                });
             }}
+
             onMouseLeave={() => setHoveredSpell(null)}
             onClick={() => {
                 setHoveredSpell(null);
@@ -71,7 +77,7 @@ const SpellButton = ({
                 <p data-element={`${element}`} className={styles.spellName}>{label}</p>
                 <p className={styles.spellCost}>{costLabel}{displayCost}</p>
             </div>
-            {statValue && <p className={styles.spellDefense}>{statValue}</p>}
+            {statValue && <p className={styles.spellDefense}>{statValue && !isBuff ? `${statValue}` : ``}</p>}
             {isMoreInfo && (
                 <MoreInformationDisplay spellInfo={additionalInfo ?? ''} />
             )}

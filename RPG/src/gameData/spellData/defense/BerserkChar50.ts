@@ -2,6 +2,7 @@ import Buffs, { Buff } from "../../Buffs";
 import { CharacterType } from "../../../atom/CharacterAtom";
 
 const spellCost = 50;
+const statValue = 25;
 const isMoreInfo = true;
 const additionalInfo = "Increase attack and speed";
 
@@ -25,5 +26,5 @@ const BerserkChar50 = (
 
 };
 
-export { spellCost, isMoreInfo, additionalInfo };
+export { spellCost, statValue, isMoreInfo, additionalInfo };
 export default BerserkChar50;

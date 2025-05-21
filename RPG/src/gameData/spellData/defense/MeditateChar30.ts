@@ -2,6 +2,7 @@ import { CharacterType } from "../../../atom/CharacterAtom";
 import { BlessingsData } from "../../characters/blessings/BlessingsData";
 
 const spellCost = 0;
+const statValue = 30;
 const isMoreInfo = true;
 const additionalInfo = 'Restores 30 mana';
 const MeditateChar30 = (
@@ -23,5 +24,5 @@ const MeditateChar30 = (
     return { id: character.id, mana: character.mana };
 };
 
-export { spellCost, isMoreInfo, additionalInfo };
+export { spellCost, statValue, isMoreInfo, additionalInfo };
 export default MeditateChar30;

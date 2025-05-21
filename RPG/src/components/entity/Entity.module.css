@@ -242,10 +242,6 @@
 
 /* More information button */
 
-/* .moreInformationWrapper {
-    position: relative;
-} */
-
 .moreInformationIcon {
     background-color: transparent;
     color: var(--buff);
@@ -287,30 +283,8 @@
     display: block;
 }
 
-/* .moreInformationWrapper[data-tutorial='true'][data-tutorial-disabled='true']:hover {
-    cursor: pointer;
-} */
-
-/* @media (max-width: 1920px) {
-    .moreInformationText {
-        bottom: 20vh; 
-    }
-}
-
-@media (max-width: 1080px)  {
-    .moreInformationText {
-        bottom: 30vh; 
-    }
-}
-
-@media (max-height: 431px)  {
-    .moreInformationText {
-        bottom: 3vh; 
-    }
-} */
-
-/* Target Arrow */
-.targetArrow {
+/* Target Value */
+.targetValue {
     position: absolute;
     top: -40%;
     left: 40%;
@@ -319,14 +293,12 @@
     transform: translateX(-50%);
     z-index: var(--high-layer);
     pointer-events: none;
-    animation: targetArrow 1200ms infinite ease-in-out;
-    image-rendering: pixelated;
+    animation: targetValue 1200ms infinite ease-in-out;
     color: var(--white);
-    text-shadow: none;
-    filter: drop-shadow(1px 1px 2px var(--shadow));
+    text-shadow: 2px 2px 2px var(--shadow);
 }
 
-@keyframes targetArrow {
+@keyframes targetValue {
     0%, 100% { transform: translateY(-30%); }
     50% { transform: translateY(0%); }
 }

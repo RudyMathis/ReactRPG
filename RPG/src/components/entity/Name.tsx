@@ -32,7 +32,29 @@ const Name: React.FC<NameProps> = ({ entity }) => {
             data-entity-name={`${entity.name.match(/Fire|Ice|Dark|Lightning|Holy|Earth/)}`} 
             data-type={entity.type}
         >
-            {isTargeted && <img className={styles.targetArrow} src="/assets/select_arrow.png" alt="target arrow" />}
+            {isTargeted && hoveredSpell?.adjustedDamage && (
+                <p className={styles.targetValue}>
+                    {hoveredSpell.adjustedDamage[
+                        hoveredSpell.affectedEntityIds.findIndex((id) => id === entity.id)
+                    ]}
+                </p>
+            )}
+            {isTargeted &&
+                hoveredSpell?.statValues &&
+                hoveredSpell.affectedEntityIds.includes(entity.id) && (
+                    (() => {
+                        const index = hoveredSpell.affectedEntityIds.findIndex(
+                            (id) => id === entity.id
+                        );
+                        const value = hoveredSpell.statValues[index];
+                        return value !== 0 ? (
+                            <p className={styles.targetValue}>{value}</p>
+                        ) : null;
+                    })()
+                )
+            }
+
+
             {entity.type === 'player' ? entity.name : displayName}
         </div>
     );

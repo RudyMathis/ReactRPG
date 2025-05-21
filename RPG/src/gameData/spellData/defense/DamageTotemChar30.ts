@@ -4,8 +4,9 @@ import { storeAtom } from "../../../atom/storeAtom";
 import Buffs, { Buff } from "../../Buffs";
 
 const spellCost = 30;
+const statValue = 25;
 const isMoreInfo = true;
-const additionalInfo = "Increase attack damage for the party";
+const additionalInfo = "Increase attack damage for the party by 25";
 
 const DamageTotemChar30 = (
     character: CharacterType
@@ -61,5 +62,5 @@ const DamageTotemChar30 = (
     return selectedCharacters.map(char => ({ id: char.id, buff: Buffs.DamageTotem }));
 };
 
-export { spellCost, isMoreInfo, additionalInfo };
+export { spellCost, statValue, isMoreInfo, additionalInfo };
 export default DamageTotemChar30;

@@ -62,6 +62,7 @@ const ActionMenu = ({
                             {char.spells.map((spell, index) => {
                                 const element = attacks[spell]?.element || buffs[spell]?.element || '';
                                 const isSelf = buffs[spell]?.isSelfBuff;
+                                const isBuff = buffs[spell]?.isBuff;
                                 const spellDamage = Math.round(char.attack * (attacks[spell]?.damageMulitplier ?? 0));
                                 const aoeAttack = attacks[spell]?.aoe;
                                 const aoeDefense = buffs[spell]?.isAoe;
@@ -80,6 +81,7 @@ const ActionMenu = ({
                                     const costLabel = buffs[spell].cost === 0 ? 'Free' : '';
                                     const displayCost = Math.abs(buffs[spell].cost ?? 0);
                                     const statValue = buffs[spell]?.statValue;
+
                                     const isMoreInfo = buffs[spell]?.isMoreInfo;
                                     const additionalInfo = buffs[spell]?.additionalInfo;
 
@@ -98,6 +100,7 @@ const ActionMenu = ({
                                                 costLabel={costLabel}
                                                 displayCost={costLabel !== 'Free' ? ` ${displayCost}` : ''}
                                                 statValue={statValue}
+                                                isBuff={isBuff}
                                                 isMoreInfo={isMoreInfo}
                                                 additionalInfo={additionalInfo}
                                                 aoeDefense={aoeDefense}
