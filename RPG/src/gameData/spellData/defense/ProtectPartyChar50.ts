@@ -5,7 +5,7 @@ import Buffs, { Buff } from "../../Buffs";
 
 const spellCost = 50;
 const isMoreInfo = true;
-const additionalInfo = "Increase defense for the party";
+const additionalInfo = "Increase defense for the party by 25";
 
 const ProtectPartyChar50 = (
     character: CharacterType

@@ -52,7 +52,7 @@ export const useTutorialManager = () => {
   useEffect(() => {
     if (tutorial.isEndTutorial) {
       setTimeout(() => {
-        jumpToStep(18);
+        jumpToStep(21);
         localStorage.removeItem('tutorialState');
       }, 2000)
     }

@@ -2,7 +2,7 @@
     "Tutorial": [
         {
             "id": 0,
-            "text": "Welcome to Sacred Loop! In this tutorial you will learn the basics!",
+            "text": "Welcome to Sacred Loop! In this tutorial you will learn the basics of how to play the game!",
             "textPosition": "center",
             "isPrev": false,
             "isNext": true,
@@ -12,7 +12,7 @@
         },
         {
             "id": 1,
-            "text": "From left to right there is the menu button to bring you back to the main menu, the settings icon to change the volume and read more about the game mechanics, the turn order showing you the attack order, then finally the score and round and level.",
+            "text": "From left to right there is the menu button to bring you back to the main menu, the settings icon to change the volume and read more about the game mechanics, the turn order showing you when each character and enemy does their turn, then finally the score and current stage.",
             "textPosition": "center",
             "isPrev": true,
             "isNext": true,
@@ -32,7 +32,7 @@
         },
         {
             "id": 3,
-            "text": "Speaking of rounds, this game is broken down into turns, cycles, rounds, and levels. Every character and enemy gets a turn before the order cycle is reset, the turn cycle continues untill either all characters are dead or all enemies are. Once that happens the round is over and you advance to the next round.",
+            "text": "This game's loop can be broken down into, turns, cycles, rounds, and levels. Every character and enemy gets a turn before the order cycle is reset, the turn cycle continues untill either all characters are dead or all enemies are. Once that happens the round is over and you advance to the next round.",
             "textPosition": "center",
             "isPrev": true,
             "isNext": true,
@@ -52,7 +52,7 @@
         },
         {
             "id": 5,
-            "text": "Let's start our first round by clicking the Begin Button, the enemy will go first.",
+            "text": "Let's start our first round by clicking the 'Begin' button, if you check the turn order the Goblin will go first.",
             "textPosition": "bottom",
             "isPrev": true,
             "isNext": false,
@@ -72,7 +72,7 @@
         },
         {
             "id": 7,
-            "text": "Now it's your turn Shaman's turn.",
+            "text": "Now it's your turn Shaman's turn as indicated by the pointing finger indicator.",
             "textPosition": "right",
             "isPrev": false,
             "isNext": true,
@@ -82,7 +82,7 @@
         },
         {
             "id": 8,
-            "text": "You can left click any of your party members right now and see that you can buff them or check out their stats under details.",
+            "text": "You can left click any of your party members right now and see that you can buff them or check out their stats under details this is a context window.",
             "textPosition": "right",
             "isPrev": true,
             "isNext": true,
@@ -92,7 +92,7 @@
         },
         {
             "id": 9,
-            "text": "Right now your spells are greyed out, but later they will be available to you.",
+            "text": "Right now your spells are unavailable for tutorial purposes.",
             "textPosition": "right",
             "isPrev": true,
             "isNext": true,
@@ -102,7 +102,7 @@
         },
         {
             "id": 10,
-            "text": "This context window will allow you cast spells depending on if it's your party member, youself, or an enemy.",
+            "text": "The context window will allow you cast different spells depending on if it's your party member, youself, or an enemy.",
             "textPosition": "right",
             "isPrev": true,
             "isNext": true,
@@ -142,7 +142,7 @@
         },
         {
             "id": 14,
-            "text": "Here you can see the enemy's stats and notice you have one spell you can use on them.",
+            "text": "Here you can see the enemy's stats and notice you have one spell you can cast on them.",
             "textPosition": "left",
             "isPrev": true,
             "isNext": true,
@@ -156,12 +156,42 @@
             "textPosition": "left",
             "isPrev": true,
             "isNext": true,
-            "isClickable": true,
+            "isClickable": false,
             "isTutorialVisible": true,
             "tutorialEntity": "npc"
         },
         {
             "id": 16,
+            "text": "Also notice the damage numbers next to each of the enemies for your spell. On fire enemies like the Goblin the damage will be reduced. On ice targets like the Goblin the damage will be increased.",
+            "textPosition": "left",
+            "isPrev": true,
+            "isNext": true,
+            "isClickable": false,
+            "isTutorialVisible": true,
+            "tutorialEntity": "npc"
+        },
+        {
+            "id": 17,
+            "text": "That's because 'Burning Spirits' is a fire spell which does fire damage and is in red text. After you cast the spell you will also see a fire icon under there mana bar, that is because all fire spells cause the debuff 'burn', which does damage at the start of each turn.",
+            "textPosition": "left",
+            "isPrev": true,
+            "isNext": true,
+            "isClickable": true,
+            "isTutorialVisible": true,
+            "tutorialEntity": "npc"
+        },
+        {
+            "id": 18,
+            "text": "There are a variety of spell interactions and effects that you can learn more about in the spell book which is located in the gear icon at the top left of the screen.",
+            "textPosition": "left",
+            "isPrev": true,
+            "isNext": true,
+            "isClickable": true,
+            "isTutorialVisible": true,
+            "tutorialEntity": "npc"
+        },
+        {
+            "id": 19,
             "text": "Use the spell 'Buring Spirits' to continue the round",
             "textPosition": "left",
             "isPrev": true,
@@ -171,7 +201,7 @@
             "tutorialEntity": "npc"
         },
         {
-            "id": 17,
+            "id": 20,
             "text": "",
             "textPosition": "left",
             "isPrev": true,
@@ -181,7 +211,7 @@
             "tutorialEntity": ""
         },
         {
-            "id": 18,
+            "id": 21,
             "text": "Congrats, you won the round and finished the tutorial, good luck on your next adventure!",
             "textPosition": "center",
             "isPrev": false,

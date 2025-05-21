@@ -4,7 +4,7 @@ type CharacterDetailProps = {
     spellInfo: string;
 }
 
-const MoreInformationBtn = ({ spellInfo }: CharacterDetailProps) => {
+const MoreInformationDisplay = ({ spellInfo }: CharacterDetailProps) => {
     return (
         <div className={styles.moreInformationWrapper}>
             <span className={styles.moreInformationIcon}>&#128712;</span>
@@ -15,4 +15,4 @@ const MoreInformationBtn = ({ spellInfo }: CharacterDetailProps) => {
     );
 }
 
-export default MoreInformationBtn;
+export default MoreInformationDisplay;

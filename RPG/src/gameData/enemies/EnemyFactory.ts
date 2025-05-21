@@ -178,17 +178,25 @@ export const generateInitialEnemies = (): Record<number, EnemyType> => {
 
 export const generateTutorialEnemies = (): Record<number, EnemyType> => {
     const tutorialEnemies = Object.values(BaseEnemyData).filter(enemy => enemy.isTutorial);
-        const enemyRecord: Record<number, EnemyType> = {};
-        for (const enemy of tutorialEnemies) {
-            enemyRecord[enemy.id] = {
-                ...enemy,
-                buffs: [],
-                debuffs: [],
-                order: 0,
-            };
-        }
+    const enemyRecord: Record<number, EnemyType> = {};
+
+    const modifiers = ["Ice", "Fire"];
+
+    tutorialEnemies.forEach((enemy, index) => {
+        const element = modifiers[index];
+        const modifiedEnemy = EnemyFactory.createEnemy( enemy.name, [element]);
+
+        modifiedEnemy.id = enemy.id;
+        modifiedEnemy.buffs = [];
+        modifiedEnemy.debuffs = [];
+        modifiedEnemy.order = 0;
+        modifiedEnemy.group = determineEnemyGroup(modifiedEnemy.name);
+
+        enemyRecord[modifiedEnemy.id] = modifiedEnemy;
+    });
 
     return enemyRecord;
 };
+
 
 export default EnemyFactory;

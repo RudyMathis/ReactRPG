@@ -34,7 +34,7 @@ const ActionMenu = ({
     const [, setSelectedSpell] = useAtom(selectedSpellAtom);
     const [playerTarget] = useAtom(playerTargetAtom);
     const { tutorial, jumpToStep } = useTutorialManager();
-    const skipStep = getTutorialStep(16);
+    const skipStep = getTutorialStep(17);
 
     let isClick = {};
     if (!tutorial.isTutorial) {isClick = { 'data-tutorial-clickable': false };}
@@ -45,7 +45,7 @@ const ActionMenu = ({
         SoundManager.playSfx(spell);
 
         if (tutorial.isTutorial && skipStep) {
-            jumpToStep(17);
+            jumpToStep(20);
         }
     };
 
