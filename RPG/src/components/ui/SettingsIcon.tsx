@@ -3,9 +3,12 @@ import styles from './UI.module.css';
 import SoundManager from '../../gameData/SoundManager';
 import { useAtomValue } from 'jotai';
 import { tutorialAtom } from '../../atom/TutorialAtom';
+import GameReference from './GameReference';
+import Btn from './Btn';
 
 const SettingsIcon = () => {
     const [open, setOpen] = useState(false);
+    const [openGameReference, setOpenGameReference] = useState(false);
     const [volume, setVolume] = useState(50);
     const menuRef = useRef<HTMLDivElement>(null);
     const tutorial = useAtomValue(tutorialAtom);
@@ -45,6 +48,25 @@ const SettingsIcon = () => {
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, [open]);
 
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (
+                openGameReference &&
+                menuRef.current &&
+                !menuRef.current.contains(event.target as Node)
+            ) {
+                setOpenGameReference(false);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, [openGameReference]);
+
+    const handleGameReference = () => {
+        setOpenGameReference(prev => !prev);
+    };
+
     return (
         <div className={styles.settingsContainer} {...(tutorial.isTutorial && { 'data-tutorial-layer': 'top' })}>
             <img
@@ -72,9 +94,10 @@ const SettingsIcon = () => {
                             onChange={handleVolumeChange}
                         />
                     </div>
-
-                    {/* <div className={styles.settingsRow}>Gamepedia</div>
-                    <div className={styles.settingsRow}>Credits</div> */}
+                    <Btn onClick={handleGameReference} text="Game Reference" />
+                    <div className={styles.scrollWrapper}>
+                        {openGameReference && <GameReference/>}
+                    </div>
                 </div>
             </div>
         </div>

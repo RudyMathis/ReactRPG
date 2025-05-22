@@ -26,12 +26,10 @@ const LevelLayout = () => {
     } else {
         localStorage.setItem('inProgressGame', 'true')
     }
-    const handleReflection = () => {
-    } // Needed for Btn component
 
     return (
         <div className={styles.levelLayout}>
-            <Btn className={styles.reflectionBtn} {...(tutorial.isTutorial &&  { 'data-tutorial-show': tutorial.isTutorialVisible })} onClick={() => handleReflection()} text="menu" />
+            <Btn className={styles.reflectionBtn} {...(tutorial.isTutorial &&  { 'data-tutorial-show': tutorial.isTutorialVisible })} onClick={() => {}} text="menu" />
             <RelectionCurrentLevelDisplay />
             <div className={styles.topBar} {...(tutorial.isTutorial && { 'data-tutorial-layer': 'top' })}>
                 <NavigateBtn locationValue="/" location="Menu" />
