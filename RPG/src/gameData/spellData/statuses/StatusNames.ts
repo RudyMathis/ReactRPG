@@ -3,6 +3,7 @@ export const StatusNames = {
     Burn: "Burn",
     Frozen: "Frozen",
     Sundered: "Sundered",
+    Weaken: "Weaken",
     Berserk: "Berserk",
     DamageTotem: "DamageTotem",
     Protected: "Protected",

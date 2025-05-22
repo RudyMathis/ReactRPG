@@ -12,11 +12,7 @@ const GarroteTar40 = (enemy: EnemyType, character: CharacterType, target: Charac
     if(targetCharacter) {
         enemy.mana -= spellCost;
         const damage = Math.max(5, Math.round((enemy.attack * damageMulitplier) - character.defense));
-
-        if (character.debuffs.find(d => d.name === Debuffs.Bleed.name)) {
-            HandleDamageEffect(damage, "Physical", "player", character.id);
-            return character.health -= damage;
-        } else {
+        if (!character.debuffs.find(d => d.name === Debuffs.Bleed.name)) {
             character.debuffs.push({
                 type: Debuffs.Bleed.type,
                 duration: 3,
@@ -24,29 +20,45 @@ const GarroteTar40 = (enemy: EnemyType, character: CharacterType, target: Charac
                 name: Debuffs.Bleed.name,
                 icon: Debuffs.Bleed.icon
             });
-            HandleDamageEffect(damage, "Physical", "player", character.id);
-            return character.health -= damage;
+        } else {
+            character.debuffs.fill({
+                type: Debuffs.Bleed.type,
+                duration: 3,
+                damage: 10,
+                name: Debuffs.Bleed.name,
+                icon: Debuffs.Bleed.icon
+            });
         }
+
+        HandleDamageEffect(damage, "Physical", "player", character.id);
+        return character.health -= damage;
+
     } else {
         character.mana -= spellCost;
         const damage = Math.max(5, Math.round((character.attack * damageMulitplier) - enemy.defense));
 
-        if(enemy.debuffs.find(d => d.type === Debuffs.Bleed.type)) {
-            HandleDamageEffect(damage, "Physical", "npc", enemy.id);
-            BlessingOfBurnBonus(character, enemy);
-            BlessingOfLightningBonus(character, enemy);
-            return enemy.health -= damage;
-        } else {
+        if(!enemy.debuffs.find(d => d.type === Debuffs.Bleed.type)) {
             enemy.debuffs.push({
-                type: Debuffs.Bleed.type, duration: 3,
+                type: Debuffs.Bleed.type, 
+                duration: 3,
+                damage: 10,
                 name: Debuffs.Bleed.name,
                 icon: Debuffs.Bleed.icon
             });
-            HandleDamageEffect(damage, "Physical", "npc", enemy.id);
-            BlessingOfBurnBonus(character, enemy);
-            BlessingOfLightningBonus(character, enemy);
-            return enemy.health -= damage;
+        } else {
+            enemy.debuffs.fill({
+                type: Debuffs.Bleed.type, 
+                duration: 3,
+                damage: 10,
+                name: Debuffs.Bleed.name,
+                icon: Debuffs.Bleed.icon
+            });
         }
+        
+        HandleDamageEffect(damage, "Physical", "npc", enemy.id);
+        BlessingOfBurnBonus(character, enemy);
+        BlessingOfLightningBonus(character, enemy);
+        return enemy.health -= damage;
     }
 }
 

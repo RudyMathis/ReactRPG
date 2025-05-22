@@ -6,6 +6,7 @@ import { HandleDamageEffect } from "../../../../gameMechanics/HandleDamageEffect
 import { FlashAnimationAtom } from "../../../../atom/effects/FlashAnimationAtom";
 import Resistances from "../../../Resistances";
 import Vulnerabilites from "../../../Vulnerabilities";
+import Debuffs from "../../../Debuffs";
 
 const spellCost = 50;
 const damageMulitplier = .9;
@@ -27,11 +28,30 @@ const HolyExplosionTar50 = (
 
         selectedCharacters.forEach(targetChar => {
             flashUpdate[targetChar.id] = spellAnimation;
+            if(!targetChar.debuffs.find(d => d.name === Debuffs.Weaken.name)){
+                targetChar.debuffs.push({
+                    type: Debuffs.Weaken.type, 
+                    duration: 3,
+                    damage: 0,
+                    name: Debuffs.Weaken.name,
+                    icon: Debuffs.Weaken.icon
+                });
+                targetChar.attack = Math.round(targetChar.attack / 2);
+            } else {
+                targetChar.debuffs.fill({
+                    type: Debuffs.Weaken.type, 
+                    duration: 3,
+                    damage: 0,
+                    name: Debuffs.Weaken.name,
+                    icon: Debuffs.Weaken.icon
+                });
+            }
+
             let damage = Math.round(character.attack * damageMulitplier);
             const holyResistance = targetChar.resistances.find(res => res.type ===  Resistances.Holy.type);
             const holyVulnerability = targetChar.vulnerabilities.find(vul => vul.type === Vulnerabilites.Holy.name);
-            const damageResistance = Math.max(5, Math.round(damage - Resistances.Holy.value))
-            const damageVulnerability = Math.round(damage + Vulnerabilites.Holy.value)
+            const damageResistance = Math.max(5, Math.round(damage - Resistances.Holy.value));
+            const damageVulnerability = Math.round(damage + Vulnerabilites.Holy.value);
 
             if (holyResistance) {
                 damage = damageResistance;
@@ -60,9 +80,27 @@ const HolyExplosionTar50 = (
         const enemies = Object.values(storeAtom.get(EnemyAtom));
         const flashUpdate: Record<number, string | null> = {};
 
-    
         enemies.forEach(targetEnemy => {
             flashUpdate[targetEnemy.id] = spellAnimation;
+            if(!targetEnemy.debuffs.find(d => d.name === Debuffs.Weaken.name)){
+                targetEnemy.debuffs.push({
+                    type: Debuffs.Weaken.type, 
+                    duration: 3,
+                    damage: 0,
+                    name: Debuffs.Weaken.name,
+                    icon: Debuffs.Weaken.icon
+                });
+                targetEnemy.attack = Math.round(targetEnemy.attack / 2);
+            } else {
+                targetEnemy.debuffs.fill({
+                    type: Debuffs.Weaken.type, 
+                    duration: 3,
+                    damage: 0,
+                    name: Debuffs.Weaken.name,
+                    icon: Debuffs.Weaken.icon
+                });
+            }
+
             let damage = Math.round(character.attack * damageMulitplier);
             const holyResistance = targetEnemy.resistances.find(res => res.type ===  Resistances.Holy.type);
             const holyVulnerability = targetEnemy.vulnerabilities.find(vul => vul.type === Vulnerabilites.Holy.name);

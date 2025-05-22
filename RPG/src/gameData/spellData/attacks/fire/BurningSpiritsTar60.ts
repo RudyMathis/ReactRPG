@@ -71,7 +71,8 @@ const BurningSpritsTar60 = (
             flashUpdate[targetEnemy.id] = spellAnimation;
 
             targetEnemy.debuffs.push({
-                type: Debuffs.Burn.type, duration: 2,
+                type: Debuffs.Burn.type, 
+                duration: 2,
                 name: Debuffs.Burn.name,
                 icon: Debuffs.Burn.icon
             });

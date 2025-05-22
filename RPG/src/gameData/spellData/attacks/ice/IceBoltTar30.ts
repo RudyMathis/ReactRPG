@@ -21,19 +21,7 @@ const IceBoltTar30 = (enemy: EnemyType, character: CharacterType, target: Charac
         const damageResistance = Math.max(5, Math.round(damage - Resistances.Ice.value))
         const damageVulnerability = Math.round(damage + Vulnerabilites.Ice.value)
 
-        if(character.debuffs.find(d => d.name === Debuffs.Frozen.name)){
-            if(iceResistance) {
-                HandleDamageEffect(damageResistance, "Ice", "player", character.id);
-                return character.health -= damageResistance;
-            } else if (iceVulnerability) {
-                HandleDamageEffect(damageVulnerability, "Ice", "player", character.id);
-                return character.health -= damageVulnerability;
-            } else {
-                HandleDamageEffect(damage, "Ice", "player", character.id);
-                return character.health -= damage;
-            }
-
-        } else {
+        if(!character.debuffs.find(d => d.name === Debuffs.Frozen.name)){
             character.debuffs.push({
                 type: Debuffs.Frozen.type, 
                 duration: 3,
@@ -41,20 +29,26 @@ const IceBoltTar30 = (enemy: EnemyType, character: CharacterType, target: Charac
                 name: Debuffs.Frozen.name,
                 icon: Debuffs.Frozen.icon
             });
-            character.speed = 0;
+            character.speed = 0
+        } else {
+            character.debuffs.fill({
+                type: Debuffs.Frozen.type, 
+                duration: 3,
+                damage: 0,
+                name: Debuffs.Frozen.name,
+                icon: Debuffs.Frozen.icon
+            });
+        }
 
-            if(iceResistance) {
-                HandleDamageEffect(damageResistance, "Ice", "player", character.id);
-
-                return character.health -= damageResistance;
-            } else if (iceVulnerability) {
-                HandleDamageEffect(damageVulnerability, "Ice", "player", character.id);
-                return character.health -= damageVulnerability;
-            } else {
-
-                HandleDamageEffect(damage, "Ice", "player", character.id);
-                return character.health -= damage;
-            }
+        if(iceResistance) {
+            HandleDamageEffect(damageResistance, "Ice", "player", character.id);
+            return character.health -= damageResistance;
+        } else if (iceVulnerability) {
+            HandleDamageEffect(damageVulnerability, "Ice", "player", character.id);
+            return character.health -= damageVulnerability;
+        } else {
+            HandleDamageEffect(damage, "Ice", "player", character.id);
+            return character.health -= damage;
         }
 
     } else {
@@ -66,26 +60,10 @@ const IceBoltTar30 = (enemy: EnemyType, character: CharacterType, target: Charac
         const damageResistance = Math.max(5, Math.round(damage - Resistances.Ice.value))
         const damageVulnerability = Math.round(damage + Vulnerabilites.Ice.value)
 
-        if(enemy.debuffs.find(d => d.name === Debuffs.Frozen.name)){
-            enemy.debuffs.fill({
-                type: Debuffs.Frozen.type, 
-                duration: 3,
-                name: Debuffs.Frozen.name,
-                icon: Debuffs.Frozen.icon
-            });
-            enemy.speed = 0;
+        BlessingOfBurnBonus(character, enemy);
+        BlessingOfLightningBonus(character, enemy);
 
-            if(iceResistance) {
-                HandleDamageEffect(damageResistance, "Ice", "npc", enemy.id);
-                return enemy.health -= damageResistance;
-            } else if (iceVulnerability) {
-                HandleDamageEffect(damageVulnerability, "Ice", "npc", enemy.id);
-                return enemy.health -= damageVulnerability;
-            } else {
-                HandleDamageEffect(damage, "Ice", "npc", enemy.id);
-                return enemy.health -= damage;
-            }
-        } else {
+        if(!enemy.debuffs.find(d => d.name === Debuffs.Frozen.name)){
             enemy.debuffs.push({
                 type: Debuffs.Frozen.type, 
                 duration: 3,
@@ -93,22 +71,26 @@ const IceBoltTar30 = (enemy: EnemyType, character: CharacterType, target: Charac
                 icon: Debuffs.Frozen.icon
             });
             enemy.speed = 0;
-
-            BlessingOfBurnBonus(character, enemy);
-            BlessingOfLightningBonus(character, enemy);
-    
-            console.log("icename", Vulnerabilites.Ice.name, "iceResistance", iceResistance, "iceVulnerability", iceVulnerability, "damageResistance", damageResistance, "damageVulnerability", damageVulnerability, "damage", damage);
-            if(iceResistance) {
-                HandleDamageEffect(damageResistance, "Ice", "npc", enemy.id);
-                return enemy.health -= damageResistance;
-            } else if (iceVulnerability) {
-                HandleDamageEffect(damageVulnerability, "Ice", "npc", enemy.id);
-                return enemy.health -= damageVulnerability;
-            } else {
-                HandleDamageEffect(damage, "Ice", "npc", enemy.id);
-                return enemy.health -= damage;
-            }
+        } else {
+            enemy.debuffs.fill({
+                type: Debuffs.Frozen.type, 
+                duration: 3,
+                name: Debuffs.Frozen.name,
+                icon: Debuffs.Frozen.icon
+            });
         }
+
+        if(iceResistance) {
+            HandleDamageEffect(damageResistance, "Ice", "npc", enemy.id);
+            return enemy.health -= damageResistance;
+        } else if (iceVulnerability) {
+            HandleDamageEffect(damageVulnerability, "Ice", "npc", enemy.id);
+            return enemy.health -= damageVulnerability;
+        } else {
+            HandleDamageEffect(damage, "Ice", "npc", enemy.id);
+            return enemy.health -= damage;
+        }
+
     }
 }
 

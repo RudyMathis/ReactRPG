@@ -1,6 +1,7 @@
 import { EnemyType } from "../../../../atom/BaseEnemyAtom";
 import { CharacterType } from "../../../../atom/CharacterAtom";
 import { HandleDamageEffect } from "../../../../gameMechanics/HandleDamageEffect";
+import Debuffs from "../../../Debuffs";
 import Resistances from "../../../Resistances";
 import Vulnerabilites from "../../../Vulnerabilities";
 import { BlessingOfBurnBonus, BlessingOfLightningBonus } from "../../AdditionalBlessingDamage";
@@ -19,6 +20,25 @@ const HolyStrikeTar40 = (enemy: EnemyType, character: CharacterType, target: Cha
         const holyVulnerability = character.vulnerabilities.find(vul => vul.type === Vulnerabilites.Holy.name);
         const damageResistance = Math.max(5, Math.round(damage - Resistances.Holy.value))
         const damageVulnerability = Math.round(damage + Vulnerabilites.Holy.value)
+
+        if(!character.debuffs.find(d => d.name === Debuffs.Weaken.name)){
+            character.debuffs.push({
+                type: Debuffs.Weaken.type, 
+                duration: 3,
+                damage: 0,
+                name: Debuffs.Weaken.name,
+                icon: Debuffs.Weaken.icon
+            });
+            character.attack = Math.round(character.attack / 2);
+        } else {
+            character.debuffs.fill({
+                type: Debuffs.Weaken.type,
+                duration: 3,
+                damage: 0,
+                name: Debuffs.Weaken.name,
+                icon: Debuffs.Weaken.icon,
+            });
+        }
         
         if (holyResistance) {
             HandleDamageEffect(damageResistance, "Holy", "player", character.id);
@@ -29,7 +49,7 @@ const HolyStrikeTar40 = (enemy: EnemyType, character: CharacterType, target: Cha
         } else {
             HandleDamageEffect(damage, "Holy", "player", character.id);
             return character.health -= damage;
-        }
+        } 
     } else {
         character.mana -= spellCost;
 
@@ -41,6 +61,25 @@ const HolyStrikeTar40 = (enemy: EnemyType, character: CharacterType, target: Cha
 
         BlessingOfBurnBonus(character, enemy);
         BlessingOfLightningBonus(character, enemy);
+
+        if(!enemy.debuffs.find(d => d.name === Debuffs.Weaken.name)){
+            enemy.debuffs.push({
+                type: Debuffs.Weaken.type, 
+                duration: 3,
+                damage: 0,
+                name: Debuffs.Weaken.name,
+                icon: Debuffs.Weaken.icon
+            });
+            enemy.attack = enemy.attack / 2;
+        } else {
+            enemy.debuffs.fill({
+                type: Debuffs.Weaken.type, 
+                duration: 3,
+                damage: 0,
+                name: Debuffs.Weaken.name,
+                icon: Debuffs.Weaken.icon
+            });
+        }
 
         if (holyResistance) {
             HandleDamageEffect(damageResistance, "Holy", "npc", enemy.id);

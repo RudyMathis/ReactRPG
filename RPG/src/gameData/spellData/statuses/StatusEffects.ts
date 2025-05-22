@@ -84,6 +84,17 @@ export const StatusEffects: Record<StatusName, StatusEffect> = {
             entity.defense = entity.defenseDefault;
         }
     },
+    Weaken: {
+        name: "Weaken",
+        perTurn: (entity, status) => {
+            if (status?.duration === 3) {
+                entity.attack = Math.round(entity.attackDefault / Debuffs.Weaken.attack);
+            }
+        },
+        onExpire: (entity) => {
+            entity.attack = entity.attackDefault;
+        }
+    },
 
     Berserk: {
         name: "Berserk",

@@ -13,6 +13,7 @@ const Debuffs = {
     Burn: { name: "Burn", type: "Fire", damage: 10, icon: '/assets/vfx/fire.png' },
     Frozen: { name: "Frozen", type: "Ice", speed: 0, icon: '/assets/vfx/ice.png' },
     Sundered: { name: "Sundered", type: "Physical", defense: 0, icon: '/assets/vfx/sundered.png'},
+    Weaken: { name: "Weaken", type: "Holy", attack: 2, icon: '/assets/vfx/sundered.png'},
 };
 
 export default Debuffs;
