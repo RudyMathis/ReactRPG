@@ -16,8 +16,10 @@ const ShadowDaggerTar30 = (enemy: EnemyType, character: CharacterType, target: C
         const damage = Math.round(enemy.attack * damageMulitplier)
         const darkResistance = character.resistances.find(res => res.type ===  Resistances.Dark.type);
         const darkVulnerability = character.vulnerabilities.find(vul => vul.type === Vulnerabilites.Dark.name);
-        const damageResistance = Math.max(5, Math.round(damage - Resistances.Dark.value))
-        const damageVulnerability = Math.round(damage + Vulnerabilites.Dark.value)
+        const damageResistance = Math.max(5, Math.round(damage - Resistances.Dark.value));
+        const damageVulnerability = Math.round(damage + Vulnerabilites.Dark.value);
+        character.resistances = [];
+        character.buffs = [];
         
         if (darkResistance) {
             HandleDamageEffect(damageResistance, "Dark", "player", character.id);
@@ -35,8 +37,10 @@ const ShadowDaggerTar30 = (enemy: EnemyType, character: CharacterType, target: C
         const damage = Math.round(character.attack * damageMulitplier)
         const darkResistance = enemy.resistances.find(res => res.type ===  Resistances.Dark.type);
         const darkVulnerability = enemy.vulnerabilities.find(vul => vul.type === Vulnerabilites.Dark.name);
-        const damageResistance = Math.max(5, Math.round(damage - Resistances.Dark.value))
-        const damageVulnerability = Math.round(damage + Vulnerabilites.Dark.value)
+        const damageResistance = Math.max(5, Math.round(damage - Resistances.Dark.value));
+        const damageVulnerability = Math.round(damage + Vulnerabilites.Dark.value);
+        enemy.resistances = [];
+        enemy.buffs = [];
 
         BlessingOfBurnBonus(character, enemy);
         BlessingOfLightningBonus(character, enemy);

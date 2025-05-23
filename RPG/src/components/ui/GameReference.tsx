@@ -8,32 +8,32 @@ const GameReference = () => {
             <article>
                 <h2>Elements</h2>
                 <ul>
-                    <li><span>Fire</span> <span>Causes Burn debuff</span></li>
-                    <li><span>Ice</span> <span>Causes Frozen debuff</span></li>
-                    <li><span>Lightning</span> <span>Depletes 50% of targets mana</span></li>
-                    <li><span>Dark</span> <span>Removes buffs and resistances from target</span></li>
-                    <li><span>Holy</span> <span>Causes Weaken debuff</span></li>
-                    <li><span>Physical/Normal</span> <span>Uneffected by resistances, but affected by defense</span></li>
+                    <li><span className={styles.fire}>Fire</span>: <span>Causes Burn debuff</span></li>
+                    <li><span className={styles.ice}>Ice</span>: <span>Causes Frozen debuff</span></li>
+                    <li><span className={styles.lightning}>Lightning</span>: <span>Depletes 50% of targets mana</span></li>
+                    <li><span className={styles.dark}>Dark</span>: <span>Removes buffs and resistances from target</span></li>
+                    <li><span className={styles.holy}>Holy</span>: <span>Causes Weaken debuff</span></li>
+                    <li><span>Physical/Normal</span>: <span>Uneffected by resistances, but affected by defense</span></li>
                 </ul>
             </article>
             <article>
                 <h2>Vulnerabilities</h2>
                 <h3>Element attacks are specifically weak to their own element so attacking an enemy with Fire will be weak to Fire</h3>
                 <ul>
-                    <li><span>Fire</span> <span>Strong against Ice</span></li>
-                    <li><span>Ice</span> <span>Strong against Fire</span></li>
-                    <li><span>Lightning</span> <span>Strong against Water</span></li>
-                    <li><span>Dark</span> <span>Strong against Holy</span></li>
-                    <li><span>Holy</span> <span>Strong against Dark</span></li>
+                    <li><span className={styles.fire}>Fire</span>: <span>Strong against Ice</span></li>
+                    <li><span className={styles.ice}>Ice</span>: <span>Strong against Fire</span></li>
+                    <li><span className={styles.lightning}>Lightning</span>: <span>Strong against Water</span></li>
+                    <li><span className={styles.dark}>Dark</span>: <span>Strong against Holy</span></li>
+                    <li><span className={styles.holy}>Holy</span>: <span>Strong against Dark</span></li>
                 </ul>
             </article>
             <article>
                 <h2>Types of Resources</h2>
                 <h3>Under the health bar are different colored bars</h3>
                 <ul>
-                    <li><span>Magic</span> <span>Colored blue this resource can be regenerated between rounds or specific abilities like meditate</span></li>
-                    <li><span>Energy</span> <span>Colored yellow similar to magic but spells cost more and can only be regenerated between rounds</span></li>
-                    <li><span>Rage</span> <span>Colred red this resource needs spells to increase it before using spells that consume it</span></li>
+                    <li><span className={styles.blue}>Magic</span>: <span>Colored blue this resource can be regenerated between rounds or specific abilities like meditate</span></li>
+                    <li><span className={styles.yellow}>Energy</span>: <span>Colored yellow similar to magic but spells cost more and can only be regenerated between rounds</span></li>
+                    <li><span className={styles.red}>Rage</span>: <span>Colored red this resource needs spells to increase it before using spells that consume it</span></li>
                 </ul>
             </article>
             <article>

@@ -199,6 +199,8 @@
     border-image-width: var(--border-image-width);
     border-image-source: var(--border-image-source);
     border-image-repeat: var(--border-image-repeat);
+    background-color: var(--background-secondary);
+    border-radius: var(--small-radius);
 }
 
 .popup p, .popup h2 {
@@ -296,6 +298,14 @@
     animation: targetValue 1200ms infinite ease-in-out;
     color: var(--white);
     text-shadow: 2px 2px 2px var(--shadow);
+}
+
+.targetValue[data-resistance='true'] {
+    color: var(--debuff);
+}
+
+.targetValue[data-vulnerability='true'] {
+    color: var(--buff);
 }
 
 @keyframes targetValue {

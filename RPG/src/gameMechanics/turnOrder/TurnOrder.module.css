@@ -25,13 +25,8 @@
     object-fit: cover; 
 }
 
-.turnOrderSprite[data-entity-type="player"] {
+.turnOrderSprite[data-entity-type="player"],.turnOrderSprite[data-entity-size="medium"], .turnOrderSprite[data-entity-size="large"] {
     height: 200%;
-}
-
-.turnOrderSprite[data-entity-size="medium"], .turnOrderSprite[data-entity-size="large"] {
-    height: 250%;
-    object-position: -.85em 0;
 }
 
 .turnOrderItem {

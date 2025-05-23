@@ -314,9 +314,56 @@ input[type="range"]::-webkit-slider-thumb:hover {
 
 /* Game Reference */
 
+h2 {
+    font-size: 1.35rem;
+    margin: 1rem 0;
+}
+
+h3 {
+    font-size: 1.15rem;
+    margin: 1rem 0;
+}
+
 .gameReference {
     line-height: 1.6;
 }
+
+.gameReference .fire {
+    color: var(--fire);
+}
+
+.gameReference .dark {
+    color: var(--dark);
+}
+
+.gameReference .lightning {
+    color: var(--lightning);
+}
+
+.gameReference .ice {
+    color: var(--ice);
+}
+
+.gameReference .holy {
+    color: var(--holy);
+}
+
+.gameReference .dark {
+    color: var(--dark);
+}
+
+.gameReference .red {
+    color: var(--red);
+}
+
+.gameReference .blue {
+    color: var(--blue);
+}
+
+.gameReference .yellow {
+    color: var(--yellow);
+}
+
 
 @media (max-height: 431px)  {
 	.backgroundBorder, .backgroundGlow, .reflectionRightContainer, .backgroundGlow::before {

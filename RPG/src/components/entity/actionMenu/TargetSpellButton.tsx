@@ -97,6 +97,8 @@ const TargetSpellButton = ({
                     label,
                     affectedEntityIds,
                     adjustedDamage: adjustedDamages,
+                    vulnerability: targets.map(e => !!e.vulnerabilities.find(vul => vul.type === element)),
+                    resistance: targets.map(e => !!e.resistances.find(res => res.type === element)),
                 });
             }}
 

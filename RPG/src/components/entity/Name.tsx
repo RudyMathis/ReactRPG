@@ -33,10 +33,12 @@ const Name: React.FC<NameProps> = ({ entity }) => {
             data-type={entity.type}
         >
             {isTargeted && hoveredSpell?.adjustedDamage && (
-                <p className={styles.targetValue}>
-                    {hoveredSpell.adjustedDamage[
-                        hoveredSpell.affectedEntityIds.findIndex((id) => id === entity.id)
-                    ]}
+                <p 
+                    className={styles.targetValue}
+                    data-resistance={hoveredSpell.resistance?.[hoveredSpell.affectedEntityIds.findIndex((id) => id === entity.id)]}
+                    data-vulnerability={hoveredSpell.vulnerability?.[hoveredSpell.affectedEntityIds.findIndex((id) => id === entity.id)]}
+                >
+                    {hoveredSpell.adjustedDamage[hoveredSpell.affectedEntityIds.findIndex((id) => id === entity.id)]}
                 </p>
             )}
             {isTargeted &&
@@ -53,7 +55,6 @@ const Name: React.FC<NameProps> = ({ entity }) => {
                     })()
                 )
             }
-
 
             {entity.type === 'player' ? entity.name : displayName}
         </div>
