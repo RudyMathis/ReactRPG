@@ -274,9 +274,18 @@
     text-align: justify;
 }
 
+.actionMenuButton:disabled .moreInformationText {
+    transform: translate(-50%, -150%);
+}
+
 .moreInformationText p {
     padding: .25rem;
     font-size: .9rem;
+}
+
+.moreInformationWrapper {
+    background-color: var(--background-secondary);
+    border-radius: var(--small-radius);
 }
 
 .moreInformationWrapper:hover 
